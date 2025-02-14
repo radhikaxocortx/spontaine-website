@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button'
 import {
   Sheet,
   SheetContent,
@@ -9,8 +8,9 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet'
 import { User } from '@/types'
-import { Link, usePage } from '@inertiajs/react'
+import { Link, router, usePage } from '@inertiajs/react'
 import { useMemo, useRef, useState } from 'react'
+import SidebarMenuItems from './sidebar-menu-items'
 
 const SHEET_SIDES = ['left'] as const
 
@@ -35,16 +35,62 @@ export default function Sidebar() {
       {SHEET_SIDES.map((side) => (
         <Sheet key={side}>
           <SheetTrigger asChild>
-            <Button variant='outline'>{side}</Button>
+            <div className='p-7 hover:cursor-pointer'>
+              <svg
+                fill='#000000'
+                width='32'
+                height='33'
+                viewBox='0 0 24 24'
+                xmlns='http://www.w3.org/2000/svg'
+              >
+                <g data-name='Layer 2'>
+                  <g data-name='menu'>
+                    <rect
+                      width='24'
+                      height='24'
+                      transform='rotate(180 12 12)'
+                      opacity='0'
+                    />
+
+                    <rect
+                      x='3'
+                      y='11'
+                      width='18'
+                      height='2'
+                      rx='.95'
+                      ry='.95'
+                    />
+
+                    <rect
+                      x='3'
+                      y='16'
+                      width='18'
+                      height='2'
+                      rx='.95'
+                      ry='.95'
+                    />
+
+                    <rect
+                      x='3'
+                      y='6'
+                      width='18'
+                      height='2'
+                      rx='.95'
+                      ry='.95'
+                    />
+                  </g>
+                </g>
+              </svg>
+            </div>
           </SheetTrigger>
           <div
-            className='mt-6 flex flex-shrink-0 items-center justify-end sm:relative sm:justify-normal'
+            className='ml-auto mt-6 flex flex-shrink-0 items-center justify-center p-5 sm:relative sm:justify-normal'
             ref={profileRef}
           >
             <div className='flex flex-col items-center'>
               <div className='flex'>
                 <button
-                  className='h1-stop border-1stop-gray bg-1stop-accent2 flex h-12 w-12 cursor-pointer items-center justify-center rounded-full text-2xl text-black'
+                  className='h1-stop flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border-1stop-gray bg-1stop-accent2 text-2xl text-black'
                   onClick={() => setIsProfileDropdown(!isProfileDropdown)}
                 >
                   {userInitial}
@@ -68,7 +114,7 @@ export default function Sidebar() {
 
               {isProfileDropdown && (
                 <div className='mt-2 flex justify-center'>
-                  <div className='bg:opacity-100 border-1stop-highlight bg-1stop-white z-50 w-48 rounded-xl border p-2 shadow sm:absolute sm:right-10'>
+                  <div className='bg:opacity-100 z-50 w-48 rounded-xl border border-1stop-highlight bg-1stop-white p-2 shadow sm:absolute sm:right-10'>
                     {/* User Name */}
                     <div className='px-4 py-2 text-center'>
                       <p className='small-1stop text-gray-900'>Logged in as {userName}</p>
@@ -79,7 +125,7 @@ export default function Sidebar() {
                       <Link
                         href='/logout'
                         method='post'
-                        className='text-black-700 small-1stop hover:bg-1stop-gray flex w-full rounded px-4 py-2 text-left'
+                        className='text-black-700 small-1stop flex w-full rounded px-4 py-2 text-left hover:bg-1stop-gray'
                       >
                         <svg
                           xmlns='http://www.w3.org/2000/svg'
@@ -112,7 +158,22 @@ export default function Sidebar() {
           <SheetContent side={side}>
             <SheetHeader>
               <SheetTitle>KADODO</SheetTitle>
-              <SheetDescription></SheetDescription>
+              <SheetDescription>
+                {SidebarMenuItems.map((item) => (
+                  <button
+                    key={item.name}
+                    onClick={() => router.get(route(item.url || ''))}
+                    className='body-1stop flex text-1stop-dark'
+                  >
+                    <span
+                      dangerouslySetInnerHTML={{
+                        __html: typeof item.image === 'string' ? item.image : item.image.svg,
+                      }}
+                    />
+                    {item.name}
+                  </button>
+                ))}
+              </SheetDescription>
             </SheetHeader>
 
             <SheetFooter>{/* <SheetClose asChild></SheetClose> */}</SheetFooter>
