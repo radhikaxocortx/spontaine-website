@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\ReferenceDataModel;
+namespace App\Models\ReferenceData;
 
 use App\Http\Requests\ReferenceDataRequests\ReferenceDataSearchRequest;
 use Illuminate\Database\Eloquent\Builder;

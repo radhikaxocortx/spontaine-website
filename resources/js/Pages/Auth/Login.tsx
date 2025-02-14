@@ -1,11 +1,11 @@
-import Checkbox from '@/Components/Checkbox';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import TextInput from '@/Components/TextInput';
-import GuestLayout from '@/Layouts/GuestLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
-import { Button } from '@/Components/ui/button';
+import LaravelCheckbox from '@/Components/LaravelCheckbox'
+import LaravelInputError from '@/Components/LaravelInputError'
+import LaravelInputLabel from '@/Components/LaravelInputLabel'
+import TextInput from '@/Components/TextInput'
+import GuestLayout from '@/Layouts/GuestLayout'
+import { Head, Link, useForm } from '@inertiajs/react'
+import { FormEventHandler } from 'react'
+import { Button } from '@/Components/ui/button'
 
 
 interface Props {
@@ -17,16 +17,16 @@ export default function Login({ status, canResetPassword }: Readonly<Props>) {
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
-        remember: false as boolean
-    });
+        remember: false as boolean,
+    })
 
     const submit: FormEventHandler = (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
         post(route('login'), {
-            onFinish: () => reset('password')
-        });
-    };
+            onFinish: () => reset('password'),
+        })
+    }
 
     return (
         <GuestLayout>
@@ -40,7 +40,7 @@ export default function Login({ status, canResetPassword }: Readonly<Props>) {
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="email" value="Email" />
+                    <LaravelInputLabel htmlFor="email" value="Email" />
 
                     <TextInput
                         id="email"
@@ -53,11 +53,11 @@ export default function Login({ status, canResetPassword }: Readonly<Props>) {
                         onChange={(e) => setData('email', e.target.value)}
                     />
 
-                    <InputError message={errors.email} className="mt-2" />
+                    <LaravelInputError message={errors.email} className="mt-2" />
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
+                    <LaravelInputLabel htmlFor="password" value="Password" />
 
                     <TextInput
                         id="password"
@@ -69,18 +69,18 @@ export default function Login({ status, canResetPassword }: Readonly<Props>) {
                         onChange={(e) => setData('password', e.target.value)}
                     />
 
-                    <InputError message={errors.password} className="mt-2" />
+                    <LaravelInputError message={errors.password} className="mt-2" />
                 </div>
 
                 <div className="mt-4 block">
                     <label className="flex items-center">
-                        <Checkbox
+                        <LaravelCheckbox
                             name="remember"
                             checked={data.remember}
                             onChange={(e) =>
                                 setData(
                                     'remember',
-                                    (e.target.checked || false) as false
+                                    (e.target.checked || false) as false,
                                 )
                             }
                         />
@@ -108,5 +108,5 @@ export default function Login({ status, canResetPassword }: Readonly<Props>) {
                 </div>
             </form>
         </GuestLayout>
-    );
+    )
 }

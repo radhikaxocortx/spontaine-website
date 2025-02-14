@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\ReferenceData;
 
 use App\Http\Controllers\Controller;
-use App\Models\ReferenceDataModel\ReferenceData;
+use App\Http\Requests\ReferenceDataRequests\ReferenceDataSearchRequest;
+use App\Models\ReferenceData\ReferenceData;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 

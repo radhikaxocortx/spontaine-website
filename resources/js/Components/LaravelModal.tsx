@@ -1,19 +1,19 @@
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren } from 'react'
 
 
-export default function Modal(
+export default function LaravelModal(
     {
         children,
         show = false,
         maxWidth = '2xl',
         closeable = true,
         onClose = () => {
-        }
+        },
     }: PropsWithChildren<{
         show: boolean;
         maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl';
         closeable?: boolean;
         onClose: CallableFunction;
     }>) {
-    return <></>;
+    return <></>
 }

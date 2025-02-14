@@ -1,12 +1,12 @@
-import { ButtonHTMLAttributes } from 'react';
+import { ButtonHTMLAttributes } from 'react'
 
-export default function SecondaryButton({
-    type = 'button',
-    className = '',
-    disabled,
-    children,
-    ...props
-}: ButtonHTMLAttributes<HTMLButtonElement>) {
+export default function LaravelSecondaryButton({
+                                                   type = 'button',
+                                                   className = '',
+                                                   disabled,
+                                                   children,
+                                                   ...props
+                                               }: ButtonHTMLAttributes<HTMLButtonElement>) {
     return (
         <button
             {...props}
@@ -20,5 +20,5 @@ export default function SecondaryButton({
         >
             {children}
         </button>
-    );
+    )
 }
