@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReferenceData\ReferenceDataAPIController;
 use App\Http\Controllers\ReferenceData\ReferenceDataController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -28,4 +29,10 @@ Route::middleware('auth')->group(function () {
 // Reference Data
 
 Route::resource('/reference-data', ReferenceDataController::class);
+
+Route::get('domain-list', [ReferenceDataAPIController::class, 'domainList'])
+    ->name('domain-list');
+
+Route::get('parameter-list', [ReferenceDataAPIController::class, 'parameterList'])
+    ->name('parameter-list');
 require __DIR__.'/auth.php';

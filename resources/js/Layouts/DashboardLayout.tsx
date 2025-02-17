@@ -1,0 +1,9 @@
+import { ReactNode } from 'react'
+
+interface Props {
+  children: ReactNode
+}
+
+export default function DashboardPadding({ children }: Props) {
+  return <div className='mt-4 flex w-11/12 flex-col px-10 2xl:w-10/12'>{children}</div>
+}

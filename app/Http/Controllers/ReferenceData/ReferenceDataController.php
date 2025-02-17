@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\ReferenceData;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ReferenceDataRequests\RefDataFormRequest;
 use App\Http\Requests\ReferenceDataRequests\ReferenceDataSearchRequest;
 use App\Models\ReferenceData\ReferenceData;
+use App\Models\ReferenceData\ReferenceDataDomain;
+use App\Services\ReferenceData\HasSecondValue;
+use Exception;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -44,15 +48,39 @@ class ReferenceDataController extends Controller
      */
     public function create()
     {
-        //
+        $domains = ReferenceDataDomain::get();
+
+        return Inertia::render('ReferenceData/ReferenceDataCreate', [
+            'domains' => $domains,
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(RefDataFormRequest $request, HasSecondValue $hasSecondValue)
     {
-        //
+        $response = $hasSecondValue->check($request);
+
+        if ($response->error) {
+            return back()->with([
+                'error' => $response->message,
+            ]);
+        }
+
+        try {
+            ReferenceData::create($request->all());
+        } catch (Exception $e) {
+            return back()->with([
+                'error' => $e->getMessage(),
+            ]);
+        }
+
+        return redirect()
+            ->route('reference-data.index')
+            ->with([
+                'message' => 'Reference Data Added successfully',
+            ]);
     }
 
     /**

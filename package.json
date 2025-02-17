@@ -35,12 +35,14 @@
         "vite": "^6.0.11"
     },
     "dependencies": {
+        "@radix-ui/react-checkbox": "^1.1.4",
         "@radix-ui/react-dialog": "^1.1.6",
         "@radix-ui/react-label": "^2.1.2",
         "@radix-ui/react-slot": "^1.1.2",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
         "lucide-react": "^0.475.0",
+        "react-toastify": "^11.0.3",
         "tailwind-merge": "^3.0.1",
         "tailwindcss-animate": "^1.0.7"
     }

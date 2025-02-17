@@ -11,8 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reference_data', function (Blueprint $table) {
+        Schema::create('reference_data_parameters', function (Blueprint $table) {
             $table->id();
+            $table->string('parameter');
+            $table->foreignId('domain_id')
+                ->constrained('reference_data_domains');
+            $table->boolean('has_second_value')
+                ->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -22,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('reference_data');
+        Schema::dropIfExists('reference_data_parameters');
     }
 };

@@ -162,7 +162,7 @@ export default function Sidebar() {
                 {SidebarMenuItems.map((item) => (
                   <button
                     key={item.name}
-                    onClick={() => router.get(route(item.url || ''))}
+                    onClick={() => router.get(item.url || '')}
                     className='body-1stop flex text-1stop-dark'
                   >
                     <span
