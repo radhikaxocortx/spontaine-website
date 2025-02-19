@@ -1,7 +1,6 @@
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
@@ -157,23 +156,23 @@ export default function Sidebar() {
 
           <SheetContent side={side}>
             <SheetHeader>
-              <SheetTitle>KADODO</SheetTitle>
-              <SheetDescription>
+              <SheetTitle className='h3-1stop p-5'>KADODO</SheetTitle>
+              <div className='mr-auto flex flex-col'>
                 {SidebarMenuItems.map((item) => (
                   <button
                     key={item.name}
                     onClick={() => router.get(item.url || '')}
-                    className='body-1stop flex text-1stop-dark'
+                    className='small-1stop-header mr-auto p-5 text-1stop-dark'
                   >
-                    <span
+                    {/* <span
                       dangerouslySetInnerHTML={{
                         __html: typeof item.image === 'string' ? item.image : item.image.svg,
                       }}
-                    />
+                    /> */}
                     {item.name}
                   </button>
                 ))}
-              </SheetDescription>
+              </div>
             </SheetHeader>
 
             <SheetFooter>{/* <SheetClose asChild></SheetClose> */}</SheetFooter>

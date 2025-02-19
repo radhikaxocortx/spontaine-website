@@ -26,5 +26,17 @@ const SidebarMenuItems: SidebarMenuItem[] = [
 </svg>`,
     },
   },
+  {
+    name: 'Price Plan',
+    url: '/price-plan',
+    value: 'price-plan',
+    image: { svg: `` },
+  },
+  {
+    name: 'Country',
+    url: '/country',
+    value: 'country',
+    image: { svg: `` },
+  },
 ]
 export default SidebarMenuItems

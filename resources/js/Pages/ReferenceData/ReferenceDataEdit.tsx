@@ -1,4 +1,4 @@
-import { ReferenceDataDomain } from '@/Components/Interface/data_interface'
+import { ReferenceData, ReferenceDataDomain } from '@/Components/Interface/data_interface'
 import { FormItem } from '@/FormBuilder/FormBuilder'
 import FormPage from '@/FormBuilder/FormPage'
 import useCustomForm from '@/hooks/useCustomForm'
@@ -6,15 +6,16 @@ import { useMemo } from 'react'
 
 interface Props {
   domains: ReferenceDataDomain[]
+  referenceData: ReferenceData
 }
 
-const ReferenceDataCreate = ({ domains }: Props) => {
+const ReferenceDataEdit = ({ domains, referenceData }: Props) => {
   const { formData, setFormValue } = useCustomForm({
-    domain_id: '',
-    parameter_id: '',
-    sort_order: '',
-    value_one: '',
-    value_two: '',
+    domain_id: referenceData.domain_id.toString(),
+    parameter_id: referenceData.parameter_id.toString(),
+    sort_order: referenceData.sort_order.toString(),
+    value_one: referenceData.value_one,
+    value_two: referenceData.value_two ?? '',
   })
 
   const formItems = useMemo(<
@@ -65,11 +66,12 @@ const ReferenceDataCreate = ({ domains }: Props) => {
     <FormPage
       formItems={formItems}
       formData={formData}
-      title='Create Reference Data'
-      url={route('reference-data.store')}
+      title='Update Reference Data'
+      url={route('reference-data.update', referenceData.id)}
       backUrl={route('reference-data.index')}
+      isPatchRequest
     />
   )
 }
 
-export default ReferenceDataCreate
+export default ReferenceDataEdit

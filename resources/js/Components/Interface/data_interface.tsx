@@ -24,3 +24,13 @@ export interface ReferenceData extends Model {
   value_one: string
   value_two: string | null
 }
+
+export interface PricePlan extends Model {
+  name: string
+  code: string
+  description: string
+  type: string
+  min_quantity_required: number
+  rate: number
+  additional_rate: number | null
+}

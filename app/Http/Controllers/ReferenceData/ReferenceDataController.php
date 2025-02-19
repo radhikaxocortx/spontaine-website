@@ -9,7 +9,7 @@ use App\Models\ReferenceData\ReferenceData;
 use App\Models\ReferenceData\ReferenceDataDomain;
 use App\Services\ReferenceData\HasSecondValue;
 use Exception;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 
 class ReferenceDataController extends Controller
@@ -96,15 +96,44 @@ class ReferenceDataController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $domains = ReferenceDataDomain::get();
+
+        $referenceData = ReferenceData::findOrFail($id);
+
+        return Inertia::render('ReferenceData/ReferenceDataEdit', [
+            'referenceData' => $referenceData,
+            'domains' => $domains,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(string $id, RefDataFormRequest $request, HasSecondValue $hasSecondValue): RedirectResponse
     {
-        //
+
+        $response = $hasSecondValue->check($request);
+
+        if ($response->error) {
+            return back()->with([
+                'error' => $response->message,
+            ]);
+        }
+
+        try {
+            ReferenceData::where('id', $id)
+                ->update($request->all());
+        } catch (Exception $e) {
+            return back()->with([
+                'error' => $e->getMessage(),
+            ]);
+        }
+
+        return redirect()
+            ->route('reference-data.index')
+            ->with([
+                'message' => 'Reference Data Updated successfully',
+            ]);
     }
 
     /**

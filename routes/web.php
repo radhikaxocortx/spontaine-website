@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PricePlan\PricePlanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReferenceData\ReferenceDataAPIController;
 use App\Http\Controllers\ReferenceData\ReferenceDataController;
@@ -32,7 +33,11 @@ Route::resource('/reference-data', ReferenceDataController::class);
 
 Route::get('domain-list', [ReferenceDataAPIController::class, 'domainList'])
     ->name('domain-list');
-
 Route::get('parameter-list', [ReferenceDataAPIController::class, 'parameterList'])
     ->name('parameter-list');
+
+// Price Plan
+Route::resource('price-plan', PricePlanController::class)
+    ->parameters(['price-plan' => 'pricePlan']);
+
 require __DIR__.'/auth.php';

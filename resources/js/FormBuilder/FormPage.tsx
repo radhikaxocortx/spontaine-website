@@ -89,6 +89,8 @@ export default function FormPage<
     }
     cardRef.current.scrollIntoView({ behavior: 'smooth' })
   }, [])
+  console.log('Form Submission URL:', url)
+  console.log('Submitting Data:', customSubmitData ?? formData)
 
   return (
     <div>
