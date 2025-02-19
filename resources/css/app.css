@@ -1,8 +1,424 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.Toastify__toast-container--bottom-center {
+  z-index: 999999 !important;
+}
+
+body {
+  @apply bg-gray-100;
+}
+
+.standard-th {
+  @apply px-6 py-3 text-left font-semibold uppercase tracking-wider text-gray-700;
+}
+
+.standard-tr {
+  @apply border-b border-gray-800 leading-none;
+}
+
+.standard-td {
+  @apply data-sm-1stop max-w-xs break-words px-3 py-6;
+}
+
+.link {
+  @apply cursor-pointer text-blue-500 underline hover:text-blue-700;
+}
+
+.spinner_svg {
+  animation: 2s linear infinite svg-animation;
+  max-width: 100px;
+}
+
+@keyframes svg-animation {
+  0% {
+    transform: rotateZ(0deg);
+  }
+
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+
+.tree-node:has(.tree-node-content:hover) {
+  @apply border-1stop-highlight text-1stop-highlight;
+}
+
+.spinner_circle {
+  animation: 1.4s ease-in-out infinite both circle-animation;
+  display: block;
+  fill: transparent;
+  stroke-linecap: round;
+  stroke-dasharray: 283;
+  stroke-dashoffset: 280;
+  stroke-width: 10px;
+  transform-origin: 50% 50%;
+}
+
 @layer base {
   :root {
-    --radius: 0.5rem
+    /* 1stop */
+
+    --colour-1stop-dark: #262626;
+
+    /* --colour-1stop-accent1: #e3fe3c;
+    --colour-1stop-accent2: #eff0a6;
+    --colour-1stop-highlight: #91ad48;
+    --colour-1stop-highlight2: #d2ddca; */
+
+    --colour-1stop-accent1: #0091ff;
+    /* --colour-1stop-accent2: #73ade1; */
+    --colour-1stop-accent2: #c5dff0;
+    --colour-1stop-highlight: #235cc0;
+    /* --colour-1stop-highlight2: #97c7e4; */
+    --colour-1stop-highlight2: #73ade1;
+    --colour-1stop-gradient-left: #d9dee8;
+    --colour-1stop-gradient-right: #cbd7ef;
+    /* --colour-1stop-gray: #d9dee8; */
+    --colour-1stop-gray: #d9dee8;
+    --colour-1stop-alt-gray: #e5e8dd;
+    --colour-1stop-dark-gray: #6c7d88;
+    --colour-1stop-alt-highlight: #679436;
+    --colour-1stop-white: #f5f5fa;
+    --colour-1stop-login-gradient-fr: #9edcdb;
+    --colour-1stop-login-gradient-vi: #d9dee8;
+    --colour-1stop-login-gradient-to: #97c7e4;
+    --colour-chart-1: #a93053;
+    --colour-chart-2: #508d81;
+    --colour-chart-3: #74aed4;
+    --colour-chart-4: #9e0689;
+    --colour-chart-5: #db464b;
+    --colour-chart-6: #7d4b12;
+    --colour-chart-7: #bdf3fe;
+    --colour-chart-main: #e3fe3c;
+    --colour-chart-dark: #262626;
+    --colour-1stop-link: #5da4b8;
+    --colour-1stop-background: #ffffff;
+
+    --color-header-dark: #585388;
+    --color-accent-light: #f5efef;
+    --color-accent-dark: #c7bda3;
+    --color-panel-dark: #857755;
+    --color-highlight-alert: #fbc3c3;
+    --color-highlight-light: #f6efdc;
+    --color-border-dark: #857755;
+    --color-button-base: #958a8a;
+    --color-button-muted: #d9d9d9;
+    --color-button-accent: #f2d387;
+    --color-addbutton-base: #f2d387;
+    --color-deletebutton: #958a8a;
+    --color-addbutton-base-hover: #ffe069;
+    --color-base-hover: #bbb4b4;
+    --color-muted-hover: #aeaeae;
+    --color-accent-hover: #c7bda3;
+    --color-light: #ffffff;
+    --color-dark: #857755;
+    --color-black: #000000;
+    --color-title-text: #635f5f;
+    --color-text-base: #000000;
+    --color-text-textbox: #958a8a;
+    --color-box-textbox: #ffffff;
+    --color-button-textbase: #ffffff;
+    --color-tab-accent: #c7bda3;
+    --color-tab-base: #f6efdc;
+    --color-card-yellow: #f6efdc;
+    --color-card--pink: #fbc3c3;
+    --color-card--progressbar: #93ab6d;
+    --color-dropdown: #b3c7a3;
+    --color-background: #f6f2f2;
+    --color-success: #d2ddca;
+    --color-fail: #da999a;
+    --radius: 0.5rem;
+  }
+  @font-face {
+    font-family: 'Figtree-Light';
+    src: url('/fonts/onestop/Figtree-Light.woff');
+    font-style: normal;
+    font-weight: 300;
+  }
+  @font-face {
+    font-family: 'Figtree-Regular';
+    src: url('/fonts/onestop/Figtree-Regular.woff');
+    font-style: normal;
+    font-weight: 400;
+  }
+  @font-face {
+    font-family: 'Figtree-Medium';
+    src: url('/fonts/onestop/Figtree-Medium.woff');
+    font-style: normal;
+    font-weight: 500;
+  }
+  @font-face {
+    font-family: 'Figtree-Bold';
+    src: url('/fonts/onestop/Figtree-Bold.woff');
+    font-style: normal;
+    font-weight: 700;
+  }
+  @font-face {
+    font-family: 'Figtree-ExtraBold';
+    src: url('/fonts/onestop/Figtree-ExtraBold.woff');
+    font-style: normal;
+    font-weight: 800;
+  }
+  @font-face {
+    font-family: 'Poppins-Regular';
+    src: url('/fonts/onestop/Poppins-Regular.woff');
+    font-style: normal;
+    font-weight: 400;
+  }
+
+  @font-face {
+    font-family: 'Poppins-Italic';
+    src: url('/fonts/onestop/Poppins-Italic.woff');
+    font-style: normal;
+    font-weight: 800;
+  }
+
+  @font-face {
+    font-family: 'Poppins-ExtraBold';
+    src: url('/fonts/onestop/Poppins-ExtraBold.woff');
+    font-style: normal;
+    font-weight: 800;
+  }
+
+  @font-face {
+    font-family: 'Poppins-Medium';
+    src: url('/fonts/onestop/Poppins-Medium.woff');
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  @font-face {
+    font-family: 'DMMono-Regular';
+    src: url('/fonts/onestop/DMMono-Regular.woff');
+    font-style: normal;
+    font-weight: 400;
+  }
+  @font-face {
+    font-family: 'DMMono-Medium';
+    src: url('/fonts/onestop/DMMono-Medium.woff');
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  @font-face {
+    font-family: 'Lato';
+    src: url('/fonts/Lato2OFL/Lato-Regular.ttf');
+    font-style: normal;
+    font-weight: 400;
+  }
+
+  @font-face {
+    font-family: 'Lato-Black';
+    src: url('/fonts/Lato2OFL/Lato-Black.ttf');
+  }
+
+  @font-face {
+    font-family: 'Lato-Bold';
+    src: url('/fonts/Lato2OFL/Lato-Bold.ttf');
+    font-style: normal;
+    font-weight: 900;
+  }
+
+  @font-face {
+    font-family: 'Lato-Medium';
+    src: url('/fonts/Lato2OFL/Lato-Medium.ttf');
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  html {
+    font-size: 16px;
+  }
+
+  body {
+    @apply bg-background;
+  }
+
+  span {
+    @apply text-sm;
+  }
+
+  .link {
+    @apply cursor-pointer font-bold text-blue-600 underline hover:text-blue-500;
+  }
+
+  .card-8col {
+    @apply bg-1stop-gray my-4 flex w-full rounded-2xl p-2 md:w-1/2;
+  }
+
+  .card-6col {
+    @apply bg-1stop-white my-4 flex w-full rounded-2xl p-2 md:w-1/2;
+  }
+
+  .card-4col {
+    @apply bg-1stop-gray my-4 flex w-full rounded-2xl p-2 py-2 md:w-1/2;
+  }
+
+  .link-1stop {
+    @apply text-1stop-link cursor-pointer underline hover:opacity-70;
+  }
+
+  .indicator-highlight {
+    @apply bg-1stop-accent1 rounded-2xl;
+  }
+
+  .indicator-regular {
+    @apply bg-1stop-accent2 rounded-2xl;
+  }
+
+  .indicator-muted {
+    @apply bg-1stop-gray rounded-2xl;
+  }
+
+  .btn-highlight {
+    @apply bg-1stop-accent1 hover:bg-1stop-highlight rounded-2xl px-6 py-2;
+  }
+
+  .btn-muted {
+    @apply hover:bg-1stop-highlight rounded-2xl border px-6 py-2;
+  }
+
+  .date-picker-input::-webkit-calendar-picker-indicator {
+    /* display: none; */
+  }
+  .month-picker-calendar .react-datepicker__month {
+    font-size: 10px;
+    font-weight: 600;
+    font-family: 'Figtree-Regular';
+  }
+
+  /* 1 Stop */
+  .h1-1stop {
+    font-family: 'Figtree-ExtraBold';
+    font-style: normal;
+    font-size: 42px;
+    font-weight: 900;
+    line-height: 50px;
+    letter-spacing: -1px;
+  }
+
+  .h2-1stop {
+    font-family: 'Figtree-ExtraBold';
+    font-style: normal;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 40px;
+    letter-spacing: 0px;
+  }
+
+  .h3-1stop {
+    font-family: 'Figtree-ExtraBold';
+    font-style: normal;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 26px;
+    letter-spacing: 0px;
+  }
+
+  .subheader-1stop {
+    font-family: 'Figtree-Medium';
+    font-style: normal;
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 22px;
+    letter-spacing: 2px;
+  }
+
+  .subheader-sm-1stop {
+    font-family: 'Figtree-Medium';
+    font-style: normal;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 14px;
+    letter-spacing: 1px;
+  }
+
+  .body-1stop {
+    font-family: 'Figtree-Regular';
+    font-style: normal;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 20px;
+  }
+
+  .small-1stop {
+    font-family: 'Figtree-Regular';
+    font-style: normal;
+    font-size: 12px;
+    font-weight: 200;
+    line-height: 16px;
+  }
+  .small-1stop-header {
+    font-family: 'Figtree-Medium';
+    font-size: 12px;
+    line-height: 16px;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+  }
+
+  .xlmetric-1stop {
+    font-family: 'Figtree-ExtraBold';
+    font-style: normal;
+    font-size: 34px;
+    font-weight: 800;
+    line-height: 44px;
+    letter-spacing: -1px;
+  }
+  .mdmetric-1stop {
+    font-family: 'Figtree-Regular';
+    font-style: normal;
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 36px;
+    letter-spacing: -1px;
+  }
+
+  .smmetric-1stop {
+    font-family: 'Figtree-Regular';
+    font-style: normal;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 28px;
+    letter-spacing: -1px;
+  }
+  .axial-label-1stop {
+    font-family: 'Figtree-Regular';
+    font-style: normal;
+    font-size: 12px;
+    font-weight: 200;
+    line-height: 12px;
+    letter-spacing: 0px;
+  }
+  .data-xs-1stop {
+    font-family: 'DMMono-Regular';
+    font-style: normal;
+    font-size: 12px;
+    font-weight: 200;
+    line-height: 14px;
+  }
+  .data-sm-1stop {
+    font-family: 'DMMono-Regular';
+    font-style: normal;
+    font-size: 12px;
+    font-weight: 200;
+    line-height: 16px;
+  }
+  .data-md-1stop {
+    font-family: 'DMMono-Regular';
+    font-style: normal;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+  }
+
+  .data-lg-1stop {
+    font-family: 'DMMono-Medium';
+    font-style: normal;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
   }
 }
