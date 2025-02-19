@@ -34,3 +34,10 @@ export interface PricePlan extends Model {
   rate: number
   additional_rate: number | null
 }
+
+export interface Country extends Model {
+  name: string
+  code: string
+  currency: string
+  tax_rate: number
+}

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Country\CountryController;
 use App\Http\Controllers\PricePlan\PricePlanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReferenceData\ReferenceDataAPIController;
@@ -39,5 +40,9 @@ Route::get('parameter-list', [ReferenceDataAPIController::class, 'parameterList'
 // Price Plan
 Route::resource('price-plan', PricePlanController::class)
     ->parameters(['price-plan' => 'pricePlan']);
+
+// Country
+Route::resource('/country', CountryController::class)
+    ->parameters(['country' => 'country']);
 
 require __DIR__.'/auth.php';
