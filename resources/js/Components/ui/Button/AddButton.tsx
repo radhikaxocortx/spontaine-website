@@ -1,0 +1,31 @@
+import { router } from '@inertiajs/react'
+import { PlusIcon } from 'lucide-react'
+import React from 'react'
+import ButtonBorderIcon from './ButtonBorderIcon'
+
+interface Props {
+  link?: string
+  onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => unknown
+  buttonText?: string
+}
+
+export default function AddButton({ link, onClick, buttonText }: Props) {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    if (link != null) {
+      router.get(link)
+      return
+    }
+    if (onClick != null) {
+      onClick(event)
+    }
+  }
+
+  return (
+    <ButtonBorderIcon onClick={handleClick}>
+      <div className='body-1stop flex flex-col items-center'>
+        <PlusIcon className='h-6 w-6' />
+        {buttonText}
+      </div>
+    </ButtonBorderIcon>
+  )
+}

@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\Country\CountryController;
+use App\Http\Controllers\PricePlan\PricePlanController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReferenceData\ReferenceDataAPIController;
+use App\Http\Controllers\ReferenceData\ReferenceDataController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -23,5 +27,22 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+// Reference Data
+
+Route::resource('/reference-data', ReferenceDataController::class);
+
+Route::get('domain-list', [ReferenceDataAPIController::class, 'domainList'])
+    ->name('domain-list');
+Route::get('parameter-list', [ReferenceDataAPIController::class, 'parameterList'])
+    ->name('parameter-list');
+
+// Price Plan
+Route::resource('price-plan', PricePlanController::class)
+    ->parameters(['price-plan' => 'pricePlan']);
+
+// Country
+Route::resource('/country', CountryController::class)
+    ->parameters(['country' => 'country']);
 
 require __DIR__.'/auth.php';
