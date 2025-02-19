@@ -1,19 +1,19 @@
-import DangerButton from '@/Components/DangerButton';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import Modal from '@/Components/Modal';
-import SecondaryButton from '@/Components/SecondaryButton';
-import TextInput from '@/Components/TextInput';
-import { useForm } from '@inertiajs/react';
-import { FormEventHandler, useRef, useState } from 'react';
+import LaravelDangerButton from '@/Components/LaravelDangerButton'
+import LaravelInputError from '@/Components/LaravelInputError'
+import LaravelInputLabel from '@/Components/LaravelInputLabel'
+import LaravelModal from '@/Components/LaravelModal'
+import LaravelSecondaryButton from '@/Components/LaravelSecondaryButton'
+import TextInput from '@/Components/TextInput'
+import { useForm } from '@inertiajs/react'
+import { FormEventHandler, useRef, useState } from 'react'
 
 export default function DeleteUserForm({
-    className = '',
-}: {
+                                           className = '',
+                                       }: {
     className?: string;
 }) {
-    const [confirmingUserDeletion, setConfirmingUserDeletion] = useState(false);
-    const passwordInput = useRef<HTMLInputElement>(null);
+    const [confirmingUserDeletion, setConfirmingUserDeletion] = useState(false)
+    const passwordInput = useRef<HTMLInputElement>(null)
 
     const {
         data,
@@ -25,29 +25,29 @@ export default function DeleteUserForm({
         clearErrors,
     } = useForm({
         password: '',
-    });
+    })
 
     const confirmUserDeletion = () => {
-        setConfirmingUserDeletion(true);
-    };
+        setConfirmingUserDeletion(true)
+    }
 
     const deleteUser: FormEventHandler = (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
         destroy(route('profile.destroy'), {
             preserveScroll: true,
             onSuccess: () => closeModal(),
             onError: () => passwordInput.current?.focus(),
             onFinish: () => reset(),
-        });
-    };
+        })
+    }
 
     const closeModal = () => {
-        setConfirmingUserDeletion(false);
+        setConfirmingUserDeletion(false)
 
-        clearErrors();
-        reset();
-    };
+        clearErrors()
+        reset()
+    }
 
     return (
         <section className={`space-y-6 ${className}`}>
@@ -64,11 +64,11 @@ export default function DeleteUserForm({
                 </p>
             </header>
 
-            <DangerButton onClick={confirmUserDeletion}>
+            <LaravelDangerButton onClick={confirmUserDeletion}>
                 Delete Account
-            </DangerButton>
+            </LaravelDangerButton>
 
-            <Modal show={confirmingUserDeletion} onClose={closeModal}>
+            <LaravelModal show={confirmingUserDeletion} onClose={closeModal}>
                 <form onSubmit={deleteUser} className="p-6">
                     <h2 className="text-lg font-medium text-gray-900">
                         Are you sure you want to delete your account?
@@ -82,7 +82,7 @@ export default function DeleteUserForm({
                     </p>
 
                     <div className="mt-6">
-                        <InputLabel
+                        <LaravelInputLabel
                             htmlFor="password"
                             value="Password"
                             className="sr-only"
@@ -102,23 +102,23 @@ export default function DeleteUserForm({
                             placeholder="Password"
                         />
 
-                        <InputError
+                        <LaravelInputError
                             message={errors.password}
                             className="mt-2"
                         />
                     </div>
 
                     <div className="mt-6 flex justify-end">
-                        <SecondaryButton onClick={closeModal}>
+                        <LaravelSecondaryButton onClick={closeModal}>
                             Cancel
-                        </SecondaryButton>
+                        </LaravelSecondaryButton>
 
-                        <DangerButton className="ms-3" disabled={processing}>
+                        <LaravelDangerButton className="ms-3" disabled={processing}>
                             Delete Account
-                        </DangerButton>
+                        </LaravelDangerButton>
                     </div>
                 </form>
-            </Modal>
+            </LaravelModal>
         </section>
-    );
+    )
 }

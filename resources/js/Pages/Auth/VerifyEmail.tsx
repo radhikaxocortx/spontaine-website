@@ -1,16 +1,16 @@
-import PrimaryButton from '@/Components/PrimaryButton';
-import GuestLayout from '@/Layouts/GuestLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
+import LaravelPrimaryButton from '@/Components/LaravelPrimaryButton'
+import GuestLayout from '@/Layouts/GuestLayout'
+import { Head, Link, useForm } from '@inertiajs/react'
+import { FormEventHandler } from 'react'
 
 export default function VerifyEmail({ status }: { status?: string }) {
-    const { post, processing } = useForm({});
+    const { post, processing } = useForm({})
 
     const submit: FormEventHandler = (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
-        post(route('verification.send'));
-    };
+        post(route('verification.send'))
+    }
 
     return (
         <GuestLayout>
@@ -32,9 +32,9 @@ export default function VerifyEmail({ status }: { status?: string }) {
 
             <form onSubmit={submit}>
                 <div className="mt-4 flex items-center justify-between">
-                    <PrimaryButton disabled={processing}>
+                    <LaravelPrimaryButton disabled={processing}>
                         Resend Verification Email
-                    </PrimaryButton>
+                    </LaravelPrimaryButton>
 
                     <Link
                         href={route('logout')}
@@ -47,5 +47,5 @@ export default function VerifyEmail({ status }: { status?: string }) {
                 </div>
             </form>
         </GuestLayout>
-    );
+    )
 }
