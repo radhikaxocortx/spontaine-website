@@ -1,10 +1,10 @@
 import LaravelInputError from '@/Components/LaravelInputError'
 import LaravelInputLabel from '@/Components/LaravelInputLabel'
 import LaravelPrimaryButton from '@/Components/LaravelPrimaryButton'
-import TextInput from '@/Components/TextInput'
 import GuestLayout from '@/Layouts/GuestLayout'
 import { Head, Link, useForm } from '@inertiajs/react'
 import { FormEventHandler } from 'react'
+import LaravelTextInput from '@/Components/LaravelTextInput'
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -30,7 +30,7 @@ export default function Register() {
                 <div>
                     <LaravelInputLabel htmlFor="name" value="Name" />
 
-                    <TextInput
+                    <LaravelTextInput
                         id="name"
                         name="name"
                         value={data.name}
@@ -47,7 +47,7 @@ export default function Register() {
                 <div className="mt-4">
                     <LaravelInputLabel htmlFor="email" value="Email" />
 
-                    <TextInput
+                    <LaravelTextInput
                         id="email"
                         type="email"
                         name="email"
@@ -64,7 +64,7 @@ export default function Register() {
                 <div className="mt-4">
                     <LaravelInputLabel htmlFor="password" value="Password" />
 
-                    <TextInput
+                    <LaravelTextInput
                         id="password"
                         type="password"
                         name="password"
@@ -84,7 +84,7 @@ export default function Register() {
                         value="Confirm Password"
                     />
 
-                    <TextInput
+                    <LaravelTextInput
                         id="password_confirmation"
                         type="password"
                         name="password_confirmation"

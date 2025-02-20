@@ -1,9 +1,9 @@
 import LaravelInputError from '@/Components/LaravelInputError'
 import LaravelInputLabel from '@/Components/LaravelInputLabel'
 import LaravelPrimaryButton from '@/Components/LaravelPrimaryButton'
-import TextInput from '@/Components/TextInput'
 import { Link, useForm, usePage } from '@inertiajs/react'
 import { FormEventHandler } from 'react'
+import LaravelTextInput from '@/Components/LaravelTextInput'
 
 export default function UpdateProfileInformation({
                                                      mustVerifyEmail,
@@ -44,7 +44,7 @@ export default function UpdateProfileInformation({
                 <div>
                     <LaravelInputLabel htmlFor="name" value="Name" />
 
-                    <TextInput
+                    <LaravelTextInput
                         id="name"
                         className="mt-1 block w-full"
                         value={data.name}
@@ -60,7 +60,7 @@ export default function UpdateProfileInformation({
                 <div>
                     <LaravelInputLabel htmlFor="email" value="Email" />
 
-                    <TextInput
+                    <LaravelTextInput
                         id="email"
                         type="email"
                         className="mt-1 block w-full"

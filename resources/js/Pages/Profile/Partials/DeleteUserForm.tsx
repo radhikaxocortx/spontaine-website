@@ -3,9 +3,9 @@ import LaravelInputError from '@/Components/LaravelInputError'
 import LaravelInputLabel from '@/Components/LaravelInputLabel'
 import LaravelModal from '@/Components/LaravelModal'
 import LaravelSecondaryButton from '@/Components/LaravelSecondaryButton'
-import TextInput from '@/Components/TextInput'
 import { useForm } from '@inertiajs/react'
 import { FormEventHandler, useRef, useState } from 'react'
+import LaravelTextInput from '@/Components/LaravelTextInput'
 
 export default function DeleteUserForm({
                                            className = '',
@@ -88,7 +88,7 @@ export default function DeleteUserForm({
                             className="sr-only"
                         />
 
-                        <TextInput
+                        <LaravelTextInput
                             id="password"
                             type="password"
                             name="password"

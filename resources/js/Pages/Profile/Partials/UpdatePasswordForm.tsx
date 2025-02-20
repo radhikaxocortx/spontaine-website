@@ -1,9 +1,10 @@
 import LaravelInputError from '@/Components/LaravelInputError'
 import LaravelInputLabel from '@/Components/LaravelInputLabel'
 import LaravelPrimaryButton from '@/Components/LaravelPrimaryButton'
-import TextInput from '@/Components/TextInput'
 import { useForm } from '@inertiajs/react'
 import { FormEventHandler, useRef } from 'react'
+import LaravelTextInput from '@/Components/LaravelTextInput'
+
 
 export default function UpdatePasswordForm({
                                                className = '',
@@ -67,7 +68,7 @@ export default function UpdatePasswordForm({
                         value="Current Password"
                     />
 
-                    <TextInput
+                    <LaravelTextInput
                         id="current_password"
                         ref={currentPasswordInput}
                         value={data.current_password}
@@ -88,7 +89,7 @@ export default function UpdatePasswordForm({
                 <div>
                     <LaravelInputLabel htmlFor="password" value="New Password" />
 
-                    <TextInput
+                    <LaravelTextInput
                         id="password"
                         ref={passwordInput}
                         value={data.password}
@@ -107,7 +108,7 @@ export default function UpdatePasswordForm({
                         value="Confirm Password"
                     />
 
-                    <TextInput
+                    <LaravelTextInput
                         id="password_confirmation"
                         value={data.password_confirmation}
                         onChange={(e) =>

@@ -1,10 +1,10 @@
 import LaravelInputError from '@/Components/LaravelInputError'
 import LaravelInputLabel from '@/Components/LaravelInputLabel'
 import LaravelPrimaryButton from '@/Components/LaravelPrimaryButton'
-import TextInput from '@/Components/TextInput'
 import GuestLayout from '@/Layouts/GuestLayout'
 import { Head, useForm } from '@inertiajs/react'
 import { FormEventHandler } from 'react'
+import LaravelTextInput from '@/Components/LaravelTextInput'
 
 export default function ResetPassword({
                                           token,
@@ -13,6 +13,7 @@ export default function ResetPassword({
     token: string;
     email: string;
 }) {
+    
     const { data, setData, post, processing, errors, reset } = useForm({
         token: token,
         email: email,
@@ -36,7 +37,7 @@ export default function ResetPassword({
                 <div>
                     <LaravelInputLabel htmlFor="email" value="Email" />
 
-                    <TextInput
+                    <LaravelTextInput
                         id="email"
                         type="email"
                         name="email"
@@ -52,7 +53,7 @@ export default function ResetPassword({
                 <div className="mt-4">
                     <LaravelInputLabel htmlFor="password" value="Password" />
 
-                    <TextInput
+                    <LaravelTextInput
                         id="password"
                         type="password"
                         name="password"
@@ -71,8 +72,7 @@ export default function ResetPassword({
                         htmlFor="password_confirmation"
                         value="Confirm Password"
                     />
-
-                    <TextInput
+                    <LaravelTextInput
                         type="password"
                         name="password_confirmation"
                         value={data.password_confirmation}

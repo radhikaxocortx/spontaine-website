@@ -1,10 +1,10 @@
 import LaravelInputError from '@/Components/LaravelInputError'
 import LaravelInputLabel from '@/Components/LaravelInputLabel'
 import LaravelPrimaryButton from '@/Components/LaravelPrimaryButton'
-import TextInput from '@/Components/TextInput'
 import GuestLayout from '@/Layouts/GuestLayout'
 import { Head, useForm } from '@inertiajs/react'
 import { FormEventHandler } from 'react'
+import LaravelTextInput from '@/Components/LaravelTextInput'
 
 export default function ConfirmPassword() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -31,8 +31,7 @@ export default function ConfirmPassword() {
             <form onSubmit={submit}>
                 <div className="mt-4">
                     <LaravelInputLabel htmlFor="password" value="Password" />
-
-                    <TextInput
+                    <LaravelTextInput
                         id="password"
                         type="password"
                         name="password"
