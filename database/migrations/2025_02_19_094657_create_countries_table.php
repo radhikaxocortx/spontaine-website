@@ -15,7 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('code')->unique();
+            $table->string('description');
             $table->string('currency');
+            $table->string('currency_code');
+            $table->string('base_cxy_conv_rate');
+            $table->string('tax_name');
+            $table->string('tax_code');
             $table->string('tax_rate');
             $table->softDeletes();
             $table->timestamps();

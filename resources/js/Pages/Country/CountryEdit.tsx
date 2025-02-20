@@ -12,7 +12,12 @@ const CountryEdit = ({ currency, country }: Props) => {
   const { formData, setFormValue } = useCustomForm({
     name: country.name,
     code: country.code,
+    description: country.description,
     currency: country.currency,
+    currency_code: country.currency_code,
+    base_cxy_conv_rate: country.base_cxy_conv_rate,
+    tax_name: country.tax_name,
+    tax_code: country.tax_code,
     tax_rate: country.tax_rate,
   })
   const formItems = useMemo(<
@@ -33,6 +38,11 @@ const CountryEdit = ({ currency, country }: Props) => {
         type: 'text',
         setValue: setFormValue('code'),
       },
+      description: {
+        label: 'Description',
+        type: 'text',
+        setValue: setFormValue('description'),
+      },
       currency: {
         label: 'Currency',
         type: 'select',
@@ -40,6 +50,26 @@ const CountryEdit = ({ currency, country }: Props) => {
         list: currency,
         dataKey: 'value_one',
         displayKey: 'value_one',
+      },
+      currency_code: {
+        label: 'Currency Code',
+        type: 'text',
+        setValue: setFormValue('currency_code'),
+      },
+      base_cxy_conv_rate: {
+        label: 'Base Currency Conversion Rate',
+        type: 'number',
+        setValue: setFormValue('base_cxy_conv_rate'),
+      },
+      tax_name: {
+        label: 'Tax Name',
+        type: 'text',
+        setValue: setFormValue('tax_name'),
+      },
+      tax_code: {
+        label: 'Tax Code',
+        type: 'text',
+        setValue: setFormValue('tax_code'),
       },
       tax_rate: {
         label: 'Tax Rate (%)',

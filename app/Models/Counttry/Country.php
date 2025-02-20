@@ -14,7 +14,12 @@ class Country extends Model
     protected $fillable = [
         'name',
         'code',
+        'description',
         'currency',
+        'currency_code',
+        'base_cxy_conv_rate',
+        'tax_name',
+        'tax_code',
         'tax_rate',
     ];
 }

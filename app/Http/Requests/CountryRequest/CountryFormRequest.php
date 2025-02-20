@@ -12,7 +12,12 @@ class CountryFormRequest extends Data
     public function __construct(
         public string $name,
         public string $code,
+        public string $description,
         public string $currency,
+        public string $currency_code,
+        public string $base_cxy_conv_rate,
+        public string $tax_name,
+        public string $tax_code,
         public string $tax_rate,
     ) {}
 }

@@ -38,6 +38,11 @@ export interface PricePlan extends Model {
 export interface Country extends Model {
   name: string
   code: string
+  description: string
   currency: string
+  currency_code: string
+  base_cxy_conv_rate: number
+  tax_name: string
+  tax_code: string
   tax_rate: number
 }
