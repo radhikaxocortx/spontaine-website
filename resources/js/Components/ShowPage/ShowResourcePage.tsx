@@ -1,11 +1,11 @@
-import { Card } from '@/components/ui/Card/card'
-import CardHeader from '@/components/ui/Card/CardHeader'
+import { Card } from '@/Components/CustomUI/Card/card'
+import CardHeader from '@/Components/CustomUI/Card/CardHeader'
 import DashboardPadding from '@/Layouts/DashboardLayout'
 import Dashboard from '@/Pages/Dashboard'
 import NormalText from '@/typography/NormalText'
 import SubHeading from '@/typography/SubHeading'
 import React, { useCallback, useRef } from 'react'
-import { BreadcrumbItemLink } from '../ui/BreadCrumb'
+import { BreadcrumbItemLink } from '../CustomUI/BreadCrumb'
 
 export interface ShowPageItem {
   id: number

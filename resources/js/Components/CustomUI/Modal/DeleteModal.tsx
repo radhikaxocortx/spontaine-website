@@ -1,6 +1,6 @@
 import useInertiaPost from '@/hooks/useInertiaPost'
 import React from 'react'
-import Button from '../FormFieldLaravel/Button'
+import Button from '@/Components/CustomUI/FormFields/Button'
 import Modal from './Modal'
 
 interface Properties {

@@ -5,8 +5,8 @@ import SubHeading from '@/typography/SubHeading'
 import axios from 'axios'
 import { XIcon } from 'lucide-react'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { handleHttpErrors } from '../alerts'
-import { getFormStyle } from './Input'
+import { handleHttpErrors } from '../../ui/alerts'
+import { getFormStyle } from './TextInput'
 
 interface Properties<
   K extends keyof T,

@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react'
-import { Paginator } from '../ui_interfaces'
+import { Paginator } from '../../ui/ui_interfaces'
 
 const calcUrls = (pagination: Paginator<{}>) => {
   let index = 0

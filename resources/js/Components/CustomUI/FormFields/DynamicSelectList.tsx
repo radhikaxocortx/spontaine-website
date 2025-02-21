@@ -1,5 +1,5 @@
 import useFetchList from '@/hooks/useFetchList'
-import { FormFieldProp } from '../ui_interfaces'
+import { FormFieldProp } from '../../ui/ui_interfaces'
 import SelectList from './SelectList'
 
 interface Props<

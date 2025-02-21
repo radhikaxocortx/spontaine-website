@@ -1,3 +1,4 @@
+import AddButton from '@/Components/CustomUI/Button/AddButton'
 import { ListItemKeys } from '@/Components/ListingPage/ListResourcePage'
 import { Card } from '@/components/ui/card'
 import NormalText from '@/typography/NormalText'
@@ -5,7 +6,6 @@ import StrongText from '@/typography/StrongText'
 import SubHeading from '@/typography/SubHeading'
 import { cn } from '@/utils'
 import React, { useMemo } from 'react'
-import AddButton from '../ui/Button/AddButton'
 
 interface Props<
   U extends keyof T,

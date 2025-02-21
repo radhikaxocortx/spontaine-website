@@ -1,6 +1,6 @@
 import React from 'react'
-import { FormFieldProp } from '../ui_interfaces'
-import { getFormStyle } from './Input'
+import { FormFieldProp } from '../../ui/ui_interfaces'
+import { getFormStyle } from './TextInput'
 import ErrorText from '@/typography/ErrorText'
 
 export default function TextArea({

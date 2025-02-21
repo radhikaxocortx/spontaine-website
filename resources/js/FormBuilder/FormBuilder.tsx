@@ -1,14 +1,14 @@
 import LaravelCheckbox from '@/Components/LaravelCheckbox'
-import Button from '@/Components/ui/FormFieldLaravel/Button'
-import ComboBox from '@/Components/ui/FormFieldLaravel/ComboBox'
-import DatePicker from '@/Components/ui/FormFieldLaravel/DatePicker'
-import DynamicSelectList from '@/Components/ui/FormFieldLaravel/DynamicSelectList'
-import FileInput from '@/Components/ui/FormFieldLaravel/FileInput'
-import Input from '@/Components/ui/FormFieldLaravel/Input'
-import SelectList from '@/Components/ui/FormFieldLaravel/SelectList'
-import TextArea from '@/Components/ui/FormFieldLaravel/TextArea'
-import TimePicker from '@/Components/ui/FormFieldLaravel/TimePicker'
-import FullSpinnerWrapper from '@/Components/ui/FullSpinnerWrapper'
+import Button from '@/Components/CustomUI/FormFields/Button'
+import ComboBox from '@/Components/CustomUI/FormFields/ComboBox'
+import DatePicker from '@/Components/CustomUI/FormFields/DatePicker'
+import DynamicSelectList from '@/Components/CustomUI/FormFields/DynamicSelectList'
+import FileInput from '@/Components/CustomUI/FormFields/FileInput'
+import TextInput from '@/Components/CustomUI/FormFields/TextInput'
+import SelectList from '@/Components/CustomUI/FormFields/SelectList'
+import TextArea from '@/Components/CustomUI/FormFields/TextArea'
+import TimePicker from '@/Components/CustomUI/FormFields/TimePicker'
+import FullSpinnerWrapper from '@/Components/CustomUI/FullSpinnerWrapper'
 import NormalText from '@/typography/NormalText'
 import { cn } from '@/utils'
 import React, { useMemo } from 'react'
@@ -120,7 +120,7 @@ export default function FormBuilder<
               {formItems[keyValue].description != null && (
                 <NormalText>{formItems[keyValue].description}</NormalText>
               )}
-              <Input
+              <TextInput
                 value={formData[keyValue] as string | number | undefined}
                 label={formItems[keyValue].label}
                 setValue={formItems[keyValue].setValue as (value: string) => unknown}
@@ -135,7 +135,7 @@ export default function FormBuilder<
               {formItems[keyValue].description != null && (
                 <NormalText>{formItems[keyValue].description}</NormalText>
               )}
-              <Input
+              <TextInput
                 value={formData[keyValue] as string | number | undefined}
                 label={formItems[keyValue].label}
                 setValue={formItems[keyValue].setValue as (value: string) => unknown}
@@ -151,7 +151,7 @@ export default function FormBuilder<
               {formItems[keyValue].description != null && (
                 <NormalText>{formItems[keyValue].description}</NormalText>
               )}
-              <Input
+              <TextInput
                 value={formData[keyValue] as string | number | undefined}
                 label={formItems[keyValue].label}
                 type='email'
@@ -167,7 +167,7 @@ export default function FormBuilder<
               {formItems[keyValue].description != null && (
                 <NormalText>{formItems[keyValue].description}</NormalText>
               )}
-              <Input
+              <TextInput
                 value={formData[keyValue] as string | number | undefined}
                 label={formItems[keyValue].label}
                 type='password'

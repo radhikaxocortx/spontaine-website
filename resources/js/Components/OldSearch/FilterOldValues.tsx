@@ -1,6 +1,6 @@
 import { router } from '@inertiajs/react'
 import { useCallback } from 'react'
-import BorderedPill from '../ui/Pills/BorderedPill'
+import BorderedPill from '@/Components/CustomUI/Pills/BorderedPill'
 
 export interface AnnouncementListPageProperties {
   oldSearch: string
@@ -11,6 +11,7 @@ interface Properties {
   oldValues?: Record<string, string>
   searchUrl?: string
 }
+
 const FilterOldValues = ({ oldValues, searchUrl }: Properties) => {
   const performSearchtest = useCallback(
     (key: string) => {

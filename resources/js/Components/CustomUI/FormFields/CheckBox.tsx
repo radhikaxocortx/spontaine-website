@@ -1,5 +1,5 @@
 import React from 'react'
-import { CheckboxProp } from '../ui_interfaces'
+import { CheckboxProp } from '../../ui/ui_interfaces'
 import ErrorText from '@/typography/ErrorText'
 
 export default function CheckBox({

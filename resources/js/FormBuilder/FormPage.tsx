@@ -1,6 +1,6 @@
-import { BreadcrumbItemLink } from '@/Components/ui/BreadCrumb'
+import { BreadcrumbItemLink } from '@/Components/CustomUI/BreadCrumb'
 import { Card } from '@/components/ui/card'
-import CardHeader from '@/components/ui/Card/CardHeader'
+import CardHeader from '@/Components/CustomUI/Card/CardHeader'
 import useInertiaPost from '@/hooks/useInertiaPost'
 import DashboardPadding from '@/Layouts/DashboardLayout'
 import Dashboard from '@/Pages/Dashboard'

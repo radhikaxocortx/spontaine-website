@@ -1,5 +1,5 @@
 import React from 'react'
-import { FormFieldProp } from '../ui_interfaces'
+import { FormFieldProp } from '../../ui/ui_interfaces'
 
 export default function TimePicker({
   label,
