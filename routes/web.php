@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\Country\CountryController;
+use App\Http\Controllers\EntityTemplate\EntityTemplateController;
+use App\Http\Controllers\EntityTemplate\EntityTemplateGroupController;
+use App\Http\Controllers\EntityTemplate\EntityTemplateItemController;
 use App\Http\Controllers\PricePlan\PricePlanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReferenceData\ReferenceDataAPIController;
@@ -36,6 +39,10 @@ Route::get('domain-list', [ReferenceDataAPIController::class, 'domainList'])
     ->name('domain-list');
 Route::get('parameter-list', [ReferenceDataAPIController::class, 'parameterList'])
     ->name('parameter-list');
+Route::get('unique-ref-data-values', [ReferenceDataAPIController::class, 'uniqueValues'])
+    ->name('unique-ref-data-values');
+Route::get('cascaded-ref-data', [ReferenceDataAPIController::class, 'cascadedValues'])
+    ->name('cascaded-ref-data');
 
 // Price Plan
 Route::resource('price-plan', PricePlanController::class)
@@ -44,5 +51,13 @@ Route::resource('price-plan', PricePlanController::class)
 // Country
 Route::resource('/country', CountryController::class)
     ->parameters(['country' => 'country']);
+
+// Entity Template
+Route::resource('/entity-templates', EntityTemplateController::class)
+    ->parameters(['entity-templates' => 'entityTemplates']);
+Route::apiResource('entity-template-group', EntityTemplateGroupController::class)
+    ->parameters(['entity-template-group' => 'templateGroup']);
+Route::apiResource('entity-template-item', EntityTemplateItemController::class)
+    ->parameters(['entity-template-item' => 'templateItem']);
 
 require __DIR__.'/auth.php';
