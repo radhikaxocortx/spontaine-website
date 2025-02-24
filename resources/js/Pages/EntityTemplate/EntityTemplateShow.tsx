@@ -1,10 +1,11 @@
+import NormalButton from '@/Components/CustomUI/FormFields/Button'
+import DeleteModal from '@/Components/CustomUI/Modal/DeleteModal'
+import Modal from '@/Components/CustomUI/Modal/Modal'
 import ManageTemplateGroup from '@/Components/EntityTemplate/TemplateGroup/ManageTemplateGroup'
 import TemplateGroupForm from '@/Components/EntityTemplate/TemplateGroup/TemplateGroupForm'
 import { EntityTemplate, EntityTemplateGroup } from '@/Components/Interface/data_interface'
 import ShowResourcePage, { ShowPageItem } from '@/Components/ShowPage/ShowResourcePage'
-import Button from '@/Components/ui/FormFieldLaravel/Button'
-import DeleteModal from '@/Components/ui/Modal/DeleteModal'
-import Modal from '@/Components/ui/Modal/Modal'
+
 import { useMemo, useState } from 'react'
 
 interface Props {
@@ -54,7 +55,7 @@ export default function MetaGroupShow({ entityTemplate, groups }: Readonly<Props
       selectedHeading='configurations'
     >
       <div className='my-5 flex justify-end gap-5'>
-        <Button
+        <NormalButton
           label='Add Info Group'
           onClick={() => setShowAddGroupModal(true)}
         />

@@ -1,3 +1,10 @@
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import ErrorText from '@/typography/ErrorText'
 import { useMemo } from 'react'
 import { FormFieldProp as FormFieldProperty } from '../../ui/ui_interfaces'
@@ -66,33 +73,35 @@ export default function SelectList<
   return (
     <>
       {label != null && showLabel && <label className='standard-label small-1stop'>{label}</label>}
-      <select
-        name='type'
+      <Select
+        onValueChange={setValue}
         value={selectedOption}
-        onChange={(e) => setValue(e.target.value)}
-        className={getStyle(style)}
         disabled={disabled}
       >
-        {showAllOption && <option value=''>{allOptionText}</option>}
-        {!showAllOption && label != null && (
-          <option
-            value=''
-            disabled
-          >
-            Select {label}
-          </option>
-        )}
-        {list.map((item: T) => {
-          return (
-            <option
-              value={item[dataKey]}
-              key={item[dataKey]}
+        <SelectTrigger className={getStyle(style)}>
+          <SelectValue placeholder={allOptionText || `Select ${label}`} />
+        </SelectTrigger>
+        <SelectContent>
+          {showAllOption && <SelectItem value='all'>{allOptionText}</SelectItem>}
+          {!showAllOption && label && (
+            <SelectItem
+              value='none'
+              disabled
+            >
+              Select {label}
+            </SelectItem>
+          )}
+          {list.map((item) => (
+            <SelectItem
+              key={String(item[dataKey])}
+              value={String(item[dataKey])}
             >
               {item[displayKey]}
-            </option>
-          )
-        })}
-      </select>
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+
       {error && <ErrorText>{error}</ErrorText>}
     </>
   )

@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button'
 import { cn } from '@/utils'
 import { Link } from '@inertiajs/react'
 import React from 'react'
@@ -52,7 +53,7 @@ export const chooseButtonColor = (type: string): [string, string] => {
   }
 }
 
-export default function Button({
+export default function NormalButton({
   label,
   onClick,
   variant = 'primary',
@@ -79,7 +80,7 @@ export default function Button({
         </Link>
       )}
       {!processing && link == null && (
-        <button
+        <Button
           onClick={onClick}
           disabled={disabled}
           className={cn(
@@ -90,7 +91,7 @@ export default function Button({
           type={type}
         >
           {label}
-        </button>
+        </Button>
       )}
       {processing && <Spinner svgStyle={svgStyle} />}
     </>

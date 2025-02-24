@@ -1,8 +1,9 @@
 import { EntityTemplateGroup } from '@/Components/Interface/data_interface'
-import DeleteButton from '@/Components/ui/Button/DeleteButton'
-import EditButton from '@/Components/ui/Button/EditButton'
-import DeleteModal from '@/Components/ui/Modal/DeleteModal'
-import Modal from '@/Components/ui/Modal/Modal'
+
+import DeleteButton from '@/Components/CustomUI/Button/DeleteButton'
+import EditButton from '@/Components/CustomUI/Button/EditButton'
+import DeleteModal from '@/Components/CustomUI/Modal/DeleteModal'
+import Modal from '@/Components/CustomUI/Modal/Modal'
 import { useState } from 'react'
 import ManageTemplateItems from './ManageTemplateItem'
 import TemplateGroupUpdateForm from './TemplateGroupUpdateForm'

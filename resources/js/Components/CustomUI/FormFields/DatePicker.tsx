@@ -1,4 +1,4 @@
-import React from 'react'
+import { Input } from '@/components/ui/input'
 import { FormFieldProp } from '../../ui/ui_interfaces'
 
 interface DatePickerProp extends FormFieldProp {
@@ -21,7 +21,7 @@ export default function DatePicker({
       <label className='small-1stop mb-1 leading-tight tracking-normal text-gray-800'>
         {label}
       </label>
-      <input
+      <Input
         type='date'
         value={value}
         min={min}

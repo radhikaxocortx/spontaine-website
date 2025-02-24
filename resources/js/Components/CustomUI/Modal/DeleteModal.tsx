@@ -1,6 +1,6 @@
+import NormalButton from '@/Components/CustomUI/FormFields/Button'
 import useInertiaPost from '@/hooks/useInertiaPost'
 import React from 'react'
-import Button from '@/Components/CustomUI/FormFields/Button'
 import Modal from './Modal'
 
 interface Properties {
@@ -43,7 +43,7 @@ export default function DeleteModal({
       <div className='flex w-full flex-col gap-3 p-2'>
         {children}
         <div className='flex w-full justify-end'>
-          <Button
+          <NormalButton
             label='DELETE'
             onClick={onDelete}
             processing={loading}

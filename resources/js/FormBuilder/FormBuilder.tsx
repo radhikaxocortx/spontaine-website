@@ -1,14 +1,14 @@
-import LaravelCheckbox from '@/Components/LaravelCheckbox'
-import Button from '@/Components/CustomUI/FormFields/Button'
+import NormalButton from '@/Components/CustomUI/FormFields/Button'
 import ComboBox from '@/Components/CustomUI/FormFields/ComboBox'
 import DatePicker from '@/Components/CustomUI/FormFields/DatePicker'
 import DynamicSelectList from '@/Components/CustomUI/FormFields/DynamicSelectList'
 import FileInput from '@/Components/CustomUI/FormFields/FileInput'
-import TextInput from '@/Components/CustomUI/FormFields/TextInput'
 import SelectList from '@/Components/CustomUI/FormFields/SelectList'
 import TextArea from '@/Components/CustomUI/FormFields/TextArea'
+import TextInput from '@/Components/CustomUI/FormFields/TextInput'
 import TimePicker from '@/Components/CustomUI/FormFields/TimePicker'
 import FullSpinnerWrapper from '@/Components/CustomUI/FullSpinnerWrapper'
+import { Checkbox } from '@/components/ui/checkbox'
 import NormalText from '@/typography/NormalText'
 import { cn } from '@/utils'
 import React, { useMemo } from 'react'
@@ -183,7 +183,7 @@ export default function FormBuilder<
               {formItems[keyValue].description != null && (
                 <NormalText>{formItems[keyValue].description}</NormalText>
               )}
-              <LaravelCheckbox
+              <Checkbox
                 toggleValue={formItems[keyValue].setValue as () => unknown}
                 value={formData[keyValue] as boolean}
                 label={formItems[keyValue].label}
@@ -325,9 +325,9 @@ export default function FormBuilder<
       {!hideSubmitButton && (
         <div className={cn('col-start-1 flex gap-5', buttonStyle)}>
           <FullSpinnerWrapper processing={loading}>
-            <Button label={buttonText} />
+            <NormalButton label={buttonText} />
             {showSecondaryButton && secondaryAction != null && (
-              <Button
+              <NormalButton
                 label={secondaryButtonLabel}
                 variant='secondary'
                 type='button'

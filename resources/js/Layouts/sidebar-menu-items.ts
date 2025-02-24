@@ -38,5 +38,11 @@ const SidebarMenuItems: SidebarMenuItem[] = [
     value: 'country',
     image: { svg: `` },
   },
+  {
+    name: 'Workflow',
+    url: '/entity-templates',
+    value: 'workflow',
+    image: { svg: `` },
+  },
 ]
 export default SidebarMenuItems

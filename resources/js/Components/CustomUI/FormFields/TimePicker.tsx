@@ -1,4 +1,4 @@
-import React from 'react'
+import { Input } from '@/components/ui/input'
 import { FormFieldProp } from '../../ui/ui_interfaces'
 
 export default function TimePicker({
@@ -13,7 +13,7 @@ export default function TimePicker({
   return (
     <>
       <label className='small-1stop mb-1 text-sm tracking-normal text-gray-800'>{label}</label>
-      <input
+      <Input
         type='time'
         value={value}
         onChange={(e) => setValue(e.target.value)}

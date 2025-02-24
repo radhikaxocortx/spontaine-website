@@ -1,3 +1,4 @@
+import { Input } from '@/components/ui/input'
 import useClick from '@/hooks/useClick'
 import ErrorText from '@/typography/ErrorText'
 import NormalText from '@/typography/NormalText'
@@ -163,7 +164,7 @@ const ComboBox = <
                 {linkText}
               </a>
             </div>
-            <input
+            <Input
               type='text'
               value={textFieldValue}
               onKeyDown={handleKeydown}
