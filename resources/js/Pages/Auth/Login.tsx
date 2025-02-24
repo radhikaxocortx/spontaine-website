@@ -1,9 +1,8 @@
+import NormalButton from '@/Components/CustomUI/FormFields/Button'
 import LaravelCheckbox from '@/Components/LaravelCheckbox'
 import LaravelInputError from '@/Components/LaravelInputError'
 import LaravelInputLabel from '@/Components/LaravelInputLabel'
 import LaravelTextInput from '@/Components/LaravelTextInput'
-
-import { Button } from '@/Components/ui/button'
 import GuestLayout from '@/Layouts/GuestLayout'
 import { Head, Link, useForm } from '@inertiajs/react'
 import { FormEventHandler } from 'react'
@@ -101,13 +100,13 @@ export default function Login({ status, canResetPassword }: Readonly<Props>) {
             </Link>
           )}
 
-          <Button
+          <NormalButton
             variant='outline'
             className='ms-4'
             disabled={processing}
           >
             Log in
-          </Button>
+          </NormalButton>
         </div>
       </form>
     </GuestLayout>

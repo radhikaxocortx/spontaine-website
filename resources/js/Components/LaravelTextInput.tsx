@@ -1,3 +1,4 @@
+import { Input } from '@/components/ui/input'
 import { forwardRef, InputHTMLAttributes, useEffect, useImperativeHandle, useRef } from 'react'
 
 export default forwardRef(function TextInput(
@@ -22,7 +23,7 @@ export default forwardRef(function TextInput(
   }, [isFocused])
 
   return (
-    <input
+    <Input
       {...props}
       type={type}
       className={

@@ -1,49 +1,31 @@
+import { Badge } from '@/components/ui/badge'
+import { X } from 'lucide-react'
+
 interface Properties {
   value: string
   onClose?: () => void
-  type?: string
+  type?: 'info' | 'success' | 'danger' | 'warning' | 'default'
 }
 
-const pillStyle = (type: string) => {
-  switch (type) {
-    case 'info': {
-      return 'bg-blue-100 text-blue-800'
-    }
-    case 'success': {
-      return 'bg-green-100 text-green-800'
-    }
-    case 'danger': {
-      return 'bg-red-100 text-red-800'
-    }
-    case 'warning': {
-      return 'bg-yellow-100 text-yellow-800'
-    }
-    default: {
-      return 'bg-white border-black'
-    }
-  }
+const pillVariants = {
+  info: 'bg-blue-100 text-blue-800',
+  success: 'bg-green-100 text-green-800',
+  danger: 'bg-red-100 text-red-800',
+  warning: 'bg-yellow-100 text-yellow-800',
+  default: 'bg-white border border-black text-black',
 }
 
-const BorderedPill = ({ value, onClose, type = 'white' }: Properties) => {
+const BorderedPill = ({ value, onClose, type = 'default' }: Properties) => {
   return (
-    <div
-      className={`flex flex-wrap rounded-2xl border px-4 py-1 text-xs md:text-sm ${pillStyle(
-        type
-      )}`}
-    >
+    <Badge className={`flex items-center gap-2 rounded-2xl px-4 py-1 ${pillVariants[type]}`}>
       <span>{value}</span>
-      {onClose != null && (
-        <>
-          <span>&nbsp;&nbsp;&nbsp;</span>
-          <span
-            className='cursor-pointer hover:font-h2-1stop'
-            onClick={onClose}
-          >
-            x
-          </span>
-        </>
+      {onClose && (
+        <X
+          className='h-4 w-4 cursor-pointer'
+          onClick={onClose}
+        />
       )}
-    </div>
+    </Badge>
   )
 }
 

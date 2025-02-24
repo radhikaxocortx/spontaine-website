@@ -1,7 +1,7 @@
-import React from 'react'
+import { Textarea } from '@/components/ui/textarea'
+import ErrorText from '@/typography/ErrorText'
 import { FormFieldProp } from '../../ui/ui_interfaces'
 import { getFormStyle } from './TextInput'
-import ErrorText from '@/typography/ErrorText'
 
 export default function TextArea({
   label,
@@ -15,14 +15,14 @@ export default function TextArea({
   return (
     <>
       <label className='small-1stop mb-1 text-sm tracking-normal text-gray-800'>{label}</label>
-      <textarea
+      <Textarea
         value={value}
         onChange={(e) => setValue(e.target.value)}
         placeholder={placeholder}
         name='description'
         disabled={disabled}
         className={getFormStyle(style)}
-      ></textarea>
+      ></Textarea>
       {error && <ErrorText>{error}</ErrorText>}
     </>
   )
