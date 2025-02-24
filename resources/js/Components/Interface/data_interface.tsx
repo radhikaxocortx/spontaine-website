@@ -15,6 +15,32 @@ export interface ReferenceDataParameter extends Model {
   parameter: string
 }
 
+export interface EntityTemplate extends Model {
+  step: string
+  name: string
+  description: string | null
+  groups?: Partial<EntityTemplateGroup>[]
+}
+
+export interface EntityTemplateGroup extends Model {
+  group_number: number
+  name: string
+  description: string | null
+  entity_template_id: number
+  items: EntityTemplateItem[]
+}
+
+export interface EntityTemplateItem extends Model {
+  entity_template_group_id: number
+  field_number: number
+  field_name: string
+  type: string
+  domain: string | null
+  parameter: string | null
+  default_value: string | null
+  checklist: boolean
+}
+
 export interface ReferenceData extends Model {
   domain_id: number
   parameter_id: number
@@ -38,6 +64,11 @@ export interface PricePlan extends Model {
 export interface Country extends Model {
   name: string
   code: string
+  description: string
   currency: string
+  currency_code: string
+  base_cxy_conv_rate: number
+  tax_name: string
+  tax_code: string
   tax_rate: number
 }
