@@ -1,8 +1,9 @@
-import React, { ChangeEvent } from 'react'
-import { XIcon } from 'lucide-react'
-import StrongText from '@/typography/StrongText'
-import Paragraph from '@/typography/Paragraph'
+import { Input } from '@/components/ui/input'
 import ErrorText from '@/typography/ErrorText'
+import Paragraph from '@/typography/Paragraph'
+import StrongText from '@/typography/StrongText'
+import { XIcon } from 'lucide-react'
+import { ChangeEvent } from 'react'
 
 export interface Props {
   file?: File | null
@@ -29,7 +30,7 @@ export default function FileInput({ file, label, error, setValue, accept }: Prop
       {file == null && (
         <>
           <label className='small-1stop standard-label'>{label}</label>
-          <input
+          <Input
             type='file'
             name='name'
             onChange={onFile}

@@ -5,8 +5,9 @@ import {
 } from '@/Components/Interface/data_interface'
 import CardGridView from '@/Components/ListingPage/CardGridView'
 import { ListItemKeys } from '@/Components/ListingPage/ListResourcePage'
-import DeleteModal from '@/Components/ui/Modal/DeleteModal'
-import Modal from '@/Components/ui/Modal/Modal'
+
+import DeleteModal from '@/Components/CustomUI/Modal/DeleteModal'
+import Modal from '@/Components/CustomUI/Modal/Modal'
 import useInertiaPost from '@/hooks/useInertiaPost'
 import { useCallback, useMemo, useState } from 'react'
 import TemplateItemForm from './TemplateItemForm'
