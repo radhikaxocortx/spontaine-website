@@ -120,7 +120,7 @@ const ComboBox = <
     <>
       {value != null && (
         <div className='flex flex-col gap-2'>
-          <div className='small-1stop flex items-center justify-between bg-gray-100 px-3 py-2 text-sm text-gray-800'>
+          <div className='flex items-center justify-between bg-gray-100 px-3 py-2 text-sm text-gray-800'>
             <span>
               {label}
               <br />
@@ -151,12 +151,10 @@ const ComboBox = <
         >
           <div className='flex flex-col'>
             <div className='flex justify-between'>
-              <label className='small-1stop mb-1 text-sm tracking-normal text-gray-800'>
-                {label}
-              </label>
+              <NormalText>{label}</NormalText>
 
               <a
-                className={`link small-1stop flex flex-col justify-center text-xs ${linkText != null ? '' : 'hidden'}`}
+                className={`link flex flex-col justify-center text-xs ${linkText != null ? '' : 'hidden'}`}
                 href={redirectLink ?? ''}
                 target='_blank'
                 rel='noreferrer'
@@ -183,7 +181,7 @@ const ComboBox = <
                   return (
                     <div
                       key={item[dataKey]}
-                      className={`flex cursor-pointer flex-col px-2 py-3 text-sm ${highlightedIndex === index ? 'subheader-sm-1stop bg-gray-200' : ''}`}
+                      className={`flex cursor-pointer flex-col px-2 py-3 text-sm ${highlightedIndex === index ? 'bg-gray-200' : ''}`}
                       onClick={() => handleSelection(item)}
                       onMouseEnter={() => setHighlightedIndex(index)}
                     >

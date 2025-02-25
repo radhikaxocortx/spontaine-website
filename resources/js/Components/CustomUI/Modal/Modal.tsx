@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogClose,
@@ -5,6 +6,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
+import Heading from '@/typography/Heading'
 import { X } from 'lucide-react'
 import React from 'react'
 
@@ -30,15 +32,19 @@ export default function Modal({
     >
       <DialogContent className={large ? 'max-w-2xl' : 'max-w-lg'}>
         <DialogHeader>
-          {title && <DialogTitle>{title}</DialogTitle>}
+          {title && (
+            <DialogTitle>
+              <Heading>{title}</Heading>
+            </DialogTitle>
+          )}
           {showCloseButton && (
             <DialogClose asChild>
-              <button
+              <Button
                 className='absolute right-4 top-4 rounded-full p-1 hover:bg-gray-200'
                 onClick={() => setShowModal(false)}
               >
                 <X className='h-5 w-5' />
-              </button>
+              </Button>
             </DialogClose>
           )}
         </DialogHeader>
