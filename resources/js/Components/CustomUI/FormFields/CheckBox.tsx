@@ -1,5 +1,6 @@
 import { Input } from '@/components/ui/input'
 import ErrorText from '@/typography/ErrorText'
+import NormalText from '@/typography/NormalText'
 import { CheckboxProp } from '../../ui/ui_interfaces'
 
 export default function CheckBox({
@@ -41,7 +42,7 @@ export default function CheckBox({
             </svg>
           </div>
         </div>
-        <p className='ml-1 leading-4'>{label}</p>
+        <NormalText>{label}</NormalText>
         {/* Code block ends */}
         <style>
           {`.checkbox:checked + .check-icon {

@@ -1,5 +1,6 @@
 import { Input } from '@/components/ui/input'
 import ErrorText from '@/typography/ErrorText'
+import NormalText from '@/typography/NormalText'
 import React from 'react'
 import { FormFieldProp } from '../../ui/ui_interfaces'
 
@@ -46,7 +47,7 @@ export default function TextInput({
 
   return (
     <>
-      {label != null && <label className='mb-1 tracking-normal text-gray-800'>{label}</label>}
+      {label != null && <NormalText>{label}</NormalText>}
       <Input
         type={type}
         value={value}

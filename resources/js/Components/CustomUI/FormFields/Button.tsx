@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button'
+import NormalText from '@/typography/NormalText'
 import { Link } from '@inertiajs/react'
 import React from 'react'
 
@@ -39,7 +40,7 @@ export default function NormalButton({
           type={type}
           variant={variant}
         >
-          {label}
+          <NormalText>{label}</NormalText>
         </Button>
       )}
       {/* {processing && <Spinner svgStyle={svgStyle} />} */}

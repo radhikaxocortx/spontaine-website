@@ -1,4 +1,5 @@
 import { Input } from '@/components/ui/input'
+import NormalText from '@/typography/NormalText'
 import { FormFieldProp } from '../../ui/ui_interfaces'
 
 interface DatePickerProp extends FormFieldProp {
@@ -18,7 +19,7 @@ export default function DatePicker({
 }: DatePickerProp) {
   return (
     <>
-      <label className='mb-1 leading-tight tracking-normal text-gray-800'>{label}</label>
+      <NormalText>{label}</NormalText>
       <Input
         type='date'
         value={value}

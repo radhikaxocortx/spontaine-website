@@ -1,4 +1,5 @@
 import { Input } from '@/components/ui/input'
+import NormalText from '@/typography/NormalText'
 import { FormFieldProp } from '../../ui/ui_interfaces'
 
 export default function TimePicker({
@@ -12,7 +13,7 @@ export default function TimePicker({
 }: FormFieldProp) {
   return (
     <>
-      <label className='mb-1 text-sm tracking-normal text-gray-800'>{label}</label>
+      <NormalText>{label}</NormalText>
       <Input
         type='time'
         value={value}

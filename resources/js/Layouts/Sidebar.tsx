@@ -14,6 +14,9 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet'
 import { User } from '@/types'
+import Heading from '@/typography/Heading'
+import NormalText from '@/typography/NormalText'
+import SubHeading from '@/typography/SubHeading'
 import { Link, router, usePage } from '@inertiajs/react'
 import { useMemo, useRef, useState } from 'react'
 import SidebarMenuItems from './sidebar-menu-items'
@@ -107,7 +110,7 @@ export default function Sidebar() {
                 className='w-48'
               >
                 <DropdownMenuItem>
-                  <p className='w-full text-center text-gray-900'>Logged in as {userName}</p>
+                  <SubHeading>Logged in as {userName}</SubHeading>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <Link
@@ -117,7 +120,7 @@ export default function Sidebar() {
                   >
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
-                      className='icon icon-tabler icon-tabler-logout'
+                      className='icon icon-tabler icon-tabler-logout pr-2'
                       width={20}
                       height={20}
                       viewBox='0 0 24 24'
@@ -134,7 +137,7 @@ export default function Sidebar() {
                       <path d='M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2' />
                       <path d='M7 12h14l-3 -3m0 6l3 -3' />
                     </svg>
-                    <span className='ml-2 text-sm'>Sign out</span>
+                    <NormalText>Sign out</NormalText>
                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -143,7 +146,9 @@ export default function Sidebar() {
 
           <SheetContent side={side}>
             <SheetHeader>
-              <SheetTitle className='p-5'>KADODO</SheetTitle>
+              <SheetTitle className='p-5'>
+                <Heading>KADODO</Heading>
+              </SheetTitle>
               <div className='mr-auto flex flex-col'>
                 {SidebarMenuItems.map((item) => (
                   <Button
@@ -157,7 +162,7 @@ export default function Sidebar() {
                         __html: typeof item.image === 'string' ? item.image : item.image.svg,
                       }}
                     /> */}
-                    {item.name}
+                    <SubHeading>{item.name}</SubHeading>
                   </Button>
                 ))}
               </div>

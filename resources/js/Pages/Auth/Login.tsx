@@ -1,8 +1,8 @@
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import GuestLayout from '@/Layouts/GuestLayout'
+import StrongText from '@/typography/StrongText'
 import { Head, Link, useForm } from '@inertiajs/react'
 import { FormEventHandler } from 'react'
 
@@ -35,7 +35,7 @@ export default function Login({ status, canResetPassword }: Readonly<Props>) {
         className='space-y-4'
       >
         <div>
-          <Label htmlFor='email'>Email</Label>
+          <StrongText>Email</StrongText>
           <Input
             id='email'
             type='email'
@@ -49,7 +49,7 @@ export default function Login({ status, canResetPassword }: Readonly<Props>) {
         </div>
 
         <div>
-          <Label htmlFor='password'>Password</Label>
+          <StrongText>Password</StrongText>
           <Input
             id='password'
             type='password'
@@ -67,12 +67,7 @@ export default function Login({ status, canResetPassword }: Readonly<Props>) {
             checked={data.remember}
             onCheckedChange={(checked) => setData('remember', checked as boolean)}
           />
-          <Label
-            htmlFor='remember'
-            className='ml-2 text-sm'
-          >
-            Remember me
-          </Label>
+          <StrongText>Remember me</StrongText>
         </div>
 
         <div className='flex items-center justify-end'>
@@ -90,7 +85,7 @@ export default function Login({ status, canResetPassword }: Readonly<Props>) {
             className='ml-4'
             disabled={processing}
           >
-            <Link> Log in</Link>
+            <Link href=''> Log in</Link>
           </Button>
         </div>
       </form>

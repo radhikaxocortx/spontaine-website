@@ -1,5 +1,6 @@
 import { Input } from '@/components/ui/input'
 import ErrorText from '@/typography/ErrorText'
+import NormalText from '@/typography/NormalText'
 import Paragraph from '@/typography/Paragraph'
 import StrongText from '@/typography/StrongText'
 import { XIcon } from 'lucide-react'
@@ -29,7 +30,7 @@ export default function FileInput({ file, label, error, setValue, accept }: Prop
     <>
       {file == null && (
         <>
-          <label className='standard-label'>{label}</label>
+          <NormalText>{label}</NormalText>
           <Input
             type='file'
             name='name'
