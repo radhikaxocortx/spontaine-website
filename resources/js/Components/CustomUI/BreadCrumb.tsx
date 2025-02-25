@@ -1,3 +1,4 @@
+import NormalText from '@/typography/NormalText'
 import { Link } from '@inertiajs/react'
 
 export interface BreadcrumbItemLink {
@@ -17,7 +18,7 @@ const BreadCrumbs = ({ breadcrumbItems }: { breadcrumbItems?: BreadcrumbItemLink
             href={breadcrumb.link}
             className={` ${breadcrumb.link == '' ? 'cursor-text font-semibold' : 'hover:underline'}`}
           >
-            {breadcrumb.item}
+            <NormalText>{breadcrumb.item}</NormalText>
           </Link>
 
           {index < breadcrumbItems.length - 1 && <span className='mx-1'>{'>'}</span>}

@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button'
 import NormalText from '@/typography/NormalText'
+import StrongText from '@/typography/StrongText'
 import { Link } from '@inertiajs/react'
 import React from 'react'
 
@@ -30,7 +31,7 @@ export default function NormalButton({
           href={link}
           as='a'
         >
-          {label}
+          <NormalText>{label}</NormalText>
         </Link>
       )}
       {!processing && link == null && (
@@ -40,7 +41,7 @@ export default function NormalButton({
           type={type}
           variant={variant}
         >
-          <NormalText>{label}</NormalText>
+          <StrongText>{label}</StrongText>
         </Button>
       )}
       {/* {processing && <Spinner svgStyle={svgStyle} />} */}

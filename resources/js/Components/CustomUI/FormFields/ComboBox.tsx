@@ -151,7 +151,7 @@ const ComboBox = <
         >
           <div className='flex flex-col'>
             <div className='flex justify-between'>
-              <label className='mb-1 text-sm tracking-normal text-gray-800'>{label}</label>
+              <NormalText>{label}</NormalText>
 
               <a
                 className={`link flex flex-col justify-center text-xs ${linkText != null ? '' : 'hidden'}`}

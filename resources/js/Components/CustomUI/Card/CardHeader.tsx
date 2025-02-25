@@ -4,6 +4,7 @@ import BackButton from '@/Components/CustomUI/Button/BackButton'
 import DeleteButton from '@/Components/CustomUI/Button/DeleteButton'
 import EditButton from '@/Components/CustomUI/Button/EditButton'
 import Heading from '@/typography/Heading'
+import SubHeading from '@/typography/SubHeading'
 
 interface Props {
   title: string
@@ -75,7 +76,7 @@ export default function CardHeader({
           )}
         </div>
       </div>
-      <div className=''>{subheading ?? ''}</div>
+      <SubHeading>{subheading ?? ''}</SubHeading>
     </div>
   )
 }
