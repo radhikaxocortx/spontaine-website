@@ -22,7 +22,7 @@ export default function AddButton({ link, onClick, buttonText }: Props) {
 
   return (
     <ButtonBorderIcon onClick={handleClick}>
-      <div className='body-1stop flex flex-col items-center'>
+      <div className='flex flex-col items-center'>
         <PlusIcon className='h-6 w-6' />
         {buttonText}
       </div>

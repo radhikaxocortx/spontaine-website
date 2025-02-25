@@ -6,6 +6,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import ErrorText from '@/typography/ErrorText'
+import NormalText from '@/typography/NormalText'
 import { useMemo } from 'react'
 import { FormFieldProp as FormFieldProperty } from '../../ui/ui_interfaces'
 
@@ -72,7 +73,7 @@ export default function SelectList<
 
   return (
     <>
-      {label != null && showLabel && <label className='standard-label small-1stop'>{label}</label>}
+      {label != null && showLabel && <NormalText>{label}</NormalText>}
       <Select
         onValueChange={setValue}
         value={selectedOption}

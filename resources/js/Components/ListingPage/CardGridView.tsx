@@ -88,7 +88,7 @@ export default function CardGridView<
         return (
           <Card
             className={cn(
-              `flex flex-col gap-2 bg-1stop-white p-2 ${isUsingTitleClick ? '' : 'cursor-pointer'}`,
+              `flex flex-col gap-2 p-2 ${isUsingTitleClick ? '' : 'cursor-pointer'}`,
               row['viewStyle' as keyof typeof row] as string | undefined,
               cardStyles
             )}
@@ -97,7 +97,7 @@ export default function CardGridView<
           >
             {/*  Title Row*/}
             {titleKey != null && (
-              <div className='body-1stop flex'>
+              <div className='flex'>
                 <SubHeading
                   onClick={() => handleTitleClick(row[primaryKey] as string | number)}
                   className={`${!isUsingTitleClick ? '' : 'cursor-pointer transition hover:scale-105'}`}
@@ -106,12 +106,12 @@ export default function CardGridView<
                   row[titleKey.key as keyof typeof row]?.toString().includes(':') ? (
                     <div>
                       <span>{row[titleKey.key as keyof typeof row]?.toString().split(':')[0]}</span>
-                      <span className='font-bold'>
+                      <span className=''>
                         :{row[titleKey.key as keyof typeof row]?.toString().split(':')[1]}
                       </span>
                     </div>
                   ) : (
-                    <span className='font-bold'>{row[titleKey.key] as string}</span>
+                    <span className=''>{row[titleKey.key] as string}</span>
                   )}
                 </SubHeading>
 
@@ -131,7 +131,7 @@ export default function CardGridView<
                     key={rowKey.key as string}
                   >
                     {(rowKey.hideLabel == null || !rowKey.hideLabel) && (
-                      <StrongText className='small-1stop'>{rowKey.label as string} : </StrongText>
+                      <StrongText className=''>{rowKey.label as string} : </StrongText>
                     )}
                     <NormalText
                       className={cn(
@@ -149,7 +149,7 @@ export default function CardGridView<
               <div className={`col-span-full flex gap-3`}>
                 {row.actions.map((action) => (
                   <button
-                    className={`small-1stop text-blue-500 underline hover:text-blue-600 ${action.textStyles}`}
+                    className={`text-blue-500 underline hover:text-blue-600 ${action.textStyles}`}
                     key={action.title}
                     onClick={action.action}
                   >

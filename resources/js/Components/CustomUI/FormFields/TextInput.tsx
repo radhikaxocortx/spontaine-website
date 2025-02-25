@@ -1,5 +1,6 @@
 import { Input } from '@/components/ui/input'
 import ErrorText from '@/typography/ErrorText'
+import NormalText from '@/typography/NormalText'
 import React from 'react'
 import { FormFieldProp } from '../../ui/ui_interfaces'
 
@@ -17,7 +18,7 @@ export const getFormStyle = (style: 'normal' | 'bottom-border' | 'dark') => {
     }
 
     case 'dark': {
-      return 'flex h-11 items-center rounded border border-gray-300 bg-white pr-20 pl-10 text-sm body-1stop text-gray-600 shadow focus:border focus:border-indigo-700 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 sm:pr-52'
+      return 'flex h-11 items-center rounded border border-gray-300 bg-white pr-20 pl-10 text-sm  text-gray-600 shadow focus:border focus:border-indigo-700 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 sm:pr-52'
     }
     default: {
       return ''
@@ -46,9 +47,7 @@ export default function TextInput({
 
   return (
     <>
-      {label != null && (
-        <label className='small-1stop mb-1 tracking-normal text-gray-800'>{label}</label>
-      )}
+      {label != null && <NormalText>{label}</NormalText>}
       <Input
         type={type}
         value={value}
