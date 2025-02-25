@@ -72,7 +72,7 @@ export default function SelectList<
 
   return (
     <>
-      {label != null && showLabel && <label className='standard-label small-1stop'>{label}</label>}
+      {label != null && showLabel && <label className='standard-label'>{label}</label>}
       <Select
         onValueChange={setValue}
         value={selectedOption}

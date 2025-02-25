@@ -18,7 +18,7 @@ export default function CheckBox({
             checked={value}
             onChange={() => toggleValue()}
             disabled={disabled}
-            className='checkbox absolute h-full w-full cursor-pointer'
+            className='checkbox absolute h-5 w-2 cursor-pointer'
           />
           <div className='check-icon bg-primary-500 hidden rounded-sm text-white'>
             <svg
@@ -41,7 +41,7 @@ export default function CheckBox({
             </svg>
           </div>
         </div>
-        <p className='small-1stop ml-1 leading-4'>{label}</p>
+        <p className='ml-1 leading-4'>{label}</p>
         {/* Code block ends */}
         <style>
           {`.checkbox:checked + .check-icon {

@@ -12,7 +12,7 @@ export default function TimePicker({
 }: FormFieldProp) {
   return (
     <>
-      <label className='small-1stop mb-1 text-sm tracking-normal text-gray-800'>{label}</label>
+      <label className='mb-1 text-sm tracking-normal text-gray-800'>{label}</label>
       <Input
         type='time'
         value={value}

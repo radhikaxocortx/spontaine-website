@@ -36,8 +36,6 @@ export default function CardHeader({
   subheading,
   breadCrumb,
   titleClassName,
-  onFolderIconClick,
-  existingUserUrl,
 }: Props) {
   return (
     <div className=''>
@@ -50,7 +48,7 @@ export default function CardHeader({
             />
           )}
           <div className='flex flex-col'>
-            <Heading className={`subheader-1stop uppercase ${titleClassName}`}>{title}</Heading>
+            <Heading className={`${titleClassName}`}>{title}</Heading>
 
             <BreadCrumbs breadcrumbItems={breadCrumb} />
           </div>
@@ -77,7 +75,7 @@ export default function CardHeader({
           )}
         </div>
       </div>
-      <div className='small-1stop pl-4 text-primary'>{subheading ?? ''}</div>
+      <div className=''>{subheading ?? ''}</div>
     </div>
   )
 }

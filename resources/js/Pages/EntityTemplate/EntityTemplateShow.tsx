@@ -58,6 +58,7 @@ export default function MetaGroupShow({ entityTemplate, groups }: Readonly<Props
         <NormalButton
           label='Add Info Group'
           onClick={() => setShowAddGroupModal(true)}
+          variant='secondary'
         />
       </div>
       <div className='flex flex-col gap-5'>

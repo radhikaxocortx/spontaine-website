@@ -29,7 +29,7 @@ export default function FileInput({ file, label, error, setValue, accept }: Prop
     <>
       {file == null && (
         <>
-          <label className='small-1stop standard-label'>{label}</label>
+          <label className='standard-label'>{label}</label>
           <Input
             type='file'
             name='name'
