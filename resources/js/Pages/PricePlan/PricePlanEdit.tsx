@@ -19,7 +19,6 @@ const PricePlanEdit = ({ pricePlan, type }: Props) => {
     rate: pricePlan.rate,
     additional_rate: pricePlan.additional_rate ? pricePlan.additional_rate : null,
   })
-  console.log(pricePlan)
   const formItems = useMemo(<
     T,
     U extends keyof T,

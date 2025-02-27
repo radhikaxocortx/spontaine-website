@@ -11,6 +11,7 @@ use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 class EntityTemplateFormRequest extends Data
 {
     public function __construct(
+        public readonly int $workflowId,
         public readonly string $step,
         public readonly string $name,
         #[Max(1000)]

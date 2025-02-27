@@ -72,3 +72,14 @@ export interface Country extends Model {
   tax_code: string
   tax_rate: number
 }
+
+export interface Workflow extends Model {
+  name: string
+  description: string
+  country: Country
+  country_id: number
+  priceplan_id: number
+  priceplan: PricePlan
+  status: string
+  active_from: string
+}
