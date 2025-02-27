@@ -1,8 +1,4 @@
-import {
-  EntityTemplate,
-  EntityTemplateGroup,
-  EntityTemplateItem,
-} from '@/Components/Interface/data_interface'
+import { EntityTemplate, EntityTemplateItem } from '@/Components/Interface/data_interface'
 import CardGridView from '@/Components/ListingPage/CardGridView'
 import { ListItemKeys } from '@/Components/ListingPage/ListResourcePage'
 
@@ -14,10 +10,11 @@ import TemplateItemForm from './TemplateItemForm'
 import TemplateItemUpdateForm from './TemplateItemUpdateForm'
 
 interface Props {
-  group: EntityTemplateGroup
+  workflowModule: EntityTemplate
 }
 
-export default function ManageTemplateItems({ group }: Props) {
+export default function ManageTemplateItems({ workflowModule }: Props) {
+  console.log(workflowModule)
   const [showAddModal, setShowAddModal] = useState(false)
   const [selectedItem, setSelectedItem] = useState<EntityTemplateItem | null>(null)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
@@ -55,7 +52,7 @@ export default function ManageTemplateItems({ group }: Props) {
 
   //table data
   const data = useMemo(() => {
-    return group.items.map((record) => {
+    return workflowModule.workflow_items.map((record) => {
       return {
         id: record.id,
         field_name: `${record.field_number}) ${record.field_name}`,
@@ -79,16 +76,16 @@ export default function ManageTemplateItems({ group }: Props) {
         ],
       }
     })
-  }, [group])
+  }, [workflowModule])
 
   const handleSubmit = useCallback(
     (data: Record<string, string | boolean | number>) => {
       post({
         ...data,
-        entity_template_group_id: group.id,
+        workflow_module_id: workflowModule.id,
       })
     },
-    [post, group]
+    [post, workflowModule]
   )
 
   return (

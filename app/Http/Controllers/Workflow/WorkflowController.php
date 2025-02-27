@@ -59,7 +59,7 @@ class WorkflowController extends Controller
      */
     public function show(string $id)
     {
-        $workflow = Workflow::with('country', 'priceplan', 'workflowModules')->findOrFail($id);
+        $workflow = Workflow::with('country', 'priceplan', 'workflowModules.workflowItems')->findOrFail($id);
 
         return Inertia::render('Workflow/WorkflowShow', [
             'workflow' => $workflow,

@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/accordion'
 import { useState } from 'react'
 import EntityTemplateUpdateForm from './EntityTemplateUpdateForm'
+import ManageTemplateItems from './ManageTemplateItem'
 
 interface Props {
   module: EntityTemplate[]
@@ -49,7 +50,7 @@ export default function ManageWorkflowModule({ module }: Readonly<Props>) {
               </div>
             </AccordionTrigger>
             <AccordionContent>
-              <p>More details about {workflowModule.name} can go here.</p>
+              <ManageTemplateItems workflowModule={workflowModule} />
             </AccordionContent>
 
             {/* Delete Modal */}
@@ -83,45 +84,3 @@ export default function ManageWorkflowModule({ module }: Readonly<Props>) {
     </Accordion>
   )
 }
-
-// <div
-//   className='flex flex-col gap-2'
-//   key={module.id}
-// >
-//   <div className='flex justify-between'>
-//     <div className='flex flex-col'>
-//       <h1>
-//         # {group.group_number}) {group.name}
-//       </h1>
-//       <p className='text-xs'>{group.description}</p>
-//     </div>
-//     <div className='flex justify-end gap-5'>
-//       <EditButton onClick={() => setShowEditModal(true)} />
-//       <DeleteButton onClick={() => setShowDeleteModal(true)} />
-//     </div>
-//   </div>
-//   <ManageTemplateItems group={group} />
-//   {showEditModal && (
-//     <Modal
-//       setShowModal={setShowEditModal}
-//       title='Update Group'
-//     >
-//       <TemplateGroupUpdateForm
-//         group={group}
-//         setShowForm={setShowEditModal}
-//       />
-//     </Modal>
-//   )}
-//   {showDeleteModal && (
-//     <DeleteModal
-//       setShowModal={setShowDeleteModal}
-//       title={`Delete ${module.name}`}
-//       url={route('entity-template.destroy', module.id)}
-//     >
-//       <p>
-//         Are you sure you want to delete this Workflow Module, all associated items will also
-//         will be deleted?
-//       </p>
-//     </DeleteModal>
-//   )}
-// </div>

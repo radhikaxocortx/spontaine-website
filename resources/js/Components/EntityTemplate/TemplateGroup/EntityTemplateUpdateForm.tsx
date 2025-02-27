@@ -72,24 +72,12 @@ export default function EntityTemplateUpdateForm({
 
   return (
     <FormBuilder
-      // isPatchRequest={entityTemplate != null}
-      // url={
-      //   entityTemplate != null
-      //     ? route('entity-templates.update', entityTemplate.id)
-      //     : route('entity-templates.store')
-      // }
       onFormSubmit={onFormSubmit}
       loading={loading}
       errors={errors}
       formData={formData}
       formItems={formItems}
       buttonText='Add'
-      // title={entityTemplate != null ? 'Edit Workflow' : 'Create Workflow'}
-      // backUrl={
-      //   entityTemplate != null
-      //     ? route('entity-templates.show', entityTemplate.id)
-      //     : route('entity-templates.index')
-      // }
       formStyles='w-1/2 md:grid-cols-1'
     />
   )

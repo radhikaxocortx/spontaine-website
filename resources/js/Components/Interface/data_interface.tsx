@@ -31,26 +31,17 @@ export interface EntityTemplate extends Model {
   sequence: string
   name: string
   description: string | null
-  items?: Partial<EntityTemplateItem>[]
+  workflow_items: EntityTemplateItem[]
 }
 
-// export interface EntityTemplateGroup extends Model {
-//   group_number: number
-//   name: string
-//   description: string | null
-//   entity_template_id: number
-//   items: EntityTemplateItem[]
-// }
-
 export interface EntityTemplateItem extends Model {
-  entity_template_group_id: number
+  workflow_module_id: number
   field_number: number
   field_name: string
   type: string
   domain: string | null
   parameter: string | null
   default_value: string | null
-  checklist: boolean
 }
 
 export interface ReferenceData extends Model {
