@@ -3,10 +3,12 @@
 namespace App\Models\Workflow;
 
 use App\Models\Country\Country;
+use App\Models\EntityTemplate\EntityTemplate;
 use App\Models\PricePlan\PricePlan;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Workflow extends Model
@@ -31,5 +33,10 @@ class Workflow extends Model
     public function priceplan(): BelongsTo
     {
         return $this->belongsTo(PricePlan::class, 'priceplan_id', 'id');
+    }
+
+    public function workflowModules(): HasMany
+    {
+        return $this->hasMany(EntityTemplate::class, 'workflow_id', 'id');
     }
 }

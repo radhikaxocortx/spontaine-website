@@ -1,17 +1,25 @@
 import DeleteModal from '@/Components/CustomUI/Modal/DeleteModal'
+import Modal from '@/Components/CustomUI/Modal/Modal'
+import EntityTemplateCreate from '@/Components/EntityTemplate/TemplateGroup/EntityTemplateCreate'
+import ManageWorkflowModule from '@/Components/EntityTemplate/TemplateGroup/ManageWorkflowModule'
 import { Workflow } from '@/Components/Interface/data_interface'
 import ShowResourcePage, { ShowPageItem } from '@/Components/ShowPage/ShowResourcePage'
+import { Button } from '@/components/ui/button'
 import { useMemo, useState } from 'react'
-
 interface Props {
   workflow: Workflow
 }
 const WorkflowShow = ({ workflow }: Props) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [addWorkflowModuleModal, setAddWorkflowModuleModal] = useState(false)
 
   const handleDeleteClick = () => {
     setShowDeleteModal(true)
   }
+  const handleAddWorkflowModule = () => {
+    setAddWorkflowModuleModal(true)
+  }
+  console.log(workflow)
   const displayValues = useMemo(() => {
     return [
       {
@@ -60,6 +68,19 @@ const WorkflowShow = ({ workflow }: Props) => {
       backUrl={route('workflow.index')}
       onDeleteClick={handleDeleteClick}
     >
+      <div className='ml-auto p-3'>
+        <Button
+          variant='secondary'
+          onClick={handleAddWorkflowModule}
+        >
+          Add Workflow Module
+        </Button>
+      </div>
+      {workflow.workflow_modules && (
+        <div>
+          <ManageWorkflowModule module={workflow.workflow_modules} />
+        </div>
+      )}
       {showDeleteModal && (
         <DeleteModal
           setShowModal={setShowDeleteModal}
@@ -68,6 +89,17 @@ const WorkflowShow = ({ workflow }: Props) => {
         >
           <p>Are you sure you want to delete {workflow.name}?</p>
         </DeleteModal>
+      )}
+      {addWorkflowModuleModal && (
+        <Modal
+          setShowModal={setAddWorkflowModuleModal}
+          title={`Add Workflow Module`}
+        >
+          <EntityTemplateCreate
+            workflowId={workflow.id}
+            setShowForm={setAddWorkflowModuleModal}
+          />
+        </Modal>
       )}
     </ShowResourcePage>
   )

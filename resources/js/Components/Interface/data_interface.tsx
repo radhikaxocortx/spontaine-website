@@ -14,21 +14,33 @@ export interface ReferenceDataParameter extends Model {
   domain_id: number
   parameter: string
 }
+export interface Workflow extends Model {
+  name: string
+  description: string
+  country: Country
+  country_id: number
+  priceplan_id: number
+  priceplan: PricePlan
+  status: string
+  active_from: string
+  workflow_modules: EntityTemplate[]
+}
 
 export interface EntityTemplate extends Model {
-  step: string
+  workflow_id: number
+  sequence: string
   name: string
   description: string | null
-  groups?: Partial<EntityTemplateGroup>[]
+  items?: Partial<EntityTemplateItem>[]
 }
 
-export interface EntityTemplateGroup extends Model {
-  group_number: number
-  name: string
-  description: string | null
-  entity_template_id: number
-  items: EntityTemplateItem[]
-}
+// export interface EntityTemplateGroup extends Model {
+//   group_number: number
+//   name: string
+//   description: string | null
+//   entity_template_id: number
+//   items: EntityTemplateItem[]
+// }
 
 export interface EntityTemplateItem extends Model {
   entity_template_group_id: number
@@ -71,15 +83,4 @@ export interface Country extends Model {
   tax_name: string
   tax_code: string
   tax_rate: number
-}
-
-export interface Workflow extends Model {
-  name: string
-  description: string
-  country: Country
-  country_id: number
-  priceplan_id: number
-  priceplan: PricePlan
-  status: string
-  active_from: string
 }

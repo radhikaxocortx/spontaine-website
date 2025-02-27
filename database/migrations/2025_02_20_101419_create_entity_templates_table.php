@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('entity_templates', function (Blueprint $table) {
             $table->id();
-            $table->string('step');
+            $table->unique_integer('sequence');
             $table->string('name');
             $table->string('description');
             $table->foreignId('workflow_id')->constrained('workflows');

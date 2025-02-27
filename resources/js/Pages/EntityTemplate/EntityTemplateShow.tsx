@@ -1,7 +1,7 @@
 import NormalButton from '@/Components/CustomUI/FormFields/Button'
 import DeleteModal from '@/Components/CustomUI/Modal/DeleteModal'
 import Modal from '@/Components/CustomUI/Modal/Modal'
-import ManageTemplateGroup from '@/Components/EntityTemplate/TemplateGroup/ManageTemplateGroup'
+import ManageTemplateGroup from '@/Components/EntityTemplate/TemplateGroup/ManageWorkflowModule'
 import TemplateGroupForm from '@/Components/EntityTemplate/TemplateGroup/TemplateGroupForm'
 import { EntityTemplate, EntityTemplateGroup } from '@/Components/Interface/data_interface'
 import ShowResourcePage, { ShowPageItem } from '@/Components/ShowPage/ShowResourcePage'
@@ -20,8 +20,8 @@ export default function MetaGroupShow({ entityTemplate, groups }: Readonly<Props
     return [
       {
         id: 1,
-        label: 'Step',
-        content: entityTemplate.step,
+        label: 'Sequence',
+        content: entityTemplate.sequence,
         type: 'text',
       },
       {

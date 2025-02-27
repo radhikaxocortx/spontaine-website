@@ -59,7 +59,7 @@ Route::resource('workflow', WorkflowController::class)
     ->parameters(['workflow' => 'workflow']);
 
 // Entity Template
-Route::resource('/entity-templates', EntityTemplateController::class)
+Route::apiResource('/entity-templates', EntityTemplateController::class)
     ->parameters(['entity-templates' => 'entityTemplates']);
 Route::apiResource('entity-template-group', EntityTemplateGroupController::class)
     ->parameters(['entity-template-group' => 'templateGroup']);

@@ -12,9 +12,10 @@ class EntityTemplate extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'step',
+        'sequence',
         'name',
         'description',
+        'workflow_id',
 
     ];
 }
