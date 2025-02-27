@@ -19,7 +19,7 @@ const WorkflowShow = ({ workflow }: Props) => {
   const handleAddWorkflowModule = () => {
     setAddWorkflowModuleModal(true)
   }
-  console.log(workflow)
+
   const displayValues = useMemo(() => {
     return [
       {

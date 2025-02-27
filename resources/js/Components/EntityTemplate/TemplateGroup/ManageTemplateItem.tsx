@@ -14,7 +14,6 @@ interface Props {
 }
 
 export default function ManageTemplateItems({ workflowModule }: Props) {
-  console.log(workflowModule)
   const [showAddModal, setShowAddModal] = useState(false)
   const [selectedItem, setSelectedItem] = useState<EntityTemplateItem | null>(null)
   const [showDeleteModal, setShowDeleteModal] = useState(false)

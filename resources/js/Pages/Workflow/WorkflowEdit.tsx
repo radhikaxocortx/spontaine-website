@@ -2,7 +2,7 @@ import { Country, PricePlan, ReferenceData, Workflow } from '@/Components/Interf
 import { FormItem } from '@/FormBuilder/FormBuilder'
 import FormPage from '@/FormBuilder/FormPage'
 import useCustomForm from '@/hooks/useCustomForm'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 
 interface Props {
   workflow: Workflow
@@ -10,7 +10,6 @@ interface Props {
 }
 
 const WorkflowEdit = ({ workflow, status }: Props) => {
-  console.log(workflow)
   const [country, setCountry] = useState<Country | null>(workflow.country)
   const [pricePlan, setPricePlan] = useState<PricePlan | null>(workflow.priceplan)
   const { formData, setFormValue } = useCustomForm({
@@ -89,10 +88,7 @@ const WorkflowEdit = ({ workflow, status }: Props) => {
       },
     } as Record<U, FormItem<T[U], K, G, L>>
   }, [setFormValue, status, country, pricePlan])
-  console.log(formData)
-  useEffect(() => {
-    console.log(country, pricePlan)
-  }, [country, pricePlan])
+
   return (
     <FormPage
       formItems={formItems}

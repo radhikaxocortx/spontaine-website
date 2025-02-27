@@ -54,12 +54,11 @@ export default function EntityTemplateCreate({ workflowId, setShowForm }: Readon
   const onFormSubmit = useCallback(
     (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault()
-      console.log('formdata', formData)
       post(formData)
     },
     [post, formData]
   )
-  console.log(formData)
+
   return (
     <FormBuilder
       onFormSubmit={onFormSubmit}
