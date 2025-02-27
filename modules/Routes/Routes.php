@@ -1,0 +1,9 @@
+<?php
+
+use Modules\Controllers\PagesController;
+
+\Illuminate\Support\Facades\Route::middleware('auth')->group(function () {
+
+    Route::resource('pages', PagesController::class);
+
+});
