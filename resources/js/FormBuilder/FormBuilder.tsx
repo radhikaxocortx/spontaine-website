@@ -183,13 +183,15 @@ export default function FormBuilder<
               {formItems[keyValue].description != null && (
                 <NormalText>{formItems[keyValue].description}</NormalText>
               )}
-              <Checkbox
-                toggleValue={formItems[keyValue].setValue as () => unknown}
-                value={formData[keyValue] as boolean}
-                label={formItems[keyValue].label}
-                error={errors != null ? errors[keyValue] : undefined}
-                disabled={formItems[keyValue].disabled}
-              />
+              <div className='flex items-center space-x-2'>
+                <Checkbox
+                  // id={keyValue}
+                  checked={formData[keyValue] as boolean}
+                  onCheckedChange={(value) => formItems[keyValue].setValue(value)}
+                  disabled={formItems[keyValue].disabled}
+                />
+                <NormalText>{formItems[keyValue].label}</NormalText>
+              </div>
             </div>
           )}
           {formItems[keyValue].type === 'textarea' && !formItems[keyValue].hidden && (

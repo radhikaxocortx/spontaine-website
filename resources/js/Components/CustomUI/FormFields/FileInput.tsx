@@ -1,8 +1,6 @@
+import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import ErrorText from '@/typography/ErrorText'
-import NormalText from '@/typography/NormalText'
-import Paragraph from '@/typography/Paragraph'
-import StrongText from '@/typography/StrongText'
+import { Label } from '@/components/ui/label'
 import { XIcon } from 'lucide-react'
 import { ChangeEvent } from 'react'
 
@@ -21,40 +19,40 @@ function fileSizeInMB(sizeInBytes?: number): string {
 
 export default function FileInput({ file, label, error, setValue, accept }: Props) {
   const onFile = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files != null && e.target.files.length > 0) {
+    if (e.target.files && e.target.files.length > 0) {
       setValue(e.target.files[0])
     }
   }
 
   return (
-    <>
-      {file == null && (
-        <>
-          <NormalText>{label}</NormalText>
+    <div className='space-y-2'>
+      {!file ? (
+        <div className='space-y-1'>
+          {label && <Label className='text-sm font-medium'>{label}</Label>}
           <Input
             type='file'
-            name='name'
             onChange={onFile}
-            className='standard-input'
             accept={accept}
+            className='cursor-pointer'
           />
-        </>
-      )}
-      {file != null && (
-        <div className='flex flex-col items-center text-center'>
-          <StrongText>{file.name}</StrongText>
-          <Paragraph>{fileSizeInMB(file.size)} MB</Paragraph>
-          <Paragraph>{file?.type}</Paragraph>
-          <button
-            type='button'
+          {error && <p className='text-sm text-red-500'>{error}</p>}
+        </div>
+      ) : (
+        <div className='flex flex-col items-center space-y-2 rounded-lg border p-4 text-center'>
+          <p className='font-medium'>{file.name}</p>
+          <p className='text-sm text-gray-500'>{fileSizeInMB(file.size)} MB</p>
+          <p className='text-sm text-gray-500'>{file.type}</p>
+          <Button
+            variant='destructive'
+            size='sm'
             onClick={() => setValue(null)}
-            className='ml-2 rounded-lg p-2 text-red-500 hover:bg-gray-200 hover:text-white'
+            className='flex items-center gap-1'
           >
-            <XIcon size={20} />
-          </button>
+            <XIcon size={16} />
+            Remove File
+          </Button>
         </div>
       )}
-      {error && <ErrorText>{error}</ErrorText>}
-    </>
+    </div>
   )
 }

@@ -19,11 +19,6 @@ return new class extends Migration
             $table->string('url')->nullable();
             $table->fullText('title');
             $table->fullText('description');
-            $table->json('blocks')->nullable();
-            $table->longText('block_content')->nullable();
-            $table->longText('block_content_mal')->nullable();
-            $table->fullText('block_content');
-            $table->fullText('block_content_mal')->language('malayalam');
             $table->boolean('published')->default(0);
             $table->string('type')->default('Page');
             $table->string('preview_image')->nullable();
