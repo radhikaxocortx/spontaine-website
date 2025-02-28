@@ -8,7 +8,6 @@ interface Props {
   type: ReferenceData[]
 }
 const PricePlanCreate = ({ type }: Props) => {
-  console.log(type)
   const { formData, setFormValue } = useCustomForm({
     name: '',
     code: '',

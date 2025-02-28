@@ -14,31 +14,34 @@ export interface ReferenceDataParameter extends Model {
   domain_id: number
   parameter: string
 }
-
-export interface EntityTemplate extends Model {
-  step: string
+export interface Workflow extends Model {
   name: string
-  description: string | null
-  groups?: Partial<EntityTemplateGroup>[]
+  description: string
+  country: Country
+  country_id: number
+  priceplan_id: number
+  priceplan: PricePlan
+  status: string
+  active_from: string
+  workflow_modules: EntityTemplate[]
 }
 
-export interface EntityTemplateGroup extends Model {
-  group_number: number
+export interface EntityTemplate extends Model {
+  workflow_id: number
+  sequence: string
   name: string
   description: string | null
-  entity_template_id: number
-  items: EntityTemplateItem[]
+  workflow_items: EntityTemplateItem[]
 }
 
 export interface EntityTemplateItem extends Model {
-  entity_template_group_id: number
+  workflow_module_id: number
   field_number: number
   field_name: string
   type: string
   domain: string | null
   parameter: string | null
   default_value: string | null
-  checklist: boolean
 }
 
 export interface ReferenceData extends Model {

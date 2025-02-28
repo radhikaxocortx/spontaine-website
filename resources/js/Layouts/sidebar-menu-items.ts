@@ -40,7 +40,7 @@ const SidebarMenuItems: SidebarMenuItem[] = [
   },
   {
     name: 'Workflow',
-    url: '/entity-templates',
+    url: '/workflow',
     value: 'workflow',
     image: { svg: `` },
   },
