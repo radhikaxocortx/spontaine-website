@@ -68,6 +68,7 @@ interface Props<
   selectedHeading?: string
   breadCrumbs?: BreadcrumbItemLink[]
   isDualHeading?: string
+  children?: React.ReactNode
 }
 
 export default function ListResourcePage<
@@ -115,6 +116,7 @@ export default function ListResourcePage<
   breadCrumbs,
   buttonText,
   isDualHeading,
+  children,
 }: Readonly<Props<U, T, Q, P, R, S, L>>) {
   const onSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -186,6 +188,7 @@ export default function ListResourcePage<
             oldValues={oldValues}
             searchUrl={searchUrl}
           />
+          {children}
           <CardGridView
             keys={keys}
             primaryKey={primaryKey}
