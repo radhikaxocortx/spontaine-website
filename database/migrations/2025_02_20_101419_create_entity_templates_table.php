@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('entity_templates', function (Blueprint $table) {
             $table->id();
-            $table->string('step');
+            $table->integer('sequence');
             $table->string('name');
             $table->string('description');
+            $table->foreignId('workflow_id')->constrained('workflows');
             $table->softDeletes();
             $table->timestamps();
         });

@@ -24,7 +24,7 @@ export default function TemplateItemUpdateForm({ templateItem, setShowModal }: R
     (data: Record<string, string | boolean | number>) => {
       post({
         _method: 'PUT',
-        entity_template_group_id: templateItem.entity_template_group_id,
+        workflow_module_id: templateItem.workflow_module_id,
         ...data,
       })
     },

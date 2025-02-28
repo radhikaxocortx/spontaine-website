@@ -121,17 +121,17 @@ const ComboBox = <
       {value != null && (
         <div className='flex flex-col gap-2'>
           <div className='flex items-center justify-between bg-gray-100 px-3 py-2 text-sm text-gray-800'>
-            <span>
+            <NormalText>
               {label}
               <br />
               <b>{value[displayKey]}</b>
-              {displayValue2 != null && (
+              {/* {displayValue2 != null && (
                 <>
                   <br />
                   <b>{value[displayValue2]}</b>
                 </>
-              )}
-            </span>
+              )} */}
+            </NormalText>
             {!disabled && (
               <button
                 className='cursor-pointer rounded-full p-1 hover:bg-gray-50'
@@ -141,7 +141,7 @@ const ComboBox = <
               </button>
             )}
           </div>
-          {error != null && <div className='error-text'>{error}</div>}
+          {error != null && <ErrorText>{error}</ErrorText>}
         </div>
       )}
       {value == null && (
