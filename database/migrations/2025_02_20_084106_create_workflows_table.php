@@ -11,13 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('entity_template_groups', function (Blueprint $table) {
+        Schema::create('workflows', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedInteger('group_number')->default(1);
-            $table->string('description')->nullable();
-            $table->foreignId('entity_template_id')
-                ->constrained('entity_templates');
+            $table->text('description');
+            $table->foreignId('country_id')
+                ->constrained('countries');
+            $table->foreignId('priceplan_id')
+                ->constrained('price_plans');
+            $table->string('status');
+            $table->string('active_from');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('entity_template_groups');
+        Schema::dropIfExists('workflows');
     }
 };

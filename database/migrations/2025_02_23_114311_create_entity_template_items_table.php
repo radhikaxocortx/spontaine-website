@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('entity_template_items', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('entity_template_group_id')
-                ->constrained('entity_template_groups');
+            $table->foreignId('workflow_module_id')
+                ->constrained('entity_templates');
 
             $table->unsignedInteger('field_number')->default(1);
 

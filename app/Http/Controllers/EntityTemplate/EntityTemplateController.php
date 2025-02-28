@@ -3,56 +3,33 @@
 namespace App\Http\Controllers\EntityTemplate;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\EntityTemplate\EntityTemplateFormRequest;
 use App\Libs\ExceptionMessage;
 use App\Models\EntityTemplate\EntityTemplate;
 use App\Models\EntityTemplate\EntityTemplateGroup;
 use Exception;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Inertia\Response;
 
 class EntityTemplateController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(Request $request): Response
+    public function store(EntityTemplateFormRequest $request)
     {
-        $entityTemplates = EntityTemplate::when($request->filled(key: 'search'), fn (Builder $builder) => $builder->where('name', operator: 'like', value: '%'.$request->input(key: 'search').'%'))
-            ->paginate(20)
-            ->withQueryString();
 
-        return Inertia::render('EntityTemplate/EntityTemplateIndex', [
-            'entityTemplates' => $entityTemplates,
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return Inertia::render('EntityTemplate/EntityTemplateCreate');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
         try {
-            /** @var EntityTemplate $record */
-            $record = EntityTemplate::create($request->all());
+
+            EntityTemplate::create([
+                ...$request->all(),
+
+            ]);
         } catch (Exception $e) {
             return back()
                 ->with(['error' => ExceptionMessage::getMessage($e)]);
         }
 
         return redirect()
-            ->route('entity-templates.show', $record->id)
-            ->with(['message' => 'Data added successfully.']);
+            ->back();
     }
 
     /**
@@ -73,39 +50,33 @@ class EntityTemplateController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        $entityTemplate = EntityTemplate::find($id);
-
-        return Inertia::render('EntityTemplate/EntityTemplateCreate', [
-            'entityTemplate' => $entityTemplate,
-        ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id): RedirectResponse
     {
         try {
-            $record = EntityTemplate::find($id)->update($request->all());
-        } catch (Exception $e) {
-            return back()
-                ->with(['error' => ExceptionMessage::getMessage($e)]);
+
+            $entityTemplate = EntityTemplate::find($id);
+
+            $entityTemplate->update($request->all());
+
+        } catch (Exception $exception) {
+            return redirect()
+                ->back()
+                ->with([
+                    'error' => ExceptionMessage::getMessage($exception),
+                ]);
         }
 
         return redirect()
-            ->route('entity-templates.index')
-            ->with(['message' => 'Record updated successfully.']);
+            ->back()
+            ->with([
+                'message' => 'Workflow Module updated successfully',
+            ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id): RedirectResponse
+    public function destroy(string $id)
     {
         try {
             EntityTemplate::find($id)->delete();
@@ -114,8 +85,5 @@ class EntityTemplateController extends Controller
                 ->with(['error' => ExceptionMessage::getMessage($e)]);
         }
 
-        return redirect()
-            ->route('entity-templates.index')
-            ->with(['message' => 'Record deleted successfully.']);
     }
 }

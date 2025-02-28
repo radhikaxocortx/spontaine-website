@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Country;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CountryRequest\CountryFormRequest;
-use App\Models\Counttry\Country;
+use App\Models\Country\Country;
 use App\Models\ReferenceData\ReferenceData;
 use Exception;
 use Inertia\Inertia;

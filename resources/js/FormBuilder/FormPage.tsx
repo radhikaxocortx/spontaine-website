@@ -1,6 +1,6 @@
 import { BreadcrumbItemLink } from '@/Components/CustomUI/BreadCrumb'
-import { Card } from '@/components/ui/card'
 import CardHeader from '@/Components/CustomUI/Card/CardHeader'
+import { Card } from '@/components/ui/card'
 import useInertiaPost from '@/hooks/useInertiaPost'
 import DashboardPadding from '@/Layouts/DashboardLayout'
 import Dashboard from '@/Pages/Dashboard'
@@ -89,8 +89,6 @@ export default function FormPage<
     }
     cardRef.current.scrollIntoView({ behavior: 'smooth' })
   }, [])
-  console.log('Form Submission URL:', url)
-  console.log('Submitting Data:', customSubmitData ?? formData)
 
   return (
     <div>

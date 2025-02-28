@@ -11,8 +11,8 @@ use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 class TemplateItemFormRequest extends Data
 {
     public function __construct(
-        #[Exists('entity_template_groups', 'id')]
-        public int $entityTemplateGroupId,
+        #[Exists('entity_templates', 'id')]
+        public int $workflowModuleId,
         public int $fieldNumber,
         public string $fieldName,
         public string $type,
