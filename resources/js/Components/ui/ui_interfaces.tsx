@@ -15,6 +15,7 @@ export interface Paginator<T> {
   total: number
   last_page: number
 }
+
 export interface FormFieldProp {
   label?: string
   type?: 'text' | 'email' | 'password' | 'number'
@@ -102,5 +103,3 @@ export const solidColors = [
   '#EFE4C5',
   '#CDE9F6',
 ]
-
-export type Language = 'en' | 'mal'

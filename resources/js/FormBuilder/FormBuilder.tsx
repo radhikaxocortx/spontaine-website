@@ -1,11 +1,11 @@
-import NormalButton from '@/Components/CustomUI/FormFields/Button'
+import ActionButton from '@/Components/CustomUI/FormFields/ActionButton'
 import ComboBox from '@/Components/CustomUI/FormFields/ComboBox'
 import DatePicker from '@/Components/CustomUI/FormFields/DatePicker'
 import DynamicSelectList from '@/Components/CustomUI/FormFields/DynamicSelectList'
 import FileInput from '@/Components/CustomUI/FormFields/FileInput'
 import SelectList from '@/Components/CustomUI/FormFields/SelectList'
-import TextArea from '@/Components/CustomUI/FormFields/TextArea'
-import TextInput from '@/Components/CustomUI/FormFields/TextInput'
+import InputDescription from '@/Components/CustomUI/FormFields/InputDescription'
+import InputText from '@/Components/CustomUI/FormFields/InputText'
 import TimePicker from '@/Components/CustomUI/FormFields/TimePicker'
 import FullSpinnerWrapper from '@/Components/CustomUI/FullSpinnerWrapper'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -120,7 +120,7 @@ export default function FormBuilder<
               {formItems[keyValue].description != null && (
                 <NormalText>{formItems[keyValue].description}</NormalText>
               )}
-              <TextInput
+              <InputText
                 value={formData[keyValue] as string | number | undefined}
                 label={formItems[keyValue].label}
                 setValue={formItems[keyValue].setValue as (value: string) => unknown}
@@ -135,7 +135,7 @@ export default function FormBuilder<
               {formItems[keyValue].description != null && (
                 <NormalText>{formItems[keyValue].description}</NormalText>
               )}
-              <TextInput
+              <InputText
                 value={formData[keyValue] as string | number | undefined}
                 label={formItems[keyValue].label}
                 setValue={formItems[keyValue].setValue as (value: string) => unknown}
@@ -151,7 +151,7 @@ export default function FormBuilder<
               {formItems[keyValue].description != null && (
                 <NormalText>{formItems[keyValue].description}</NormalText>
               )}
-              <TextInput
+              <InputText
                 value={formData[keyValue] as string | number | undefined}
                 label={formItems[keyValue].label}
                 type='email'
@@ -167,7 +167,7 @@ export default function FormBuilder<
               {formItems[keyValue].description != null && (
                 <NormalText>{formItems[keyValue].description}</NormalText>
               )}
-              <TextInput
+              <InputText
                 value={formData[keyValue] as string | number | undefined}
                 label={formItems[keyValue].label}
                 type='password'
@@ -199,7 +199,7 @@ export default function FormBuilder<
               {formItems[keyValue].description != null && (
                 <NormalText>{formItems[keyValue].description}</NormalText>
               )}
-              <TextArea
+              <InputDescription
                 setValue={formItems[keyValue].setValue as (value: string) => unknown}
                 value={formData[keyValue] as string}
                 label={formItems[keyValue].label}
@@ -327,9 +327,9 @@ export default function FormBuilder<
       {!hideSubmitButton && (
         <div className={cn('col-start-1 flex gap-5', buttonStyle)}>
           <FullSpinnerWrapper processing={loading}>
-            <NormalButton label={buttonText} />
+            <ActionButton label={buttonText} />
             {showSecondaryButton && secondaryAction != null && (
-              <NormalButton
+              <ActionButton
                 label={secondaryButtonLabel}
                 variant='secondary'
                 type='button'

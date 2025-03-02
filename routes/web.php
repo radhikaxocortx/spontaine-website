@@ -3,7 +3,6 @@
 use App\Http\Controllers\AutoComplete\AutoCompleteController;
 use App\Http\Controllers\Country\CountryController;
 use App\Http\Controllers\EntityTemplate\EntityTemplateController;
-use App\Http\Controllers\EntityTemplate\EntityTemplateGroupController;
 use App\Http\Controllers\EntityTemplate\EntityTemplateItemController;
 use App\Http\Controllers\PricePlan\PricePlanController;
 use App\Http\Controllers\ProfileController;
@@ -61,8 +60,6 @@ Route::resource('workflow', WorkflowController::class)
 // Entity Template
 Route::apiResource('/entity-templates', EntityTemplateController::class)
     ->parameters(['entity-templates' => 'entityTemplates']);
-Route::apiResource('entity-template-group', EntityTemplateGroupController::class)
-    ->parameters(['entity-template-group' => 'templateGroup']);
 Route::apiResource('entity-template-item', EntityTemplateItemController::class)
     ->parameters(['entity-template-item' => 'templateItem']);
 

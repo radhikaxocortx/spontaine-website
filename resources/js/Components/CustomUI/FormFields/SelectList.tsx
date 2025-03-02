@@ -4,19 +4,30 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
+} from '@/Components/ui/select'
 import ErrorText from '@/typography/ErrorText'
 import NormalText from '@/typography/NormalText'
 import { useMemo } from 'react'
-import { FormFieldProp as FormFieldProperty } from '../../ui/ui_interfaces'
 
 export interface Properties<
   K extends keyof T,
   G extends keyof T,
-  U extends number | string,
-  V extends number | string | null,
-  T extends Record<K, U> & Record<G, V>,
-> extends FormFieldProperty {
+  T extends Record<K, number | string> & Record<G, number | string | null>,
+> {
+  label?: string
+  type?: 'text' | 'email' | 'password' | 'number'
+  value?: string | number
+  error?: string
+  styles?: string
+  placeholder?: string
+  setValue: (value: string) => unknown
+  disabled?: boolean
+  readonly?: boolean
+  isDate?: boolean
+  isTime?: boolean
+  preventFormSubmit?: boolean
+  style?: 'normal' | 'bottom-border' | 'dark'
+  required?: boolean
   list: T[]
   dataKey: K
   displayKey: G
@@ -47,9 +58,7 @@ const getStyle = (style: 'normal' | 'bottom-border' | 'dark') => {
 export default function SelectList<
   K extends keyof T,
   G extends keyof T,
-  U extends number | string,
-  V extends number | string | null,
-  T extends Record<K, U> & Record<G, V>,
+  T extends Record<K, number | string> & Record<G, number | string | null>,
 >({
   value,
   label,
@@ -63,12 +72,12 @@ export default function SelectList<
   style = 'normal',
   disabled = false,
   showLabel = true,
-}: Properties<K, G, U, V, T>) {
+}: Properties<K, G, T>) {
   const selectedOption = useMemo(() => {
     const index = list.findIndex((item) => {
       return item[dataKey] == value
     })
-    return index === -1 ? '' : value
+    return index === -1 ? '' : `${value}`
   }, [value, dataKey, list])
 
   return (

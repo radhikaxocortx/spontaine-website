@@ -7,7 +7,7 @@ import axios from 'axios'
 import { XIcon } from 'lucide-react'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { handleHttpErrors } from '../../ui/alerts'
-import { getFormStyle } from './TextInput'
+import { getFormStyle } from './InputText'
 
 interface Properties<
   K extends keyof T,

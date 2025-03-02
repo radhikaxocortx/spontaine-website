@@ -1,6 +1,8 @@
-import PageIndex, { PageBuilder } from '@/Modules/Pages/PageIndex'
+import PageIndex from '@/Modules/PageBuilder/Pages/PageIndex'
+import { Page } from '@/Modules/PageBuilder/page_interfaces'
+
 interface Props {
-  pages: PageBuilder[]
+  pages: Page[]
 }
 
 const PageBuilderIndex = ({ pages }: Props) => {

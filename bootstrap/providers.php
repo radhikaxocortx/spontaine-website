@@ -1,6 +1,9 @@
 <?php
 
+use Database\Seeders\Providers\AppServiceProvider;
+use Modules\PageBuilder\Providers\PageBuilderServiceProvider;
+
 return [
-    App\Providers\AppServiceProvider::class,
-    \Modules\Providers\PageBuilderServiceProvider::class,
+    AppServiceProvider::class,
+    PageBuilderServiceProvider::class,
 ];

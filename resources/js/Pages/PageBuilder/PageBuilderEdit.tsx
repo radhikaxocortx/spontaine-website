@@ -1,11 +1,11 @@
 import CardHeader from '@/Components/CustomUI/Card/CardHeader'
 import DashboardPadding from '@/Layouts/DashboardLayout'
-import PageEdit from '@/Modules/Pages/PageEdit'
-import { PageBuilder } from '@/Modules/Pages/PageIndex'
+import { Page } from '@/Modules/PageBuilder/page_interfaces'
+import PageEdit from '@/Modules/PageBuilder/Pages/PageEdit'
 import Dashboard from '../Dashboard'
 
 interface Props {
-  page: PageBuilder
+  page: Page
 }
 
 const PageBuilderEdit = ({ page }: Props) => {
