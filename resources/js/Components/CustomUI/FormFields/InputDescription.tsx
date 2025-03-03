@@ -1,5 +1,5 @@
 import { getFormStyle } from '@/Components/CustomUI/FormFields/InputText'
-import { Textarea } from '@/Components/ui/textarea'
+import { Textarea } from '@/components/ui/textarea'
 import ErrorText from '@/typography/ErrorText'
 import NormalText from '@/typography/NormalText'
 import { FormFieldProp } from '../../ui/ui_interfaces'

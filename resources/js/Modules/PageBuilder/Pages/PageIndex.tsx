@@ -100,7 +100,7 @@ export default function PageIndex({ pages }: Props) {
       rows={data}
       keys={keys}
       primaryKey={'id'}
-      title='Page Builder'
+      title='Pages'
       formItems={formItems}
       formData={formData}
       searchUrl={route('pages.index')}

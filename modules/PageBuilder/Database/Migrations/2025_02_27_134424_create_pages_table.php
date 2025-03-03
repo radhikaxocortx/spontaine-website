@@ -22,6 +22,7 @@ return new class extends Migration
             $table->boolean('published')->default(0);
             $table->string('type')->default('Page');
             $table->string('preview_image')->nullable();
+            $table->json('blocks')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->softDeletes();
