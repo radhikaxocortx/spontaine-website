@@ -18,7 +18,7 @@ export default function PageEdit({ page }: Props) {
     url: page.url,
     published: page.published,
     type: page.type,
-    preview_image: page.preview_image,
+    preview_image: null,
   })
   const Url = useNameUrl(formData.title)
 
@@ -86,7 +86,6 @@ export default function PageEdit({ page }: Props) {
     },
     [post, formData]
   )
-
   return (
     <FormBuilder
       formData={formData}

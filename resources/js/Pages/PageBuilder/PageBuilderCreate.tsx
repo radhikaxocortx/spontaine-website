@@ -7,7 +7,7 @@ export default function PageBuilderCreate() {
   return (
     <Dashboard>
       <DashboardPadding>
-        <CardHeader title='Create Page Builder ' />
+        <CardHeader title='Create Pages ' />
         <PageCreate />
       </DashboardPadding>
     </Dashboard>

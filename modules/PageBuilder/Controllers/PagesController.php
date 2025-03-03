@@ -3,6 +3,7 @@
 namespace Modules\PageBuilder\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Libs\SaveFile;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
@@ -12,6 +13,8 @@ use Modules\PageBuilder\Request\PageBuilderFormRequest;
 
 class PagesController extends Controller
 {
+    use SaveFile;
+
     public function index(): Response
     {
         $pages = Page::all();
@@ -29,8 +32,20 @@ class PagesController extends Controller
     public function store(PageBuilderFormRequest $request): RedirectResponse
     {
         try {
+
+            $previewImagePath = null;
+
+            if ($request->previewImage) {
+                $previewImagePath = $this->save(
+                    $request->previewImage,
+                    time(),
+                    'page_previews'
+                );
+            }
+
             $record = Page::create([
                 ...$request->all(),
+                'preview_image' => $previewImagePath,
                 'blocks' => [
                     'lastUUID' => 1,
                     'blocks' => [],
@@ -64,8 +79,23 @@ class PagesController extends Controller
     public function update(PageBuilderFormRequest $request, string $id): RedirectResponse
     {
         try {
-            $record = Page::find($id);
-            $record->update($request->all());
+            $record = Page::findOrFail($id);
+
+            $previewImagePath = $record->preview_image;
+
+            if ($request->previewImage) {
+
+                $previewImagePath = $this->save(
+                    $request->previewImage,
+                    time(),
+                    'page_previews'
+                );
+            }
+
+            $record->update([
+                ...$request->all(),
+                'preview_image' => $previewImagePath,
+            ]);
         } catch (Exception $e) {
             return redirect()->back()->with(['error' => $e->getMessage()]);
         }

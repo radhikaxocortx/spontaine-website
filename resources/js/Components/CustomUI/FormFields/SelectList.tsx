@@ -4,7 +4,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/Components/ui/select'
+} from '@/components/ui/select'
 import ErrorText from '@/typography/ErrorText'
 import NormalText from '@/typography/NormalText'
 import { useMemo } from 'react'
