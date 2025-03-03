@@ -1,3 +1,9 @@
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -149,22 +155,40 @@ export default function Sidebar() {
               <SheetTitle className='p-5'>
                 <Heading>KADODO</Heading>
               </SheetTitle>
-              <div className='mr-auto flex flex-col'>
-                {SidebarMenuItems.map((item) => (
-                  <Button
-                    key={item.name}
-                    onClick={() => router.get(item.url || '')}
-                    className='mr-auto p-5'
-                    variant='ghost'
-                  >
-                    {/* <span
-                      dangerouslySetInnerHTML={{
-                        __html: typeof item.image === 'string' ? item.image : item.image.svg,
-                      }}
-                    /> */}
-                    <SubHeading>{item.name}</SubHeading>
-                  </Button>
-                ))}
+
+              <div className='w-full'>
+                <Accordion
+                  type='single'
+                  collapsible
+                >
+                  {SidebarMenuItems.map((menu) => (
+                    <AccordionItem
+                      key={menu.title}
+                      value={menu.title}
+                    >
+                      <AccordionTrigger className='p-4 font-bold'>{menu.title}</AccordionTrigger>
+
+                      <AccordionContent className='pl-4'>
+                        {menu.items.map((item) => (
+                          <Button
+                            key={item.name}
+                            onClick={() => router.get(item.url || '')}
+                            className='items-left flex w-full p-2 text-left'
+                            variant='ghost'
+                          >
+                            {typeof item.image !== 'string' && item.image?.svg && (
+                              <span
+                                className='mr-2'
+                                dangerouslySetInnerHTML={{ __html: item.image.svg }}
+                              />
+                            )}
+                            {item.name}
+                          </Button>
+                        ))}
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
               </div>
             </SheetHeader>
 

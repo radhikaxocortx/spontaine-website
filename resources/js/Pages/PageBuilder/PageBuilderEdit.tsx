@@ -13,7 +13,7 @@ const PageBuilderEdit = ({ page }: Props) => {
   return (
     <Dashboard>
       <DashboardPadding>
-        <CardHeader title='Edit Page Builder ' />
+        <CardHeader title='Edit Pages ' />
         <PageEdit page={page} />
       </DashboardPadding>
     </Dashboard>
