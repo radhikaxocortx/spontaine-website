@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('type')->default('Page');
             $table->string('preview_image')->nullable();
             $table->json('blocks')->nullable();
+            $table->longText('block_content')->nullable();
+            $table->longText('block_content_mal')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->softDeletes();

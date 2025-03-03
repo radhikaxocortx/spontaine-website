@@ -71,12 +71,35 @@ const marginBottoms = [
   { value: 'mb-10', label: '10' },
 ]
 
+const mobileColSpanOptions = [{ value: 'col-span-full', label: 'Full Width' }]
+
+const tabletColSpanOptions = [
+  { value: 'md:col-span-full', label: 'Full Width' },
+  { value: 'md:col-span-1', label: '1/2' },
+]
+
+const laptopColSpanOptions = [
+  { value: 'lg:col-span-full', label: 'Full Width' },
+  { value: 'lg:col-span-2', label: '1/2' },
+  { value: 'lg:col-span-1', label: '1/4' },
+]
+
+const desktopColSpanOptions = [
+  { value: 'xl:col-span-full', label: 'Full Width' },
+  { value: 'xl:col-span-2', label: '1/2' },
+  { value: 'xl:col-span-1', label: '1/4' },
+]
+
 const BlockConfigurationForm = ({ showForm, setShowForm, onConfigUpdate, block }: Properties) => {
   const { formData, setFormValue, setAll } = useCustomForm({
     paddingTop: '',
     paddingBottom: '',
     marginTop: '',
     marginBottom: '',
+    mobileWidth: '',
+    tabletWidth: '',
+    laptopWidth: '',
+    desktopWidth: '',
   })
 
   useEffect(() => {
@@ -86,6 +109,10 @@ const BlockConfigurationForm = ({ showForm, setShowForm, onConfigUpdate, block }
         paddingBottom: block.paddingBottom ?? '',
         marginTop: block.marginTop ?? '',
         marginBottom: block.marginBottom ?? '',
+        mobileWidth: block.mobileWidth ?? 'col-span-full',
+        tabletWidth: block.tabletWidth ?? 'md:col-span-full',
+        laptopWidth: block.laptopWidth ?? 'lg:col-span-full',
+        desktopWidth: block.desktopWidth ?? 'xl:col-span-full',
       })
     }
   }, [block, setAll])
@@ -148,6 +175,46 @@ const BlockConfigurationForm = ({ showForm, setShowForm, onConfigUpdate, block }
                 dataKey='value'
                 displayKey='label'
                 setValue={setFormValue('marginBottom')}
+              />
+            </div>
+            <div className='flex flex-col'>
+              <SelectList
+                label='Width (Mobile)'
+                list={mobileColSpanOptions}
+                value={formData.mobileWidth}
+                dataKey='value'
+                displayKey='label'
+                setValue={setFormValue('mobileWidth')}
+              />
+            </div>
+            <div className='flex flex-col'>
+              <SelectList
+                label={'Width (Tablet)'}
+                setValue={setFormValue('tabletWidth')}
+                value={formData.tabletWidth}
+                list={tabletColSpanOptions}
+                dataKey='value'
+                displayKey='label'
+              />
+            </div>
+            <div className='flex flex-col'>
+              <SelectList
+                setValue={setFormValue('laptopWidth')}
+                list={laptopColSpanOptions}
+                dataKey='value'
+                displayKey='label'
+                label={'Width (Laptop)'}
+                value={formData.laptopWidth}
+              />
+            </div>
+            <div className='flex flex-col'>
+              <SelectList
+                setValue={setFormValue('desktopWidth')}
+                list={desktopColSpanOptions}
+                dataKey='value'
+                displayKey='label'
+                label={'Width (Desktop)'}
+                value={formData.desktopWidth}
               />
             </div>
             <div className='flex justify-end'>

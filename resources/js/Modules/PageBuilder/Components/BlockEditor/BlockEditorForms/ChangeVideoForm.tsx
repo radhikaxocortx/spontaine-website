@@ -1,10 +1,9 @@
+import Modal from '@/Components/CustomUI/Modal/Modal'
+import { BlocKFieldInfo } from '@/Modules/PageBuilder/Components/BlockEditor/BlockEditor'
+import ChooseVideo from '@/Modules/PageBuilder/Components/Forms/VideoUpload/ChooseVideo'
+import { PageBuilderAction } from '@/Modules/PageBuilder/hooks/pageBuilderService'
+import { Block, Video } from '@/Modules/PageBuilder/page_interfaces'
 import React, { useCallback } from 'react'
-import { Block } from '../../../DataStructures/ui_builder_interfaces'
-import Modal from '../../../ui/modal/Modal'
-import { BlocKFieldInfo } from '../PageBuilder/BlockEditor'
-import { PageBuilderAction } from '../PageBuilder/pageBuilderService'
-import ChooseVideo from '../../Common/VideoUpload/ChooseVideo'
-import { Video } from '../../../DataStructures/data_interfaces'
 
 interface Properties {
   selectedField: BlocKFieldInfo | null

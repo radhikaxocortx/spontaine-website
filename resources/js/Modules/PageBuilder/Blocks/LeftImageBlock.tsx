@@ -16,6 +16,7 @@ import EditLabel from '@/Modules/PageBuilder/Components/EditLabel'
 import InertiaLink from '@/Modules/PageBuilder/Components/InertiaLink'
 import Localization from '@/Modules/PageBuilder/Components/Localization'
 import { Language } from '@/Modules/PageBuilder/Pages/PageBuilder'
+import useBlockStyling from '@/Modules/PageBuilder/hooks/useBlockStyling'
 
 export interface ImageBlock extends BlockConfiguration {
   title: TextData
@@ -101,11 +102,11 @@ const LeftImageBlock = ({
     }
   }
 
+  const blockStyling = useBlockStyling(blockData)
+
   return (
     // <AppLayoutPadding>
-    <div
-      className={`${blockData.marginTop} ${blockData.marginBottom} ${blockData.paddingTop} ${blockData.paddingBottom}`}
-    >
+    <div className={`${editMode ? '' : blockStyling}`}>
       <div className={`bg-theme_color_2 flex w-full flex-wrap`}>
         <div className='flex w-full flex-col md:w-5/12 lg:w-4/12'>
           {blockData.image != null && (

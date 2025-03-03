@@ -1,4 +1,7 @@
 import LeftImageBlock, { ImageBlock } from '@/Modules/PageBuilder/Blocks/LeftImageBlock'
+import RichTextBlock, {
+  RichTextBlockData,
+} from '@/Modules/PageBuilder/Blocks/RichText/RichTextBlock'
 import { BlocKFieldInfo } from '@/Modules/PageBuilder/Components/BlockEditor/BlockEditor'
 import { PageBuilderAction } from '@/Modules/PageBuilder/hooks/pageBuilderService'
 import { Block, PageDataDependencies } from '@/Modules/PageBuilder/page_interfaces'
@@ -25,7 +28,6 @@ const ResolveComponent = ({
   dispatch,
   dependencies,
 }: Properties) => {
-  console.log(blockName)
   return (
     <>
       {blockName === 'Sample - Left Image' && (
@@ -33,6 +35,14 @@ const ResolveComponent = ({
           editMode={editMode}
           onFieldEdit={onFieldEdit}
           blockData={block as unknown as ImageBlock}
+          language={language}
+        />
+      )}
+      {blockName === 'Formatted Text' && (
+        <RichTextBlock
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          blockData={block as unknown as RichTextBlockData}
           language={language}
         />
       )}

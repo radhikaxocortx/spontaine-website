@@ -30,8 +30,6 @@ const PageBuilder = ({ page, dependencies }: Properties) => {
   const [pageBlock, managePage] = useReducer(PageBuilderService, page.blocks)
   const [language, setLanguage] = useState<Language>('en')
 
-  console.log(pageBlock)
-
   const addComponent = (block: string) => {
     managePage({ action: 'ADD_BLOCK', blockName: block })
   }
@@ -89,7 +87,7 @@ const PageBuilder = ({ page, dependencies }: Properties) => {
           />
         </div>
       </div>
-      <div className='mt-56'>
+      <div className='mt-56 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4'>
         {pageBlock.blocks.map((block) => {
           return (
             <Fragment key={block.id.toString()}>

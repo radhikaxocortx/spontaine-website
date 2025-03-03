@@ -1,11 +1,10 @@
+import ActionButton from '@/Components/CustomUI/FormFields/ActionButton'
+import FileInput from '@/Components/CustomUI/FormFields/FileInput'
+import InputText from '@/Components/CustomUI/FormFields/InputText'
+import { handleHttpErrors, showError } from '@/Components/ui/alerts'
+import { CreateResponse, Image, Video } from '@/Modules/PageBuilder/page_interfaces'
 import axios from 'axios'
-import React, { useCallback, useState } from 'react'
-import { Image, Video } from '../../../DataStructures/data_interfaces'
-import { handleHttpErrors, showError } from '../../../ui/alerts'
-import Button from '../../../ui/button/Button'
-import FileSelect from '../../../ui/form/FileSelect'
-import Input from '../../../ui/form/Input'
-import { CreateResponse } from '../../../ui/ui_interfaces'
+import { useCallback, useState } from 'react'
 
 interface Properties {
   onUpload: (file: Video) => void
@@ -46,17 +45,17 @@ const UploadNewVideo = ({ onUpload }: Properties) => {
   return (
     <div className='mt-5 flex flex-col gap-5'>
       <div className='flex flex-col'>
-        <Input
+        <InputText
           label='Video Name'
-          data={fileName}
-          setData={setFileName}
+          value={fileName}
+          setValue={setFileName}
         />
       </div>
       <div className='flex flex-col'>
-        <FileSelect setData={setFile} />
+        <FileInput setValue={setFile} />
       </div>
       <div className='flex'>
-        <Button
+        <ActionButton
           label='UPLOAD'
           processing={processing}
           onClick={uploadFile}

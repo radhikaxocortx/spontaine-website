@@ -1,8 +1,8 @@
-import { Video } from '../../../DataStructures/data_interfaces'
+import SelectList from '@/Components/CustomUI/FormFields/SelectList'
+import SelectUploadedVideo from '@/Modules/PageBuilder/Components/Forms/VideoUpload/SelectUploadedVideo'
+import UploadNewVideo from '@/Modules/PageBuilder/Components/Forms/VideoUpload/UploadNewVideo'
+import { Video } from '@/Modules/PageBuilder/page_interfaces'
 import { useState } from 'react'
-import Tabs from '../../../ui/Tab/Tabs'
-import UploadNewVideo from './UploadNewVideo'
-import SelectUploadedVideo from './SelectUploadedVideo'
 
 const tabItems = [{ value: 'Upload New Video' }, { value: 'Select Video' }]
 
@@ -15,10 +15,12 @@ const ChooseVideo = ({ onVideo }: Properties) => {
   return (
     <div className='p-2'>
       <div className='w-full'>
-        <Tabs
-          items={tabItems}
-          selectedTab={selectedTab}
-          setSelectedTab={setSelectedTab}
+        <SelectList
+          list={tabItems}
+          value={selectedTab}
+          setValue={setSelectedTab}
+          dataKey='value'
+          displayKey='value'
         />
       </div>
       {selectedTab == 'Upload New Video' && <UploadNewVideo onUpload={onVideo} />}

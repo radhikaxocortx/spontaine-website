@@ -1,0 +1,197 @@
+.mce-content-body table {
+  border: 1px solid black;
+}
+
+.mce-content-body tr {
+  border: 1px solid black;
+  padding: 2px;
+}
+
+.mce-content-body th,
+.mce-content-body td {
+  border: 1px solid black;
+  padding: 2px;
+}
+
+.mce-content-body span {
+  font-family: 'Satoshi', 'NotoSansMalayalam', sans-serif;
+  display: block !important;
+  margin-block-start: 1em !important;
+  margin-block-end: 1em !important;
+  margin-inline-start: 0px !important;
+  margin-inline-end: 0px !important;
+}
+
+.mce-content-body ul {
+  display: block !important;
+  list-style-type: disc !important;
+  padding-left: 2rem !important;
+  margin-block-start: 1em !important;
+  margin-block-end: 1em !important;
+  margin-inline-start: 0px !important;
+  margin-inline-end: 0px !important;
+  padding-inline-start: 40px !important;
+}
+
+.mce-content-body ol {
+  display: block !important;
+  list-style-type: decimal !important;
+  margin-block-start: 1em !important;
+  margin-block-end: 1em !important;
+  margin-inline-start: 0px !important;
+  margin-inline-end: 0px !important;
+  padding-inline-start: 40px !important;
+}
+
+.mce-content-body li {
+  /* margin-block-start: 1em  !important;
+  margin-block-end: 1em  !important;
+  margin-inline-start: 0px  !important;
+  margin-inline-end: 0px  !important;
+  padding-inline-start: 40px  !important; */
+  white-space: normal !important;
+}
+/* ol {
+  display: block;
+  list-style-type: decimal;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 40px;
+}
+
+ul {
+  display: block;
+  list-style-type: disc;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 40px;
+  padding-left: 2rem;
+} */
+
+li {
+  /* list-style-type: disc; */
+}
+
+.mce-content-body h1 {
+  display: block;
+  font-size: 2em;
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+}
+
+.mce-content-body h2 {
+  display: block;
+  font-size: 1.5em;
+  margin-block-start: 0.83em;
+  margin-block-end: 0.83em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+}
+
+.mce-content-body h3 {
+  display: block;
+  font-size: 1.17em;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+}
+
+.mce-content-body h4 {
+  display: block;
+  margin-block-start: 1.33em;
+  margin-block-end: 1.33em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+}
+
+.mce-content-body h5 {
+  display: block;
+  font-size: 0.83em;
+  margin-block-start: 1.67em;
+  margin-block-end: 1.67em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+}
+
+.mce-content-body h6 {
+  display: block;
+  font-size: 0.67em;
+  margin-block-start: 2.33em;
+  margin-block-end: 2.33em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+}
+
+.mce-content-body pre {
+  display: block;
+  font-family: monospace;
+  white-space: pre;
+  margin: 1em 0px;
+}
+
+.mce-content-body p {
+  display: block !important;
+  margin-block-start: 1em !important;
+  margin-block-end: 1em !important;
+  margin-inline-start: 0px !important;
+  margin-inline-end: 0px !important;
+}
+
+.mce-content-body sub {
+  vertical-align: sub;
+  font-size: smaller;
+}
+
+.mce-content-body sup {
+  vertical-align: super;
+  font-size: smaller;
+}
+
+.mce-content-body a {
+  cursor: pointer;
+}
+
+.mce-content-body em {
+  font-style: italic;
+}
+
+.mce-content-body blockquote {
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 40px;
+  margin-inline-end: 40px;
+}
+
+.mce-content-body:not([dir='rtl']) blockquote {
+  border-left: 2px solid #ccc;
+  margin-left: 1.5rem;
+  padding-left: 1rem;
+}
+
+.mce-content-body [data-mce-selected='inline-boundary'] {
+  background-color: #b4d7ff;
+}
+
+.mce-content-body code {
+  background-color: #e8e8e8;
+  border-radius: 3px;
+  padding: 0.1rem 0.2rem;
+}
+
+.mce-content-body {
+  word-wrap: break-word;
+}

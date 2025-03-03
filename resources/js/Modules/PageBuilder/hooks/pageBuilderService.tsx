@@ -1,5 +1,6 @@
 import { showError } from '@/Components/ui/alerts'
 import { imageBlock } from '@/Modules/PageBuilder/Blocks/LeftImageBlock'
+import { richTextData } from '@/Modules/PageBuilder/Blocks/RichText/RichTextBlock'
 import { BlockFieldValues } from '@/Modules/PageBuilder/Components/BlockEditor/BlockEditor'
 import { Block, ItemListField, PageBlock } from '@/Modules/PageBuilder/page_interfaces'
 
@@ -31,6 +32,11 @@ const getBlockDefaultData = (blockName: string) => {
     case 'Sample - Left Image': {
       return {
         ...imageBlock,
+      }
+    }
+    case 'Formatted Text': {
+      return {
+        ...richTextData,
       }
     }
     default: {

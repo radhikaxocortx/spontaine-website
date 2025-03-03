@@ -1,13 +1,15 @@
 import ButtonBorderIcon from '@/Components/CustomUI/Button/ButtonBorderIcon'
-import BlockConfigurationForm from '@/Modules/PageBuilder/Components/BlockEditor/BlockEditorForms/BlockConfigurationForm'
+import { default as BlockConfigurationForm } from '@/Modules/PageBuilder/Components/BlockEditor/BlockEditorForms/BlockConfigurationForm'
 import ChangeDescriptionForm from '@/Modules/PageBuilder/Components/BlockEditor/BlockEditorForms/ChangeDescriptionForm'
 import ChangeImageForm from '@/Modules/PageBuilder/Components/BlockEditor/BlockEditorForms/ChangeImageForm'
 import ChangeLinkForm from '@/Modules/PageBuilder/Components/BlockEditor/BlockEditorForms/ChangeLinkForm'
 import ChangeTextForm from '@/Modules/PageBuilder/Components/BlockEditor/BlockEditorForms/ChangeTextForm'
+import ChangeVideoForm from '@/Modules/PageBuilder/Components/BlockEditor/BlockEditorForms/ChangeVideoForm'
 import ResolveComponent from '@/Modules/PageBuilder/Components/ResolveComponent'
 import TinyMCE from '@/Modules/PageBuilder/Components/TinyMCE/TinyMce'
 import { Language } from '@/Modules/PageBuilder/Pages/PageBuilder'
 import { PageBuilderAction } from '@/Modules/PageBuilder/hooks/pageBuilderService'
+import useBlockStyling from '@/Modules/PageBuilder/hooks/useBlockStyling'
 import {
   Block,
   BlockConfiguration,
@@ -18,6 +20,7 @@ import {
   RequiredTextData,
   TextData,
 } from '@/Modules/PageBuilder/page_interfaces'
+import { ArrowDownIcon, ArrowUpIcon, Settings2Icon, XIcon } from 'lucide-react'
 import React, { useCallback, useState } from 'react'
 
 interface Properties {
@@ -107,24 +110,23 @@ const BlockEditor = ({ block, dispatch, language, dependencies }: Properties) =>
     [dispatch, block]
   )
 
+  const blockStyling = useBlockStyling(block)
+
   return (
-    <div className='relative'>
+    <div className={`relative ${blockStyling}`}>
       <div className='absolute right-2 top-1 z-20 flex flex-wrap gap-2'>
         <ButtonBorderIcon onClick={() => setShowConfigurationForm(true)}>
           <></>
-          {/*<AdjustmentsHorizontalIcon className='h-6 w-6' />*/}
+          <Settings2Icon className='h-4 w-5' />
         </ButtonBorderIcon>
         <ButtonBorderIcon onClick={moveUP}>
-          <></>
-          {/*<ArrowUpIcon className='h-6 w-6' />*/}
+          <ArrowUpIcon className='h-5 w-4' />
         </ButtonBorderIcon>
         <ButtonBorderIcon onClick={moveDOWN}>
-          <></>
-          {/*<ArrowDownIcon className='h-6 w-6' />*/}
+          <ArrowDownIcon className='h-4 w-5' />
         </ButtonBorderIcon>
         <ButtonBorderIcon onClick={remove}>
-          <></>
-          {/*<XMarkIcon className='h-6 w-6' />*/}
+          <XIcon className='h-4 w-4' />
         </ButtonBorderIcon>
       </div>
       {selectedField?.fieldType !== 'html' && (
@@ -175,12 +177,12 @@ const BlockEditor = ({ block, dispatch, language, dependencies }: Properties) =>
         selectedField={selectedField}
         setSelectedField={setSelectedField}
       />
-      {/*<ChangeVideoForm*/}
-      {/*  block={block}*/}
-      {/*  dispatch={dispatch}*/}
-      {/*  selectedField={selectedField}*/}
-      {/*  setSelectedField={setSelectedField}*/}
-      {/*/>*/}
+      <ChangeVideoForm
+        block={block}
+        dispatch={dispatch}
+        selectedField={selectedField}
+        setSelectedField={setSelectedField}
+      />
       <BlockConfigurationForm
         showForm={showConfigurationForm}
         setShowForm={setShowConfigurationForm}

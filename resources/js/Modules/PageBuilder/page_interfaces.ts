@@ -50,6 +50,10 @@ export interface BlockConfiguration {
   paddingBottom?: string
   marginTop?: string
   marginBottom?: string
+  mobileWidth?: string
+  tabletWidth?: string
+  laptopWidth?: string
+  desktopWidth?: string
 }
 
 export interface BlockImage {
@@ -73,6 +77,12 @@ export interface ItemListField<T> {
 }
 
 export interface Image extends Model {
+  name: string
+  url: string | null
+  mime: string
+}
+
+export interface Video extends Model {
   name: string
   url: string | null
   mime: string

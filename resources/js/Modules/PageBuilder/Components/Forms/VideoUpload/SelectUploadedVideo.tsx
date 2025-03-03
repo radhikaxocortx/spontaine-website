@@ -1,11 +1,11 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { Video } from '../../../DataStructures/data_interfaces'
+import InputText from '@/Components/CustomUI/FormFields/InputText'
+import FullSpinnerWrapper from '@/Components/CustomUI/FullSpinnerWrapper'
+import RestPagination from '@/Components/CustomUI/RestPagination'
+import { handleHttpErrors } from '@/Components/ui/alerts'
+import { Paginator } from '@/Components/ui/ui_interfaces'
+import { Video } from '@/Modules/PageBuilder/page_interfaces'
 import axios from 'axios'
-import { handleHttpErrors } from '../../../ui/alerts'
-import Input from '../../../ui/form/Input'
-import FullSpinnerWrapper from '../../../ui/FullSpinnerWrapper'
-import { Paginator } from '../../../ui/ui_interfaces'
-import RestPagination from '../../../ui/table/RestPagination'
+import { useCallback, useEffect, useState } from 'react'
 
 interface Properties {
   onSelect: (file: Video) => void
@@ -39,10 +39,10 @@ const SelectUploadedVideo = ({ onSelect }: Properties) => {
   return (
     <div className='flex flex-col gap-5'>
       <div className='flex flex-col'>
-        <Input
+        <InputText
           label='Search'
-          setData={setFileName}
-          data={fileName}
+          setValue={setFileName}
+          value={fileName}
         />
       </div>
       <FullSpinnerWrapper processing={processing}>
