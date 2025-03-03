@@ -4,6 +4,7 @@ namespace App\Libs;
 
 use Exception;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 trait SaveFile
 {
@@ -11,10 +12,18 @@ trait SaveFile
     {
         try {
             $fileName = $name.'.'.$file->extension();
-            $file->storePublicly(
-                $folder.'/',
-                $fileName
-            );
+            if (! $public) {
+                $file->storeAs(
+                    $folder,
+                    $fileName
+                );
+            } else {
+                Storage::disk('public')->putFileAs(
+                    $folder,
+                    $file,
+                    $fileName
+                );
+            }
         } catch (Exception $e) {
             return '';
         }
