@@ -6,7 +6,14 @@ import { Page } from '@/Modules/PageBuilder/page_interfaces'
 import { useState } from 'react'
 import ResolveComponent from './ResolveComponent'
 
-const pageBlocks = [{ name: 'Sample - Left Image' }, { name: 'Formatted Text' }]
+const pageBlocks = [
+  { name: 'Home - Hero Section' },
+  { name: 'Home - Image Cards' },
+  { name: 'Home - Grid With Video' },
+  { name: 'Home - Full Width Image With Title' },
+  { name: 'Sample - Left Image' },
+  { name: 'Formatted Text' },
+]
 
 interface Properties {
   onBlockAdd: (block: string) => void

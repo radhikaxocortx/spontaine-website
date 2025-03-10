@@ -1,6 +1,6 @@
-import React, { useMemo } from 'react'
-import { TextData } from '../DataStructures/ui_builder_interfaces'
-import { Language } from './ui_interfaces'
+import { Language } from '@/Components/ui/ui_interfaces'
+import { useMemo } from 'react'
+import { TextData } from '../page_interfaces'
 
 interface Properties {
   text?: TextData | null
