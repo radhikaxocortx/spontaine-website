@@ -1,3 +1,4 @@
+import AppLayout from '@/Layouts/AppLayout'
 import ViewBuilder from '@/Modules/PageBuilder/Pages/ViewBuilder'
 import { Page } from '@/Modules/PageBuilder/page_interfaces'
 
@@ -6,5 +7,9 @@ interface Props {
 }
 
 export default function ViewBuilderPage({ page }: Props) {
-  return <ViewBuilder page={page} />
+  return (
+    <AppLayout>
+      <ViewBuilder page={page} />
+    </AppLayout>
+  )
 }

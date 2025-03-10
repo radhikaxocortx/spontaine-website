@@ -3,6 +3,9 @@ import { imageBlock } from '@/Modules/PageBuilder/Blocks/LeftImageBlock'
 import { richTextData } from '@/Modules/PageBuilder/Blocks/RichText/RichTextBlock'
 import { BlockFieldValues } from '@/Modules/PageBuilder/Components/BlockEditor/BlockEditor'
 import { Block, ItemListField, PageBlock } from '@/Modules/PageBuilder/page_interfaces'
+import { fullWidthImageWithTItleBlock } from '../Blocks/FullWidthImageWithTItle'
+import { gridWithVideoBlock } from '../Blocks/GridWithVideo'
+import { imageCardsBlock } from '../Blocks/ImageCards'
 
 export interface PageBuilderAction {
   action:
@@ -32,6 +35,27 @@ const getBlockDefaultData = (blockName: string) => {
     case 'Sample - Left Image': {
       return {
         ...imageBlock,
+      }
+    }
+    case 'Home - Hero Section': {
+      return {
+        ...imageBlock,
+      }
+    }
+
+    case 'Home - Image Cards': {
+      return {
+        ...imageCardsBlock,
+      }
+    }
+    case 'Home - Grid With Video': {
+      return {
+        ...gridWithVideoBlock,
+      }
+    }
+    case 'Home - Full Width Image With Title': {
+      return {
+        ...fullWidthImageWithTItleBlock,
       }
     }
     case 'Formatted Text': {

@@ -87,7 +87,7 @@ const PageBuilder = ({ page, dependencies }: Properties) => {
           />
         </div>
       </div>
-      <div className='mt-56 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4'>
+      <div className='mt-56'>
         {pageBlock.blocks.map((block) => {
           return (
             <Fragment key={block.id.toString()}>
