@@ -48,6 +48,7 @@ export type BlockFieldValues =
   | LinkData
   | BlockImage
   | BlockVideo
+  | { link: LinkData }
   | null
   | undefined
 

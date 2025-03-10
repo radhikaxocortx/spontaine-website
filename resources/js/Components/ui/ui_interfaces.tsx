@@ -103,3 +103,5 @@ export const solidColors = [
   '#EFE4C5',
   '#CDE9F6',
 ]
+
+export type Language = 'en' | 'mal'

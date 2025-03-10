@@ -1,5 +1,17 @@
 import { Model } from '@/Components/Interface/data_interface'
 
+export const loremIpsum = 'lorem ipsum'
+export const placeholderParagraph =
+  'Veritatis omnis at minima. Voluptas sunt eos aperiam non minus. Voluptatem voluptas quam amet. ' +
+  'Qui enim sit et cumque doloribus facilis neque.Dolores in molestias cum excepturi reiciendis.'
+
+export const placeholderTitle = 'In dicta dolore numquam qui dolor'
+
+export const placeholderImage = {
+  url: '/placeholder.jpeg',
+  caption: 'placeholder image',
+}
+
 export interface Page {
   id: number
   title: string
@@ -94,4 +106,34 @@ export interface CreateResponse<T> {
     message: string
     record?: T
   }
+}
+export interface ImageBlock extends BlockConfiguration {
+  title: TextData
+  description: ItemListField<TextData>
+  image?: BlockImage | null
+  link?: LinkData | null
+  video?: BlockVideo | null
+  videoLink?: TextData | null
+  date?: TextData
+  categoryLink?: LinkData
+  category?: TextData
+}
+export const imageBlock = {
+  title: {
+    english: placeholderTitle,
+    malayalam: placeholderTitle,
+  },
+  description: {
+    lastUUID: 1,
+    items: [
+      {
+        id: 1,
+        item: {
+          english: placeholderParagraph,
+          malayalam: placeholderParagraph,
+        },
+      },
+    ],
+  },
+  image: placeholderImage,
 }
