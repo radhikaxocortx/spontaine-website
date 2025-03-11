@@ -43,7 +43,7 @@ const PageBuilder = ({ page, dependencies }: Properties) => {
   }
   return (
     <>
-      <div className='h-64 bg-slate-900 px-2 pt-10 shadow-2xl'>
+      <div className='h-64 bg-tertiary-950 px-2 pt-10 shadow-2xl'>
         <div className='mb-2 mt-5 flex w-full flex-wrap items-start justify-start'>
           <span className='text-sm text-white'>/{page.url}</span>
         </div>
@@ -79,6 +79,7 @@ const PageBuilder = ({ page, dependencies }: Properties) => {
               dataKey='value'
               value={language}
               setValue={(value: string) => setLanguage(value as Language)}
+              style='dark'
             />
           </div>
           <AddPageBlock

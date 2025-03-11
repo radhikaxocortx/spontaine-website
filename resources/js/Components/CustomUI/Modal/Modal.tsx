@@ -30,7 +30,7 @@ export default function Modal({
       open
       onOpenChange={setShowModal}
     >
-      <DialogContent className={large ? 'max-w-2xl' : 'max-w-lg'}>
+      <DialogContent className={`mt-10 overflow-scroll ${large ? 'max-w-5xl' : 'max-w-lg'}`}>
         <DialogHeader>
           {title && (
             <DialogTitle>

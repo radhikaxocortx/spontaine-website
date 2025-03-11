@@ -11,6 +11,7 @@ const pageBlocks = [
   { name: 'Home - Image Cards' },
   { name: 'Home - Grid With Video' },
   { name: 'Home - Full Width Image With Title' },
+  { name: 'Content Section - FAQ Style Accordion with Links' },
   { name: 'Sample - Left Image' },
   { name: 'Formatted Text' },
 ]
