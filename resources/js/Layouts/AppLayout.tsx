@@ -1,5 +1,5 @@
 import React from 'react'
-import Navbar from './NavBar'
+import Navbar from '@/Layouts/Navbar'
 
 interface Properties {
   children: React.ReactNode
