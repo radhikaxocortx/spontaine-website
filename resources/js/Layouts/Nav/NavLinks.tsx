@@ -4,7 +4,7 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   navigationMenuTriggerStyle,
-} from '@/components/ui/navigation-menu'
+} from '@/Components/ui/navigation-menu'
 import { Link } from '@inertiajs/react'
 
 export function NavLinks() {
