@@ -3,6 +3,7 @@ import { imageBlock } from '@/Modules/PageBuilder/Blocks/LeftImageBlock'
 import { richTextData } from '@/Modules/PageBuilder/Blocks/RichText/RichTextBlock'
 import { BlockFieldValues } from '@/Modules/PageBuilder/Components/BlockEditor/BlockEditor'
 import { Block, ItemListField, PageBlock } from '@/Modules/PageBuilder/page_interfaces'
+import { faqBlock } from '../Blocks/FAQ'
 import { fullWidthImageWithTItleBlock } from '../Blocks/FullWidthImageWithTItle'
 import { gridWithVideoBlock } from '../Blocks/GridWithVideo'
 import { imageCardsBlock } from '../Blocks/ImageCards'
@@ -56,6 +57,12 @@ const getBlockDefaultData = (blockName: string) => {
     case 'Home - Full Width Image With Title': {
       return {
         ...fullWidthImageWithTItleBlock,
+      }
+    }
+
+    case 'Content Section - FAQ Style Accordion with Links': {
+      return {
+        ...faqBlock,
       }
     }
     case 'Formatted Text': {

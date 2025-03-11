@@ -177,7 +177,10 @@ const ImageCards = ({
                       size='md'
                       variant={'outlineSecondary'}
                     >
-                      {blockData.link.name.english}
+                      <Localization
+                        language={language}
+                        text={blockData.link.name}
+                      />
                       <ArrowRightIcon className='ml-2 h-4 w-4' />
                     </Button>
                   </InertiaLink>

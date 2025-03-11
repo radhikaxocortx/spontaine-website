@@ -61,7 +61,7 @@ export default function Login({ status, canResetPassword }: Readonly<Props>) {
           {errors.password && <p className='text-sm text-red-600'>{errors.password}</p>}
         </div>
 
-        <div className='flex items-center'>
+        <div className='flex items-center gap-2'>
           <Checkbox
             id='remember'
             checked={data.remember}
