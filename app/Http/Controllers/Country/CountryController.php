@@ -29,7 +29,7 @@ class CountryController extends Controller
     public function create()
     {
         $currency = ReferenceData::fullData()
-            ->where('domain', 'Entity-Country-Info')
+            ->where('domain', 'Country')
             ->where('parameter', 'Currency')
             ->get();
 
@@ -74,7 +74,7 @@ class CountryController extends Controller
     {
         $country = Country::find($id);
         $currency = ReferenceData::fullData()
-            ->where('domain', 'Entity-Country-Info')
+            ->where('domain', 'Country')
             ->where('parameter', 'Currency')
             ->get();
 
