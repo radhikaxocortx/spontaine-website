@@ -29,7 +29,7 @@ class WorkflowController extends Controller
     public function create()
     {
         $status = ReferenceData::fullData()
-            ->where('domain', 'Entity-Workflow-Info')
+            ->where('domain', 'Workflow')
             ->where('parameter', 'Status')
             ->get();
 
@@ -72,9 +72,14 @@ class WorkflowController extends Controller
     public function edit(string $id)
     {
         $workflow = Workflow::with('country', 'priceplan')->find($id);
+        $status = ReferenceData::fullData()
+            ->where('domain', 'Workflow')
+            ->where('parameter', 'Status')
+            ->get();
 
         return Inertia::render('Workflow/WorkflowEdit', [
             'workflow' => $workflow,
+            'status' => $status,
         ]);
     }
 
