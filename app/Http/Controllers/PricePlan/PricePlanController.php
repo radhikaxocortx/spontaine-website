@@ -29,7 +29,7 @@ class PricePlanController extends Controller
     public function create()
     {
         $type = ReferenceData::fullData()
-            ->where('domain', 'Entity-PricePlan-Info')
+            ->where('domain', 'Price Plan')
             ->where('parameter', 'Type')
             ->get();
 
@@ -75,7 +75,7 @@ class PricePlanController extends Controller
     {
         $pricePlan = PricePlan::find($id);
         $type = ReferenceData::fullData()
-            ->where('domain', 'Entity-PricePlan-Info')
+            ->where('domain', 'Price Plan')
             ->where('parameter', 'Type')
             ->get();
 
