@@ -15,6 +15,7 @@ import {
   BlockConfiguration,
   BlockImage,
   BlockVideo,
+  ItemListField,
   LinkData,
   PageDataDependencies,
   RequiredTextData,
@@ -22,6 +23,7 @@ import {
 } from '@/Modules/PageBuilder/page_interfaces'
 import { ArrowDownIcon, ArrowUpIcon, Settings2Icon, XIcon } from 'lucide-react'
 import React, { useCallback, useState } from 'react'
+import { FAQItemData } from '../../Blocks/FAQ'
 
 interface Properties {
   block: Block
@@ -48,6 +50,8 @@ export type BlockFieldValues =
   | LinkData
   | BlockImage
   | BlockVideo
+  | FAQItemData
+  | ItemListField<TextData>
   | { link: LinkData }
   | null
   | undefined

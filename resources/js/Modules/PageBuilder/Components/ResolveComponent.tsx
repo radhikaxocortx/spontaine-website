@@ -7,6 +7,7 @@ import { PageBuilderAction } from '@/Modules/PageBuilder/hooks/pageBuilderServic
 import { Block, PageDataDependencies } from '@/Modules/PageBuilder/page_interfaces'
 import { Language } from '@/Modules/PageBuilder/Pages/PageBuilder'
 import React from 'react'
+import FAQ, { FAQBlockInfo } from '../Blocks/FAQ'
 import FullWidthImageWithTItle, {
   FullWidthImageWithTItleBlock,
 } from '../Blocks/FullWidthImageWithTItle'
@@ -82,6 +83,15 @@ const ResolveComponent = ({
           onFieldEdit={onFieldEdit}
           blockData={block as unknown as FullWidthImageWithTItleBlock}
           language={language}
+        />
+      )}
+      {blockName === 'Content Section - FAQ Style Accordion with Links' && (
+        <FAQ
+          language={language}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          blockData={block as unknown as FAQBlockInfo}
+          dispatch={dispatch}
         />
       )}
     </>
