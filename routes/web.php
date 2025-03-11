@@ -9,16 +9,16 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReferenceData\ReferenceDataAPIController;
 use App\Http\Controllers\ReferenceData\ReferenceDataController;
 use App\Http\Controllers\Workflow\WorkflowController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Modules\PageBuilder\Models\Page;
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
+    $page = Page::where('url', 'home')
+        ->firstOrFail();
+
+    return Inertia::render('PageBuilder/ViewBuilderPage', [
+        'page' => $page,
     ]);
 });
 
@@ -33,7 +33,6 @@ Route::middleware('auth')->group(function () {
 });
 
 // Reference Data
-
 Route::resource('/reference-data', ReferenceDataController::class);
 
 Route::get('domain-list', [ReferenceDataAPIController::class, 'domainList'])
@@ -66,6 +65,7 @@ Route::apiResource('entity-template-item', EntityTemplateItemController::class)
 // AutoComplete
 Route::get('country-list', [AutoCompleteController::class, 'findCountry'])
     ->name('country-list');
+
 Route::get('priceplan-list', [AutoCompleteController::class, 'findPriceplan'])
     ->name('priceplan-list');
 
