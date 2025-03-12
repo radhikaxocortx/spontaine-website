@@ -33,19 +33,19 @@ const SidebarMenuItems: SidebarMenuItem[] = [
         },
       },
       {
-        name: 'Price Plan',
+        name: 'Price Plans',
         url: '/price-plan',
         value: 'price-plan',
         image: { svg: `` },
       },
       {
-        name: 'Country',
+        name: 'Countries',
         url: '/country',
         value: 'country',
         image: { svg: `` },
       },
       {
-        name: 'Workflow',
+        name: 'Workflows',
         url: '/workflow',
         value: 'workflow',
         image: { svg: `` },
