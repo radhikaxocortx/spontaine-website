@@ -28,7 +28,7 @@ export interface Workflow extends Model {
 
 export interface EntityTemplate extends Model {
   workflow_id: number
-  sequence: string
+  sequence: number
   name: string
   description: string | null
   workflow_items: EntityTemplateItem[]
