@@ -130,7 +130,7 @@ const FAQ = ({
 
   return (
     <div
-      className={`bg-gradient-to-r from-secondary-100 to-white py-6 ${editMode ? '' : blockStyling}`}
+      className={`place-items-center bg-gradient-to-r from-secondary-100 to-white py-6 ${editMode ? '' : blockStyling}`}
     >
       <AppLayoutPadding>
         <div className='gris-cols-1 grid gap-8 md:grid-cols-2'>

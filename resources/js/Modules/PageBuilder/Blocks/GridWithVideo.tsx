@@ -124,7 +124,7 @@ const GridWithVideo = ({
 
   return (
     <div
-      className={`bg-gradient-to-r from-secondary-100 to-white py-6 ${editMode ? '' : blockStyling}`}
+      className={`place-items-center bg-gradient-to-r from-secondary-100 to-white py-6 ${editMode ? '' : blockStyling}`}
     >
       <AppLayoutPadding>
         <div className={`grid grid-cols-1 md:grid-cols-12 md:gap-6 lg:gap-4`}>

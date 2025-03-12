@@ -127,7 +127,7 @@ const SectionHero = ({
 
   return (
     <div
-      className={`flex flex-col py-6 ${blockData?.marginTop} ${blockData?.marginBottom} ${blockData?.paddingTop} ${blockData?.paddingBottom}`}
+      className={`flex flex-col items-center py-6 ${blockData?.marginTop} ${blockData?.marginBottom} ${blockData?.paddingTop} ${blockData?.paddingBottom}`}
     >
       <AppLayoutPadding>
         <div className='flex flex-col gap-4 md:gap-2 lg:gap-0'>
