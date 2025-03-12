@@ -95,7 +95,7 @@ const FullWidthImageWithTItle = ({
   const blockStyling = useBlockStyling(blockData)
 
   return (
-    <div className={`bg-white py-6 ${editMode ? '' : blockStyling}`}>
+    <div className={`place-items-center bg-white py-6 ${editMode ? '' : blockStyling}`}>
       <AppLayoutPadding>
         <div className={`flex w-full flex-col gap-2`}>
           <div className='w-full justify-start'>

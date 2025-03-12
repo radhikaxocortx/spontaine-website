@@ -6,7 +6,7 @@ import { NavLinks } from './Nav/NavLinks'
 
 const Navbar = () => {
   return (
-    <nav className='sticky top-0 z-50 bg-white shadow-md'>
+    <nav className='sticky top-0 z-50 place-items-center bg-white shadow-md'>
       <AppLayoutPadding>
         <div className='flex items-center justify-between py-4'>
           <div className='flex items-center'>

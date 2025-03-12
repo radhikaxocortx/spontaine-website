@@ -119,7 +119,7 @@ const ImageCards = ({
   const blockStyling = useBlockStyling(blockData)
 
   return (
-    <div className={`bg-beige-50 py-6 ${editMode ? '' : blockStyling}`}>
+    <div className={`place-items-center bg-beige-50 py-6 ${editMode ? '' : blockStyling}`}>
       <AppLayoutPadding>
         <div className={`flex w-full flex-col gap-2`}>
           <div className='w-full justify-start'>
