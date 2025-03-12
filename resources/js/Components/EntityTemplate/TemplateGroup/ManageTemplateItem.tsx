@@ -51,30 +51,32 @@ export default function ManageTemplateItems({ workflowModule }: Props) {
 
   //table data
   const data = useMemo(() => {
-    return workflowModule.workflow_items.map((record) => {
-      return {
-        id: record.id,
-        field_name: `${record.field_number}) ${record.field_name}`,
-        type: record.type,
-        default_value: record.default_value,
-        actions: [
-          {
-            action: () => {
-              setSelectedItem(record)
-              setShowUpdateModal(true)
+    return workflowModule.workflow_items
+      .sort((a, b) => a.field_number - b.field_number)
+      .map((record) => {
+        return {
+          id: record.id,
+          field_name: `${record.field_number}) ${record.field_name}`,
+          type: record.type,
+          default_value: record.default_value,
+          actions: [
+            {
+              action: () => {
+                setSelectedItem(record)
+                setShowUpdateModal(true)
+              },
+              title: 'EDIT',
             },
-            title: 'EDIT',
-          },
-          {
-            action: () => {
-              setSelectedItem(record)
-              setShowDeleteModal(true)
+            {
+              action: () => {
+                setSelectedItem(record)
+                setShowDeleteModal(true)
+              },
+              title: 'DELETE',
             },
-            title: 'DELETE',
-          },
-        ],
-      }
-    })
+          ],
+        }
+      })
   }, [workflowModule])
 
   const handleSubmit = useCallback(
