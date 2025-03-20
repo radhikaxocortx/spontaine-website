@@ -47,6 +47,7 @@ export default function TemplateItemForm({
     domain: item?.domain ?? '',
     parameter: item?.parameter ?? '',
     default_value: item?.default_value ?? '',
+    placeholder: item?.placeholder ?? '',
   })
 
   const formItems = useMemo(<
@@ -66,6 +67,11 @@ export default function TemplateItemForm({
         type: 'text',
         label: 'Field Name',
         setValue: setFormValue('field_name'),
+      },
+      placeholder: {
+        type: 'text',
+        label: 'Placeholder',
+        setValue: setFormValue('placeholder'),
       },
       type: {
         type: 'select',

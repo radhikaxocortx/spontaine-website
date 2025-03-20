@@ -46,6 +46,10 @@ export default function ManageTemplateItems({ workflowModule }: Props) {
         key: 'default_value',
         label: 'Default Value',
       },
+      {
+        key: 'placeholder',
+        label: 'Placeholder',
+      },
     ] as ListItemKeys<Partial<EntityTemplate>>[]
   }, [])
 
@@ -59,6 +63,7 @@ export default function ManageTemplateItems({ workflowModule }: Props) {
           field_name: `${record.field_number}) ${record.field_name}`,
           type: record.type,
           default_value: record.default_value,
+          placeholder: record.placeholder,
           actions: [
             {
               action: () => {

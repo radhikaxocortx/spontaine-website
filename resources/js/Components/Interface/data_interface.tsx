@@ -42,6 +42,7 @@ export interface EntityTemplateItem extends Model {
   domain: string | null
   parameter: string | null
   default_value: string | null
+  placeholder: string | null
 }
 
 export interface ReferenceData extends Model {

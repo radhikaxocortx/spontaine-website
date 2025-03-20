@@ -17,6 +17,6 @@ class EntityTemplateItem extends Model
         'default_value',
         'domain',
         'parameter',
-
+        'placeholder',
     ];
 }

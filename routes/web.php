@@ -34,7 +34,6 @@ Route::middleware('auth')->group(function () {
 
 // Reference Data
 Route::resource('/reference-data', ReferenceDataController::class);
-
 Route::get('domain-list', [ReferenceDataAPIController::class, 'domainList'])
     ->name('domain-list');
 Route::get('parameter-list', [ReferenceDataAPIController::class, 'parameterList'])
@@ -65,7 +64,6 @@ Route::apiResource('entity-template-item', EntityTemplateItemController::class)
 // AutoComplete
 Route::get('country-list', [AutoCompleteController::class, 'findCountry'])
     ->name('country-list');
-
 Route::get('priceplan-list', [AutoCompleteController::class, 'findPriceplan'])
     ->name('priceplan-list');
 
