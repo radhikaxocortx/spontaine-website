@@ -15,9 +15,9 @@ class EntityTemplateFormRequest extends Data
         public readonly string $sequence,
         public readonly string $name,
         #[Max(1000)]
-        public readonly ?string $description,
+        public readonly string $description,
         public readonly ?string $prevButton,
-        public readonly ?string $nextButton,
+        public readonly string $nextButton,
 
     ) {}
 }

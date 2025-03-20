@@ -17,6 +17,7 @@ class Country extends Model
         'description',
         'currency',
         'currency_code',
+        'currency_symbol',
         'base_cxy_conv_rate',
         'tax_name',
         'tax_code',

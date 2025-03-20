@@ -15,6 +15,7 @@ const CountryEdit = ({ currency, country }: Props) => {
     description: country.description,
     currency: country.currency,
     currency_code: country.currency_code,
+    currency_symbol: country.currency_symbol,
     base_cxy_conv_rate: country.base_cxy_conv_rate,
     tax_name: country.tax_name,
     tax_code: country.tax_code,
@@ -55,6 +56,11 @@ const CountryEdit = ({ currency, country }: Props) => {
         label: 'Currency Code',
         type: 'text',
         setValue: setFormValue('currency_code'),
+      },
+      currency_symbol: {
+        label: 'Currency Symbol',
+        type: 'text',
+        setValue: setFormValue('currency_symbol'),
       },
       base_cxy_conv_rate: {
         label: 'Base Currency Conversion Rate',

@@ -14,6 +14,7 @@ const CountryCreate = ({ currency }: Props) => {
     description: '',
     currency: '',
     currency_code: '',
+    currency_symbol: '',
     base_cxy_conv_rate: '',
     tax_name: '',
     tax_code: '',
@@ -54,6 +55,11 @@ const CountryCreate = ({ currency }: Props) => {
         label: 'Currency Code',
         type: 'text',
         setValue: setFormValue('currency_code'),
+      },
+      currency_symbol: {
+        label: 'Currency Symbol',
+        type: 'text',
+        setValue: setFormValue('currency_symbol'),
       },
       base_cxy_conv_rate: {
         label: 'Base Currency Conversion Rate',

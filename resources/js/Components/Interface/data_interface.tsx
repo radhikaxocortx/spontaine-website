@@ -73,6 +73,7 @@ export interface Country extends Model {
   description: string
   currency: string
   currency_code: string
+  currency_symbol: string
   base_cxy_conv_rate: number
   tax_name: string
   tax_code: string
