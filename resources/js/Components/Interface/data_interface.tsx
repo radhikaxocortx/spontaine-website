@@ -32,6 +32,8 @@ export interface EntityTemplate extends Model {
   name: string
   description: string | null
   workflow_items: EntityTemplateItem[]
+  prev_button: string | null
+  next_button: string | null
 }
 
 export interface EntityTemplateItem extends Model {

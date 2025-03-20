@@ -17,6 +17,8 @@ class EntityTemplate extends Model
         'name',
         'description',
         'workflow_id',
+        'prev_button',
+        'next_button',
     ];
 
     public function workflowItems(): HasMany

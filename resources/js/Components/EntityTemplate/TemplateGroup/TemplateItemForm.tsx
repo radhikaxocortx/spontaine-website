@@ -12,13 +12,16 @@ interface Props {
 }
 
 const types = [
-  { name: 'Text', value: 'text' },
+  { name: 'Checkbox', value: 'checkbox' },
   { name: 'Date', value: 'date' },
-  { name: 'Number', value: 'number' },
-  { name: 'Long Text', value: 'long_text' },
   { name: 'Dropdown', value: 'dropdown' },
   { name: 'Image', value: 'image' },
+  { name: 'Long Text', value: 'long_text' },
+  { name: 'Multiple Select Pills', value: 'multi_list_pills' },
+  { name: 'Number', value: 'number' },
   { name: 'PDF', value: 'pdf' },
+  { name: 'Single Select Pills', value: 'single_list_pills' },
+  { name: 'Text', value: 'text' },
   { name: 'Word Document', value: 'word_document' },
 ]
 
@@ -68,20 +71,20 @@ export default function TemplateItemForm({
         label: 'Field Name',
         setValue: setFormValue('field_name'),
       },
-      placeholder: {
-        type: 'text',
-        label: 'Placeholder',
-        setValue: setFormValue('placeholder'),
-      },
+
       type: {
         type: 'select',
-        label: 'Value',
+        label: 'Field Type',
         setValue: setFormValue('type'),
         list: types,
         dataKey: 'value',
         displayKey: 'name',
         showAllOption: true,
-        allOptionText: 'All',
+      },
+      placeholder: {
+        type: 'text',
+        label: 'Placeholder',
+        setValue: setFormValue('placeholder'),
       },
       domain: {
         label: 'Domain',
@@ -93,7 +96,10 @@ export default function TemplateItemForm({
         list: domains,
         displayKey: 'domain',
         dataKey: 'domain',
-        hidden: formData.type !== 'dropdown',
+        hidden:
+          formData.type !== 'dropdown' &&
+          formData.type !== 'single_list_pills' &&
+          formData.type !== 'multi_list_pills',
       },
       parameter: {
         label: 'Parameter',
@@ -104,7 +110,10 @@ export default function TemplateItemForm({
         selectListUrl: route('parameter-list', {
           domain: domains.find((domain) => domain.domain === formData.domain)?.id ?? '',
         }),
-        hidden: formData.type !== 'dropdown',
+        hidden:
+          formData.type !== 'dropdown' &&
+          formData.type !== 'single_list_pills' &&
+          formData.type !== 'multi_list_pills',
       },
       default_value: {
         type: getDefaultValue(formData.type),

@@ -29,6 +29,8 @@ export default function EntityTemplateUpdateForm({
     name: entityTemplate?.name ?? '',
     description: entityTemplate?.description ?? '',
     workflow_id: entityTemplate?.workflow_id,
+    prev_button: entityTemplate?.prev_button ?? '',
+    next_button: entityTemplate?.next_button ?? '',
   })
   const formItems = useMemo(<
     T,
@@ -56,6 +58,16 @@ export default function EntityTemplateUpdateForm({
         type: 'textarea',
         label: 'Description',
         setValue: setFormValue('description'),
+      },
+      prev_button: {
+        type: 'text',
+        label: 'Previous Button Label',
+        setValue: setFormValue('prev_button'),
+      },
+      next_button: {
+        type: 'text',
+        label: 'Next Button Label',
+        setValue: setFormValue('next_button'),
       },
     } as Record<U, FormItem<T[U], K, G, L>>
   }, [setFormValue])
