@@ -47,6 +47,10 @@ export interface EntityTemplateItem extends Model {
   placeholder: string | null
 }
 
+export interface EntityTemplateFormItem extends EntityTemplateItem {
+  value: string
+  file: File | null
+}
 export interface ReferenceData extends Model {
   domain_id: number
   parameter_id: number

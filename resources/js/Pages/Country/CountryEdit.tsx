@@ -41,7 +41,7 @@ const CountryEdit = ({ currency, country }: Props) => {
       },
       description: {
         label: 'Description',
-        type: 'text',
+        type: 'textarea',
         setValue: setFormValue('description'),
       },
       currency: {

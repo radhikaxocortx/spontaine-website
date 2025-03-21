@@ -20,6 +20,7 @@ const types = [
   { name: 'Multiple Select Pills', value: 'multi_list_pills' },
   { name: 'Number', value: 'number' },
   { name: 'PDF', value: 'pdf' },
+  { name: 'Phone Number', value: 'phone_number' },
   { name: 'Single Select Pills', value: 'single_list_pills' },
   { name: 'Text', value: 'text' },
   { name: 'Word Document', value: 'word_document' },
@@ -28,7 +29,10 @@ const types = [
 const getDefaultValue = (type: string) => {
   switch (type) {
     case 'dropdown':
+    case 'single_list_pills':
+    case 'multi_list_pills':
       return 'dynamicSelect'
+
     case 'date':
       return 'date'
     default:
