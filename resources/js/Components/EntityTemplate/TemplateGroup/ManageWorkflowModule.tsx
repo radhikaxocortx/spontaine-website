@@ -1,6 +1,6 @@
 import DeleteModal from '@/Components/CustomUI/Modal/DeleteModal'
 import Modal from '@/Components/CustomUI/Modal/Modal'
-import { EntityTemplate } from '@/Components/Interface/data_interface'
+import { WorkflowModule } from '@/Components/Interface/data_interface'
 import {
   Accordion,
   AccordionContent,
@@ -12,12 +12,12 @@ import EntityTemplateUpdateForm from './EntityTemplateUpdateForm'
 import ManageTemplateItems from './ManageTemplateItem'
 
 interface Props {
-  module: EntityTemplate[]
+  module: WorkflowModule[]
 }
 
 export default function ManageWorkflowModule({ module }: Readonly<Props>) {
-  const [editModal, setEditModal] = useState<EntityTemplate | null>(null)
-  const [selectedModule, setSelectedModule] = useState<EntityTemplate | null>(null)
+  const [editModal, setEditModal] = useState<WorkflowModule | null>(null)
+  const [selectedModule, setSelectedModule] = useState<WorkflowModule | null>(null)
 
   return (
     <Accordion

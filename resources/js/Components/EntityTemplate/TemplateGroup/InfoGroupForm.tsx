@@ -3,16 +3,16 @@ import DynamicSelectList from '@/Components/CustomUI/FormFields/DynamicSelectLis
 import DynamicSelectPills from '@/Components/CustomUI/FormFields/DynamicSelectPills'
 import FileInput from '@/Components/CustomUI/FormFields/FileInput'
 import InputDescription from '@/Components/CustomUI/FormFields/InputDescription'
+import InputText from '@/Components/CustomUI/FormFields/InputText'
 import { PhoneInput } from '@/Components/CustomUI/FormFields/PhoneInput'
-import { EntityTemplateFormItem } from '@/Components/Interface/data_interface'
+import { WorflowFormItem } from '@/Components/Interface/data_interface'
 import { Checkbox } from '@/components/ui/checkbox'
-import { Input } from '@/components/ui/input'
 import NormalText from '@/typography/NormalText'
 
 interface Props {
   updateTextValue: (entityItemId: number, value: string) => void
   updateFileValue: (entityItemId: number, value: File | null) => void
-  item: EntityTemplateFormItem
+  item: WorflowFormItem
 }
 
 export default function InfoGroupForm({ updateTextValue, updateFileValue, item }: Readonly<Props>) {
@@ -43,23 +43,25 @@ export default function InfoGroupForm({ updateTextValue, updateFileValue, item }
         <DatePicker
           setValue={(value) => updateTextValue(item.id, value)}
           label={item.field_name}
+          placeholder={item.placeholder ?? ''}
           value={item.value}
         />
       )}
       {item.type === 'checkbox' && (
-        <div className='flexs'>
+        <div className='flex p-2'>
           <Checkbox
             onCheckedChange={(val) => updateTextValue(item.id, val ? 'true' : 'false')}
             checked={item.value === 'true'}
           />
-          <NormalText>{item.field_name}</NormalText>
+          <NormalText className='pl-2'>{item.field_name}</NormalText>
         </div>
       )}
       {(item.type === 'text' || item.type === 'number') && (
-        <Input
+        <InputText
           setValue={(value) => updateTextValue(item.id, value)}
           value={item.value}
           label={item.field_name}
+          placeholder={item.placeholder ?? ''}
         />
       )}
       {item.type === 'long_text' && (
@@ -67,6 +69,7 @@ export default function InfoGroupForm({ updateTextValue, updateFileValue, item }
           setValue={(value) => updateTextValue(item.id, value)}
           label={item.field_name}
           value={item.value}
+          placeholder={item.placeholder ?? ''}
         />
       )}
       {item.type === 'phone_number' && (
@@ -89,6 +92,7 @@ export default function InfoGroupForm({ updateTextValue, updateFileValue, item }
           showAllOption
           allOptionText={`Select ${item.field_name}`}
           value={item.value}
+          placeholder={item.placeholder ?? ''}
         />
       )}
       {(item.type === 'pdf' || item.type === 'word_document' || item.type === 'image') && (
@@ -112,6 +116,7 @@ export default function InfoGroupForm({ updateTextValue, updateFileValue, item }
             setValue={(file) => updateFileValue(item.id, file)}
             label={`${item.field_name} ${fileInputLabel(item.type)}`}
             accept={findFileType(item.type)}
+            placeholder={item.placeholder ?? ''}
           />
         </>
       )}

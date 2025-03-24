@@ -1,11 +1,11 @@
-import { EntityTemplate } from '@/Components/Interface/data_interface'
+import { WorkflowModule } from '@/Components/Interface/data_interface'
 import FormBuilder, { FormItem } from '@/FormBuilder/FormBuilder'
 import useCustomForm from '@/hooks/useCustomForm'
 import useInertiaPost from '@/hooks/useInertiaPost'
 import { Dispatch, FormEvent, SetStateAction, useCallback, useMemo } from 'react'
 
 interface Props {
-  entityTemplate: EntityTemplate
+  entityTemplate: WorkflowModule
   setShowForm: Dispatch<SetStateAction<boolean>>
 }
 

@@ -1,11 +1,11 @@
-import { EntityTemplateItem, ReferenceData } from '@/Components/Interface/data_interface'
+import { ReferenceData, WorkflowModuleItem } from '@/Components/Interface/data_interface'
 import FormBuilder, { FormItem } from '@/FormBuilder/FormBuilder'
 import useCustomForm from '@/hooks/useCustomForm'
 import useFetchList from '@/hooks/useFetchList'
 import { FormEvent, useMemo } from 'react'
 
 interface Props {
-  item?: EntityTemplateItem
+  item?: WorkflowModuleItem
   errors: Record<string, string | unknown>
   loading: boolean
   onSubmit: (data: Record<string, string | boolean | number>) => void
@@ -89,6 +89,11 @@ export default function TemplateItemForm({
         type: 'text',
         label: 'Placeholder',
         setValue: setFormValue('placeholder'),
+        hidden:
+          formData.type === 'checkbox' ||
+          formData.type === 'single_list_pills' ||
+          formData.type === 'multi_list_pills' ||
+          formData.type === 'phone_number',
       },
       domain: {
         label: 'Domain',

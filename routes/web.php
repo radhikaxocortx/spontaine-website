@@ -4,6 +4,7 @@ use App\Http\Controllers\AutoComplete\AutoCompleteController;
 use App\Http\Controllers\Country\CountryController;
 use App\Http\Controllers\EntityTemplate\EntityTemplateController;
 use App\Http\Controllers\EntityTemplate\EntityTemplateItemController;
+use App\Http\Controllers\EntityTemplate\workflowAPIController;
 use App\Http\Controllers\PricePlan\PricePlanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReferenceData\ReferenceDataAPIController;
@@ -54,12 +55,16 @@ Route::resource('/country', CountryController::class)
 // workflow
 Route::resource('workflow', WorkflowController::class)
     ->parameters(['workflow' => 'workflow']);
-
-// Entity Template
 Route::apiResource('/entity-templates', EntityTemplateController::class)
     ->parameters(['entity-templates' => 'entityTemplates']);
 Route::apiResource('entity-template-item', EntityTemplateItemController::class)
     ->parameters(['entity-template-item' => 'templateItem']);
+
+Route::get('workflow-module', workflowAPIController::class)
+    ->name('workflow-module');
+
+Route::get('workflow-test', [workflowAPIController::class, 'workflowTest'])
+    ->name('workflow-test');
 
 // AutoComplete
 Route::get('country-list', [AutoCompleteController::class, 'findCountry'])
