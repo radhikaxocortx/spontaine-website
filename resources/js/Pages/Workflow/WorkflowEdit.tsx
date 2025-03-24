@@ -96,6 +96,7 @@ const WorkflowEdit = ({ workflow, status }: Props) => {
       title='Update Workflow'
       url={route('workflow.update', workflow.id)}
       backUrl={route('workflow.index')}
+      isPatchRequest
     />
   )
 }

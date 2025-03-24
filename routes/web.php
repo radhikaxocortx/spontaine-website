@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AutoComplete\AutoCompleteController;
 use App\Http\Controllers\Country\CountryController;
+use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\EntityTemplate\EntityTemplateController;
 use App\Http\Controllers\EntityTemplate\EntityTemplateItemController;
 use App\Http\Controllers\EntityTemplate\workflowAPIController;
@@ -32,7 +33,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
+// Sign Up Form
+Route::resource('sign-up', CustomerController::class)
+    ->parameters(['sign-up' => 'customer']);
 // Reference Data
 Route::resource('/reference-data', ReferenceDataController::class);
 Route::get('domain-list', [ReferenceDataAPIController::class, 'domainList'])
