@@ -93,12 +93,21 @@ const CustomerCreate = () => {
         placeholder: 'Enter Password',
         type: 'password',
         setValue: setFormValue('password'),
+        validate: (val: string) => {
+          if (!val) return 'Password is required'
+          return true
+        },
       },
       retype_password: {
         label: 'Retype Password',
         placeholder: 'Retype Password',
         type: 'password',
         setValue: setFormValue('retype_password'),
+        validate: (val: string) => {
+          if (!val) return 'Please confirm your password'
+          if (val !== formData.password) return 'Passwords do not match'
+          return true
+        },
       },
       have_company: {
         label: 'Are you signing up on behalf of a company? ',
