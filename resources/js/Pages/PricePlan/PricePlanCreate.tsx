@@ -45,7 +45,7 @@ const PricePlanCreate = ({ type }: Props) => {
       },
       description: {
         label: 'Price Plan Description',
-        type: 'text',
+        type: 'textarea',
         setValue: setFormValue('description'),
       },
       min_quantity_required: {

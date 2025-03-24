@@ -1,11 +1,10 @@
-import { useCallback, useEffect, useState } from 'react'
+import { handleHttpErrors } from '@/Components/ui/alerts'
 import axios from 'axios'
-import { handleHttpErrors } from '@/ui/alerts'
-import { Paginator } from '@/ui/ui_interfaces'
+import { useCallback, useEffect, useState } from 'react'
 
-export default function useFetchRecord<T>(url: string): [Paginator<T> | null, boolean] {
+export default function useFetchRecord<T>(url: string): [T | null, boolean] {
   const [loading, setLoading] = useState(false)
-  const [list, setList] = useState<Paginator<T> | null>(null)
+  const [list, setList] = useState<T | null>(null)
 
   const fetchList = useCallback(async () => {
     setLoading(true)

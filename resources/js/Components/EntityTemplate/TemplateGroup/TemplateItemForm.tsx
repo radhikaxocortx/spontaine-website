@@ -1,31 +1,38 @@
-import { EntityTemplateItem, ReferenceData } from '@/Components/Interface/data_interface'
+import { ReferenceData, WorkflowModuleItem } from '@/Components/Interface/data_interface'
 import FormBuilder, { FormItem } from '@/FormBuilder/FormBuilder'
 import useCustomForm from '@/hooks/useCustomForm'
 import useFetchList from '@/hooks/useFetchList'
 import { FormEvent, useMemo } from 'react'
 
 interface Props {
-  item?: EntityTemplateItem
+  item?: WorkflowModuleItem
   errors: Record<string, string | unknown>
   loading: boolean
   onSubmit: (data: Record<string, string | boolean | number>) => void
 }
 
 const types = [
-  { name: 'Text', value: 'text' },
+  { name: 'Checkbox', value: 'checkbox' },
   { name: 'Date', value: 'date' },
-  { name: 'Number', value: 'number' },
-  { name: 'Long Text', value: 'long_text' },
   { name: 'Dropdown', value: 'dropdown' },
   { name: 'Image', value: 'image' },
+  { name: 'Long Text', value: 'long_text' },
+  { name: 'Multiple Select Pills', value: 'multi_list_pills' },
+  { name: 'Number', value: 'number' },
   { name: 'PDF', value: 'pdf' },
+  { name: 'Phone Number', value: 'phone_number' },
+  { name: 'Single Select Pills', value: 'single_list_pills' },
+  { name: 'Text', value: 'text' },
   { name: 'Word Document', value: 'word_document' },
 ]
 
 const getDefaultValue = (type: string) => {
   switch (type) {
     case 'dropdown':
+    case 'single_list_pills':
+    case 'multi_list_pills':
       return 'dynamicSelect'
+
     case 'date':
       return 'date'
     default:
@@ -47,6 +54,7 @@ export default function TemplateItemForm({
     domain: item?.domain ?? '',
     parameter: item?.parameter ?? '',
     default_value: item?.default_value ?? '',
+    placeholder: item?.placeholder ?? '',
   })
 
   const formItems = useMemo(<
@@ -67,15 +75,25 @@ export default function TemplateItemForm({
         label: 'Field Name',
         setValue: setFormValue('field_name'),
       },
+
       type: {
         type: 'select',
-        label: 'Value',
+        label: 'Field Type',
         setValue: setFormValue('type'),
         list: types,
         dataKey: 'value',
         displayKey: 'name',
         showAllOption: true,
-        allOptionText: 'All',
+      },
+      placeholder: {
+        type: 'text',
+        label: 'Placeholder',
+        setValue: setFormValue('placeholder'),
+        hidden:
+          formData.type === 'checkbox' ||
+          formData.type === 'single_list_pills' ||
+          formData.type === 'multi_list_pills' ||
+          formData.type === 'phone_number',
       },
       domain: {
         label: 'Domain',
@@ -87,7 +105,10 @@ export default function TemplateItemForm({
         list: domains,
         displayKey: 'domain',
         dataKey: 'domain',
-        hidden: formData.type !== 'dropdown',
+        hidden:
+          formData.type !== 'dropdown' &&
+          formData.type !== 'single_list_pills' &&
+          formData.type !== 'multi_list_pills',
       },
       parameter: {
         label: 'Parameter',
@@ -98,7 +119,10 @@ export default function TemplateItemForm({
         selectListUrl: route('parameter-list', {
           domain: domains.find((domain) => domain.domain === formData.domain)?.id ?? '',
         }),
-        hidden: formData.type !== 'dropdown',
+        hidden:
+          formData.type !== 'dropdown' &&
+          formData.type !== 'single_list_pills' &&
+          formData.type !== 'multi_list_pills',
       },
       default_value: {
         type: getDefaultValue(formData.type),

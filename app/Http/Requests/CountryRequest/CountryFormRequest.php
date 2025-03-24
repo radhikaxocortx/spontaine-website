@@ -15,6 +15,7 @@ class CountryFormRequest extends Data
         public string $description,
         public string $currency,
         public string $currency_code,
+        public string $currency_symbol,
         public string $base_cxy_conv_rate,
         public string $tax_name,
         public string $tax_code,

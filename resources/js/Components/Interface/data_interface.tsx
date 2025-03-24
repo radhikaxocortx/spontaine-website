@@ -23,18 +23,20 @@ export interface Workflow extends Model {
   priceplan: PricePlan
   status: string
   active_from: string
-  workflow_modules: EntityTemplate[]
+  workflow_modules: WorkflowModule[]
 }
 
-export interface EntityTemplate extends Model {
+export interface WorkflowModule extends Model {
   workflow_id: number
   sequence: number
   name: string
   description: string | null
-  workflow_items: EntityTemplateItem[]
+  workflow_items: WorkflowModuleItem[]
+  prev_button: string | null
+  next_button: string | null
 }
 
-export interface EntityTemplateItem extends Model {
+export interface WorkflowModuleItem extends Model {
   workflow_module_id: number
   field_number: number
   field_name: string
@@ -42,8 +44,13 @@ export interface EntityTemplateItem extends Model {
   domain: string | null
   parameter: string | null
   default_value: string | null
+  placeholder: string | null
 }
 
+export interface WorflowFormItem extends WorkflowModuleItem {
+  value: string
+  file: File | null
+}
 export interface ReferenceData extends Model {
   domain_id: number
   parameter_id: number
@@ -70,6 +77,7 @@ export interface Country extends Model {
   description: string
   currency: string
   currency_code: string
+  currency_symbol: string
   base_cxy_conv_rate: number
   tax_name: string
   tax_code: string

@@ -11,13 +11,14 @@ export interface Props {
   styles?: string
   setValue: (value: File | null) => unknown
   accept?: string
+  placeholder?: string
 }
 
 function fileSizeInMB(sizeInBytes?: number): string {
   return ((sizeInBytes ?? 0) / (1024 * 1024)).toFixed(2)
 }
 
-export default function FileInput({ file, label, error, setValue, accept }: Props) {
+export default function FileInput({ file, label, error, setValue, accept, placeholder }: Props) {
   const onFile = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setValue(e.target.files[0])
@@ -34,6 +35,7 @@ export default function FileInput({ file, label, error, setValue, accept }: Prop
             onChange={onFile}
             accept={accept}
             className='cursor-pointer'
+            placeholder={placeholder}
           />
           {error && <p className='text-sm text-red-500'>{error}</p>}
         </div>

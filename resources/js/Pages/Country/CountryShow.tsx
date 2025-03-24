@@ -46,27 +46,33 @@ const CountryShow = ({ country }: Props) => {
         type: 'text',
       },
       {
+        label: 'Currency Symbol',
+        content: country.currency_symbol,
+        id: 6,
+        type: 'text',
+      },
+      {
         label: 'Base Currency Conversion Rate',
         content: country.base_cxy_conv_rate,
-        id: 6,
+        id: 7,
         type: 'text',
       },
       {
         label: 'Tax Name',
         content: country.tax_name,
-        id: 7,
+        id: 8,
         type: 'text',
       },
       {
         label: 'Tax Code',
         content: country.tax_code,
-        id: 8,
+        id: 9,
         type: 'text',
       },
       {
         label: 'Tax Rate(%)',
         content: country.tax_rate,
-        id: 9,
+        id: 10,
         type: 'text',
       },
     ] as ShowPageItem[]

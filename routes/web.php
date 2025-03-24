@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\AutoComplete\AutoCompleteController;
 use App\Http\Controllers\Country\CountryController;
+use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\EntityTemplate\EntityTemplateController;
 use App\Http\Controllers\EntityTemplate\EntityTemplateItemController;
+use App\Http\Controllers\EntityTemplate\workflowAPIController;
 use App\Http\Controllers\PricePlan\PricePlanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReferenceData\ReferenceDataAPIController;
@@ -31,10 +33,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
+// Sign Up Form
+Route::resource('sign-up', CustomerController::class)
+    ->parameters(['sign-up' => 'customer']);
 // Reference Data
 Route::resource('/reference-data', ReferenceDataController::class);
-
 Route::get('domain-list', [ReferenceDataAPIController::class, 'domainList'])
     ->name('domain-list');
 Route::get('parameter-list', [ReferenceDataAPIController::class, 'parameterList'])
@@ -55,17 +58,20 @@ Route::resource('/country', CountryController::class)
 // workflow
 Route::resource('workflow', WorkflowController::class)
     ->parameters(['workflow' => 'workflow']);
-
-// Entity Template
 Route::apiResource('/entity-templates', EntityTemplateController::class)
     ->parameters(['entity-templates' => 'entityTemplates']);
 Route::apiResource('entity-template-item', EntityTemplateItemController::class)
     ->parameters(['entity-template-item' => 'templateItem']);
 
+Route::get('workflow-module', workflowAPIController::class)
+    ->name('workflow-module');
+
+Route::get('workflow-test', [workflowAPIController::class, 'workflowTest'])
+    ->name('workflow-test');
+
 // AutoComplete
 Route::get('country-list', [AutoCompleteController::class, 'findCountry'])
     ->name('country-list');
-
 Route::get('priceplan-list', [AutoCompleteController::class, 'findPriceplan'])
     ->name('priceplan-list');
 
