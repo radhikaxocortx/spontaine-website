@@ -19,6 +19,7 @@ class TemplateItemFormRequest extends Data
         public ?string $defaultValue,
         public ?string $domain,
         public ?string $parameter,
+        public ?string $placeholder,
 
     ) {}
 }

@@ -96,7 +96,7 @@ export default function FormPage<
         <DashboardPadding>
           <div ref={cardRef}>
             <Card>
-              <div className='flex flex-col gap-5'>
+              <div className='flex flex-col gap-5 p-2'>
                 <CardHeader
                   title={title}
                   backUrl={backUrl}

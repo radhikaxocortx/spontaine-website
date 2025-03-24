@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('field_name');
             $table->string('type');
             $table->string('default_value')->nullable();
-
+            $table->string('placeholder')->nullable();
             $table->string('domain')->nullable();
             $table->string('parameter')->nullable();
 

@@ -1,10 +1,10 @@
-import { EntityTemplateItem } from '@/Components/Interface/data_interface'
+import { WorkflowModuleItem } from '@/Components/Interface/data_interface'
 import useInertiaPost from '@/hooks/useInertiaPost'
 import { Dispatch, SetStateAction, useCallback } from 'react'
 import TemplateItemForm from './TemplateItemForm'
 
 interface Props {
-  templateItem: EntityTemplateItem
+  templateItem: WorkflowModuleItem
   setShowModal: Dispatch<SetStateAction<boolean>>
 }
 

@@ -1,21 +1,21 @@
-import { EntityTemplate, EntityTemplateItem } from '@/Components/Interface/data_interface'
 import CardGridView from '@/Components/ListingPage/CardGridView'
 import { ListItemKeys } from '@/Components/ListingPage/ListResourcePage'
 
 import DeleteModal from '@/Components/CustomUI/Modal/DeleteModal'
 import Modal from '@/Components/CustomUI/Modal/Modal'
+import { WorkflowModule, WorkflowModuleItem } from '@/Components/Interface/data_interface'
 import useInertiaPost from '@/hooks/useInertiaPost'
 import { useCallback, useMemo, useState } from 'react'
 import TemplateItemForm from './TemplateItemForm'
 import TemplateItemUpdateForm from './TemplateItemUpdateForm'
 
 interface Props {
-  workflowModule: EntityTemplate
+  workflowModule: WorkflowModule
 }
 
 export default function ManageTemplateItems({ workflowModule }: Props) {
   const [showAddModal, setShowAddModal] = useState(false)
-  const [selectedItem, setSelectedItem] = useState<EntityTemplateItem | null>(null)
+  const [selectedItem, setSelectedItem] = useState<WorkflowModuleItem | null>(null)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [showUpdateModal, setShowUpdateModal] = useState(false)
 
@@ -46,7 +46,11 @@ export default function ManageTemplateItems({ workflowModule }: Props) {
         key: 'default_value',
         label: 'Default Value',
       },
-    ] as ListItemKeys<Partial<EntityTemplate>>[]
+      {
+        key: 'placeholder',
+        label: 'Placeholder',
+      },
+    ] as ListItemKeys<Partial<WorkflowModuleItem>>[]
   }, [])
 
   //table data
@@ -59,6 +63,7 @@ export default function ManageTemplateItems({ workflowModule }: Props) {
           field_name: `${record.field_number}) ${record.field_name}`,
           type: record.type,
           default_value: record.default_value,
+          placeholder: record.placeholder,
           actions: [
             {
               action: () => {

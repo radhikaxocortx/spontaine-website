@@ -1,0 +1,106 @@
+<?php
+
+namespace App\Http\Controllers\Customer;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Customer\CustomerFormRequest;
+use App\Models\Customer\Customer;
+use App\Models\Customer\CustomerOrganization;
+use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Inertia\Inertia;
+
+class CustomerController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return Inertia::render('Customer/CustomerCreate');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(CustomerFormRequest $request)
+    {
+
+        try {
+            $company = null;
+            if ($request->haveCompany) {
+                $company = CustomerOrganization::create([
+                    'company_legal_entity_name' => $request->companyLegalEntityName,
+                    'company_address_line_1' => $request->companyAddressLine1,
+                    'company_address_line_2' => $request->companyAddressLine2,
+                    'company_city' => $request->companyCity,
+                    'company_country' => $request->companyCountry,
+                    'company_postal_code' => $request->companyPostalCode,
+                    'company_tax_id' => $request->companyTaxId,
+                    'company_registration_id' => $request->companyRegistrationId,
+                ]);
+            }
+            $customer = Customer::create([
+                'first_name' => $request->firstName,
+                'last_name' => $request->lastName,
+                'telephone' => $request->telephone,
+                'address_line_1' => $request->addressLine1,
+                'address_line_2' => $request->addressLine2,
+                'city' => $request->city,
+                'country' => $request->country,
+                'postal_code' => $request->postalCode,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'company_id' => $company?->id,
+            ]);
+        } catch (Exception $e) {
+
+            return redirect()->back()->with(['error' => $e->getMessage()]);
+        }
+
+        return redirect()
+            ->back()
+            ->with(['success' => 'Customer Created Successfully']);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
+    }
+}
