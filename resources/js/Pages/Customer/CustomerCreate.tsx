@@ -74,13 +74,14 @@ const CustomerCreate = () => {
         label: 'Country',
         placeholder: 'Enter Country',
         type: 'text',
-        setValue: setFormValue('country'),
+        setValue: (value: string) => setFormValue('country')(value.toUpperCase()),
       },
       postal_code: {
         label: 'Postal Code',
         placeholder: 'Enter Postal Code',
         type: 'text',
         setValue: setFormValue('postal_code'),
+        hidden: formData.country?.toUpperCase() === 'SIERRA LEONE'.toUpperCase(),
       },
       email: {
         label: 'Email',
@@ -93,21 +94,12 @@ const CustomerCreate = () => {
         placeholder: 'Enter Password',
         type: 'password',
         setValue: setFormValue('password'),
-        validate: (val: string) => {
-          if (!val) return 'Password is required'
-          return true
-        },
       },
       retype_password: {
         label: 'Retype Password',
         placeholder: 'Retype Password',
         type: 'password',
         setValue: setFormValue('retype_password'),
-        validate: (val: string) => {
-          if (!val) return 'Please confirm your password'
-          if (val !== formData.password) return 'Passwords do not match'
-          return true
-        },
       },
       have_company: {
         label: 'Are you signing up on behalf of a company? ',
@@ -146,7 +138,7 @@ const CustomerCreate = () => {
         label: 'Country of Company',
         placeholder: 'Enter Country',
         type: 'text',
-        setValue: setFormValue('company_country'),
+        setValue: (value: string) => setFormValue('company_country')(value.toUpperCase()),
         hidden: formData.have_company === false,
       },
       company_postal_code: {
@@ -154,7 +146,9 @@ const CustomerCreate = () => {
         placeholder: 'Enter Postal Code',
         type: 'text',
         setValue: setFormValue('company_postal_code'),
-        hidden: formData.have_company === false,
+        hidden:
+          formData.have_company === false ||
+          formData.company_country?.toUpperCase() === 'SIERRA LEONE'.toUpperCase(),
       },
 
       company_tax_id: {

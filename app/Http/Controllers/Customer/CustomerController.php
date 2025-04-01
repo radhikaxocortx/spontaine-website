@@ -62,14 +62,15 @@ class CustomerController extends Controller
                 'password' => Hash::make($request->password),
                 'company_id' => $company?->id,
             ]);
+
+            return redirect()
+                ->back()
+                ->with(['message' => 'Customer Created Successfully']);
         } catch (Exception $e) {
 
-            return redirect()->back()->with(['error' => $e->getMessage()]);
+            return redirect()->route('sign-up.create')->with(['error' => $e->getMessage()]);
         }
 
-        return redirect()
-            ->back()
-            ->with(['success' => 'Customer Created Successfully']);
     }
 
     /**
