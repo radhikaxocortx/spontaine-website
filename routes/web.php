@@ -13,6 +13,7 @@ use App\Http\Controllers\ReferenceData\ReferenceDataController;
 use App\Http\Controllers\Workflow\WorkflowController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Modules\OTP\SendOtp;
 use Modules\PageBuilder\Models\Page;
 
 Route::get('/', function () {
@@ -74,5 +75,9 @@ Route::get('country-list', [AutoCompleteController::class, 'findCountry'])
     ->name('country-list');
 Route::get('priceplan-list', [AutoCompleteController::class, 'findPriceplan'])
     ->name('priceplan-list');
+
+Route::get('test', function (SendOtp $sendOtp) {
+    return $sendOtp->sendOtp('sms')->send('swaraj@gmail.com', 'login');
+});
 
 require __DIR__.'/auth.php';
