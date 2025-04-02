@@ -44,7 +44,7 @@ export default function EntityTemplateUpdateForm({
         setValue: setFormValue('workflow_id'),
         hidden: true,
       },
-      step: {
+      sequence: {
         type: 'text',
         label: 'Sequence Number',
         setValue: setFormValue('sequence'),

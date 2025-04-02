@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('address_line_2')->nullable();
             $table->string('city');
             $table->string('country');
-            $table->string('postal_code');
+            $table->string('postal_code')->nullable();
             $table->string('email')->unique();
             $table->string('password');
             $table->foreignId('company_id')->nullable()->constrained('customer_organizations');

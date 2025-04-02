@@ -6,6 +6,7 @@ use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Attributes\Validation\Email;
 use Spatie\LaravelData\Attributes\Validation\Max;
 use Spatie\LaravelData\Attributes\Validation\RequiredIf;
+use Spatie\LaravelData\Attributes\Validation\RequiredUnless;
 use Spatie\LaravelData\Attributes\Validation\Rule;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
@@ -29,7 +30,8 @@ class CustomerFormRequest extends Data
         #[Max(255)]
         public string $country,
         #[Max(255)]
-        public string $postalCode,
+        #[RequiredUnless('country', 'SIERRA LEONE')]
+        public ?string $postalCode,
         #[Email(), Rule('unique:customers,email')]
         #[Max(255)]
         public string $email,
@@ -56,6 +58,7 @@ class CustomerFormRequest extends Data
         #[Max(255)]
         public ?string $companyCountry,
         #[RequiredIf('haveCompany', 'true')]
+        #[RequiredUnless('companyCountry', 'SIERRA LEONE')]
         #[Max(255)]
         public ?string $companyPostalCode,
         #[RequiredIf('haveCompany', 'true')]

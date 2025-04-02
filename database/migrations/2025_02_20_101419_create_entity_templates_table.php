@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('sequence');
             $table->string('name');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->foreignId('workflow_id')->constrained('workflows');
             $table->string('prev_button')->nullable();
             $table->string('next_button');
