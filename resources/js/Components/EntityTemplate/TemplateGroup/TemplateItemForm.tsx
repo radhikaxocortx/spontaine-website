@@ -90,10 +90,10 @@ export default function TemplateItemForm({
         label: 'Placeholder',
         setValue: setFormValue('placeholder'),
         hidden:
-          formData.type === 'checkbox' ||
-          formData.type === 'single_list_pills' ||
-          formData.type === 'multi_list_pills' ||
-          formData.type === 'phone_number',
+          formData.type !== 'text' &&
+          formData.type !== 'phone_number' &&
+          formData.type !== 'number' &&
+          formData.type !== 'long_text',
       },
       domain: {
         label: 'Domain',

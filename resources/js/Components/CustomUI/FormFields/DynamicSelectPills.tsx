@@ -6,6 +6,7 @@ interface Props {
   type: 'single' | 'multi'
   fetchUrl: string
   value: string | string[]
+  label?: string
   setValue: (val: string | string[]) => void
 }
 
@@ -14,7 +15,7 @@ type OptionItem = {
   [key: string]: any
 }
 
-const DynamicSelectPills = ({ type, fetchUrl, value, setValue }: Props) => {
+const DynamicSelectPills = ({ type, fetchUrl, value, setValue, label }: Props) => {
   const [list] = useFetchList<OptionItem>(fetchUrl)
   const options = list?.map((item) => item.value_one).filter(Boolean) || []
 
@@ -22,11 +23,13 @@ const DynamicSelectPills = ({ type, fetchUrl, value, setValue }: Props) => {
     <SingleSelectPills
       options={options}
       value={value as string}
+      label={label}
       setValue={setValue as (val: string) => void}
     />
   ) : (
     <MultiSelectPills
       options={options}
+      label={label}
       values={value as string[]}
       setValues={setValue as (val: string[]) => void}
     />

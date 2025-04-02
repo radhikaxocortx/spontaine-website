@@ -59,16 +59,7 @@ const useInertiaPost = <T,>(url: string, options?: PostOptions) => {
         }
       )
     },
-    [
-      options?.onComplete,
-      options?.onError,
-      url,
-      options?.showErrorToast,
-      options?.forceFormData,
-      options?.replace,
-      options?.preserveState,
-      options?.preserveScroll,
-    ]
+    [url, options]
   )
 
   return { post, loading, errors }

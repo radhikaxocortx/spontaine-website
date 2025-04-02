@@ -128,6 +128,7 @@ export default function InfoGroupForm({ updateTextValue, updateFileValue, item }
             parameter: item.parameter,
           })}
           value={item.value || ''}
+          label={item.field_name}
           setValue={(val) => updateTextValue(item.id, val)}
         />
       )}
@@ -140,6 +141,7 @@ export default function InfoGroupForm({ updateTextValue, updateFileValue, item }
             parameter: item.parameter,
           })}
           value={item.value || []}
+          label={item.field_name}
           setValue={(val) => updateTextValue(item.id, val)}
         />
       )}

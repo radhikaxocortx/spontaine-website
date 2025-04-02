@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('company_address_line_1');
             $table->string('company_address_line_2')->nullable();
             $table->string('company_city');
-            $table->string('company_postal_code');
+            $table->string('company_postal_code')->nullable();
             $table->string('company_country');
             $table->string('company_tax_id')->unique();
             $table->string('company_registration_id')->unique();
