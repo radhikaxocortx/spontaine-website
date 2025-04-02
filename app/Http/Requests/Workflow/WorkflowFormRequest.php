@@ -11,7 +11,7 @@ class WorkflowFormRequest extends Data
 {
     public function __construct(
         public string $name,
-        public string $description,
+        public ?string $description,
         public string $country_id,
         public string $priceplan_id,
         public string $status,

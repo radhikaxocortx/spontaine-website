@@ -96,7 +96,7 @@ const CustomerCreate = () => {
         setValue: setFormValue('password'),
       },
       retype_password: {
-        label: 'Retype Password',
+        label: 'Confirm Password',
         placeholder: 'Retype Password',
         type: 'password',
         setValue: setFormValue('retype_password'),
