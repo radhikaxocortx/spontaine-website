@@ -22,8 +22,8 @@ class Customer extends Model
         'postal_code',
         'email',
         'password',
-
         'company_id',
+        'email_verified',
     ];
 
     protected $hidden = [

@@ -76,8 +76,12 @@ Route::get('country-list', [AutoCompleteController::class, 'findCountry'])
 Route::get('priceplan-list', [AutoCompleteController::class, 'findPriceplan'])
     ->name('priceplan-list');
 
-Route::get('test', function (SendOtp $sendOtp) {
-    return $sendOtp->sendOtp('sms')->send('swaraj@gmail.com', 'login');
+Route::get('customer-verification/{email}', function ($email, SendOtp $sendOtp) {
+    return $sendOtp->sendOtp('email')->send($email, 'email');
+})->name('customer-verification');
+
+Route::get('test', function () {
+    return view('otp');
 });
 
 require __DIR__.'/auth.php';

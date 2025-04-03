@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->foreignId('company_id')->nullable()->constrained('customer_organizations');
+            $table->boolean('email_verified')->default(false);
             $table->softDeletes();
             $table->timestamps();
         });

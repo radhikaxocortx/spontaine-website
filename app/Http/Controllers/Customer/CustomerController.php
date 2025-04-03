@@ -18,7 +18,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('OTP/OtpPage');
     }
 
     /**
@@ -64,7 +64,7 @@ class CustomerController extends Controller
             ]);
 
             return redirect()
-                ->back()
+                ->route('customer-verification', ['email' => $customer->email])
                 ->with(['message' => 'Customer Created Successfully']);
         } catch (Exception $e) {
 
