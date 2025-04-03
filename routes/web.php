@@ -13,7 +13,9 @@ use App\Http\Controllers\ReferenceData\ReferenceDataController;
 use App\Http\Controllers\Workflow\WorkflowController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use Modules\OTP\SendOtp;
+use Modules\OTP\Controllers\RegisterOtpController;
+use Modules\OTP\Controllers\ValidateOtpController;
+use Modules\OTP\Controllers\VerifyOtpController;
 use Modules\PageBuilder\Models\Page;
 
 Route::get('/', function () {
@@ -76,12 +78,11 @@ Route::get('country-list', [AutoCompleteController::class, 'findCountry'])
 Route::get('priceplan-list', [AutoCompleteController::class, 'findPriceplan'])
     ->name('priceplan-list');
 
-Route::get('customer-verification/{email}', function ($email, SendOtp $sendOtp) {
-    return $sendOtp->sendOtp('email')->send($email, 'email');
-})->name('customer-verification');
-
-Route::get('test', function () {
-    return view('otp');
-});
+Route::get('customer-verification/{customerId}', [RegisterOtpController::class, 'sendOtp'])
+    ->name('customer-verification');
+Route::get('verify-otp/{customerId}', [VerifyOtpController::class, 'verifyOtp'])
+    ->name('verify-otp');
+Route::post('validate-otp', [ValidateOtpController::class, 'validateOtp'])
+    ->name('validate-otp');
 
 require __DIR__.'/auth.php';

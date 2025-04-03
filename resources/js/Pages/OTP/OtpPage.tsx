@@ -1,35 +1,68 @@
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/Components/CustomUI/FormFields/InputOtp'
 import { Button } from '@/components/ui/button'
+import useCustomForm from '@/hooks/useCustomForm'
+import useInertiaPost from '@/hooks/useInertiaPost'
 import StrongText from '@/typography/StrongText'
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from 'input-otp'
-import React from 'react'
+import { FormEvent, useCallback } from 'react'
 
-const OtpPage = () => {
-  const [value, setValue] = React.useState('')
-  console.log(value)
+interface Props {
+  customerId: string
+}
+
+const OtpPage = ({ customerId }: Props) => {
+  const { formData, setFormValue } = useCustomForm({
+    otp: '',
+    customerId: customerId,
+  })
+
+  const { post } = useInertiaPost(route('validate-otp'))
+
+  const onFormSubmit = useCallback(
+    (event: FormEvent<HTMLFormElement>) => {
+      console.log(formData)
+      event.preventDefault()
+      post(formData)
+    },
+    [post, formData]
+  )
+
+  const handleOtpChange = (value: string) => {
+    setFormValue('otp')(value)
+  }
 
   return (
     <div className='flex items-center justify-center'>
-      <div className='flex flex-col items-center gap-4 rounded-xl p-4'>
+      <form
+        className='flex flex-col items-center gap-4 rounded-xl p-4'
+        onSubmit={onFormSubmit}
+      >
         <StrongText className='mb-2'>Enter OTP</StrongText>
+
         <InputOTP
           maxLength={6}
           pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
-          onChange={(value) => setValue(value)}
+          onChange={(value: string) => handleOtpChange(value)}
         >
           <InputOTPGroup>
             <InputOTPSlot index={0} />
             <InputOTPSlot index={1} />
             <InputOTPSlot index={2} />
-
             <InputOTPSlot index={3} />
             <InputOTPSlot index={4} />
             <InputOTPSlot index={5} />
           </InputOTPGroup>
         </InputOTP>
-        <Button type='submit'>Submit</Button>
-      </div>
+
+        <Button
+          type='submit'
+          className='mt-4'
+        >
+          Submit
+        </Button>
+      </form>
     </div>
   )
 }
+
 export default OtpPage

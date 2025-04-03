@@ -1,4 +1,4 @@
-{{ $otp }} is SECRET OTP for your transaction at Technopark's website.
+{{ $otp }} is SECRET OTP for KADODO.
 OTP is valid for 15 minutes.
 <br/>
 <br/>

@@ -64,7 +64,7 @@ class CustomerController extends Controller
             ]);
 
             return redirect()
-                ->route('customer-verification', ['email' => $customer->email])
+                ->route('customer-verification', ['customerId' => $customer->email])
                 ->with(['message' => 'Customer Created Successfully']);
         } catch (Exception $e) {
 

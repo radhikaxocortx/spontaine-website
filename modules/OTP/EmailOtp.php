@@ -16,12 +16,17 @@ class EmailOtp implements OtpNotifier
             Mail::to($destination)->send(new OTPMail((string) $otp));
             OTP::create(['email' => $destination, 'otp' => $otp]);
 
-            return ['message' => 'Email sent Successfully'];
         } catch (\Exception $e) {
             return [
 
-                'error' => 'Failed to send OTP: '.$e->getMessage(),
+                'error' => true,
+                'message' => $e->getMessage(),
             ];
         }
+
+        return [
+            'error' => false,
+            'message' => null,
+        ];
     }
 }
