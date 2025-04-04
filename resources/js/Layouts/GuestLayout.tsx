@@ -1,10 +1,35 @@
 import ApplicationLogo from '@/Components/CustomUI/ApplicationLogo'
-import { Link } from '@inertiajs/react'
-import { PropsWithChildren } from 'react'
+import { showError, showSuccess } from '@/Components/ui/alerts'
+import { LaravelFlash } from '@/Components/ui/ui_interfaces'
+import { Link, usePage } from '@inertiajs/react'
+import { PropsWithChildren, useEffect } from 'react'
+import { ToastContainer } from 'react-toastify'
 
 export default function Guest({ children }: PropsWithChildren) {
+  const { flash } = usePage().props as unknown as { flash?: LaravelFlash }
+  useEffect(() => {
+    if (flash?.error != null) {
+      showError(flash.error)
+    }
+    if (flash?.message != null) {
+      showSuccess(flash.message)
+    }
+  }, [flash])
   return (
     <div className='flex min-h-screen flex-col items-center bg-gray-100 pt-6 sm:justify-center sm:pt-0'>
+      <ToastContainer
+        position='bottom-center'
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme='dark'
+        toastClassName='toast-container'
+      />
       <div>
         <Link href='/'>
           <ApplicationLogo className='h-20 w-20 fill-current text-gray-500' />

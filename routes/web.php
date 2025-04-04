@@ -3,6 +3,7 @@
 use App\Http\Controllers\AutoComplete\AutoCompleteController;
 use App\Http\Controllers\Country\CountryController;
 use App\Http\Controllers\Customer\CustomerController;
+use App\Http\Controllers\CustomerLogin\CustomerLoginController;
 use App\Http\Controllers\EntityTemplate\EntityTemplateController;
 use App\Http\Controllers\EntityTemplate\EntityTemplateItemController;
 use App\Http\Controllers\EntityTemplate\workflowAPIController;
@@ -85,4 +86,7 @@ Route::get('verify-otp/{customerId}', [VerifyOtpController::class, 'verifyOtp'])
 Route::post('validate-otp', [ValidateOtpController::class, 'validateOtp'])
     ->name('validate-otp');
 
+Route::get('customer-login', [CustomerLoginController::class, 'loginForm']);
+Route::post('validate-customer', [CustomerLoginController::class, 'ValidatePassword'])
+    ->name('validate-customer');
 require __DIR__.'/auth.php';
