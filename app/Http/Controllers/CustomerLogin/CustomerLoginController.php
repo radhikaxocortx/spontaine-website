@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CustomerLogin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer\Customer;
+use App\Models\PricePlan\PricePlan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
@@ -34,5 +35,19 @@ class CustomerLoginController extends Controller
         } else {
             return redirect()->route('customer-verification', ['customerId' => $customer->email]);
         }
+    }
+
+    public function choosePriceplan()
+    {
+        $priceplan = PricePlan::all();
+
+        return Inertia::render('CustomerLogin/ChoosePriceplan', [
+            'pricePlan' => $priceplan,
+        ]);
+    }
+
+    public function customerDashboard()
+    {
+        return Inertia::render('CustomerLogin/CustomerDashboard');
     }
 }

@@ -14,17 +14,24 @@ class workflowAPIController extends Controller
     {
         $name = $request->input('name');
         $country = $request->input('country');
+        $pricePlan = $request->input('pricePlan');
 
         if ($name == null) {
-
             return response()->json([
                 'workflow' => null,
             ]);
         }
 
-        $workflow = Workflow::where('name', $name)
-            ->with('workflowModules.workflowItems')
-            ->first();
+        $workflowQuery = Workflow::where('name', $name)
+            ->with('workflowModules.workflowItems');
+
+        if ($pricePlan !== null) {
+            $workflowQuery->whereHas('pricePlan', function ($query) use ($pricePlan) {
+                $query->where('name', $pricePlan);
+            });
+        }
+
+        $workflow = $workflowQuery->first();
 
         return response()->json([
             'workflow' => $workflow,

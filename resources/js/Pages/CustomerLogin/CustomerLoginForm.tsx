@@ -1,10 +1,13 @@
+import { showError, showSuccess } from '@/Components/ui/alerts'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
+import { LaravelFlash } from '@/Components/ui/ui_interfaces'
 import GuestLayout from '@/Layouts/GuestLayout'
 import StrongText from '@/typography/StrongText'
-import { Link, useForm } from '@inertiajs/react'
-import { FormEventHandler } from 'react'
+import { Link, useForm, usePage } from '@inertiajs/react'
+import { FormEventHandler, useEffect } from 'react'
+import { ToastContainer } from 'react-toastify'
 
 interface Props {
   status?: string
@@ -12,6 +15,16 @@ interface Props {
 }
 
 export default function CustomerrLoginForm({ status, canResetPassword }: Readonly<Props>) {
+  const { flash } = usePage().props as unknown as { flash?: LaravelFlash }
+  useEffect(() => {
+    if (flash?.error != null) {
+      showError(flash.error)
+    }
+    if (flash?.message != null) {
+      showSuccess(flash.message)
+    }
+  }, [flash])
+
   const { data, setData, post, processing, errors, reset } = useForm({
     email: '',
     password: '',
@@ -91,6 +104,19 @@ export default function CustomerrLoginForm({ status, canResetPassword }: Readonl
           </Button>
         </div>
       </form>
+      <ToastContainer
+        position='bottom-center'
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme='dark'
+        toastClassName='toast-container'
+      />
     </GuestLayout>
   )
 }

@@ -83,3 +83,18 @@ export interface Country extends Model {
   tax_code: string
   tax_rate: number
 }
+
+export interface Customer extends Model {
+  first_name: string
+  last_name: string
+  telephone: string
+  address_line_1: string
+  address_line_2: string
+  city: string
+  country: string
+  postal_code: string
+  email: string
+  password: string
+  company_id: number
+  email_verified: boolean
+}

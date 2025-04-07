@@ -86,7 +86,13 @@ Route::get('verify-otp/{customerId}', [VerifyOtpController::class, 'verifyOtp'])
 Route::post('validate-otp', [ValidateOtpController::class, 'validateOtp'])
     ->name('validate-otp');
 
+// customer
 Route::get('customer-login', [CustomerLoginController::class, 'loginForm']);
 Route::post('validate-customer', [CustomerLoginController::class, 'ValidatePassword'])
     ->name('validate-customer');
+Route::middleware(['auth:customer'])->group(function () {
+    Route::get('choose-priceplan', [CustomerLoginController::class, 'choosePriceplan']);
+    Route::get('customer-dashboard', [CustomerLoginController::class, 'customerDashboard'])
+        ->name('customer-dashboard');
+});
 require __DIR__.'/auth.php';
