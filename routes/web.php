@@ -93,7 +93,7 @@ Route::get('customer-login', [CustomerLoginController::class, 'loginForm']);
 Route::post('validate-customer', [CustomerLoginController::class, 'ValidatePassword'])
     ->name('validate-customer');
 Route::middleware(['auth:customer'])->group(function () {
-    Route::get('choose-priceplan', [CustomerLoginController::class, 'choosePriceplan'])
+    Route::get('choose-priceplan/{customerId}', [CustomerLoginController::class, 'choosePriceplan'])
         ->name('choose-priceplan');
     Route::get('customer-dashboard', [CustomerLoginController::class, 'customerDashboard'])
         ->name('customer-dashboard');
