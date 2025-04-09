@@ -1,10 +1,11 @@
 import { Card } from '@/Components/CustomUI/Card/card'
 import WorkflowModuleInfoForm from '@/Components/EntityTemplate/WorkflowModuleInfoForm'
-import { WorflowFormItem, Workflow } from '@/Components/Interface/data_interface'
+import { Customer, WorflowFormItem, Workflow } from '@/Components/Interface/data_interface'
 import { Button } from '@/components/ui/button'
 import useFetchRecord from '@/hooks/useFetchPagination'
 import DashboardPadding from '@/Layouts/DashboardLayout'
-import { useEffect, useState } from 'react'
+import { router, usePage } from '@inertiajs/react'
+import { useEffect, useMemo, useState } from 'react'
 import CustomerDashboardLayout from './Dashboard/CustomerDashboardLayouts'
 
 interface Props {
@@ -12,9 +13,15 @@ interface Props {
 }
 
 const CustomerWorkflow = ({ pricePlan }: Props) => {
+  const userInfo = usePage().props.auth as unknown as { customer: Customer }
+  const User = useMemo(() => {
+    return userInfo.customer ?? null
+  }, [userInfo])
+  const customerId = User?.id
+
   const [workflow, loadingTemplate] = useFetchRecord<{ workflow: Workflow | null }>(
     route('workflow-module', {
-      name: 'Business',
+      name: 'Business Verification',
       pricePlan: pricePlan,
     })
   )
@@ -44,6 +51,49 @@ const CustomerWorkflow = ({ pricePlan }: Props) => {
   )
   const currentModule = sortedModules[currentModuleIndex]
 
+  useEffect(() => {
+    if (workflow?.workflow?.workflow_modules == null) {
+      return
+    }
+
+    const additionalInfo = workflow?.workflow?.workflow_modules.flatMap((module) => {
+      if (module.workflow_items == null) {
+        return []
+      }
+      return module.workflow_items
+        .sort((a, b) => a.field_number - b.field_number)
+        .map((item) => {
+          return {
+            ...item,
+            value: item.default_value ?? '',
+            file: null,
+          }
+        })
+    })
+
+    setAdditionalInfo(additionalInfo)
+  }, [workflow])
+
+  const customFormData = useMemo(() => {
+    return {
+      customer_id: customerId,
+      additionalInfo: additionalInfo.map((item) => {
+        return {
+          workflow_item_id: item.id,
+
+          type: item.type,
+          value: item.value,
+          file: item.file,
+        }
+      }),
+    }
+  }, [additionalInfo, customerId])
+  console.log(customFormData)
+
+  const handleSubmit = () => {
+    router.post(route('customer-workflow-save'), customFormData)
+  }
+
   return (
     <CustomerDashboardLayout>
       <DashboardPadding>
@@ -68,13 +118,17 @@ const CustomerWorkflow = ({ pricePlan }: Props) => {
                 ) : (
                   <div></div>
                 )}
-                <Button
-                  onClick={() =>
-                    setCurrentModuleIndex((prev) => Math.min(prev + 1, sortedModules.length - 1))
-                  }
-                >
-                  {currentModule?.next_button ?? 'Next'}
-                </Button>
+                {currentModuleIndex < sortedModules.length - 1 ? (
+                  <Button
+                    onClick={() =>
+                      setCurrentModuleIndex((prev) => Math.min(prev + 1, sortedModules.length - 1))
+                    }
+                  >
+                    {currentModule?.next_button ?? 'Next'}
+                  </Button>
+                ) : (
+                  <Button onClick={handleSubmit}>Submit</Button>
+                )}
               </div>
             </div>
           )}

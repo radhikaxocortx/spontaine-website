@@ -21,7 +21,6 @@ export default function CustomerSidebar() {
     return userInfo.customer ?? null
   }, [userInfo])
 
-  console.log(User)
   const userInitial = User?.first_name ? User.first_name.charAt(0).toUpperCase() : ''
   const userName = User?.first_name || ''
 
@@ -158,8 +157,8 @@ export default function CustomerSidebar() {
                   </DropdownMenuItem>
                   <DropdownMenuItem>
                     <Link
-                      href='/logout'
-                      method='post'
+                      href='/customer-login'
+                      method='get'
                       className='flex w-full items-center px-4 py-2'
                     >
                       <svg

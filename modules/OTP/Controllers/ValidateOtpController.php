@@ -39,6 +39,6 @@ class ValidateOtpController extends Controller
         // customer login
         Auth::guard('customer')->login($customer);
 
-        return redirect()->route('customer-dashboard')->with('message', 'OTP verified and logged in successfully.');
+        return redirect()->route('choose-priceplan')->with('message', 'OTP verified and logged in successfully.');
     }
 }

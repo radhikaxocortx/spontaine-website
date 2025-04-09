@@ -57,7 +57,8 @@ class CustomerFormRequest extends Data
         #[RequiredIf('haveCompany', 'true')]
         #[Max(255)]
         public ?string $companyCountry,
-        #[RequiredIf('haveCompany', 'true'), RequiredUnless('companyCountry', 'SIERRA LEONE')]
+        #[RequiredUnless('companyCountry', 'SIERRA LEONE')]
+        #[RequiredIf('haveCompany', 'true')]
         #[Max(255)]
         public ?string $companyPostalCode,
         #[RequiredIf('haveCompany', 'true')]

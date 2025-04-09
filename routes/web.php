@@ -38,8 +38,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 // Sign Up Form
-Route::resource('sign-up', CustomerController::class)
-    ->parameters(['sign-up' => 'customer']);
+Route::middleware('guest')->group(function () {
+    Route::resource('sign-up', CustomerController::class)
+        ->parameters(['sign-up' => 'customer']);
+});
 // Reference Data
 Route::resource('/reference-data', ReferenceDataController::class);
 Route::get('domain-list', [ReferenceDataAPIController::class, 'domainList'])
@@ -91,8 +93,11 @@ Route::get('customer-login', [CustomerLoginController::class, 'loginForm']);
 Route::post('validate-customer', [CustomerLoginController::class, 'ValidatePassword'])
     ->name('validate-customer');
 Route::middleware(['auth:customer'])->group(function () {
-    Route::get('choose-priceplan', [CustomerLoginController::class, 'choosePriceplan']);
+    Route::get('choose-priceplan', [CustomerLoginController::class, 'choosePriceplan'])
+        ->name('choose-priceplan');
     Route::get('customer-dashboard', [CustomerLoginController::class, 'customerDashboard'])
         ->name('customer-dashboard');
+    Route::post('customer-workflow-save', [CustomerController::class, 'customerWorkflowSave'])
+        ->name('customer-workflow-save');
 });
 require __DIR__.'/auth.php';

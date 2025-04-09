@@ -13,7 +13,7 @@ const ChoosePriceplan = ({ pricePlan }: Props) => {
   const { formData, setFormValue } = useCustomForm({
     priceplan: '',
   })
-  console.log(formData.priceplan)
+
   const [workflow, setWorkflow] = useState<boolean>(false)
 
   const formItems = useMemo(<

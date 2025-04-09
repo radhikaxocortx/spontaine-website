@@ -4,15 +4,22 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Customer\CustomerFormRequest;
+use App\Libs\ExceptionMessage;
 use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerOrganization;
+use App\Models\Customer\CustomerWorkflow;
+use App\Services\ProcessWorkflowInfo;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class CustomerController extends Controller
 {
+    use ProcessWorkflowInfo;
+
     /**
      * Display a listing of the resource.
      */
@@ -34,7 +41,9 @@ class CustomerController extends Controller
      */
     public function store(CustomerFormRequest $request)
     {
-
+        // redirect()->back()->withErrors([
+        //     'email' => 'The email has already been taken.',
+        // ])
         try {
             $company = null;
             if ($request->haveCompany) {
@@ -103,5 +112,36 @@ class CustomerController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function customerWorkflowSave(Request $request)
+    {
+        DB::beginTransaction();
+        $filesToCleanUp = [];
+
+        try {
+            $customerId = $request->customer_id;
+
+            [$infoRecords, $filesToCleanUp] = $this->process(
+                $request->additionalInfo ?? [],
+                'customer_workflow',
+            );
+
+            foreach ($infoRecords as &$infoRecord) {
+                $infoRecord['customer_id'] = $customerId;
+            }
+
+            CustomerWorkflow::insert($infoRecords);
+        } catch (Exception $e) {
+            DB::rollBack();
+            Storage::delete($filesToCleanUp);
+
+            return back()->with(['error' => ExceptionMessage::getMessage($e)]);
+        }
+
+        DB::commit();
+
+        return redirect()->route('customer-dashboard')
+            ->with(['message' => 'Customer Workflow Saved Successfully']);
     }
 }

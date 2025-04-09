@@ -22,7 +22,7 @@ class workflowAPIController extends Controller
             ]);
         }
 
-        $workflowQuery = Workflow::where('name', $name)
+        $workflowQuery = Workflow::where('name', 'like', '%'.$name.'%')
             ->with('workflowModules.workflowItems');
 
         if ($pricePlan !== null) {

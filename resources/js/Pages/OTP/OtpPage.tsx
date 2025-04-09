@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 import { LaravelFlash } from '@/Components/ui/ui_interfaces'
 import useCustomForm from '@/hooks/useCustomForm'
 import useInertiaPost from '@/hooks/useInertiaPost'
+import GuestLayout from '@/Layouts/GuestLayout'
 import StrongText from '@/typography/StrongText'
 import { usePage } from '@inertiajs/react'
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from 'input-otp'
@@ -34,7 +35,6 @@ const OtpPage = ({ customerId }: Props) => {
 
   const onFormSubmit = useCallback(
     (event: FormEvent<HTMLFormElement>) => {
-      console.log(formData)
       event.preventDefault()
       post(formData)
     },
@@ -46,7 +46,7 @@ const OtpPage = ({ customerId }: Props) => {
   }
 
   return (
-    <>
+    <GuestLayout>
       <div className='flex items-center justify-center'>
         <form
           className='flex flex-col items-center gap-4 rounded-xl p-4'
@@ -90,7 +90,7 @@ const OtpPage = ({ customerId }: Props) => {
         theme='dark'
         toastClassName='toast-container'
       />
-    </>
+    </GuestLayout>
   )
 }
 
