@@ -7,6 +7,7 @@ use App\Http\Requests\Customer\CustomerFormRequest;
 use App\Libs\ExceptionMessage;
 use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerOrganization;
+use App\Models\Customer\CustomerPricePlan;
 use App\Models\Customer\CustomerWorkflow;
 use App\Services\ProcessWorkflowInfo;
 use Exception;
@@ -23,10 +24,7 @@ class CustomerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        return Inertia::render('OTP/OtpPage');
-    }
+    public function index() {}
 
     /**
      * Show the form for creating a new resource.
@@ -41,9 +39,7 @@ class CustomerController extends Controller
      */
     public function store(CustomerFormRequest $request)
     {
-        // redirect()->back()->withErrors([
-        //     'email' => 'The email has already been taken.',
-        // ])
+
         if ($request->haveCompany === true && $request->companyCountry !== 'SIERRA LEONE' && empty($request->companyPostalCode)) {
             return redirect()->back()->withErrors([
                 'company_postal_code' => 'Company postal code is required.',
@@ -119,13 +115,37 @@ class CustomerController extends Controller
         //
     }
 
+    public function updatePriceplan(Request $request)
+    {
+        $request->validate([
+            'price_plan_id' => 'required|exists:price_plans,id',
+            'customer_id' => 'required|exists:customers,id',
+        ]);
+        try {
+            $customerPriceplan = CustomerPricePlan::create($request->all());
+        } catch (\Exception $e) {
+            return back()->with(['error' => $e->getMessage()]);
+        }
+
+        return redirect()
+            ->route('customer-workflow-create', ['priceplanId' => $request->price_plan_id, 'customerPriceplanId' => $customerPriceplan->id]);
+    }
+
+    public function createCustomerWorkflow($priceplanId, $customerPriceplanId)
+    {
+        return Inertia::render('Customer/CustomerWorkflowCreate', [
+            'priceplanId' => $priceplanId,
+            'customerPriceplanId' => $customerPriceplanId,
+        ]);
+    }
+
     public function customerWorkflowSave(Request $request)
     {
         DB::beginTransaction();
         $filesToCleanUp = [];
 
         try {
-            $customerId = $request->customer_id;
+            $customerPriceplanId = $request->customerPriceplanId;
 
             [$infoRecords, $filesToCleanUp] = $this->process(
                 $request->additionalInfo ?? [],
@@ -133,7 +153,7 @@ class CustomerController extends Controller
             );
 
             foreach ($infoRecords as &$infoRecord) {
-                $infoRecord['customer_id'] = $customerId;
+                $infoRecord['customer_priceplan_id'] = $customerPriceplanId;
             }
 
             CustomerWorkflow::insert($infoRecords);

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('customer_workflows', function (Blueprint $table) {
             $table->id();
             $table->foreignId('workflow_item_id')->constrained('entity_template_items');
-            $table->foreignId('customer_id')->constrained('customers');
+            $table->foreignId('customer_priceplan_id')->constrained('customer_price_plans');
             $table->text('value')->nullable();
             $table->double('number_value')->nullable();
             $table->date('date_value')->nullable();

@@ -1,28 +1,29 @@
+import CustomerDashboardLayout from '@/Components/Customer/Dashboard/CustomerDashboardLayouts'
 import { Card } from '@/Components/CustomUI/Card/card'
 import WorkflowModuleInfoForm from '@/Components/EntityTemplate/WorkflowModuleInfoForm'
-import { Customer, WorflowFormItem, Workflow } from '@/Components/Interface/data_interface'
+import { WorflowFormItem, Workflow } from '@/Components/Interface/data_interface'
 import { Button } from '@/components/ui/button'
 import useFetchRecord from '@/hooks/useFetchPagination'
 import DashboardPadding from '@/Layouts/DashboardLayout'
-import { router, usePage } from '@inertiajs/react'
+import { router } from '@inertiajs/react'
 import { useEffect, useMemo, useState } from 'react'
-import CustomerDashboardLayout from './Dashboard/CustomerDashboardLayouts'
 
 interface Props {
-  pricePlan: string
+  priceplanId: number
+  customerPriceplanId: number
 }
 
-const CustomerWorkflow = ({ pricePlan }: Props) => {
-  const userInfo = usePage().props.auth as unknown as { customer: Customer }
-  const User = useMemo(() => {
-    return userInfo.customer ?? null
-  }, [userInfo])
-  const customerId = User?.id
+const CustomerWorkflowCreate = ({ priceplanId, customerPriceplanId }: Props) => {
+  //   const userInfo = usePage().props.auth as unknown as { customer: Customer }
+  //   const User = useMemo(() => {
+  //     return userInfo.customer ?? null
+  //   }, [userInfo])
+  //   const customerId = User?.id
 
   const [workflow, loadingTemplate] = useFetchRecord<{ workflow: Workflow | null }>(
     route('workflow-module', {
       name: 'Business Verification',
-      pricePlan: pricePlan,
+      pricePlanId: priceplanId,
     })
   )
 
@@ -76,7 +77,7 @@ const CustomerWorkflow = ({ pricePlan }: Props) => {
 
   const customFormData = useMemo(() => {
     return {
-      customer_id: customerId,
+      customerPriceplanId: customerPriceplanId,
       additionalInfo: additionalInfo.map((item) => {
         return {
           workflow_item_id: item.id,
@@ -87,7 +88,7 @@ const CustomerWorkflow = ({ pricePlan }: Props) => {
         }
       }),
     }
-  }, [additionalInfo, customerId])
+  }, [additionalInfo, customerPriceplanId])
   console.log(customFormData)
 
   const handleSubmit = () => {
@@ -138,4 +139,4 @@ const CustomerWorkflow = ({ pricePlan }: Props) => {
   )
 }
 
-export default CustomerWorkflow
+export default CustomerWorkflowCreate

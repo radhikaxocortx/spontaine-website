@@ -1,20 +1,25 @@
-import CustomerWorkflow from '@/Components/Customer/CustomerWorkflow'
 import CustomerDashboardLayout from '@/Components/Customer/Dashboard/CustomerDashboardLayouts'
-import { PricePlan } from '@/Components/Interface/data_interface'
+import { Customer, PricePlan } from '@/Components/Interface/data_interface'
 import FormBuilder, { FormItem } from '@/FormBuilder/FormBuilder'
 import useCustomForm from '@/hooks/useCustomForm'
-import { useMemo, useState } from 'react'
+import useInertiaPost from '@/hooks/useInertiaPost'
+import { usePage } from '@inertiajs/react'
+import { FormEvent, useCallback, useMemo } from 'react'
 
 interface Props {
   pricePlan: PricePlan[]
 }
 
 const ChoosePriceplan = ({ pricePlan }: Props) => {
-  const { formData, setFormValue } = useCustomForm({
-    priceplan: '',
-  })
+  const userInfo = usePage().props.auth as unknown as { customer: Customer }
+  const User = useMemo(() => {
+    return userInfo.customer ?? null
+  }, [userInfo])
+  const customerId = User?.id
 
-  const [workflow, setWorkflow] = useState<boolean>(false)
+  const { formData, setFormValue } = useCustomForm({
+    priceplan_id: '',
+  })
 
   const formItems = useMemo(<
     T,
@@ -24,39 +29,45 @@ const ChoosePriceplan = ({ pricePlan }: Props) => {
     L extends Record<K, string | number> & Record<G, string | number | null>,
   >() => {
     return {
-      priceplan: {
+      priceplan_id: {
         type: 'select',
         placeholder: 'Select Priceplan',
         label: 'Priceplan',
         list: pricePlan,
-        dataKey: 'name',
+        dataKey: 'id',
         displayKey: 'name',
 
         setValue: (value: string) => {
-          setFormValue('priceplan')(value)
+          setFormValue('priceplan_id')(value)
         },
       },
     } as Record<U, FormItem<T[U], K, G, L>>
   }, [setFormValue, pricePlan])
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setWorkflow(true)
-  }
+
+  const { post, loading, errors } = useInertiaPost(route('update-priceplan'))
+  const handleSubmit = useCallback(
+    (event: FormEvent<HTMLFormElement>) => {
+      event.preventDefault()
+      post({
+        price_plan_id: formData.priceplan_id,
+        customer_id: customerId,
+      })
+    },
+    [post, formData, customerId]
+  )
   return (
     <>
-      {workflow === false && (
-        <CustomerDashboardLayout>
-          <FormBuilder
-            loading={false}
-            formData={formData}
-            formItems={formItems}
-            onFormSubmit={handleSubmit}
-            buttonText='Next'
-            formStyles='items-center p-5'
-          ></FormBuilder>
-        </CustomerDashboardLayout>
-      )}
-      {workflow && <CustomerWorkflow pricePlan={formData.priceplan} />}
+      <CustomerDashboardLayout>
+        <FormBuilder
+          loading={loading}
+          errors={errors}
+          formData={formData}
+          formItems={formItems}
+          onFormSubmit={handleSubmit}
+          buttonText='Next'
+          formStyles='items-center p-5'
+        ></FormBuilder>
+      </CustomerDashboardLayout>
     </>
   )
 }
