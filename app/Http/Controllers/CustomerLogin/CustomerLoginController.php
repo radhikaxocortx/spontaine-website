@@ -32,7 +32,7 @@ class CustomerLoginController extends Controller
             ->first();
 
         if (! $customer) {
-            return back()->withErrors(['email' => 'The email is not Registered.']);
+            return back()->withErrors(['email' => 'This email is not Registered.']);
         }
         if (! Hash::check($request->password, $customer->password)) {
             return back()->withErrors(['password' => 'Wrong Password!']);
@@ -44,9 +44,9 @@ class CustomerLoginController extends Controller
     public function choosePriceplan(Request $request)
     {
         $customerId = $request->customerId;
-        if (CustomerPricePlan::where('customer_id', $customerId)->exists()) {
-            return redirect()->route('customer-dashboard');
-        }
+        // if (CustomerPricePlan::where('customer_id', $customerId)->exists()) {
+        //     return redirect()->route('customer-dashboard');
+        // }
         $priceplan = PricePlan::all();
 
         return Inertia::render('CustomerLogin/ChoosePriceplan', [

@@ -3,8 +3,12 @@ import { Customer, PricePlan } from '@/Components/Interface/data_interface'
 import FormBuilder, { FormItem } from '@/FormBuilder/FormBuilder'
 import useCustomForm from '@/hooks/useCustomForm'
 import useInertiaPost from '@/hooks/useInertiaPost'
+import Heading from '@/typography/Heading'
+import NormalText from '@/typography/NormalText'
+import Paragraph from '@/typography/Paragraph'
+import StrongText from '@/typography/StrongText'
 import { usePage } from '@inertiajs/react'
-import { FormEvent, useCallback, useMemo } from 'react'
+import { FormEvent, useCallback, useEffect, useMemo, useState } from 'react'
 
 interface Props {
   pricePlan: PricePlan[]
@@ -55,6 +59,26 @@ const ChoosePriceplan = ({ pricePlan }: Props) => {
     },
     [post, formData, customerId]
   )
+
+  const [selectedPriceplan, setSelectedPriceplan] = useState<PricePlan | null>(null)
+  useEffect(() => {
+    if (formData.priceplan_id) {
+      const selected = pricePlan.find(
+        (pricePlan) => pricePlan.id.toString() === formData.priceplan_id
+      )
+      setSelectedPriceplan(selected ?? null)
+    }
+  }, [formData.priceplan_id, pricePlan])
+  // useEffect(() => {
+  //   const [workflow, loadingTemplate] = useFetchRecord<{ workflow: Workflow | null }>(
+  //     route('workflow-module', {
+  //       name: 'Business Verification',
+  //       pricePlanId: selectedPriceplan?.id,
+  //     })
+  //   )
+  // }, [selectedPriceplan])
+  // console.log(Workflow)
+
   return (
     <>
       <CustomerDashboardLayout>
@@ -67,6 +91,26 @@ const ChoosePriceplan = ({ pricePlan }: Props) => {
           buttonText='Next'
           formStyles='items-center p-5'
         ></FormBuilder>
+        {selectedPriceplan && (
+          <>
+            {/* <div className=''>
+              <StrongText>{Workflow.description}</StrongText>
+            </div> */}
+            <div className='flex flex-col p-5'>
+              <Heading>{`${selectedPriceplan.name} (${selectedPriceplan.code})`}</Heading>
+              <Paragraph>{selectedPriceplan.description}</Paragraph>
+              <div className='p-3'>
+                <NormalText>
+                  Rate : <StrongText>{selectedPriceplan.rate}</StrongText>
+                </NormalText>
+                <br />
+                <NormalText>
+                  Additional Rate : <StrongText>{selectedPriceplan.additional_rate}</StrongText>
+                </NormalText>
+              </div>
+            </div>
+          </>
+        )}
       </CustomerDashboardLayout>
     </>
   )
