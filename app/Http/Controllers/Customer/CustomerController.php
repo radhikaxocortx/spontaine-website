@@ -44,6 +44,11 @@ class CustomerController extends Controller
         // redirect()->back()->withErrors([
         //     'email' => 'The email has already been taken.',
         // ])
+        if ($request->haveCompany === true && $request->companyCountry !== 'SIERRA LEONE' && empty($request->companyPostalCode)) {
+            return redirect()->back()->withErrors([
+                'company_postal_code' => 'Company postal code is required.',
+            ]);
+        }
         try {
             $company = null;
             if ($request->haveCompany) {

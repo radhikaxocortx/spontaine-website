@@ -1,31 +1,17 @@
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/Components/CustomUI/FormFields/InputOtp'
-import { showError, showSuccess } from '@/Components/ui/alerts'
 import { Button } from '@/components/ui/button'
-import { LaravelFlash } from '@/Components/ui/ui_interfaces'
 import useCustomForm from '@/hooks/useCustomForm'
 import useInertiaPost from '@/hooks/useInertiaPost'
 import GuestLayout from '@/Layouts/GuestLayout'
 import StrongText from '@/typography/StrongText'
-import { usePage } from '@inertiajs/react'
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from 'input-otp'
-import { FormEvent, useCallback, useEffect } from 'react'
-import { ToastContainer } from 'react-toastify'
+import { FormEvent, useCallback } from 'react'
 
 interface Props {
   customerId: string
 }
 
 const OtpPage = ({ customerId }: Props) => {
-  const { flash } = usePage().props as unknown as { flash?: LaravelFlash }
-  useEffect(() => {
-    if (flash?.error != null) {
-      showError(flash.error)
-    }
-    if (flash?.message != null) {
-      showSuccess(flash.message)
-    }
-  }, [flash])
-
   const { formData, setFormValue } = useCustomForm({
     otp: '',
     customerId: customerId,
@@ -77,19 +63,6 @@ const OtpPage = ({ customerId }: Props) => {
           </Button>
         </form>
       </div>
-      <ToastContainer
-        position='bottom-center'
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme='dark'
-        toastClassName='toast-container'
-      />
     </GuestLayout>
   )
 }
