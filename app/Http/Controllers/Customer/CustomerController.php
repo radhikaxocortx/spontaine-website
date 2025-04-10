@@ -4,22 +4,27 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Customer\CustomerFormRequest;
+use App\Libs\ExceptionMessage;
 use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerOrganization;
+use App\Models\Customer\CustomerPricePlan;
+use App\Models\Customer\CustomerWorkflow;
+use App\Services\ProcessWorkflowInfo;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class CustomerController extends Controller
 {
+    use ProcessWorkflowInfo;
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
-    }
+    public function index() {}
 
     /**
      * Show the form for creating a new resource.
@@ -35,6 +40,11 @@ class CustomerController extends Controller
     public function store(CustomerFormRequest $request)
     {
 
+        if ($request->haveCompany === true && $request->companyCountry !== 'SIERRA LEONE' && empty($request->companyPostalCode)) {
+            return redirect()->back()->withErrors([
+                'company_postal_code' => 'Company postal code is required.',
+            ]);
+        }
         try {
             $company = null;
             if ($request->haveCompany) {
@@ -64,7 +74,7 @@ class CustomerController extends Controller
             ]);
 
             return redirect()
-                ->back()
+                ->route('customer-verification', ['customerId' => $customer->email])
                 ->with(['message' => 'Customer Created Successfully']);
         } catch (Exception $e) {
 
@@ -103,5 +113,71 @@ class CustomerController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function updatePriceplan(Request $request)
+    {
+        $request->validate([
+            'price_plan_id' => 'required|exists:price_plans,id',
+            'customer_id' => 'required|exists:customers,id',
+        ]);
+        try {
+            $customerPriceplan = CustomerPricePlan::create($request->all());
+        } catch (\Exception $e) {
+            return back()->with(['error' => $e->getMessage()]);
+        }
+
+        return redirect()
+            ->route('customer-workflow-create', ['pricePlanId' => $request->price_plan_id, 'customerPriceplanId' => $customerPriceplan->id]);
+    }
+
+    public function createCustomerWorkflow($pricePlanId, $customerPriceplanId)
+    {
+        return Inertia::render('Customer/CustomerWorkflowCreate', [
+            'pricePlanId' => $pricePlanId,
+            'customerPriceplanId' => $customerPriceplanId,
+        ]);
+    }
+
+    public function customerWorkflowSave(Request $request)
+    {
+        DB::beginTransaction();
+        $filesToCleanUp = [];
+
+        try {
+            $customerPriceplanId = $request->customerPriceplanId;
+
+            [$infoRecords, $filesToCleanUp] = $this->process(
+                $request->additionalInfo ?? [],
+                'customer_workflow',
+            );
+
+            foreach ($infoRecords as &$infoRecord) {
+                $infoRecord['customer_priceplan_id'] = $customerPriceplanId;
+            }
+
+            CustomerWorkflow::insert($infoRecords);
+        } catch (Exception $e) {
+            DB::rollBack();
+            Storage::delete($filesToCleanUp);
+
+            return back()->with(['error' => ExceptionMessage::getMessage($e)]);
+        }
+
+        DB::commit();
+
+        return redirect()->route('customer-dashboard')
+            ->with(['message' => 'Customer Workflow Saved Successfully']);
+    }
+
+    public function findCustomerPriceplan($customerId)
+    {
+        $customerPriceplan = CustomerPricePlan::where('customer_id', $customerId)
+            ->with('pricePlan', 'customer')
+            ->first();
+
+        return response()->json([
+            'customerPriceplan' => $customerPriceplan,
+        ]);
     }
 }

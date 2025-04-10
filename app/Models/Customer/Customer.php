@@ -2,10 +2,10 @@
 
 namespace App\Models\Customer;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Customer extends Model
+class Customer extends Authenticatable
 {
     use SoftDeletes;
 
@@ -22,8 +22,8 @@ class Customer extends Model
         'postal_code',
         'email',
         'password',
-
         'company_id',
+        'email_verified',
     ];
 
     protected $hidden = [
