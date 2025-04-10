@@ -9,15 +9,15 @@ import { router } from '@inertiajs/react'
 import { useEffect, useMemo, useState } from 'react'
 
 interface Props {
-  priceplanId: number
+  pricePlanId: number
   customerPriceplanId: number
 }
 
-const CustomerWorkflowCreate = ({ priceplanId, customerPriceplanId }: Props) => {
+const CustomerWorkflowCreate = ({ pricePlanId, customerPriceplanId }: Props) => {
   const [workflow, loadingTemplate] = useFetchRecord<{ workflow: Workflow | null }>(
     route('workflow-module', {
       name: 'Business Verification',
-      pricePlanId: priceplanId,
+      pricePlanId: pricePlanId,
     })
   )
 

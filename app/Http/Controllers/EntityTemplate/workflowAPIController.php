@@ -15,8 +15,7 @@ class workflowAPIController extends Controller
         $name = $request->input('name');
         $country = $request->input('country');
         $pricePlan = $request->input('pricePlan');
-        $priceplanId = $request->input('priceplanId');
-
+        $priceplanId = $request->input('pricePlanId');
         if ($name == null) {
             return response()->json([
                 'workflow' => null,

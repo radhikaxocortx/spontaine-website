@@ -128,13 +128,13 @@ class CustomerController extends Controller
         }
 
         return redirect()
-            ->route('customer-workflow-create', ['priceplanId' => $request->price_plan_id, 'customerPriceplanId' => $customerPriceplan->id]);
+            ->route('customer-workflow-create', ['pricePlanId' => $request->price_plan_id, 'customerPriceplanId' => $customerPriceplan->id]);
     }
 
-    public function createCustomerWorkflow($priceplanId, $customerPriceplanId)
+    public function createCustomerWorkflow($pricePlanId, $customerPriceplanId)
     {
         return Inertia::render('Customer/CustomerWorkflowCreate', [
-            'priceplanId' => $priceplanId,
+            'pricePlanId' => $pricePlanId,
             'customerPriceplanId' => $customerPriceplanId,
         ]);
     }

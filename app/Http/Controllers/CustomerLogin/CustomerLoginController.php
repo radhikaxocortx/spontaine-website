@@ -44,9 +44,9 @@ class CustomerLoginController extends Controller
     public function choosePriceplan(Request $request)
     {
         $customerId = $request->customerId;
-        if (CustomerPricePlan::where('customer_id', $customerId)->exists()) {
-            return redirect()->route('customer-dashboard');
-        }
+        // if (CustomerPricePlan::where('customer_id', $customerId)->exists()) {
+        //     return redirect()->route('customer-dashboard');
+        // }
         $priceplan = PricePlan::all();
 
         return Inertia::render('CustomerLogin/ChoosePriceplan', [

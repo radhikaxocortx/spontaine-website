@@ -99,7 +99,7 @@ Route::middleware(['auth:customer'])->group(function () {
         ->name('customer-dashboard');
     Route::post('update-priceplan', [CustomerController::class, 'updatePriceplan'])
         ->name('update-priceplan');
-    Route::get('customer-workflow-create/{priceplanId}/{customerPriceplanId}', [CustomerController::class, 'createCustomerWorkflow'])
+    Route::get('customer-workflow-create/{pricePlanId}/{customerPriceplanId}', [CustomerController::class, 'createCustomerWorkflow'])
         ->name('customer-workflow-create');
     Route::get('find-customer-priceplan/{customerId}', [CustomerController::class, 'findCustomerPriceplan'])
         ->name('find-customer-priceplan');
