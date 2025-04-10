@@ -3,6 +3,7 @@
 use App\Http\Controllers\AutoComplete\AutoCompleteController;
 use App\Http\Controllers\Country\CountryController;
 use App\Http\Controllers\Customer\CustomerController;
+use App\Http\Controllers\CustomerLogin\CustomerLoginController;
 use App\Http\Controllers\EntityTemplate\EntityTemplateController;
 use App\Http\Controllers\EntityTemplate\EntityTemplateItemController;
 use App\Http\Controllers\EntityTemplate\workflowAPIController;
@@ -13,6 +14,9 @@ use App\Http\Controllers\ReferenceData\ReferenceDataController;
 use App\Http\Controllers\Workflow\WorkflowController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Modules\OTP\Controllers\RegisterOtpController;
+use Modules\OTP\Controllers\ValidateOtpController;
+use Modules\OTP\Controllers\VerifyOtpController;
 use Modules\PageBuilder\Models\Page;
 
 Route::get('/', function () {
@@ -34,8 +38,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 // Sign Up Form
-Route::resource('sign-up', CustomerController::class)
-    ->parameters(['sign-up' => 'customer']);
+Route::middleware('guest')->group(function () {
+    Route::resource('sign-up', CustomerController::class)
+        ->parameters(['sign-up' => 'customer']);
+});
 // Reference Data
 Route::resource('/reference-data', ReferenceDataController::class);
 Route::get('domain-list', [ReferenceDataAPIController::class, 'domainList'])
@@ -75,4 +81,29 @@ Route::get('country-list', [AutoCompleteController::class, 'findCountry'])
 Route::get('priceplan-list', [AutoCompleteController::class, 'findPriceplan'])
     ->name('priceplan-list');
 
+Route::get('customer-verification/{customerId}', [RegisterOtpController::class, 'sendOtp'])
+    ->name('customer-verification');
+Route::get('verify-otp/{customerId}', [VerifyOtpController::class, 'verifyOtp'])
+    ->name('verify-otp');
+Route::post('validate-otp', [ValidateOtpController::class, 'validateOtp'])
+    ->name('validate-otp');
+
+// customer
+Route::get('customer-login', [CustomerLoginController::class, 'loginForm']);
+Route::post('validate-customer', [CustomerLoginController::class, 'ValidatePassword'])
+    ->name('validate-customer');
+Route::middleware(['auth:customer'])->group(function () {
+    Route::get('choose-priceplan/{customerId}', [CustomerLoginController::class, 'choosePriceplan'])
+        ->name('choose-priceplan');
+    Route::get('customer-dashboard', [CustomerLoginController::class, 'customerDashboard'])
+        ->name('customer-dashboard');
+    Route::post('update-priceplan', [CustomerController::class, 'updatePriceplan'])
+        ->name('update-priceplan');
+    Route::get('customer-workflow-create/{pricePlanId}/{customerPriceplanId}', [CustomerController::class, 'createCustomerWorkflow'])
+        ->name('customer-workflow-create');
+    Route::get('find-customer-priceplan/{customerId}', [CustomerController::class, 'findCustomerPriceplan'])
+        ->name('find-customer-priceplan');
+    Route::post('customer-workflow-save', [CustomerController::class, 'customerWorkflowSave'])
+        ->name('customer-workflow-save');
+});
 require __DIR__.'/auth.php';
