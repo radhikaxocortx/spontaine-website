@@ -98,3 +98,10 @@ export interface Customer extends Model {
   company_id: number
   email_verified: boolean
 }
+
+export interface CustomerPricePlan extends Model {
+  customer_id: number
+  priceplan_id: number
+  price_plan: PricePlan
+  customer: Customer
+}

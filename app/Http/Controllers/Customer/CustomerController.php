@@ -169,4 +169,15 @@ class CustomerController extends Controller
         return redirect()->route('customer-dashboard')
             ->with(['message' => 'Customer Workflow Saved Successfully']);
     }
+
+    public function findCustomerPriceplan($customerId)
+    {
+        $customerPriceplan = CustomerPricePlan::where('customer_id', $customerId)
+            ->with('pricePlan', 'customer')
+            ->first();
+
+        return response()->json([
+            'customerPriceplan' => $customerPriceplan,
+        ]);
+    }
 }

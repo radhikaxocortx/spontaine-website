@@ -14,12 +14,6 @@ interface Props {
 }
 
 const CustomerWorkflowCreate = ({ priceplanId, customerPriceplanId }: Props) => {
-  //   const userInfo = usePage().props.auth as unknown as { customer: Customer }
-  //   const User = useMemo(() => {
-  //     return userInfo.customer ?? null
-  //   }, [userInfo])
-  //   const customerId = User?.id
-
   const [workflow, loadingTemplate] = useFetchRecord<{ workflow: Workflow | null }>(
     route('workflow-module', {
       name: 'Business Verification',

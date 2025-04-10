@@ -15,6 +15,7 @@ class workflowAPIController extends Controller
         $name = $request->input('name');
         $country = $request->input('country');
         $pricePlan = $request->input('pricePlan');
+        $priceplanId = $request->input('priceplanId');
 
         if ($name == null) {
             return response()->json([
@@ -25,7 +26,9 @@ class workflowAPIController extends Controller
         $workflowQuery = Workflow::where('name', 'like', '%'.$name.'%')
             ->with('workflowModules.workflowItems');
 
-        if ($pricePlan !== null) {
+        if ($priceplanId !== null) {
+            $workflowQuery->where('priceplan_id', $priceplanId);
+        } elseif ($pricePlan !== null) {
             $workflowQuery->whereHas('pricePlan', function ($query) use ($pricePlan) {
                 $query->where('name', $pricePlan);
             });

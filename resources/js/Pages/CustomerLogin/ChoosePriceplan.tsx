@@ -1,5 +1,6 @@
 import CustomerDashboardLayout from '@/Components/Customer/Dashboard/CustomerDashboardLayouts'
 import { Customer, PricePlan } from '@/Components/Interface/data_interface'
+import { Card } from '@/components/ui/card'
 import FormBuilder, { FormItem } from '@/FormBuilder/FormBuilder'
 import useCustomForm from '@/hooks/useCustomForm'
 import useInertiaPost from '@/hooks/useInertiaPost'
@@ -69,15 +70,6 @@ const ChoosePriceplan = ({ pricePlan }: Props) => {
       setSelectedPriceplan(selected ?? null)
     }
   }, [formData.priceplan_id, pricePlan])
-  // useEffect(() => {
-  //   const [workflow, loadingTemplate] = useFetchRecord<{ workflow: Workflow | null }>(
-  //     route('workflow-module', {
-  //       name: 'Business Verification',
-  //       pricePlanId: selectedPriceplan?.id,
-  //     })
-  //   )
-  // }, [selectedPriceplan])
-  // console.log(Workflow)
 
   return (
     <>
@@ -90,27 +82,28 @@ const ChoosePriceplan = ({ pricePlan }: Props) => {
           onFormSubmit={handleSubmit}
           buttonText='Next'
           formStyles='items-center p-5'
-        ></FormBuilder>
-        {selectedPriceplan && (
-          <>
-            {/* <div className=''>
-              <StrongText>{Workflow.description}</StrongText>
-            </div> */}
-            <div className='flex flex-col p-5'>
-              <Heading>{`${selectedPriceplan.name} (${selectedPriceplan.code})`}</Heading>
-              <Paragraph>{selectedPriceplan.description}</Paragraph>
-              <div className='p-3'>
-                <NormalText>
-                  Rate : <StrongText>{selectedPriceplan.rate}</StrongText>
-                </NormalText>
-                <br />
-                <NormalText>
-                  Additional Rate : <StrongText>{selectedPriceplan.additional_rate}</StrongText>
-                </NormalText>
-              </div>
-            </div>
-          </>
-        )}
+        >
+          <br />
+          {selectedPriceplan && (
+            <>
+              <Card className='w-full p-2'>
+                <div className='flex flex-col p-5'>
+                  <Heading>{`${selectedPriceplan.name} (${selectedPriceplan.code})`}</Heading>
+                  <Paragraph>{selectedPriceplan.description}</Paragraph>
+                  <div className='p-3'>
+                    <NormalText>
+                      Rate : <StrongText>{selectedPriceplan.rate}</StrongText>
+                    </NormalText>
+                    <br />
+                    <NormalText>
+                      Additional Rate : <StrongText>{selectedPriceplan.additional_rate}</StrongText>
+                    </NormalText>
+                  </div>
+                </div>
+              </Card>
+            </>
+          )}
+        </FormBuilder>
       </CustomerDashboardLayout>
     </>
   )
