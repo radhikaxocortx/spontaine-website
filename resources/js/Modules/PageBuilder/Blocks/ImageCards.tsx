@@ -119,11 +119,11 @@ const ImageCards = ({
   const blockStyling = useBlockStyling(blockData)
 
   return (
-    <div className={`place-items-center bg-beige-50 py-6 ${editMode ? '' : blockStyling}`}>
+    <div className={`relative w-full bg-beige-50 ${editMode ? '' : blockStyling}`}>
       <AppLayoutPadding>
-        <div className={`flex w-full flex-col gap-2`}>
-          <div className='w-full justify-start'>
-            <HeroHeadline className='text-black-tertiary-950'>
+        <div className='flex flex-col space-y-4 px-4 py-12 md:space-y-6 md:py-16 lg:py-20'>
+          <div className='flex w-full justify-start'>
+            <HeroHeadline className='text-primary-950'>
               <Localization
                 text={blockData.title}
                 language={language}
@@ -133,7 +133,7 @@ const ImageCards = ({
               )}
             </HeroHeadline>
           </div>
-          <div className='flex w-full flex-col lg:w-3/4'>
+          <div className='flex w-full flex-col justify-start lg:w-3/4'>
             {blockData.description.items.map((item) => {
               return (
                 <HeroTextBlock
@@ -155,27 +155,28 @@ const ImageCards = ({
               )
             })}
           </div>
-          <div className='grid grid-cols-1 gap-6 pt-6 md:grid-cols-2'>
-            <div className='relative rounded-3xl'>
+          <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
+            <div className='relative w-4/5 rounded-3xl'>
               {blockData.image != null && (
                 <img
-                  className='w-full rounded-3xl object-cover object-center'
+                  className='relative max-h-[320px] w-full rounded-3xl object-cover object-center'
                   alt={blockData.image.caption ?? ''}
                   src={blockData.image?.url ?? ''}
                   loading='lazy'
                 />
               )}
 
-              <div className='absolute inset-0 flex items-end justify-end p-20 md:p-10 lg:p-16'>
+              <div className='absolute -bottom-10 -right-6 flex items-end justify-end p-12 md:p-8 lg:p-12'>
                 {blockData.link != null && (
                   <InertiaLink
                     link={blockData.link}
                     language={language}
-                    className='flex w-full shrink-0 items-start justify-end space-x-2 py-1 text-base md:w-auto md:py-4 lg:mx-2 lg:mt-2'
+                    className='flex w-full shrink-0 items-start justify-start space-x-2 py-1 text-base md:w-auto md:py-3 lg:mx-2 lg:mt-2'
                   >
                     <Button
                       size='md'
-                      variant={'outlineSecondary'}
+                      variant={'outline'}
+                      className='transition-all duration-300 hover:bg-gradient-to-r hover:from-primary-950 hover:to-secondary-500 hover:text-white'
                     >
                       <Localization
                         language={language}
@@ -187,26 +188,27 @@ const ImageCards = ({
                 )}
               </div>
             </div>
-            <div className='relative rounded-3xl'>
+            <div className='relative w-4/5 rounded-3xl'>
               {blockData.image2 != null && (
                 <img
-                  className='w-full rounded-3xl object-cover object-center'
+                  className='relative max-h-[320px] w-full rounded-3xl object-cover object-center'
                   alt={blockData.image2.caption ?? ''}
                   src={blockData.image2?.url ?? ''}
                   loading='lazy'
                 />
               )}
 
-              <div className='absolute inset-0 flex items-end justify-end p-20 md:p-10 lg:p-16'>
+              <div className='absolute -bottom-10 -right-6 flex items-end justify-end p-12 md:p-8 lg:p-12'>
                 {blockData.link2 != null && (
                   <InertiaLink
                     link={blockData.link2}
                     language={language}
-                    className='flex w-full shrink-0 items-start justify-end space-x-2 py-1 text-base md:w-auto md:py-4 lg:mx-2 lg:mt-2'
+                    className='flex w-full shrink-0 items-start justify-end space-x-2 py-1 text-base md:w-auto md:py-3 lg:mx-2 lg:mt-2'
                   >
                     <Button
                       size='md'
-                      variant={'outlineSecondary'}
+                      variant={'outline'}
+                      className='transition-all duration-300 hover:bg-gradient-to-r hover:from-primary-950 hover:to-secondary-500 hover:text-white'
                     >
                       {blockData.link2.name.english}
                       <ArrowRightIcon className='ml-2 h-4 w-4' />
