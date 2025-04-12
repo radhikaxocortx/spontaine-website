@@ -8,7 +8,12 @@ import ResolveComponent from './ResolveComponent'
 
 const pageBlocks = [
   { name: 'Home - Hero Section' },
+  { name: 'Home - Company Marquee' },
   { name: 'Home - Image Cards' },
+  { name: 'Home - Banner With Image' },
+  { name: 'Home - Video Section' },
+  { name: 'Home - Testimonial Section' },
+  { name: 'Home - Call To Action' },
   { name: 'Home - Grid With Video' },
   { name: 'Home - Full Width Image With Title' },
   { name: 'Content Section - FAQ Style Accordion with Links' },
