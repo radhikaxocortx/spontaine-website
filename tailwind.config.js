@@ -31,30 +31,30 @@ export default {
       },
       colors: {
         primary: {
-          50: '#eff6ff',
-          100: '#dbeafe',
-          200: '#c0dbfd',
-          300: '#94c5fc',
-          400: '#62a5f8',
-          500: '#4285f4', //primary color
-          600: '#2763e9',
-          700: '#1f4ed6',
-          800: '#2041ad',
-          900: '#1f3b89',
-          950: '#182553',
+          50: '#f1f4ff', //light gray
+          100: '#e6ecff',
+          200: '#d1ddff',
+          300: '#acbfff',
+          400: '#7d95ff',
+          500: '#4962ff', //links
+          600: '#2435ff',
+          700: '#1220ef',
+          800: '#0e1ac9',
+          900: '#0c148d', // buttons
+          950: '#051070', //title
         },
         secondary: {
-          50: '#eef2ff',
-          100: '#dfe6ff', //gradient backgroud light
-          200: '#c7d2fe',
-          300: '#a5b3fc',
-          400: '#818bf8',
-          500: '#6365f1',
-          600: '#5046e5',
-          700: '#4438ca',
-          800: '#3830a3',
-          900: '#322e81',
-          950: '#1e1b4b',
+          50: '#f8f8ee',
+          100: '#ecedd4',
+          200: '#ddddab',
+          300: '#cac77a',
+          400: '#b9b256',
+          500: '#a49945', //gold
+          600: '#92813c',
+          700: '#766332',
+          800: '#635230',
+          900: '#56452d',
+          950: '#312517', //body
         },
         tertiary: {
           50: '#f0f6fe',
@@ -213,6 +213,9 @@ export default {
           to: {
             height: '0',
           },
+        },
+        shimmer: {
+          '100%': { transform: 'translateX(100%)' },
         },
       },
       animation: {

@@ -1,4 +1,5 @@
 import ApplicationLogo from '@/Components/CustomUI/ApplicationLogo'
+import CountrySelector from '@/Components/CustomUI/CountrySelector'
 import { Button } from '@/components/ui/button'
 import AppLayoutPadding from './AppLayoutPadding'
 import { MobileNav } from './Nav/MobileNav'
@@ -12,20 +13,12 @@ const Navbar = () => {
           <div className='flex items-center'>
             <ApplicationLogo className='w-24' />
           </div>
-          <div className='hidden lg:block'>
+          <div className='hidden items-center gap-4 lg:flex'>
             <NavLinks />
+            <Button size='md'>Verify Your Business</Button>
+            <CountrySelector />
           </div>
 
-          <div className='hidden items-center space-x-4 lg:flex'>
-            <Button
-              variant='outline'
-              size='xxl'
-            >
-              {' '}
-              Login{' '}
-            </Button>
-            <Button size='md'> Get Started </Button>
-          </div>
           <MobileNav />
         </div>
       </AppLayoutPadding>

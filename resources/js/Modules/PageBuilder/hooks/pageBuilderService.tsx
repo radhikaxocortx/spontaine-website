@@ -7,6 +7,11 @@ import { faqBlock } from '../Blocks/FAQ'
 import { fullWidthImageWithTItleBlock } from '../Blocks/FullWidthImageWithTItle'
 import { gridWithVideoBlock } from '../Blocks/GridWithVideo'
 import { imageCardsBlock } from '../Blocks/ImageCards'
+import { bannerBlock } from '../Blocks/SectionBanner'
+import { textBlock } from '../Blocks/SectionCallToAction'
+import { heroImageBlock } from '../Blocks/SectionHero'
+import { defaultTestimonialBlock } from '../Blocks/SectionTestimonial'
+import { videoBlock } from '../Blocks/SectionVideo'
 
 export interface PageBuilderAction {
   action:
@@ -40,13 +45,28 @@ const getBlockDefaultData = (blockName: string) => {
     }
     case 'Home - Hero Section': {
       return {
-        ...imageBlock,
+        ...heroImageBlock,
       }
     }
 
     case 'Home - Image Cards': {
       return {
         ...imageCardsBlock,
+      }
+    }
+    case 'Home - Banner With Image': {
+      return {
+        ...bannerBlock,
+      }
+    }
+    case 'Home - Video Section': {
+      return {
+        ...videoBlock,
+      }
+    }
+    case 'Home - Testimonial Section': {
+      return {
+        ...defaultTestimonialBlock,
       }
     }
     case 'Home - Grid With Video': {
@@ -68,6 +88,11 @@ const getBlockDefaultData = (blockName: string) => {
     case 'Formatted Text': {
       return {
         ...richTextData,
+      }
+    }
+    case 'Home - Call To Action': {
+      return {
+        ...textBlock,
       }
     }
     default: {

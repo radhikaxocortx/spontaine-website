@@ -13,7 +13,12 @@ import FullWidthImageWithTItle, {
 } from '../Blocks/FullWidthImageWithTItle'
 import GridWithVideo, { GridWithVideoBlock } from '../Blocks/GridWithVideo'
 import ImageCards, { ImageCardsBlock } from '../Blocks/ImageCards'
-import SectionHero from '../Blocks/SectionHero'
+import SectionBanner, { BannerBlock } from '../Blocks/SectionBanner'
+import SectionCallToAction, { TextBlock } from '../Blocks/SectionCallToAction'
+import SectionHero, { HeroImageBlock } from '../Blocks/SectionHero'
+import SectionMarquee, { MarqueeData } from '../Blocks/SectionMarquee'
+import SectionTestimonial, { TestimonialBlock } from '../Blocks/SectionTestimonial'
+import SectionVideo, { VideoImageBlock } from '../Blocks/SectionVideo'
 
 interface Properties {
   block?: Block
@@ -57,8 +62,17 @@ const ResolveComponent = ({
         <SectionHero
           editMode={editMode}
           onFieldEdit={onFieldEdit}
-          blockData={block as unknown as ImageBlock}
+          blockData={block as unknown as HeroImageBlock}
           language={language}
+        />
+      )}
+      {blockName === 'Home - Company Marquee' && (
+        <SectionMarquee
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          blockData={block as unknown as MarqueeData}
+          language={language}
+          dispatch={dispatch}
         />
       )}
       {blockName === 'Home - Image Cards' && (
@@ -66,6 +80,30 @@ const ResolveComponent = ({
           editMode={editMode}
           onFieldEdit={onFieldEdit}
           blockData={block as unknown as ImageCardsBlock}
+          language={language}
+        />
+      )}
+      {blockName === 'Home - Video Section' && (
+        <SectionVideo
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          blockData={block as unknown as VideoImageBlock}
+        />
+      )}
+      {blockName === 'Home - Testimonial Section' && (
+        <SectionTestimonial
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          blockData={block as unknown as TestimonialBlock}
+          language={language}
+          dispatch={dispatch}
+        />
+      )}
+      {blockName === 'Home - Banner With Image' && (
+        <SectionBanner
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          blockData={block as unknown as BannerBlock}
           language={language}
         />
       )}
@@ -92,6 +130,14 @@ const ResolveComponent = ({
           onFieldEdit={onFieldEdit}
           blockData={block as unknown as FAQBlockInfo}
           dispatch={dispatch}
+        />
+      )}
+      {blockName === 'Home - Call To Action' && (
+        <SectionCallToAction
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          blockData={block as unknown as TextBlock}
+          language={language}
         />
       )}
     </>
