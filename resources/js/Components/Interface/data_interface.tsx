@@ -97,6 +97,18 @@ export interface Customer extends Model {
   password: string
   company_id: number
   email_verified: boolean
+  company: CustomerOrganization
+}
+
+export interface CustomerOrganization extends Model {
+  company_legal_entity_name: string
+  company_address_line_1: string
+  company_address_line_2: string
+  company_city: string
+  company_postal_code: string
+  company_country: string
+  company_tax_id: string
+  company_registration_id: string
 }
 
 export interface CustomerPricePlan extends Model {
@@ -104,4 +116,16 @@ export interface CustomerPricePlan extends Model {
   priceplan_id: number
   price_plan: PricePlan
   customer: Customer
+}
+
+export interface WorkflowItem extends Model {
+  workflow_item_id: number
+  value: string | null
+  number_value: number | null
+  date_value: string | null
+  mime_type: string | null
+}
+
+export interface CustomerPriceplanWorkflowItem extends WorkflowItem {
+  customer_priceplan_id: number
 }
