@@ -50,6 +50,12 @@ const SidebarMenuItems: SidebarMenuItem[] = [
         value: 'workflow',
         image: { svg: `` },
       },
+      {
+        name: 'Customer Priceplans',
+        url: '/customer-admin-view',
+        value: 'customer-priceplan',
+        image: { svg: `` },
+      },
     ],
   },
 

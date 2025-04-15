@@ -13,7 +13,7 @@ class CustomerWorkflow extends Model
 
     protected $fillable = [
         'workflow_item_id',
-        'customer_id',
+        'customer_priceplan_id',
         'value',
         'number_value',
         'date_value',
@@ -23,5 +23,10 @@ class CustomerWorkflow extends Model
     public function workflowItem(): BelongsTo
     {
         return $this->belongsTo(EntityTemplateItem::class, 'workflow_item_id', 'id');
+    }
+
+    public function customerPriceplan(): BelongsTo
+    {
+        return $this->belongsTo(CustomerPricePlan::class, 'customer_priceplan_id', 'id');
     }
 }
