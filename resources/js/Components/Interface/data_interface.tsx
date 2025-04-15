@@ -117,3 +117,15 @@ export interface CustomerPricePlan extends Model {
   price_plan: PricePlan
   customer: Customer
 }
+
+export interface WorkflowItem extends Model {
+  workflow_item_id: number
+  value: string | null
+  number_value: number | null
+  date_value: string | null
+  mime_type: string | null
+}
+
+export interface CustomerPriceplanWorkflowItem extends WorkflowItem {
+  customer_priceplan_id: number
+}

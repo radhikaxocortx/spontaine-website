@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer\CustomerPricePlan;
+use App\Models\Customer\CustomerWorkflow;
+use App\Models\Workflow\Workflow;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -35,7 +37,16 @@ class CustomerAdminController extends Controller
         $customerPriceplan = CustomerPricePlan::where('id', $id)
             ->with('customer.company', 'pricePlan')
             ->firstOrFail();
+        $customerPriceplanInfo = CustomerWorkflow::where('customer_priceplan_id', $id)->get();
+        $CustomerPriceplanTemplate = Workflow::where('priceplan_id', $customerPriceplan->price_plan_id)
+            ->where('name', 'like', '%'.'Business Verification'.'%')
+            ->with('workflowModules.workflowItems')
+            ->first();
 
-        return Inertia::render('AdminView/CustomerAdminShow', ['customerPriceplan' => $customerPriceplan]);
+        return Inertia::render('AdminView/CustomerAdminShow', [
+            'customerPriceplan' => $customerPriceplan,
+            'customerPriceplanInfo' => $customerPriceplanInfo,
+            'CustomerPriceplanTemplate' => $CustomerPriceplanTemplate,
+        ]);
     }
 }
