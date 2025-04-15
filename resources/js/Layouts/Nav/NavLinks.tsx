@@ -13,29 +13,29 @@ export function NavLinks() {
       <NavigationMenuList>
         <NavigationMenuItem>
           <Link href='/'>
-            <NavigationMenuLink className={`${navigationMenuTriggerStyle()} text-primary-500`}>
-              Home
+            <NavigationMenuLink className={`${navigationMenuTriggerStyle()}`}>
+              Solutions
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <Link href='/products'>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Products
+              Company
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <Link href='/pricing'>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Pricing
+              Resources
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <Link href='/contact-us'>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Contact Us
+              Pricing
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>

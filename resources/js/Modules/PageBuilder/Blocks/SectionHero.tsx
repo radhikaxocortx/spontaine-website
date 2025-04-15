@@ -1,48 +1,28 @@
 import { Button } from '@/components/ui/button'
 import { Language } from '@/Components/ui/ui_interfaces'
-import useMounted from '@/hooks/useMounted'
 import AppLayoutPadding from '@/Layouts/AppLayoutPadding'
 import HeroHeadline from '@/typography/HeroHeadline'
 import HeroTextBlock from '@/typography/HeroTextBlock'
-import { ArrowRight } from 'lucide-react'
-import { Dispatch, useCallback } from 'react'
 import AddLabel from '../Components/AddLabel'
 import { BlocKFieldInfo } from '../Components/BlockEditor/BlockEditor'
 import EditLabel from '../Components/EditLabel'
 import InertiaLink from '../Components/InertiaLink'
 import Localization from '../Components/Localization'
-import { PageBuilderAction } from '../hooks/pageBuilderService'
 import {
   BlockConfiguration,
   BlockImage,
-  BlockVideo,
   ItemListField,
   LinkData,
   TextData,
 } from '../page_interfaces'
 
-export interface SectionHeroProps {
-  className?: string
-}
-export interface MarqueeImages {
-  id?: number
-  image: BlockImage
-  link?: LinkData
-}
-export interface ImageBlock extends BlockConfiguration {
+export interface HeroImageBlock extends BlockConfiguration {
   id?: number
   title: TextData
-  title2?: TextData
   description: ItemListField<TextData>
   image?: BlockImage | null
   link?: LinkData | null
   link2?: LinkData | null
-  video?: BlockVideo | null
-  videoLink?: TextData | null
-  date?: TextData
-  categoryLink?: LinkData
-  category?: TextData
-  actions?: ItemListField<MarqueeImages>
 }
 
 const placeholderParagraph =
@@ -61,15 +41,12 @@ export const placeholderImage = {
   caption: 'placeholder image',
 }
 
-export const imageBlock = {
+export const heroImageBlock: HeroImageBlock = {
   title: {
     english: placeholderTitle,
     malayalam: placeholderTitleMal,
   },
-  title2: {
-    english: placeholderTitle,
-    malayalam: placeholderTitleMal,
-  },
+
   description: {
     lastUUID: 1,
     items: [
@@ -83,106 +60,75 @@ export const imageBlock = {
     ],
   },
   image: placeholderImage,
-  actions: {
-    lastUUID: 0,
-    items: [],
-  },
-}
-
-const defaultMarqueeImageCard: MarqueeImages = {
-  image: { url: '/placeholdermarquee.png', caption: 'Placeholder' },
 }
 
 interface Properties {
   editMode?: boolean
   onFieldEdit?: (field: BlocKFieldInfo) => void
-  blockData?: ImageBlock
+  blockData?: HeroImageBlock
   language?: Language
-  dispatch?: Dispatch<PageBuilderAction>
 }
 
 const SectionHero = ({
   editMode = false,
   onFieldEdit,
-  blockData = imageBlock,
+  blockData = heroImageBlock,
   language = 'en',
-  dispatch,
 }: Properties) => {
-  const isMounted = useMounted()
-  const addNewAction = useCallback(() => {
-    if (dispatch != null) {
-      dispatch({
-        action: 'INSERT_INTO_LIST',
-        blockId: blockData?.id,
-        fieldName: 'actions',
-        fieldValue: {
-          ...defaultMarqueeImageCard,
-          name: { english: 'link', malayalam: '' },
-          external: false,
-          link: null,
-        },
-      })
-    }
-  }, [dispatch, blockData])
-
   return (
     <div
-      className={`flex flex-col items-center py-6 ${blockData?.marginTop} ${blockData?.marginBottom} ${blockData?.paddingTop} ${blockData?.paddingBottom}`}
+      className={`flex flex-col items-center py-12 ${blockData?.marginTop} ${blockData?.marginBottom} ${blockData?.paddingTop} ${blockData?.paddingBottom}`}
     >
       <AppLayoutPadding>
-        <div className='flex flex-col gap-4 md:gap-2 lg:gap-0'>
-          <div className='flex flex-col items-center justify-between gap-4 md:flex-row'>
-            <div className='flex max-w-lg flex-col gap-4 pt-6 text-center md:pt-10 md:text-left lg:pt-8'>
+        <div className='flex flex-col items-center justify-center gap-6'>
+          <div className='flex flex-col items-start justify-between gap-8 md:flex-row md:gap-12'>
+            <div className='flex max-w-lg flex-col gap-6 text-left'>
               {/* Banner title */}
-              <HeroHeadline className='text-primary-graige-900'>
+              <HeroHeadline className='text-primary-950'>
                 <Localization
                   text={blockData.title}
                   language={language}
                 />
+                {editMode && onFieldEdit != null && (
+                  <EditLabel
+                    onClick={() => {
+                      onFieldEdit({
+                        field: 'title',
+                        fieldType: 'text',
+                        oldValue: blockData.title,
+                        action: 'UPDATE',
+                      })
+                    }}
+                  />
+                )}
               </HeroHeadline>
 
-              {editMode && onFieldEdit != null && (
-                <EditLabel
-                  onClick={() => {
-                    onFieldEdit({
-                      field: 'title',
-                      fieldType: 'text',
-                      oldValue: blockData.title,
-                      action: 'UPDATE',
-                    })
-                  }}
-                />
-              )}
-
               {/* Banner description */}
-              <div className='flex flex-col'>
-                {blockData?.description?.items.map((item) => {
-                  return (
-                    <HeroTextBlock
-                      className='text-neutral-graige-600'
-                      key={item.id.toString()}
-                    >
-                      <Localization
-                        text={item.item}
-                        language={language}
+              <div className='flex flex-col gap-4'>
+                {blockData?.description?.items.map((item) => (
+                  <HeroTextBlock
+                    className='text-neutral-graige-600'
+                    key={item.id.toString()}
+                  >
+                    <Localization
+                      text={item.item}
+                      language={language}
+                    />
+                    {editMode && onFieldEdit != null && (
+                      <EditLabel
+                        onClick={() => {
+                          onFieldEdit({
+                            field: 'description',
+                            fieldType: 'textItems',
+                            oldValue: item.item,
+                            action: 'UPDATE',
+                            itemIndex: item.id,
+                          })
+                        }}
                       />
-                      {editMode && onFieldEdit != null && (
-                        <EditLabel
-                          onClick={() => {
-                            onFieldEdit({
-                              field: 'description',
-                              fieldType: 'textItems',
-                              oldValue: item.item,
-                              action: 'UPDATE',
-                              itemIndex: item.id,
-                            })
-                          }}
-                        />
-                      )}
-                      <br />
-                    </HeroTextBlock>
-                  )
-                })}
+                    )}
+                  </HeroTextBlock>
+                ))}
                 {editMode && onFieldEdit != null && (
                   <AddLabel
                     onClick={() => {
@@ -199,45 +145,57 @@ const SectionHero = ({
               </div>
 
               {/* Call to Action */}
-              <div className='flex items-center gap-4'>
-                <Button size='lg'>
-                  {' '}
-                  Explore Directory
-                  <ArrowRight
-                    className='ml-2 inline-block'
-                    size={18}
-                  />{' '}
-                </Button>
-
-                {blockData?.link2 != null && (
-                  <InertiaLink
-                    className='text-base font-semibold text-black-tertiary-950 underline hover:text-primary-500'
-                    language={language}
-                    link={blockData?.link2}
-                  />
+              <div className='flex items-center gap-6'>
+                {blockData.link && (
+                  <InertiaLink link={blockData.link}>
+                    <Button
+                      size='lg'
+                      className='min-w-[160px] justify-center'
+                    >
+                      <Localization
+                        text={blockData.link.name}
+                        language={language}
+                      />
+                    </Button>
+                  </InertiaLink>
                 )}
-                {editMode && onFieldEdit != null && (
-                  <div>
-                    {/* <EditLabel
-                    label='Edit LInk'
-                    onClick={() => {
-                      onFieldEdit({
-                        action: 'INSERT',
-                        field: 'link',
-                        fieldType: 'link',
-                        oldValue: blockData.link ?? null,
-                      })
-                    }}
-                  /> */}
 
+                {blockData.link2 && (
+                  <InertiaLink link={blockData.link2}>
+                    <Button
+                      variant='outline'
+                      size='lg'
+                      className='min-w-[160px] justify-center'
+                    >
+                      <Localization
+                        text={blockData.link2.name}
+                        language={language}
+                      />
+                    </Button>
+                  </InertiaLink>
+                )}
+
+                {editMode && onFieldEdit != null && (
+                  <div className='flex gap-4'>
                     <EditLabel
-                      label='Edit LInk2'
+                      label='Edit Primary Button'
                       onClick={() => {
                         onFieldEdit({
-                          action: 'INSERT',
+                          field: 'link',
+                          fieldType: 'link',
+                          oldValue: blockData.link,
+                          action: 'UPDATE',
+                        })
+                      }}
+                    />
+                    <EditLabel
+                      label='Edit Secondary Button'
+                      onClick={() => {
+                        onFieldEdit({
                           field: 'link2',
                           fieldType: 'link',
-                          oldValue: blockData.link2 ?? null,
+                          oldValue: blockData.link2,
+                          action: 'UPDATE',
                         })
                       }}
                     />
@@ -248,7 +206,7 @@ const SectionHero = ({
 
             {/* Hero Image */}
             <div className='flex flex-col'>
-              {blockData?.image != null && (
+              {blockData?.image && (
                 <img
                   className='h-auto w-full rounded-3xl object-cover object-center'
                   src={blockData.image.url}
@@ -262,27 +220,12 @@ const SectionHero = ({
                       action: 'INSERT',
                       field: 'image',
                       fieldType: 'image',
-                      oldValue: blockData.image ?? null,
+                      oldValue: blockData.image,
                     })
                   }}
                   label='Edit Image'
                 />
               )}
-            </div>
-          </div>
-          {/* Company logos */}
-          <div className='grid space-x-4 pt-2 md:grid-cols-5 lg:grid-cols-12'>
-            <div className='col-span-full flex md:col-span-1 lg:col-span-2'>
-              <HeroTextBlock className='font-semibold leading-5 text-black-tertiary-950'>
-                Trusted by the world's biggest brands
-              </HeroTextBlock>
-            </div>
-            <div className='col-span-3 flex items-center'>
-              <img
-                className=''
-                src='/imge/companylogo.png'
-                alt='Brands'
-              />
             </div>
           </div>
         </div>

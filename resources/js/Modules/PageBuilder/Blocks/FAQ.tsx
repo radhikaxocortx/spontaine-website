@@ -21,8 +21,8 @@ import {
 import { Button } from '@/components/ui/button'
 import HeroHeadline from '@/typography/HeroHeadline'
 import HeroTextBlock from '@/typography/HeroTextBlock'
-import LargeText from '@/typography/LargeText'
-import { ArrowRightIcon } from 'lucide-react'
+import NormalText from '@/typography/NormalText'
+import SmallText from '@/typography/SmallText'
 import { Dispatch, useCallback } from 'react'
 import AddLabel from '../Components/AddLabel'
 import InertiaLink from '../Components/InertiaLink'
@@ -51,11 +51,6 @@ const placeholderParagraphMal =
 
 const placeholderTitle = 'Gregor then turned to look out'
 const placeholderTitleMal = 'സാമുദായികവും സാംസ്കാരികവും സാമ്പത്തികവുമായ'
-
-export const placeholderImage = {
-  url: '/placeholder.jpeg',
-  caption: 'placeholder image',
-}
 
 export const faqBlock = {
   title: {
@@ -129,92 +124,57 @@ const FAQ = ({
   const blockStyling = useBlockStyling(blockData ?? {})
 
   return (
-    <div
-      className={`place-items-center bg-gradient-to-r from-secondary-100 to-white py-6 ${editMode ? '' : blockStyling}`}
-    >
+    <div className={`place-items-center py-6 ${editMode ? '' : blockStyling}`}>
       <AppLayoutPadding>
-        <div className='gris-cols-1 grid gap-8 md:grid-cols-2'>
-          <div className={`flex w-full flex-col gap-2`}>
-            <div className='w-full justify-start'>
-              <HeroHeadline className='text-black-tertiary-950'>
-                <Localization
-                  text={blockData?.title}
-                  language={language}
-                />
-                {editMode && onFieldEdit != null && (
-                  <EditLabel
-                    onClick={() =>
-                      onFieldEdit({
-                        field: 'title',
-                        fieldType: 'text',
-                        action: 'UPDATE',
-                        oldValue: blockData?.title,
-                      })
-                    }
-                  />
-                )}
-              </HeroHeadline>
-            </div>
-            <div className='flex w-full flex-col'>
-              {blockData?.description?.items.map((item) => {
-                return (
-                  <HeroTextBlock
-                    className='text-neutral-graige-600'
-                    key={item.id.toString()}
-                  >
-                    <Localization
-                      text={item.item}
-                      language={language}
-                    />
-                    {editMode && onFieldEdit != null && (
-                      <EditLabel
-                        label='Edit Description'
-                        onClick={() =>
-                          onFieldEdit({
-                            field: 'description',
-                            oldValue: item.item,
-                            fieldType: 'textItems',
-                            action: 'UPDATE',
-                            itemIndex: item.id,
-                          })
-                        }
-                      />
-                    )}
-                  </HeroTextBlock>
-                )
-              })}
-            </div>
-            <div>
-              {blockData?.link != null && (
-                <InertiaLink
-                  link={blockData.link}
-                  language={language}
-                  className='flex w-full shrink-0 items-start justify-start space-x-2 py-1 text-base md:w-auto md:py-4 lg:mx-2 lg:mt-2'
-                >
-                  <Button size='md'>
-                    <Localization
-                      language={language}
-                      text={blockData.link.name}
-                    />
-                    <ArrowRightIcon className='ml-2 h-4 w-4' />
-                  </Button>
-                </InertiaLink>
-              )}
-            </div>
-            {editMode && onFieldEdit != null && (
-              <EditLabel
-                label='Edit Button'
-                onClick={() =>
-                  onFieldEdit({
-                    field: 'link',
-                    fieldType: 'link',
-                    oldValue: blockData?.link,
-                    action: 'UPDATE',
-                  })
-                }
+        <div className='gap-8'>
+          <div className='flex w-full flex-col items-center justify-center gap-4'>
+            <HeroHeadline className='text-primary-950'>
+              <Localization
+                text={blockData?.title}
+                language={language}
               />
-            )}
+              {editMode && onFieldEdit != null && (
+                <EditLabel
+                  onClick={() =>
+                    onFieldEdit({
+                      field: 'title',
+                      fieldType: 'text',
+                      action: 'UPDATE',
+                      oldValue: blockData?.title,
+                    })
+                  }
+                />
+              )}
+            </HeroHeadline>
+            {blockData?.description?.items.map((item) => {
+              return (
+                <HeroTextBlock
+                  className='text-neutral-graige-600'
+                  key={item.id.toString()}
+                >
+                  <Localization
+                    text={item.item}
+                    language={language}
+                  />
+                  {editMode && onFieldEdit != null && (
+                    <EditLabel
+                      label='Edit Description'
+                      onClick={() =>
+                        onFieldEdit({
+                          field: 'description',
+                          oldValue: item.item,
+                          fieldType: 'textItems',
+                          action: 'UPDATE',
+                          itemIndex: item.id,
+                        })
+                      }
+                    />
+                  )}
+                </HeroTextBlock>
+              )
+            })}
           </div>
+
           <div>
             <Accordion
               type='single'
@@ -227,12 +187,12 @@ const FAQ = ({
                     key={item.id.toString()}
                   >
                     <AccordionTrigger>
-                      <LargeText className='font-semibold text-black-tertiary-950'>
+                      <NormalText className='font-semibold'>
                         <Localization
                           text={item.item.title}
                           language={language}
                         />
-                      </LargeText>
+                      </NormalText>
                       <div>
                         {editMode && onFieldEdit != null && (
                           <EditLabel
@@ -291,12 +251,12 @@ const FAQ = ({
                       </div>
                     </AccordionTrigger>
                     <AccordionContent>
-                      <HeroTextBlock className='text-neutral-graige-600'>
+                      <SmallText className=''>
                         <Localization
                           text={item.item.description}
                           language={language}
                         />
-                      </HeroTextBlock>
+                      </SmallText>
                       {editMode && onFieldEdit != null && (
                         <EditLabel
                           onClick={() =>
