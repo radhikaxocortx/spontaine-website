@@ -24,7 +24,6 @@ const CustomerAdminShow = ({
   customerPriceplanInfo,
   CustomerPriceplanTemplate,
 }: Props) => {
-  console.log(customerPriceplan)
   const displayValues = useMemo(() => {
     return [
       {

@@ -20,7 +20,6 @@ export default function CustomerDashboard() {
     })
   )
 
-  console.log(customerPriceplan)
   return (
     <div>
       <CustomerDashboardLayout>
