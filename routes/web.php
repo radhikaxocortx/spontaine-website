@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AutoComplete\AutoCompleteController;
 use App\Http\Controllers\Country\CountryController;
+use App\Http\Controllers\Customer\CustomerAdminController;
 use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\CustomerLogin\CustomerLoginController;
 use App\Http\Controllers\EntityTemplate\EntityTemplateController;
@@ -36,6 +37,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Customer-Priceplan-Admin
+
+    Route::get('customer-admin-view', [CustomerAdminController::class, 'customerAdminView'])
+        ->name('customer-admin-view');
+    Route::get('customer-admin-show/{id}', [CustomerAdminController::class, 'customerAdminShow'])
+        ->name('customer-admin-show');
 });
 // Sign Up Form
 Route::middleware('guest')->group(function () {
