@@ -3,6 +3,7 @@ import AppLayoutPadding from '@/Layouts/AppLayoutPadding'
 import HeroHeadline from '@/typography/HeroHeadline'
 import HeroTextBlock from '@/typography/HeroTextBlock'
 import { ArrowRight, CheckCircle } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
 import { BlocKFieldInfo } from '../Components/BlockEditor/BlockEditor'
 import EditLabel from '../Components/EditLabel'
 import InertiaLink from '../Components/InertiaLink'
@@ -91,11 +92,31 @@ const SectionBanner = ({
   blockData = bannerBlock,
   language = 'en',
 }: Properties) => {
+  const [isVisible, setIsVisible] = useState(false)
+  const imageRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting)
+      },
+      { threshold: 0.2 }
+    )
+
+    if (imageRef.current) {
+      observer.observe(imageRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [])
+
   return (
-    <div className='relative w-full py-4 sm:py-6 md:py-8'>
+    <div
+      className={`flex w-full flex-col items-center py-4 sm:py-6 md:py-8 ${blockData?.marginTop} ${blockData?.marginBottom} ${blockData?.paddingTop} ${blockData?.paddingBottom}`}
+    >
       <AppLayoutPadding>
-        <div className='flex flex-col gap-6 md:flex-row md:items-start md:gap-8 lg:gap-12'>
-          <div className='flex max-w-xl flex-col gap-4 sm:gap-6'>
+        <div className='flex flex-col justify-between gap-6 md:flex-row md:items-start md:gap-8 lg:gap-12 2xl:gap-16'>
+          <div className='flex flex-col gap-4 sm:gap-6'>
             {/* Featured Icon */}
             <div className='relative h-7 w-7 rounded-full bg-primary-100/50 sm:h-8 sm:w-8'>
               <svg
@@ -129,7 +150,7 @@ const SectionBanner = ({
             </div>
 
             {/* Banner title */}
-            <HeroHeadline className='text-primary-950'>
+            <HeroHeadline className='w-full text-primary-950 md:w-3/4 2xl:w-2/3'>
               <Localization
                 text={blockData.title}
                 language={language}
@@ -149,7 +170,7 @@ const SectionBanner = ({
             </HeroHeadline>
 
             {/* Banner description */}
-            <div className='flex w-full flex-col gap-3 sm:gap-4 md:w-3/4'>
+            <div className='flex w-full flex-col gap-4 md:w-3/4 2xl:w-2/3'>
               {blockData?.description?.items.map((item) => (
                 <HeroTextBlock
                   className='text-neutral-graige-600'
@@ -178,48 +199,82 @@ const SectionBanner = ({
 
             {/* Bullet Points */}
             <div className='flex flex-col gap-3 sm:gap-4'>
-              <div className='flex items-center gap-2'>
-                <CheckCircle className='h-4 w-4 text-primary-950 sm:h-5 sm:w-5' />
-                <span className='text-sm font-semibold sm:text-base'>
-                  <Localization
-                    text={blockData.bulletPoint1}
-                    language={language}
-                  />
-                </span>
-                {editMode && onFieldEdit && (
-                  <EditLabel
-                    onClick={() => {
-                      onFieldEdit({
-                        field: 'bulletPoint1',
-                        fieldType: 'text',
-                        oldValue: blockData.bulletPoint1,
-                        action: 'UPDATE',
-                      })
-                    }}
-                  />
-                )}
-              </div>
-              <div className='flex items-center gap-2'>
-                <CheckCircle className='h-4 w-4 text-primary-950 sm:h-5 sm:w-5' />
-                <span className='text-sm font-semibold sm:text-base'>
-                  <Localization
-                    text={blockData.bulletPoint2}
-                    language={language}
-                  />
-                </span>
-                {editMode && onFieldEdit && (
-                  <EditLabel
-                    onClick={() => {
-                      onFieldEdit({
-                        field: 'bulletPoint2',
-                        fieldType: 'text',
-                        oldValue: blockData.bulletPoint2,
-                        action: 'UPDATE',
-                      })
-                    }}
-                  />
-                )}
-              </div>
+              {blockData.bulletPoint1?.english && (
+                <div className='flex items-center gap-2'>
+                  <CheckCircle className='h-4 w-4 text-primary-950 sm:h-5 sm:w-5' />
+                  <span className='text-sm font-semibold sm:text-base'>
+                    <Localization
+                      text={blockData.bulletPoint1}
+                      language={language}
+                    />
+                  </span>
+                  {editMode && onFieldEdit && (
+                    <EditLabel
+                      onClick={() => {
+                        onFieldEdit({
+                          field: 'bulletPoint1',
+                          fieldType: 'text',
+                          oldValue: blockData.bulletPoint1,
+                          action: 'UPDATE',
+                        })
+                      }}
+                    />
+                  )}
+                </div>
+              )}
+              {blockData.bulletPoint2?.english && (
+                <div className='flex items-center gap-2'>
+                  <CheckCircle className='h-4 w-4 text-primary-950 sm:h-5 sm:w-5' />
+                  <span className='text-sm font-semibold sm:text-base'>
+                    <Localization
+                      text={blockData.bulletPoint2}
+                      language={language}
+                    />
+                  </span>
+                  {editMode && onFieldEdit && (
+                    <EditLabel
+                      onClick={() => {
+                        onFieldEdit({
+                          field: 'bulletPoint2',
+                          fieldType: 'text',
+                          oldValue: blockData.bulletPoint2,
+                          action: 'UPDATE',
+                        })
+                      }}
+                    />
+                  )}
+                </div>
+              )}
+              {editMode && onFieldEdit && (
+                <div className='flex gap-4'>
+                  {!blockData.bulletPoint1?.english && (
+                    <EditLabel
+                      label='Add First Bullet Point'
+                      onClick={() => {
+                        onFieldEdit({
+                          field: 'bulletPoint1',
+                          fieldType: 'text',
+                          oldValue: null,
+                          action: 'INSERT',
+                        })
+                      }}
+                    />
+                  )}
+                  {!blockData.bulletPoint2?.english && (
+                    <EditLabel
+                      label='Add Second Bullet Point'
+                      onClick={() => {
+                        onFieldEdit({
+                          field: 'bulletPoint2',
+                          fieldType: 'text',
+                          oldValue: null,
+                          action: 'INSERT',
+                        })
+                      }}
+                    />
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Link */}
@@ -229,8 +284,15 @@ const SectionBanner = ({
                 language={language}
                 link={blockData?.link}
               >
-                <ArrowRight className='h-3 w-3 transition-transform group-hover:translate-x-1 sm:h-4 sm:w-4' />
-                <span>{blockData.link.name.english}</span>
+                {blockData.link.name?.english && (
+                  <ArrowRight className='h-3 w-3 transition-transform group-hover:translate-x-1 sm:h-4 sm:w-4' />
+                )}
+                <span>
+                  <Localization
+                    text={blockData.link.name}
+                    language={language}
+                  />
+                </span>
               </InertiaLink>
             )}
             {editMode && onFieldEdit != null && (
@@ -251,13 +313,20 @@ const SectionBanner = ({
           </div>
 
           {/* Hero Image */}
-          <div className='w-full md:w-[30%]'>
+          <div
+            ref={imageRef}
+            className='flex w-full flex-col overflow-hidden 2xl:w-1/3'
+          >
             {blockData?.image && (
-              <img
-                className='h-auto w-full rounded-2xl object-cover object-center sm:rounded-3xl'
-                src={blockData.image.url}
-                alt={blockData.image.caption}
-              />
+              <div
+                className={`relative w-full overflow-hidden rounded-3xl ${isVisible ? 'animate-reveal' : ''}`}
+              >
+                <img
+                  className='w-full object-cover object-center'
+                  src={blockData.image.url}
+                  alt={blockData.image.caption}
+                />
+              </div>
             )}
             {editMode && onFieldEdit && (
               <EditLabel

@@ -13,28 +13,28 @@ export function NavLinks() {
       <NavigationMenuList>
         <NavigationMenuItem>
           <Link href='/'>
-            <NavigationMenuLink className={`${navigationMenuTriggerStyle()}`}>
+            <NavigationMenuLink className={`2xl:text-lg ${navigationMenuTriggerStyle()}`}>
               Solutions
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <Link href='/products'>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+            <NavigationMenuLink className={`2xl:text-lg ${navigationMenuTriggerStyle()}`}>
               Company
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <Link href='/pricing'>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+            <NavigationMenuLink className={`2xl:text-lg ${navigationMenuTriggerStyle()}`}>
               Resources
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <Link href='/contact-us'>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+            <NavigationMenuLink className={`2xl:text-lg ${navigationMenuTriggerStyle()}`}>
               Pricing
             </NavigationMenuLink>
           </Link>

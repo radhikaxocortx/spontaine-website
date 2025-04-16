@@ -10,11 +10,11 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          'bg-primary-800 text-neutral-50 shadow hover:bg-primary-900 dark:bg-neutral-50 dark:text-neutral-900 dark:hover:bg-neutral-50/90',
+          'bg-primary-900 text-white shadow transition-all duration-300 relative overflow-hidden hover:bg-gradient-to-r hover:from-primary-950 hover:to-secondary-500 hover:text-white hover:border-none dark:bg-neutral-50 dark:text-neutral-900 dark:hover:bg-neutral-50/90 before:absolute before:inset-0 before:-translate-x-full before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent hover:before:animate-[shimmer_2s_infinite]',
         destructive:
           'bg-red-500 text-neutral-50 shadow-sm hover:bg-red-500/90 dark:bg-red-900 dark:text-neutral-50 dark:hover:bg-red-900/90',
         outline:
-          'border border-black-tertiary-700 bg-white shadow-sm transition-all duration-300 relative overflow-hidden hover:bg-gradient-to-r hover:from-primary-950 hover:to-secondary-500 hover:text-white hover:border-none dark:border-neutral-800 dark:bg-neutral-950 dark:hover:bg-neutral-800 dark:hover:text-neutral-50 before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent',
+          'border border-black-tertiary-700 bg-white shadow-sm transition-all duration-300 relative overflow-hidden hover:bg-gradient-to-r hover:from-primary-950 hover:to-secondary-500 hover:text-white hover:border-none dark:border-neutral-800 dark:bg-neutral-950 dark:hover:bg-neutral-800 dark:hover:text-neutral-50 before:absolute before:inset-0 before:-translate-x-full before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent hover:before:animate-[shimmer_2s_infinite]',
         secondary:
           'bg-neutral-100 text-neutral-900 shadow-sm hover:bg-neutral-100/80 dark:bg-neutral-800 dark:text-neutral-50 dark:hover:bg-neutral-800/80',
         outlineSecondary:
