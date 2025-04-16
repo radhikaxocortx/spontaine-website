@@ -12,6 +12,11 @@ import React from 'react'
 // List of African countries with their flags
 const africanCountries = [
   {
+    code: 'GH',
+    name: 'Ghana',
+    flag: '/images/flags/gh.svg',
+  },
+  {
     code: 'NG',
     name: 'Nigeria',
     flag: '/images/flags/ng.svg',
@@ -21,11 +26,7 @@ const africanCountries = [
     name: 'Kenya',
     flag: '/images/flags/ke.svg',
   },
-  {
-    code: 'GH',
-    name: 'Ghana',
-    flag: '/images/flags/gh.svg',
-  },
+
   {
     code: 'ZA',
     name: 'South Africa',

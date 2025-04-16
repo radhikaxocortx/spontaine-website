@@ -7,7 +7,5 @@ interface Props {
 }
 
 export default function HeroHeadline({ className = '', children }: Props) {
-  return (
-    <h1 className={cn('text-3xl font-semibold md:text-4xl lg:text-5xl', className)}>{children}</h1>
-  )
+  return <h1 className={cn('text-3xl font-bold md:text-4xl lg:text-5xl', className)}>{children}</h1>
 }

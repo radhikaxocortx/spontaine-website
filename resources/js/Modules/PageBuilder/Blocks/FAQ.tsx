@@ -37,7 +37,7 @@ export interface FAQItemData {
 export interface FAQBlockInfo extends BlockConfiguration, Block {
   title: TextData
   description: ItemListField<TextData>
-  link?: LinkData
+
   faq: ItemListField<FAQItemData>
 }
 
@@ -70,14 +70,7 @@ export const faqBlock = {
       },
     ],
   },
-  link: {
-    name: {
-      english: 'Contact Us',
-      malayalam: '',
-    },
-    link: '/',
-    external: false,
-  },
+
   faq: {
     lastUUID: 0,
     items: [],
@@ -126,7 +119,7 @@ const FAQ = ({
   return (
     <div className={`place-items-center py-6 ${editMode ? '' : blockStyling}`}>
       <AppLayoutPadding>
-        <div className='gap-8'>
+        <div className='gap-8 rounded-3xl bg-primary-50 p-12'>
           <div className='flex w-full flex-col items-center justify-center gap-4'>
             <HeroHeadline className='text-primary-950'>
               <Localization
@@ -175,7 +168,7 @@ const FAQ = ({
             })}
           </div>
 
-          <div>
+          <div className='px-10 py-8 2xl:mx-24 2xl:px-20'>
             <Accordion
               type='single'
               collapsible
@@ -187,7 +180,7 @@ const FAQ = ({
                     key={item.id.toString()}
                   >
                     <AccordionTrigger>
-                      <NormalText className='font-semibold'>
+                      <NormalText className='font-semibold text-primary-950'>
                         <Localization
                           text={item.item.title}
                           language={language}
@@ -280,17 +273,19 @@ const FAQ = ({
                           <Button size='md'>
                             <Localization
                               language={language}
-                              text={item.item.link.name}
+                              text={item.item.link?.name}
                             />
                           </Button>
                         </InertiaLink>
                       )}
                       {editMode && onFieldEdit != null && (
                         <EditLabel
-                          label='Edit Button'
+                          label='Add/Edit Button'
                           onClick={() =>
                             onFieldEdit({
-                              field: 'link',
+                              field: 'faq',
+                              itemField: 'link',
+                              itemIndex: item.id,
                               fieldType: 'link',
                               oldValue: item.item.link,
                               action: 'UPDATE',

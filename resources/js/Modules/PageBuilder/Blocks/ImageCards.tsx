@@ -119,9 +119,11 @@ const ImageCards = ({
   const blockStyling = useBlockStyling(blockData)
 
   return (
-    <div className={`relative w-full bg-beige-50 ${editMode ? '' : blockStyling}`}>
+    <div
+      className={`flex w-full flex-col items-center bg-secondary-100 ${editMode ? '' : blockStyling}`}
+    >
       <AppLayoutPadding>
-        <div className='flex flex-col space-y-4 px-4 py-12 md:space-y-6 md:py-16 lg:py-20'>
+        <div className='flex flex-col space-y-4 rounded-3xl px-4 py-12 md:space-y-6 md:py-16 lg:py-20'>
           <div className='flex w-full justify-start'>
             <HeroHeadline className='text-primary-950'>
               <Localization
@@ -159,14 +161,14 @@ const ImageCards = ({
             <div className='relative w-4/5 rounded-3xl'>
               {blockData.image != null && (
                 <img
-                  className='relative max-h-[320px] w-full rounded-3xl object-cover object-center'
+                  className='relative max-h-[320px] w-full max-w-[512px] rounded-3xl object-cover object-center'
                   alt={blockData.image.caption ?? ''}
                   src={blockData.image?.url ?? ''}
                   loading='lazy'
                 />
               )}
 
-              <div className='absolute -bottom-10 -right-6 flex items-end justify-end p-12 md:p-8 lg:p-12'>
+              <div className='absolute -bottom-10 -right-6 flex items-end justify-end p-12 md:p-8 lg:p-12 2xl:right-36'>
                 {blockData.link != null && (
                   <InertiaLink
                     link={blockData.link}
@@ -191,14 +193,14 @@ const ImageCards = ({
             <div className='relative w-4/5 rounded-3xl'>
               {blockData.image2 != null && (
                 <img
-                  className='relative max-h-[320px] w-full rounded-3xl object-cover object-center'
+                  className='relative max-h-[320px] w-full max-w-[512px] rounded-3xl object-cover object-center'
                   alt={blockData.image2.caption ?? ''}
                   src={blockData.image2?.url ?? ''}
                   loading='lazy'
                 />
               )}
 
-              <div className='absolute -bottom-10 -right-6 flex items-end justify-end p-12 md:p-8 lg:p-12'>
+              <div className='absolute -bottom-10 -right-6 flex items-end justify-end p-12 md:p-8 lg:p-12 2xl:right-36'>
                 {blockData.link2 != null && (
                   <InertiaLink
                     link={blockData.link2}
