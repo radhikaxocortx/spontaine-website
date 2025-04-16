@@ -13,6 +13,7 @@ const PricePlanCreate = ({ type }: Props) => {
     code: '',
     type: '',
     description: '',
+    validity: '',
     min_quantity_required: '',
     rate: '',
     additional_rate: '',
@@ -47,6 +48,11 @@ const PricePlanCreate = ({ type }: Props) => {
         label: 'Price Plan Description',
         type: 'textarea',
         setValue: setFormValue('description'),
+      },
+      validity: {
+        label: 'Validity (months)',
+        type: 'number',
+        setValue: setFormValue('validity'),
       },
       min_quantity_required: {
         label: 'Min Quantity Required',

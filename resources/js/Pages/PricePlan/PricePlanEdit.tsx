@@ -18,6 +18,7 @@ const PricePlanEdit = ({ pricePlan, type }: Props) => {
     min_quantity_required: pricePlan.min_quantity_required,
     rate: pricePlan.rate,
     additional_rate: pricePlan.additional_rate ? pricePlan.additional_rate : null,
+    validity: pricePlan.validity,
   })
   const formItems = useMemo(<
     T,
@@ -49,6 +50,11 @@ const PricePlanEdit = ({ pricePlan, type }: Props) => {
         label: 'Price Plan Description',
         type: 'text',
         setValue: setFormValue('description'),
+      },
+      validity: {
+        label: 'Validity (months)',
+        type: 'number',
+        setValue: setFormValue('validity'),
       },
       min_quantity_required: {
         label: 'Min Quantity Required',

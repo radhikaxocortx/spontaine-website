@@ -15,6 +15,7 @@ class PricePlan extends Model
         'name',
         'type',
         'code',
+        'validity',
         'description',
         'min_quantity_required',
         'rate',

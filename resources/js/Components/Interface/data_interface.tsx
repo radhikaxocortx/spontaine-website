@@ -65,6 +65,7 @@ export interface PricePlan extends Model {
   name: string
   code: string
   description: string
+  validity: number
   type: string
   min_quantity_required: number
   rate: number
