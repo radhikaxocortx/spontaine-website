@@ -3,6 +3,7 @@ import { Language } from '@/Components/ui/ui_interfaces'
 import AppLayoutPadding from '@/Layouts/AppLayoutPadding'
 import HeroHeadline from '@/typography/HeroHeadline'
 import HeroTextBlock from '@/typography/HeroTextBlock'
+import { useEffect, useRef, useState } from 'react'
 import AddLabel from '../Components/AddLabel'
 import { BlocKFieldInfo } from '../Components/BlockEditor/BlockEditor'
 import EditLabel from '../Components/EditLabel'
@@ -75,16 +76,37 @@ const SectionHero = ({
   blockData = heroImageBlock,
   language = 'en',
 }: Properties) => {
+  const [isVisible, setIsVisible] = useState(false)
+  const imageRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.1 }
+    )
+
+    if (imageRef.current) {
+      observer.observe(imageRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <div
-      className={`flex flex-col items-center py-12 ${blockData?.marginTop} ${blockData?.marginBottom} ${blockData?.paddingTop} ${blockData?.paddingBottom}`}
+      className={`flex w-full flex-col items-center py-12 ${blockData?.marginTop} ${blockData?.marginBottom} ${blockData?.paddingTop} ${blockData?.paddingBottom}`}
     >
       <AppLayoutPadding>
-        <div className='flex flex-col items-center justify-center gap-6'>
-          <div className='flex flex-col items-start justify-between gap-8 md:flex-row md:gap-12'>
-            <div className='flex max-w-lg flex-col gap-6 text-left'>
+        <div className='flex w-full flex-col items-center justify-center gap-6'>
+          <div className='flex flex-col items-start justify-between gap-8 md:flex-row md:gap-12 2xl:items-center'>
+            <div className='flex flex-col gap-6 text-left 2xl:gap-10'>
               {/* Banner title */}
-              <HeroHeadline className='text-primary-950'>
+              <HeroHeadline className='w-full text-primary-950 md:w-3/4 2xl:w-2/3'>
                 <Localization
                   text={blockData.title}
                   language={language}
@@ -104,7 +126,7 @@ const SectionHero = ({
               </HeroHeadline>
 
               {/* Banner description */}
-              <div className='flex flex-col gap-4'>
+              <div className='flex w-full flex-col gap-4 md:w-3/4 2xl:w-2/3'>
                 {blockData?.description?.items.map((item) => (
                   <HeroTextBlock
                     className='text-neutral-graige-600'
@@ -205,13 +227,20 @@ const SectionHero = ({
             </div>
 
             {/* Hero Image */}
-            <div className='flex flex-col'>
+            <div
+              ref={imageRef}
+              className='flex w-full flex-col overflow-hidden 2xl:w-1/2'
+            >
               {blockData?.image && (
-                <img
-                  className='h-auto w-full rounded-3xl object-cover object-center'
-                  src={blockData.image.url}
-                  alt={blockData.image.caption}
-                />
+                <div
+                  className={`relative w-full overflow-hidden rounded-3xl ${isVisible ? 'animate-reveal' : ''}`}
+                >
+                  <img
+                    className='w-full object-cover object-center'
+                    src={blockData.image.url}
+                    alt={blockData.image.caption}
+                  />
+                </div>
               )}
               {editMode && onFieldEdit != null && (
                 <EditLabel
