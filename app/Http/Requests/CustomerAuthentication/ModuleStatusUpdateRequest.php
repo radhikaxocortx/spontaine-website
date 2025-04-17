@@ -11,7 +11,7 @@ class ModuleStatusUpdateRequest extends Data
 {
     public function __construct(
         public int $customer_workflow_id,
-        public int $workflow_module_id,
+        public int $module_id,
         public string $verification_date,
         public ?string $status,
         public ?string $customer_notes,

@@ -2,11 +2,12 @@ import FormBuilder, { FormItem } from '@/FormBuilder/FormBuilder'
 import useCustomForm from '@/hooks/useCustomForm'
 import useInertiaPost from '@/hooks/useInertiaPost'
 import { formatDate } from '@/lib/utils'
-import { FormEvent, useCallback, useMemo } from 'react'
+import { Dispatch, FormEvent, SetStateAction, useCallback, useMemo } from 'react'
 
 interface Props {
   customerWorkflowID: number
   workflowModuleID: number
+  setShowForm: Dispatch<SetStateAction<boolean>>
 }
 
 const statuses = [
@@ -14,7 +15,7 @@ const statuses = [
   { Value: 'approved', label: 'Approved' },
   { Value: 'rejected', label: 'Rejected' },
 ]
-const ModuleStatusUpdate = ({ customerWorkflowID, workflowModuleID }: Props) => {
+const ModuleStatusUpdate = ({ customerWorkflowID, workflowModuleID, setShowForm }: Props) => {
   const { formData, setFormValue } = useCustomForm({
     status: '',
     customer_notes: '',
@@ -59,8 +60,13 @@ const ModuleStatusUpdate = ({ customerWorkflowID, workflowModuleID }: Props) => 
     } as Record<U, FormItem<T[U], K, G, L>>
   }, [setFormValue])
 
-  const { post, loading, errors } = useInertiaPost(route('workflow-module-authenticate'))
   const verificationDate = formatDate(new Date())
+  const onComplete = useCallback(() => {
+    setShowForm(false)
+  }, [setShowForm])
+  const { post, loading, errors } = useInertiaPost(route('workflow-module-authenticate'), {
+    onComplete,
+  })
 
   const handleFormSubmit = useCallback(
     (event: FormEvent<HTMLFormElement>) => {
@@ -69,7 +75,7 @@ const ModuleStatusUpdate = ({ customerWorkflowID, workflowModuleID }: Props) => 
       post({
         ...formData,
         customer_workflow_id: customerWorkflowID,
-        workflow_module_id: workflowModuleID,
+        module_id: workflowModuleID,
         verification_date: verificationDate,
       })
     },

@@ -88,6 +88,7 @@ export default function AdminAdditionalInfoModule({
           <ModuleStatusUpdate
             workflowModuleID={workflowModule.id}
             customerWorkflowID={customerWorkflowID}
+            setShowForm={setUpdateModuleStatus}
           />
         </Modal>
       )}

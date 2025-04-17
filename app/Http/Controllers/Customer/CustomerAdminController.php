@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomerAuthentication\ModuleStatusUpdateRequest;
 use App\Models\Customer\CustomerPricePlan;
 use App\Models\Customer\CustomerWorkflow;
+use App\Models\CustomerVerification\WorkflowModuleVerification;
 use App\Models\Workflow\Workflow;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -54,6 +55,12 @@ class CustomerAdminController extends Controller
     public function workflowModuleAuthenticate(ModuleStatusUpdateRequest $request)
     {
 
-        dd($request->all());
+        try {
+            $workflowModuleVerification = WorkflowModuleVerification::create($request->all());
+        } catch (\Exception $e) {
+            return back()->with(['error' => $e->getMessage()]);
+        }
+
+        return redirect()->back()->with(['message' => 'Module Status Updates Successfully']);
     }
 }
