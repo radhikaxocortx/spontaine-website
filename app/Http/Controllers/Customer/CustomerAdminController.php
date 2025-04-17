@@ -67,6 +67,16 @@ class CustomerAdminController extends Controller
 
     public function workflowAuthenticate(WorkflowAuthenticateRequest $request)
     {
+        if ($request->status == 'Approved') {
+            $allApproved = WorkflowModuleVerification::where('customer_workflow_id', $request->customer_workflow_id)
+                ->where('status', '!=', 'Approved')
+                ->doesntExist();
+            if (! $allApproved) {
+                return back()->with([
+                    'error' => 'Approve all modules before approving the workflow.',
+                ]);
+            }
+        }
         try {
             VerificationStatus::create($request->all());
         } catch (\Exception $e) {
@@ -78,6 +88,16 @@ class CustomerAdminController extends Controller
 
     public function workflowAuthenticateUpdate(WorkflowAuthenticateRequest $request)
     {
+        if ($request->status == 'Approved') {
+            $allApproved = WorkflowModuleVerification::where('customer_workflow_id', $request->customer_workflow_id)
+                ->where('status', '!=', 'Approved')
+                ->doesntExist();
+            if (! $allApproved) {
+                return back()->with([
+                    'error' => 'Approve all modules before approving the workflow.',
+                ]);
+            }
+        }
         $workflowAuthenticateModule = VerificationStatus::where('customer_workflow_id', $request->customer_workflow_id)
             ->first();
 
