@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CustomerAuthentication\ModuleStatusUpdateRequest;
 use App\Models\Customer\CustomerPricePlan;
 use App\Models\Customer\CustomerWorkflow;
 use App\Models\Workflow\Workflow;
@@ -48,5 +49,11 @@ class CustomerAdminController extends Controller
             'customerPriceplanInfo' => $customerPriceplanInfo,
             'CustomerPriceplanTemplate' => $CustomerPriceplanTemplate,
         ]);
+    }
+
+    public function workflowModuleAuthenticate(ModuleStatusUpdateRequest $request)
+    {
+
+        dd($request->all());
     }
 }

@@ -1,4 +1,3 @@
-import AdditionalInfoModule from '@/Components/EntityTemplate/AdditionalInfoDisplay/AdditionalInfoModule'
 import {
   CustomerPricePlan,
   CustomerPriceplanWorkflowItem,
@@ -11,6 +10,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
+import AdminAdditionalInfoModule from '@/Components/WorkflowModule/AdditionalInfoDisplay/AdminAdditionalInfoModule'
 import { useMemo, useState } from 'react'
 
 interface Props {
@@ -74,39 +74,39 @@ const CustomerAdminShow = ({
         id: 8,
         type: 'text',
       },
-      customerPriceplan.customer.company_id !== null && {
+      customerPriceplan.customer.company_id && {
         label: 'Customer Organization',
-        content: customerPriceplan.customer.company.company_legal_entity_name,
+        content: customerPriceplan.customer.company?.company_legal_entity_name,
         id: 9,
         type: 'text',
       },
-      customerPriceplan.customer.company_id !== null && {
+      customerPriceplan.customer.company_id && {
         label: 'Organization Address',
-        content: customerPriceplan.customer.company.company_address_line_1,
+        content: customerPriceplan.customer.company?.company_address_line_1,
         id: 10,
         type: 'text',
       },
-      customerPriceplan.customer.company.company_postal_code !== null && {
+      customerPriceplan.customer.company.company_postal_code && {
         label: 'Organization Postal Code',
-        content: customerPriceplan.customer.company.company_postal_code,
+        content: customerPriceplan.customer.company?.company_postal_code,
         id: 11,
         type: 'text',
       },
-      customerPriceplan.customer.company_id !== null && {
+      customerPriceplan.customer.company_id && {
         label: 'Organizaton Country',
-        content: customerPriceplan.customer.company.company_country,
+        content: customerPriceplan.customer.company?.company_country,
         id: 12,
         type: 'text',
       },
-      customerPriceplan.customer.company_id !== null && {
+      customerPriceplan.customer.company_id && {
         label: 'Organization Tax ID',
-        content: customerPriceplan.customer.company.company_tax_id,
+        content: customerPriceplan.customer.company?.company_tax_id,
         id: 13,
         type: 'text',
       },
-      customerPriceplan.customer.company_id !== null && {
+      customerPriceplan.customer.company_id && {
         label: 'Organization Registration ID',
-        content: customerPriceplan.customer.company.company_registration_id,
+        content: customerPriceplan.customer.company?.company_registration_id,
         id: 14,
         type: 'text',
       },
@@ -114,6 +114,7 @@ const CustomerAdminShow = ({
   }, [customerPriceplan])
 
   const [expandedValue, setExpandedValue] = useState<string | undefined>()
+  console.log(customerPriceplan)
 
   return (
     <ShowResourcePage
@@ -164,10 +165,11 @@ const CustomerAdminShow = ({
             ?.sort((a, b) => a.sequence - b.sequence)
             .map((module) => {
               return (
-                <AdditionalInfoModule
+                <AdminAdditionalInfoModule
                   key={module.id}
                   workflowModule={module}
                   additionalInfo={customerPriceplanInfo}
+                  customerWorkflowID={customerPriceplan.id}
                 />
               )
             })}
