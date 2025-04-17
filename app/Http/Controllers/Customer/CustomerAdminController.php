@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomerAuthentication\ModuleStatusUpdateRequest;
+use App\Http\Requests\CustomerAuthentication\WorkflowAuthenticateRequest;
 use App\Models\Customer\CustomerPricePlan;
 use App\Models\Customer\CustomerWorkflow;
+use App\Models\CustomerVerification\VerificationStatus;
 use App\Models\CustomerVerification\WorkflowModuleVerification;
+use App\Models\ReferenceData\ReferenceData;
 use App\Models\Workflow\Workflow;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -45,13 +48,50 @@ class CustomerAdminController extends Controller
             ->with('workflowModules.workflowItems')
             ->first();
         $customerModuleStatus = WorkflowModuleVerification::where('customer_workflow_id', $id)->get();
+        $customerWorkflowStatus = VerificationStatus::where('customer_workflow_id', $id)->first();
+
+        $status = ReferenceData::fullData()
+            ->where('domain', 'Customer Verification')
+            ->where('parameter', 'Status')
+            ->get();
 
         return Inertia::render('AdminView/CustomerAdminShow', [
             'customerPriceplan' => $customerPriceplan,
             'customerPriceplanInfo' => $customerPriceplanInfo,
             'CustomerPriceplanTemplate' => $CustomerPriceplanTemplate,
             'customerModuleStatus' => $customerModuleStatus,
+            'customerWorkflowStatus' => $customerWorkflowStatus,
+            'statuses' => $status,
         ]);
+    }
+
+    public function workflowAuthenticate(WorkflowAuthenticateRequest $request)
+    {
+        try {
+            VerificationStatus::create($request->all());
+        } catch (\Exception $e) {
+            return back()->with(['error' => $e->getMessage()]);
+        }
+
+        return redirect()->back()->with(['message' => 'Workflow Status Updates Successfully']);
+    }
+
+    public function workflowAuthenticateUpdate(WorkflowAuthenticateRequest $request)
+    {
+        $workflowAuthenticateModule = VerificationStatus::where('customer_workflow_id', $request->customer_workflow_id)
+            ->first();
+
+        if (! $workflowAuthenticateModule) {
+            return back()->with(['error' => 'Something went wrong: No record found.']);
+        }
+
+        try {
+            $workflowAuthenticateModule->update($request->all());
+        } catch (\Exception $e) {
+            return back()->with(['error' => $e->getMessage()]);
+        }
+
+        return redirect()->back()->with(['message' => 'Workflow Status Updates Successfully']);
     }
 
     public function workflowModuleAuthenticate(ModuleStatusUpdateRequest $request)

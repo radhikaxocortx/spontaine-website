@@ -3,40 +3,37 @@ import useCustomForm from '@/hooks/useCustomForm'
 import useInertiaPost from '@/hooks/useInertiaPost'
 import { formatDate } from '@/lib/utils'
 import { Dispatch, FormEvent, SetStateAction, useCallback, useMemo } from 'react'
-import { ModuleStatusVerification, ReferenceData } from '../Interface/data_interface'
+import { CustomerWorkflowStatus, ReferenceData } from '../Interface/data_interface'
 
 interface Props {
   customerWorkflowID: number
-  workflowModuleID: number
   setShowForm: Dispatch<SetStateAction<boolean>>
-  moduleStatus: ModuleStatusVerification | undefined
+  customerWorkflowStatus: CustomerWorkflowStatus | undefined
   statuses: ReferenceData[]
 }
 
-const ModuleStatusUpdate = ({
+const UpdateCustomerWorkflowStatus = ({
   customerWorkflowID,
-  workflowModuleID,
   setShowForm,
-  moduleStatus,
+  customerWorkflowStatus,
   statuses,
 }: Props) => {
   const { formData, setFormValue } = useCustomForm({
-    status: moduleStatus?.status ?? 'processing',
-    customer_notes: moduleStatus?.customer_notes ?? '',
-    internal_notes: moduleStatus?.internal_notes ?? '',
-    allow_update: moduleStatus?.allow_update ?? false,
+    status: customerWorkflowStatus?.status ?? 'processing',
+    notes: customerWorkflowStatus?.notes ?? '',
+    customer_notes: customerWorkflowStatus?.customer_notes ?? '',
+    kadodo_id: customerWorkflowStatus?.kadodo_id ?? '',
   })
-
-  const verificationDate = formatDate(new Date())
+  const statusDate = formatDate(new Date())
 
   const onComplete = useCallback(() => {
     setShowForm(false)
   }, [setShowForm])
 
   const { post, loading, errors } = useInertiaPost(
-    moduleStatus
-      ? route('workflow-module-authenticate-update', moduleStatus.id)
-      : route('workflow-module-authenticate'),
+    customerWorkflowStatus
+      ? route('customer-workflow-authenticate-update')
+      : route('customer-workflow-authenticate'),
     {
       onComplete,
     }
@@ -59,22 +56,24 @@ const ModuleStatusUpdate = ({
         displayKey: 'value_one',
         setValue: setFormValue('status'),
       },
+      notes: {
+        type: 'textarea',
+        placeholder: 'Enter  Notes',
+        label: ' Notes',
+        setValue: setFormValue('notes'),
+      },
       customer_notes: {
         type: 'textarea',
         placeholder: 'Enter Customer Notes',
         label: 'Customer Notes',
         setValue: setFormValue('customer_notes'),
       },
-      internal_notes: {
-        type: 'textarea',
-        placeholder: 'Enter Internal Notes',
-        label: 'Internal Notes',
-        setValue: setFormValue('internal_notes'),
-      },
-      allow_update: {
-        type: 'checkbox',
-        label: 'Allow Update',
-        setValue: setFormValue('allow_update'),
+
+      kadodo_id: {
+        label: 'Kadodo ID',
+        type: 'text',
+        placeholder: 'Enter Kadodo ID',
+        setValue: setFormValue('kadodo_id'),
       },
     } as Record<U, FormItem<T[U], K, G, L>>
   }, [setFormValue, statuses])
@@ -86,14 +85,12 @@ const ModuleStatusUpdate = ({
       post({
         ...formData,
         customer_workflow_id: customerWorkflowID,
-        module_id: workflowModuleID,
-        verification_date: verificationDate,
-        ...(moduleStatus?.id && { _method: 'PATCH' }),
+        status_date: statusDate,
+        ...(customerWorkflowStatus?.id && { _method: 'PATCH' }),
       })
     },
-    [formData, post, customerWorkflowID, workflowModuleID, verificationDate, moduleStatus?.id]
+    [formData, post, customerWorkflowID, statusDate, customerWorkflowStatus?.id]
   )
-
   return (
     <div className='ml-4 w-full'>
       <FormBuilder
@@ -109,4 +106,4 @@ const ModuleStatusUpdate = ({
   )
 }
 
-export default ModuleStatusUpdate
+export default UpdateCustomerWorkflowStatus

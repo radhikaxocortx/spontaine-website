@@ -140,3 +140,12 @@ export interface ModuleStatusVerification extends Model {
   verification_date: string
   allow_update: boolean
 }
+
+export interface CustomerWorkflowStatus extends Model {
+  customer_workflow_id: number
+  status: string
+  notes: string
+  customer_notes: string
+  kadodo_id: string
+  status_date: string
+}

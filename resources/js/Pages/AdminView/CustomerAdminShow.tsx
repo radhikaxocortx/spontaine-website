@@ -1,17 +1,18 @@
+import UpdateCustomerWorkflowStatus from '@/Components/AdminCustomerVerification/UpdateCustomerWorkflowStatus'
+import Modal from '@/Components/CustomUI/Modal/Modal'
 import {
   CustomerPricePlan,
   CustomerPriceplanWorkflowItem,
+  CustomerWorkflowStatus,
   ModuleStatusVerification,
+  ReferenceData,
   Workflow,
 } from '@/Components/Interface/data_interface'
 import ShowResourcePage, { ShowPageItem } from '@/Components/ShowPage/ShowResourcePage'
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion'
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
 import AdminAdditionalInfoModule from '@/Components/WorkflowModule/AdditionalInfoDisplay/AdminAdditionalInfoModule'
+import StrongText from '@/typography/StrongText'
 import { useMemo, useState } from 'react'
 
 interface Props {
@@ -19,6 +20,8 @@ interface Props {
   customerPriceplanInfo?: CustomerPriceplanWorkflowItem[]
   CustomerPriceplanTemplate?: Workflow
   customerModuleStatus?: ModuleStatusVerification[]
+  customerWorkflowStatus: CustomerWorkflowStatus
+  statuses: ReferenceData[]
 }
 
 const CustomerAdminShow = ({
@@ -26,6 +29,8 @@ const CustomerAdminShow = ({
   customerPriceplanInfo,
   CustomerPriceplanTemplate,
   customerModuleStatus,
+  customerWorkflowStatus,
+  statuses,
 }: Props) => {
   console.log(customerModuleStatus)
   const displayValues = useMemo(() => {
@@ -117,50 +122,54 @@ const CustomerAdminShow = ({
     ] as ShowPageItem[]
   }, [customerPriceplan])
 
-  const [expandedValue, setExpandedValue] = useState<string | undefined>()
-  console.log(customerPriceplan)
+  const [updateStatus, setUpdateStatus] = useState<boolean>(false)
 
   return (
     <ShowResourcePage
       title={customerPriceplan.customer.first_name}
       items={displayValues}
     >
-      {customerPriceplan.price_plan && (
-        <div
-          className={`bg-1stop-accent2 mt-4 rounded-lg border shadow-sm transition-all duration-200 ${expandedValue ? 'h-full' : 'h-[60px]'}`}
-        >
-          <Accordion
-            type='single'
-            collapsible
-            value={expandedValue}
-            onValueChange={setExpandedValue}
-            className='w-full'
+      <div>
+        {customerPriceplan.price_plan && (
+          <div
+            className={`bg-1stop-accent2 mt-4 h-full rounded-lg border shadow-sm transition-all duration-200`}
           >
-            <AccordionItem value={customerPriceplan.price_plan.name}>
-              <AccordionTrigger className='cursor-pointer px-6 transition-colors duration-200 hover:bg-[#F1F5F9]'>
-                <span className='font-semibold'>
-                  {`${customerPriceplan.price_plan.name} (${customerPriceplan.price_plan.code})`}
-                </span>
-              </AccordionTrigger>
-
-              <AccordionContent className='px-6 pb-6'>
-                <div>
-                  <span>{customerPriceplan.price_plan.description}</span>
+            <Card className='p-4'>
+              <div className='flex justify-between'>
+                <StrongText>{`${customerPriceplan.price_plan.name} (${customerPriceplan.price_plan.code})`}</StrongText>
+                <div className='justify-end'>
+                  <Button onClick={() => setUpdateStatus(true)}>Update Status</Button>
                 </div>
-                <div className='mt-2 grid grid-cols-2'>
-                  <div>Type</div>
-                  <div>{customerPriceplan.price_plan.type}</div>
-                  <div>Minimum Quantity Required</div>
-                  <div>{customerPriceplan.price_plan.min_quantity_required}</div>
-                  <div>Rate</div>
-                  <div>{customerPriceplan.price_plan.rate}</div>
-                  <div>Additional Rate</div>
-                  <div>{customerPriceplan.price_plan.additional_rate}</div>
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        </div>
+              </div>
+              <div className='px-6 pb-6'>
+                <span>{customerPriceplan.price_plan.description}</span>
+              </div>
+              <div className='mt-2 grid grid-cols-2'>
+                <div>Type</div>
+                <div>{customerPriceplan.price_plan.type}</div>
+                <div>Minimum Quantity Required</div>
+                <div>{customerPriceplan.price_plan.min_quantity_required}</div>
+                <div>Rate</div>
+                <div>{customerPriceplan.price_plan.rate}</div>
+                <div>Additional Rate</div>
+                <div>{customerPriceplan.price_plan.additional_rate}</div>
+              </div>
+            </Card>
+          </div>
+        )}
+      </div>
+      {updateStatus && (
+        <Modal
+          setShowModal={setUpdateStatus}
+          title='Update Status'
+        >
+          <UpdateCustomerWorkflowStatus
+            customerWorkflowID={customerPriceplan.id}
+            setShowForm={setUpdateStatus}
+            customerWorkflowStatus={customerWorkflowStatus}
+            statuses={statuses}
+          />
+        </Modal>
       )}
 
       {customerPriceplanInfo && (
@@ -178,6 +187,7 @@ const CustomerAdminShow = ({
                   additionalInfo={customerPriceplanInfo}
                   customerWorkflowID={customerPriceplan.id}
                   moduleStatus={ModuleStatus}
+                  statuses={statuses}
                 />
               )
             })}
