@@ -3,25 +3,48 @@ import useCustomForm from '@/hooks/useCustomForm'
 import useInertiaPost from '@/hooks/useInertiaPost'
 import { formatDate } from '@/lib/utils'
 import { Dispatch, FormEvent, SetStateAction, useCallback, useMemo } from 'react'
+import { ModuleStatusVerification } from '../Interface/data_interface'
 
 interface Props {
   customerWorkflowID: number
   workflowModuleID: number
   setShowForm: Dispatch<SetStateAction<boolean>>
+  moduleStatus: ModuleStatusVerification | undefined
 }
 
 const statuses = [
-  { Value: 'processing', label: 'Processsing' },
+  { Value: 'processing', label: 'Processing' },
   { Value: 'approved', label: 'Approved' },
   { Value: 'rejected', label: 'Rejected' },
 ]
-const ModuleStatusUpdate = ({ customerWorkflowID, workflowModuleID, setShowForm }: Props) => {
+
+const ModuleStatusUpdate = ({
+  customerWorkflowID,
+  workflowModuleID,
+  setShowForm,
+  moduleStatus,
+}: Props) => {
   const { formData, setFormValue } = useCustomForm({
-    status: '',
-    customer_notes: '',
-    internal_notes: '',
-    allow_update: false,
+    status: moduleStatus?.status ?? 'processing',
+    customer_notes: moduleStatus?.customer_notes ?? '',
+    internal_notes: moduleStatus?.internal_notes ?? '',
+    allow_update: moduleStatus?.allow_update ?? false,
   })
+
+  const verificationDate = formatDate(new Date())
+
+  const onComplete = useCallback(() => {
+    setShowForm(false)
+  }, [setShowForm])
+
+  const { post, loading, errors } = useInertiaPost(
+    moduleStatus
+      ? route('workflow-module-authenticate-update', moduleStatus.id)
+      : route('workflow-module-authenticate'),
+    {
+      onComplete,
+    }
+  )
 
   const formItems = useMemo(<
     T,
@@ -60,14 +83,6 @@ const ModuleStatusUpdate = ({ customerWorkflowID, workflowModuleID, setShowForm 
     } as Record<U, FormItem<T[U], K, G, L>>
   }, [setFormValue])
 
-  const verificationDate = formatDate(new Date())
-  const onComplete = useCallback(() => {
-    setShowForm(false)
-  }, [setShowForm])
-  const { post, loading, errors } = useInertiaPost(route('workflow-module-authenticate'), {
-    onComplete,
-  })
-
   const handleFormSubmit = useCallback(
     (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault()
@@ -77,9 +92,10 @@ const ModuleStatusUpdate = ({ customerWorkflowID, workflowModuleID, setShowForm 
         customer_workflow_id: customerWorkflowID,
         module_id: workflowModuleID,
         verification_date: verificationDate,
+        ...(moduleStatus?.id && { _method: 'PATCH' }),
       })
     },
-    [post, formData, customerWorkflowID, workflowModuleID, verificationDate]
+    [formData, post, customerWorkflowID, workflowModuleID, verificationDate, moduleStatus?.id]
   )
 
   return (
@@ -96,4 +112,5 @@ const ModuleStatusUpdate = ({ customerWorkflowID, workflowModuleID, setShowForm 
     </div>
   )
 }
+
 export default ModuleStatusUpdate

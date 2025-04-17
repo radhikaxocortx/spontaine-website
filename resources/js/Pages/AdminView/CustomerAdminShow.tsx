@@ -1,6 +1,7 @@
 import {
   CustomerPricePlan,
   CustomerPriceplanWorkflowItem,
+  ModuleStatusVerification,
   Workflow,
 } from '@/Components/Interface/data_interface'
 import ShowResourcePage, { ShowPageItem } from '@/Components/ShowPage/ShowResourcePage'
@@ -17,13 +18,16 @@ interface Props {
   customerPriceplan: CustomerPricePlan
   customerPriceplanInfo?: CustomerPriceplanWorkflowItem[]
   CustomerPriceplanTemplate?: Workflow
+  customerModuleStatus?: ModuleStatusVerification[]
 }
 
 const CustomerAdminShow = ({
   customerPriceplan,
   customerPriceplanInfo,
   CustomerPriceplanTemplate,
+  customerModuleStatus,
 }: Props) => {
+  console.log(customerModuleStatus)
   const displayValues = useMemo(() => {
     return [
       {
@@ -164,12 +168,16 @@ const CustomerAdminShow = ({
           {CustomerPriceplanTemplate?.workflow_modules
             ?.sort((a, b) => a.sequence - b.sequence)
             .map((module) => {
+              const ModuleStatus = customerModuleStatus?.find(
+                (status) => status.module_id === module.id
+              )
               return (
                 <AdminAdditionalInfoModule
                   key={module.id}
                   workflowModule={module}
                   additionalInfo={customerPriceplanInfo}
                   customerWorkflowID={customerPriceplan.id}
+                  moduleStatus={ModuleStatus}
                 />
               )
             })}

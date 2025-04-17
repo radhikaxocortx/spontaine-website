@@ -46,6 +46,8 @@ Route::middleware('auth')->group(function () {
         ->name('customer-admin-show');
     Route::post('workflow-module-authenticate', [CustomerAdminController::class, 'workflowModuleAuthenticate'])
         ->name('workflow-module-authenticate');
+    Route::patch('workflow-module-authenticate-update', [CustomerAdminController::class, 'workflowModuleAuthenticateUpdate'])
+        ->name('workflow-module-authenticate-update');
 
 });
 // Sign Up Form

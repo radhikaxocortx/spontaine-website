@@ -1,6 +1,10 @@
 import ModuleStatusUpdate from '@/Components/AdminCustomerVerification/ModuleStatusUpdate'
 import Modal from '@/Components/CustomUI/Modal/Modal'
-import { WorkflowItem, WorkflowModule } from '@/Components/Interface/data_interface'
+import {
+  ModuleStatusVerification,
+  WorkflowItem,
+  WorkflowModule,
+} from '@/Components/Interface/data_interface'
 import {
   Accordion,
   AccordionContent,
@@ -14,12 +18,14 @@ interface Props {
   workflowModule: WorkflowModule
   additionalInfo: WorkflowItem[]
   customerWorkflowID: number
+  moduleStatus?: ModuleStatusVerification
 }
 
 export default function AdminAdditionalInfoModule({
   workflowModule,
   additionalInfo,
   customerWorkflowID,
+  moduleStatus,
 }: Readonly<Props>) {
   const [updateModuleStatus, setUpdateModuleStatus] = useState(false)
   const [expandedValue, setExpandedValue] = useState<string | undefined>()
@@ -44,11 +50,11 @@ export default function AdminAdditionalInfoModule({
             <span className='font-semibold'>{workflowModule.name}</span>
           </AccordionTrigger>
           <AccordionContent className='px-6 pb-6'>
+            <div className='mr-auto p-2'>
+              <Button onClick={() => setUpdateModuleStatus(true)}>Update Status</Button>
+            </div>
             {hasFieldsWithValues ? (
               <>
-                <div className='mr-auto p-2'>
-                  <Button onClick={() => setUpdateModuleStatus(true)}>Update Status</Button>
-                </div>
                 <div className='grid gap-4'>
                   {workflowModule.workflow_items
                     .sort((a, b) => a.field_number - b.field_number)
@@ -89,6 +95,7 @@ export default function AdminAdditionalInfoModule({
             workflowModuleID={workflowModule.id}
             customerWorkflowID={customerWorkflowID}
             setShowForm={setUpdateModuleStatus}
+            moduleStatus={moduleStatus}
           />
         </Modal>
       )}
