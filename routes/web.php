@@ -44,6 +44,15 @@ Route::middleware('auth')->group(function () {
         ->name('customer-admin-view');
     Route::get('customer-admin-show/{id}', [CustomerAdminController::class, 'customerAdminShow'])
         ->name('customer-admin-show');
+    Route::post('customer-workflow-authenticate', [CustomerAdminController::class, 'workflowAuthenticate'])
+        ->name('customer-workflow-authenticate');
+    Route::patch('customer-workflow-authenticate-update', [CustomerAdminController::class, 'workflowAuthenticateUpdate'])
+        ->name('customer-workflow-authenticate-update');
+    Route::post('workflow-module-authenticate', [CustomerAdminController::class, 'workflowModuleAuthenticate'])
+        ->name('workflow-module-authenticate');
+    Route::patch('workflow-module-authenticate-update', [CustomerAdminController::class, 'workflowModuleAuthenticateUpdate'])
+        ->name('workflow-module-authenticate-update');
+
 });
 // Sign Up Form
 Route::middleware('guest')->group(function () {
@@ -60,6 +69,8 @@ Route::get('unique-ref-data-values', [ReferenceDataAPIController::class, 'unique
     ->name('unique-ref-data-values');
 Route::get('cascaded-ref-data', [ReferenceDataAPIController::class, 'cascadedValues'])
     ->name('cascaded-ref-data');
+Route::get('find-reference-data/{domain}/{parameter}', [ReferenceDataAPIController::class, 'findReferenceData'])
+    ->name('find-reference-data');
 
 // Price Plan
 Route::resource('price-plan', PricePlanController::class)

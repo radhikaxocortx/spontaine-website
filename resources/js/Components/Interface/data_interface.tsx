@@ -65,6 +65,7 @@ export interface PricePlan extends Model {
   name: string
   code: string
   description: string
+  validity: number
   type: string
   min_quantity_required: number
   rate: number
@@ -128,4 +129,23 @@ export interface WorkflowItem extends Model {
 
 export interface CustomerPriceplanWorkflowItem extends WorkflowItem {
   customer_priceplan_id: number
+}
+
+export interface ModuleStatusVerification extends Model {
+  customer_workflow_id: number
+  module_id: number
+  status: string
+  customer_notes: string
+  internal_notes: string
+  verification_date: string
+  allow_update: boolean
+}
+
+export interface CustomerWorkflowStatus extends Model {
+  customer_workflow_id: number
+  status: string
+  notes: string
+  customer_notes: string
+  kadodo_id: string
+  status_date: string
 }

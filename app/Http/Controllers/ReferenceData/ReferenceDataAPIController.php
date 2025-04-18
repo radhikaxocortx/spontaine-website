@@ -69,4 +69,14 @@ class ReferenceDataAPIController extends Controller
 
         return response()->json($referenceData);
     }
+
+    public function findReferenceData(Request $request): JsonResponse
+    {
+        $referenceData = ReferenceData::fullData()
+            ->where('domain.domain', $request->domain)
+            ->where('parameter.parameter', $request->parameter)
+            ->get();
+
+        return response()->json($referenceData);
+    }
 }
