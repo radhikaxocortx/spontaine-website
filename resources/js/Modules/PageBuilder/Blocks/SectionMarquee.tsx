@@ -74,11 +74,11 @@ const SectionMarquee = ({ editMode, onFieldEdit, blockData, language = 'en', dis
 
   return (
     <div
-      className={` ${blockData?.marginTop} ${blockData?.marginBottom} ${blockData?.paddingTop} ${blockData?.paddingBottom}`}
+      className={`flex w-full flex-col items-center ${blockData?.marginTop} ${blockData?.marginBottom} ${blockData?.paddingTop} ${blockData?.paddingBottom}`}
     >
       {isMounted && (
         <AppLayoutPadding>
-          <div className='flex flex-col items-center gap-0 lg:flex-row lg:gap-10'>
+          <div className='flex w-full flex-col items-center justify-center gap-0 lg:flex-row lg:gap-10'>
             <div className='w-full'>
               <Marquee
                 pauseOnHover
@@ -99,7 +99,7 @@ const SectionMarquee = ({ editMode, onFieldEdit, blockData, language = 'en', dis
                         <img
                           src={item.item.image.url ?? ''}
                           alt={''}
-                          className='flex h-10 w-auto px-4 py-0 lg:h-14 lg:px-8 lg:py-3'
+                          className='flex h-10 w-auto px-4 py-0 lg:h-14 lg:px-8 lg:py-3 2xl:h-20'
                           loading='lazy'
                         />
                       </InertiaLink>

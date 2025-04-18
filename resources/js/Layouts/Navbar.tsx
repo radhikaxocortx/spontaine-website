@@ -11,7 +11,7 @@ const Navbar = () => {
       <AppLayoutPadding>
         <div className='flex items-center justify-between py-4'>
           <div className='flex items-center'>
-            <ApplicationLogo className='w-24' />
+            <ApplicationLogo className='w-28 2xl:w-36' />
           </div>
           <div className='hidden items-center gap-4 lg:flex'>
             <NavLinks />

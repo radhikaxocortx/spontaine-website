@@ -23,45 +23,43 @@ export const videoBlock: VideoImageBlock = {
 
 const SectionVideo = ({ editMode = false, blockData = videoBlock, onFieldEdit }: Properties) => {
   return (
-    <AppLayoutPadding>
-      <div
-        className={`flex py-2 ${blockData.marginTop} ${blockData.marginBottom} ${blockData.paddingTop} ${blockData.paddingBottom}`}
-      >
-        <div className='flex-grow'>
-          <div className='h-[80vh] overflow-hidden rounded-3xl text-opacity-95 shadow-lg'>
-            {blockData.video?.url && (
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                className='h-full w-full object-cover'
-                controls={editMode}
-              >
-                <source
-                  src={blockData.video.url}
-                  type={blockData.video.mime}
-                />
-                Your browser does not support the video tag.
-              </video>
-            )}
-          </div>
-          {editMode && onFieldEdit != null && (
-            <EditLabel
-              label='Edit Video'
-              onClick={() =>
-                onFieldEdit({
-                  field: 'video',
-                  fieldType: 'video',
-                  oldValue: blockData.video,
-                  action: 'INSERT',
-                })
-              }
-            />
+    <div
+      className={`flex w-full items-center justify-center py-2 ${blockData.marginTop} ${blockData.marginBottom} ${blockData.paddingTop} ${blockData.paddingBottom}`}
+    >
+      <AppLayoutPadding>
+        <div className='overflow-hidden rounded-3xl text-opacity-95 shadow-lg'>
+          {blockData.video?.url && (
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className='h-full w-full object-cover'
+              controls={editMode}
+            >
+              <source
+                src={blockData.video.url}
+                type={blockData.video.mime}
+              />
+              Your browser does not support the video tag.
+            </video>
           )}
         </div>
-      </div>
-    </AppLayoutPadding>
+        {editMode && onFieldEdit != null && (
+          <EditLabel
+            label='Edit Video'
+            onClick={() =>
+              onFieldEdit({
+                field: 'video',
+                fieldType: 'video',
+                oldValue: blockData.video,
+                action: 'INSERT',
+              })
+            }
+          />
+        )}
+      </AppLayoutPadding>
+    </div>
   )
 }
 

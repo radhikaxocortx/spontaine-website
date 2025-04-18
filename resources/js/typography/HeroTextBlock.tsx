@@ -7,5 +7,7 @@ interface Props {
 }
 
 export default function HeroTextBlock({ className = '', children }: Props) {
-  return <span className={cn('text-base leading-7', className)}>{children}</span>
+  return (
+    <span className={cn('text-base font-medium leading-7 2xl:text-lg', className)}>{children}</span>
+  )
 }
