@@ -1,7 +1,7 @@
 import { Card } from '@/Components/CustomUI/Card/card'
-import WorkflowModuleInfoForm from '@/Components/EntityTemplate/WorkflowModuleInfoForm'
 import { WorflowFormItem, Workflow } from '@/Components/Interface/data_interface'
 import { Button } from '@/components/ui/button'
+import WorkflowModuleInfoForm from '@/Components/WorkflowModule/WorkflowModuleInfoForm'
 import useFetchRecord from '@/hooks/useFetchPagination'
 import DashboardPadding from '@/Layouts/DashboardLayout'
 import { useEffect, useState } from 'react'

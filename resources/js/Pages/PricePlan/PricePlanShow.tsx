@@ -40,21 +40,27 @@ const PricePlanShow = ({ pricePlan }: Props) => {
         type: 'text',
       },
       {
+        label: 'Validity (months)',
+        content: pricePlan.validity,
+        id: 5,
+        type: 'text',
+      },
+      {
         label: 'Min Quantity Required',
         content: pricePlan.min_quantity_required,
-        id: 5,
+        id: 6,
         type: 'text',
       },
       {
         label: 'Rate',
         content: pricePlan.rate,
-        id: 6,
+        id: 7,
         type: 'text',
       },
       {
         label: 'Additional Rate',
         content: pricePlan.additional_rate,
-        id: 7,
+        id: 8,
         type: 'text',
       },
     ] as ShowPageItem[]
