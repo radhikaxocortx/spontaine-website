@@ -19,6 +19,8 @@ use Modules\OTP\Controllers\RegisterOtpController;
 use Modules\OTP\Controllers\ValidateOtpController;
 use Modules\OTP\Controllers\VerifyOtpController;
 use Modules\PageBuilder\Models\Page;
+use App\Http\Controllers\NavEditor\NavEditorController;
+use App\Http\Controllers\UIBuilder\FooterController;
 
 Route::get('/', function () {
     $page = Page::where('url', 'home')
@@ -125,4 +127,8 @@ Route::middleware(['auth:customer'])->group(function () {
     Route::post('customer-workflow-save', [CustomerController::class, 'customerWorkflowSave'])
         ->name('customer-workflow-save');
 });
-require __DIR__.'/auth.php';
+
+//Nav Editor
+Route::resource('nav-editor', NavEditorController::class);
+Route::resource('footer-editor', FooterController::class);
+require __DIR__ . '/auth.php';

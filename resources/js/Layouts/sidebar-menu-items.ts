@@ -68,6 +68,18 @@ const SidebarMenuItems: SidebarMenuItem[] = [
         value: 'pages',
         image: { svg: `` },
       },
+      {
+        name: 'Nav Editor',
+        url: '/nav-editor',
+        value: 'nav-editor',
+        image: { svg: `` },
+      },
+      {
+        name: 'Footer Editor',
+        url: '/footer-editor',
+        value: 'footer-editor',
+        image: { svg: `` },
+      },
     ],
   },
 ]
