@@ -5,6 +5,7 @@ use App\Http\Controllers\Country\CountryController;
 use App\Http\Controllers\Customer\CustomerAdminController;
 use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\CustomerLogin\CustomerLoginController;
+use App\Http\Controllers\Email\EmailController;
 use App\Http\Controllers\EntityTemplate\EntityTemplateController;
 use App\Http\Controllers\EntityTemplate\EntityTemplateItemController;
 use App\Http\Controllers\EntityTemplate\workflowAPIController;
@@ -106,9 +107,14 @@ Route::get('verify-otp/{customerId}', [VerifyOtpController::class, 'verifyOtp'])
     ->name('verify-otp');
 Route::post('validate-otp', [ValidateOtpController::class, 'validateOtp'])
     ->name('validate-otp');
+Route::get('customer-register-email/{email}/{kadodo_id}/{name}', [EmailController::class, 'customerRegisterEmail'])
+    ->name('customer-register-email');
+Route::get('customer-register-admin-email/{email}/{kadodo_id}/{name}', [EmailController::class, 'customerRegisterAdminEmail'])
+    ->name('customer-register-admin-email');
 
 // customer
-Route::get('customer-login', [CustomerLoginController::class, 'loginForm']);
+Route::get('customer-login', [CustomerLoginController::class, 'loginForm'])
+    ->name('customer-login');
 Route::post('validate-customer', [CustomerLoginController::class, 'ValidatePassword'])
     ->name('validate-customer');
 Route::middleware(['auth:customer'])->group(function () {

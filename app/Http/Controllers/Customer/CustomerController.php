@@ -74,7 +74,7 @@ class CustomerController extends Controller
             ]);
 
             return redirect()
-                ->route('customer-verification', ['customerId' => $customer->email])
+                ->route('customer-register-admin-email', ['email' => $request->email, 'kadodo_id' => $customer->id, 'name' => $customer->first_name])
                 ->with(['message' => 'Customer Created Successfully']);
         } catch (Exception $e) {
 
