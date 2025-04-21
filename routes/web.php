@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AutoComplete\AutoCompleteController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Country\CountryController;
 use App\Http\Controllers\Customer\CustomerAdminController;
 use App\Http\Controllers\Customer\CustomerController;
@@ -54,7 +55,6 @@ Route::middleware('auth')->group(function () {
         ->name('workflow-module-authenticate');
     Route::patch('workflow-module-authenticate-update', [CustomerAdminController::class, 'workflowModuleAuthenticateUpdate'])
         ->name('workflow-module-authenticate-update');
-
 });
 // Sign Up Form
 Route::middleware('guest')->group(function () {
@@ -131,4 +131,8 @@ Route::middleware(['auth:customer'])->group(function () {
 //Nav Editor
 Route::resource('nav-editor', NavEditorController::class);
 Route::resource('footer-editor', FooterController::class);
+
+//contact form
+Route::post('send-contact-mail', [ContactController::class, 'sendMail']);
+
 require __DIR__ . '/auth.php';
