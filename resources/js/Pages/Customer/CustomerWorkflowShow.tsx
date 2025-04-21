@@ -3,6 +3,7 @@ import BreadCrumbs, { BreadcrumbItemLink } from '@/Components/CustomUI/BreadCrum
 import {
   CustomerPricePlan,
   CustomerPriceplanWorkflowItem,
+  ModuleStatusVerification,
   Workflow,
 } from '@/Components/Interface/data_interface'
 import CustomerPriceplanInfoModule from '@/Components/WorkflowModule/AdditionalInfoDisplay/CustomerPriceplanInfoModule'
@@ -12,6 +13,7 @@ interface Props {
   customerPriceplan: CustomerPricePlan
   customerPriceplanInfo?: CustomerPriceplanWorkflowItem[]
   CustomerPriceplanTemplate?: Workflow
+  moduleUpdateStatus?: ModuleStatusVerification[]
 }
 
 const breadcrumbs: BreadcrumbItemLink[] = [
@@ -29,6 +31,7 @@ const CustomerWorkflowShow = ({
   customerPriceplan,
   customerPriceplanInfo,
   CustomerPriceplanTemplate,
+  moduleUpdateStatus,
 }: Props) => {
   console.log(CustomerPriceplanTemplate)
   return (
@@ -50,12 +53,16 @@ const CustomerWorkflowShow = ({
             {CustomerPriceplanTemplate?.workflow_modules
               ?.sort((a, b) => a.sequence - b.sequence)
               .map((module) => {
+                const moduleStatus = moduleUpdateStatus?.find(
+                  (status) => status.module_id == module.id
+                )
                 return (
                   <CustomerPriceplanInfoModule
                     key={module.id}
                     workflowModule={module}
                     additionalInfo={customerPriceplanInfo}
                     customerWorkflowID={customerPriceplan.id}
+                    moduleUpdateStatus={moduleStatus}
                   />
                 )
               })}

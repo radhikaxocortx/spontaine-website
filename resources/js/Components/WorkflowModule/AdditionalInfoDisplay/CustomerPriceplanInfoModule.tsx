@@ -1,23 +1,33 @@
-import { WorkflowItem, WorkflowModule } from '@/Components/Interface/data_interface'
+import Modal from '@/Components/CustomUI/Modal/Modal'
+import {
+  ModuleStatusVerification,
+  WorkflowItem,
+  WorkflowModule,
+} from '@/Components/Interface/data_interface'
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
+import { Button } from '@/components/ui/button'
+import { Bell } from 'lucide-react'
 import { useState } from 'react'
 
 interface Props {
   workflowModule: WorkflowModule
   additionalInfo: WorkflowItem[]
   customerWorkflowID: number
+  moduleUpdateStatus: ModuleStatusVerification | undefined
 }
 
 export default function CustomerPriceplanInfoModule({
   workflowModule,
   additionalInfo,
+  moduleUpdateStatus,
 }: Readonly<Props>) {
   const [expandedValue, setExpandedValue] = useState<string | undefined>()
+  const [statusOpen, setStatusOpen] = useState<boolean>(false)
 
   const hasFieldsWithValues = workflowModule.workflow_items.some(
     (item) => additionalInfo.find((info) => info.workflow_item_id === item.id)?.value
@@ -37,6 +47,14 @@ export default function CustomerPriceplanInfoModule({
         <AccordionItem value='item-1'>
           <AccordionTrigger className='cursor-pointer px-6 transition-colors duration-200 hover:bg-[#F1F5F9]'>
             <span className='font-semibold'>{workflowModule.name}</span>
+            <Button
+              className='ml-auto'
+              variant='outline'
+              size='sm'
+              onClick={() => setStatusOpen(true)}
+            >
+              <Bell className='h-4 w-4' />
+            </Button>
           </AccordionTrigger>
           <AccordionContent className='px-6 pb-6'>
             {hasFieldsWithValues ? (
@@ -72,6 +90,26 @@ export default function CustomerPriceplanInfoModule({
           </AccordionContent>
         </AccordionItem>
       </Accordion>
+      {statusOpen && (
+        <Modal
+          setShowModal={setStatusOpen}
+          title='Module Status Update'
+        >
+          <div className='flex'>
+            <div> Your Request is</div>
+            <div className='pl-2'>{moduleUpdateStatus?.status ?? 'Processing'}</div>
+          </div>
+          <div className='p-3'>
+            <div>{moduleUpdateStatus?.customer_notes ?? ''}</div>
+          </div>
+          <Button
+            onClick={() => setStatusOpen(false)}
+            size='sm'
+          >
+            OK
+          </Button>
+        </Modal>
+      )}
     </div>
   )
 }

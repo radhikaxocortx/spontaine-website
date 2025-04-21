@@ -11,6 +11,7 @@ use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerOrganization;
 use App\Models\Customer\CustomerPricePlan;
 use App\Models\Customer\CustomerWorkflow;
+use App\Models\CustomerVerification\WorkflowModuleVerification;
 use App\Models\User;
 use App\Models\Workflow\Workflow;
 use App\Services\ProcessWorkflowInfo;
@@ -219,11 +220,13 @@ class CustomerController extends Controller
             ->where('name', 'like', '%'.'Business Verification'.'%')
             ->with('workflowModules.workflowItems')
             ->first();
+        $moduleUpdateStatus = WorkflowModuleVerification::where('customer_workflow_id', $request->id)->get();
 
         return Inertia::render('Customer/CustomerWorkflowShow', [
             'customerPriceplan' => $customerPriceplan,
             'customerPriceplanInfo' => $customerPriceplanInfo,
             'CustomerPriceplanTemplate' => $CustomerPriceplanTemplate,
+            'moduleUpdateStatus' => $moduleUpdateStatus,
         ]);
     }
 }
