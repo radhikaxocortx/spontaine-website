@@ -1,7 +1,7 @@
 Dear {{ $name }}
 <br/>
 <br/>
-Status of your request of ID {{ $kadodo_id }} to Kadodo Africa has been updated.
+Status of your request with ID {{ $kadodo_id }} to Kadodo Africa has been updated.
 <br/>
 Module Name: {{ $moduleName }}
 <br/>

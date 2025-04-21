@@ -90,7 +90,7 @@ class CustomerAdminController extends Controller
         $customer = $customerDetail->customer;
         try {
             VerificationStatus::create($request->all());
-            Mail::to($customer->email)->send(new StatusUpdateMailToCustomer($customer->email, $customer->name, $customerDetail->kadodo_id));
+            Mail::to($customer->email)->send(new StatusUpdateMailToCustomer($customer->email, $customer->first_name, $customerDetail->kadodo_id));
 
         } catch (\Exception $e) {
             return back()->with(['error' => $e->getMessage()]);
@@ -127,7 +127,7 @@ class CustomerAdminController extends Controller
 
         try {
             $workflowAuthenticateModule->update($request->all());
-            Mail::to($customer->email)->send(new StatusUpdateMailToCustomer($customer->email, $customer->name, $customerDetail->kadodo_id));
+            Mail::to($customer->email)->send(new StatusUpdateMailToCustomer($customer->email, $customer->first_name, $customerDetail->kadodo_id));
 
         } catch (\Exception $e) {
             return back()->with(['error' => $e->getMessage()]);
@@ -157,7 +157,7 @@ class CustomerAdminController extends Controller
             $workflowModuleVerification = WorkflowModuleVerification::create($request->all());
             Mail::to($customer->email)->send(new ModuleUpdateEmailToCustomer([
                 'email' => $customer->email,
-                'name' => $customer->name,
+                'name' => $customer->first_name,
                 'moduleName' => $moduleName[0],
                 'kadodo_id' => $customerDetail->kadodo_id,
             ]));
@@ -189,7 +189,7 @@ class CustomerAdminController extends Controller
             $workflowModuleVerification->update($request->all());
             Mail::to($customer->email)->send(new ModuleUpdateEmailToCustomer([
                 'email' => $customer->email,
-                'name' => $customer->name,
+                'name' => $customer->first_name,
                 'moduleName' => $moduleName[0],
                 'kadodo_id' => $customerDetail->kadodo_id,
             ]));
