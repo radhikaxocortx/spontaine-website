@@ -5,7 +5,6 @@ namespace App\Http\Controllers\NavEditor;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RenameNavSectionRequest;
 use App\Http\Requests\UIEditor\NavMenuFormRequest;
-use App\Policies\NavPolicy;
 use App\Repository\NavMenu\NavMenuRepository;
 use App\Services\NavMenu\ManageNavMenu;
 use Illuminate\Http\JsonResponse;
@@ -25,8 +24,6 @@ class NavEditorController extends Controller implements HasMiddleware
 
     public function index(NavMenuRepository $navMenuRepository): Response
     {
-
-
         return Inertia::render('PageBuilder/NavEditorPage', [
             'sections' => $navMenuRepository->sectionList(),
         ]);
@@ -64,7 +61,6 @@ class NavEditorController extends Controller implements HasMiddleware
 
     public function destroy(string $section, ManageNavMenu $navMenuItemCreate): RedirectResponse
     {
-
 
         return $navMenuItemCreate->deleteSection($section);
     }
