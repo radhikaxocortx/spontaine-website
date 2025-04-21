@@ -12,6 +12,7 @@ use App\Models\Customer\CustomerOrganization;
 use App\Models\Customer\CustomerPricePlan;
 use App\Models\Customer\CustomerWorkflow;
 use App\Models\User;
+use App\Models\Workflow\Workflow;
 use App\Services\ProcessWorkflowInfo;
 use Exception;
 use Illuminate\Http\Request;
@@ -78,7 +79,12 @@ class CustomerController extends Controller
             ]);
 
             return redirect()
-                ->route('customer-register-admin-email', ['email' => $request->email, 'kadodo_id' => $customer->id, 'name' => $customer->first_name])
+                ->route('customer-register-admin-email', [
+                    'email' => $request->email,
+                    'kadodo_id' => $customer->id,
+                    'name' => $customer->first_name,
+                    'phone' => $customer->telephone,
+                ])
                 ->with(['message' => 'Customer Created Successfully']);
         } catch (Exception $e) {
 
@@ -195,11 +201,29 @@ class CustomerController extends Controller
     public function findCustomerPriceplan($customerId)
     {
         $customerPriceplan = CustomerPricePlan::where('customer_id', $customerId)
-            ->with('pricePlan', 'customer')
-            ->first();
+            ->with('pricePlan', 'customer', 'verificationStatus')
+            ->get();
 
         return response()->json([
             'customerPriceplan' => $customerPriceplan,
+        ]);
+    }
+
+    public function customerWorkflowShow(Request $request)
+    {
+        $customerPriceplan = CustomerPricePlan::where('id', $request->id)
+            ->with('pricePlan', 'customer', 'verificationStatus')
+            ->first();
+        $customerPriceplanInfo = CustomerWorkflow::where('customer_priceplan_id', $request->id)->get();
+        $CustomerPriceplanTemplate = Workflow::where('priceplan_id', $customerPriceplan->price_plan_id)
+            ->where('name', 'like', '%'.'Business Verification'.'%')
+            ->with('workflowModules.workflowItems')
+            ->first();
+
+        return Inertia::render('Customer/CustomerWorkflowShow', [
+            'customerPriceplan' => $customerPriceplan,
+            'customerPriceplanInfo' => $customerPriceplanInfo,
+            'CustomerPriceplanTemplate' => $CustomerPriceplanTemplate,
         ]);
     }
 }

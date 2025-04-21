@@ -16,9 +16,20 @@ class AdminMailForCustomerRegister extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(private string $email, private string $name, private string $kadodo_id)
+    public string $email;
+
+    public string $name;
+
+    public string $kadodo_id;
+
+    public string $phone;
+
+    public function __construct(array $data)
     {
-        //
+        $this->email = $data['email'];
+        $this->name = $data['name'];
+        $this->kadodo_id = $data['kadodo_id'];
+        $this->phone = $data['phone'];
     }
 
     /**
@@ -27,7 +38,7 @@ class AdminMailForCustomerRegister extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'A new customer has signed up with Kadodo.',
+            subject: 'New user sign-up receieved.',
         );
     }
 
@@ -38,7 +49,7 @@ class AdminMailForCustomerRegister extends Mailable
     {
         return new Content(
             view: 'adminmailforcustomerregister',
-            with: ['email' => $this->email, 'name' => $this->name, 'kadodo_id' => $this->kadodo_id],
+            with: ['email' => $this->email, 'name' => $this->name, 'kadodo_id' => $this->kadodo_id, 'phone' => $this->phone],
         );
     }
 

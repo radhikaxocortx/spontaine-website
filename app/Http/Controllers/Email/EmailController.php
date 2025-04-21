@@ -23,7 +23,7 @@ class EmailController extends Controller
     {
 
         Mail::to(User::pluck('email')->toArray())
-            ->send(new AdminMailForCustomerRegister($request->email, $request->name, $request->kadodo_id));
+            ->send(new AdminMailForCustomerRegister(['email' => $request->email, 'name' => $request->name, 'kadodo_id' => $request->kadodo_id, 'phone' => $request->phone]));
 
         return redirect()->route('customer-register-email', ['email' => $request->email, 'kadodo_id' => $request->kadodo_id, 'name' => $request->name]);
     }
