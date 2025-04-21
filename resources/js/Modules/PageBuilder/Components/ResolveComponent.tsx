@@ -1,3 +1,5 @@
+import Footer from '@/Layouts/Footer/Footer'
+import { FooterDataInterface } from '@/Modules/FooterEditor/FooterEditor'
 import LeftImageBlock, { ImageBlock } from '@/Modules/PageBuilder/Blocks/LeftImageBlock'
 import RichTextBlock, {
   RichTextBlockData,
@@ -137,6 +139,14 @@ const ResolveComponent = ({
           editMode={editMode}
           onFieldEdit={onFieldEdit}
           blockData={block as unknown as TextBlock}
+          language={language}
+        />
+      )}
+      {blockName === 'Footer' && (
+        <Footer
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          blockData={block as unknown as FooterDataInterface}
           language={language}
         />
       )}

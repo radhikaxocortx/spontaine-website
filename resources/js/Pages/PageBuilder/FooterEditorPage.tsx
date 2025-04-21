@@ -1,9 +1,10 @@
 import AppLayoutPadding from '@/Layouts/AppLayoutPadding'
-import FooterEditor, { FooterDataInterface } from '@/Modules/FooterEditor/FooterEditor'
+import FooterEditor from '@/Modules/FooterEditor/FooterEditor'
+import { FooterData } from '@/Modules/PageBuilder/page_interfaces'
 import Dashboard from '../Dashboard'
 
 interface Properties {
-  footer: FooterDataInterface
+  footer: FooterData
 }
 
 const FooterEditorPage = ({ footer }: Properties) => {
