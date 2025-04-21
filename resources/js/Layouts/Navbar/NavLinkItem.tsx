@@ -8,11 +8,11 @@ import {
 } from '@/Components/ui/navigation-menu'
 import { Language } from '@/Components/ui/ui_interfaces'
 import Localization from '@/Modules/PageBuilder/Components/Localization'
-import { NavMenuRecord } from '@/Modules/PageBuilder/page_interfaces'
+import { NavMenu } from '@/Modules/PageBuilder/page_interfaces'
 import { ChevronDownIcon } from 'lucide-react'
 
 interface Properties {
-  item: NavMenuRecord
+  item: NavMenu
   lang?: Language
 }
 
@@ -28,8 +28,8 @@ const NavLinkItem = ({ item, lang = 'en' }: Properties) => {
       >
         <Localization
           text={{
-            english: item.section,
-            malayalam: item.section_malayalam ?? '',
+            english: item.title,
+            malayalam: item.title_malayalam ?? '',
           }}
           language={lang}
         />
@@ -51,8 +51,8 @@ const NavLinkItem = ({ item, lang = 'en' }: Properties) => {
             <div className='inline-flex items-center'>
               <Localization
                 text={{
-                  english: item.section,
-                  malayalam: item.section_malayalam ?? '',
+                  english: item.title,
+                  malayalam: item.title_malayalam ?? '',
                 }}
                 language={lang}
               />

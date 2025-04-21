@@ -1,11 +1,11 @@
 import { Language } from '@/Components/ui/ui_interfaces'
-import { NavMenuRecord } from '@/Modules/PageBuilder/page_interfaces'
+import { NavMenu } from '@/Modules/PageBuilder/page_interfaces'
 import { usePage } from '@inertiajs/react'
 import NavMegaMenu from './NavMegaMenu'
 
 const NavbarLinks = () => {
   const { nav, lang = 'en' } = usePage().props as unknown as {
-    nav?: NavMenuRecord[]
+    nav?: NavMenu[]
     lang?: Language
   }
 

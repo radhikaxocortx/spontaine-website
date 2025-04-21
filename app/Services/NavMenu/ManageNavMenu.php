@@ -12,11 +12,14 @@ class ManageNavMenu
     public function __construct(private readonly NavMenuRepository $navMenuRepository) {}
 
     /**
-     * Undocumented function
+     * Create or update a nav menu item
      *
      * @param array{
-     *  section: string,
-     *  section_malayalam?: string|null,
+     *  title: string,
+     *  title_malayalam?: string|null,
+     *  position: int,
+     *  is_link: bool,
+     *  link_info?: array|null,
      *  data: array{lastUUID: int, items: array<array-key, mixed>},
      * } $data
      */
@@ -25,7 +28,7 @@ class ManageNavMenu
         /**
          * @var ?NavMenuItem $alreadyExists
          */
-        $alreadyExists = $this->navMenuRepository->fetchSection($data['section'])
+        $alreadyExists = $this->navMenuRepository->fetchSection($data['title'])
             ->first();
 
         if ($alreadyExists == null) {
@@ -36,11 +39,14 @@ class ManageNavMenu
     }
 
     /**
-     * Undocumented function
+     * Add a new nav menu item
      *
      * @param array{
-     *  section: string,
-     *  section_malayalam?: string|null,
+     *  title: string,
+     *  title_malayalam?: string|null,
+     *  position: int,
+     *  is_link: bool,
+     *  link_info?: array|null,
      *  data: array{lastUUID: int, items: array<array-key, mixed>},
      * } $data
      */
@@ -56,15 +62,18 @@ class ManageNavMenu
 
         return redirect()
             ->back()
-            ->with(['message' => 'Added Nav Menu Section: '.$data['section']]);
+            ->with(['message' => 'Added Nav Menu Section: '.$data['title']]);
     }
 
     /**
-     * Undocumented function
+     * Update an existing nav menu item
      *
      * @param array{
-     *  section: string,
-     *  section_malayalam?: string|null,
+     *  title: string,
+     *  title_malayalam?: string|null,
+     *  position?: int,
+     *  is_link?: bool,
+     *  link_info?: array|null,
      *  data: array{lastUUID: int, items: array<array-key, mixed>},
      * } $data
      */
@@ -80,13 +89,13 @@ class ManageNavMenu
 
         return redirect()
             ->back()
-            ->with(['message' => 'Updated Nav Menu Section: '.$data['section']]);
+            ->with(['message' => 'Updated Nav Menu Section: '.$data['title']]);
     }
 
-    public function deleteSection(string $section): RedirectResponse
+    public function deleteSection(string $title): RedirectResponse
     {
         try {
-            $this->navMenuRepository->deleteSection($section);
+            $this->navMenuRepository->deleteSection($title);
         } catch (Exception $e) {
             return redirect()
                 ->back()
@@ -95,19 +104,22 @@ class ManageNavMenu
 
         return redirect()
             ->back()
-            ->with(['message' => 'Deleted Nav Menu Section: '.$section]);
+            ->with(['message' => 'Deleted Nav Menu Section: '.$title]);
     }
 
     /**
+     * Update a nav menu section
+     *
      * @param array{
-     *     section: string,
-     *     section_malayalam?: string|null,
+     *     title: string,
+     *     title_malayalam?: string|null,
+     *     position?: int,
      * } $data
      */
-    public function updateSection(string $section, array $data): RedirectResponse
+    public function updateSection(string $title, array $data): RedirectResponse
     {
         try {
-            $this->navMenuRepository->updateSection($section, $data);
+            $this->navMenuRepository->updateSection($title, $data);
         } catch (Exception $e) {
             return redirect()
                 ->back()
@@ -116,6 +128,6 @@ class ManageNavMenu
 
         return redirect()
             ->back()
-            ->with(['message' => 'Updated Nav Menu Section: '.$section]);
+            ->with(['message' => 'Updated Nav Menu Section: '.$data['title']]);
     }
 }

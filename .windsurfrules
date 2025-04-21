@@ -24,6 +24,7 @@ Core Principles
 - function should not have more than 3 nested conditions and 4 return statements.
 - single line if conditions should be wrapped in braces.
 - use blank lines inside functions to separate logic.
+- Only add comments/docs when it provides more context than the method signature/variable name/class name. Use full sentences for descriptions, including a period at the end.
 
 Laravel Rules
 

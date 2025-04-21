@@ -141,23 +141,25 @@ export const imageBlock = {
   image: placeholderImage,
 }
 
-export interface NavSection {
+export interface NavSectionLinks {
   id: number
   section: RequiredTextData
   lastUUID: number
   links: BlockLink[]
 }
 
-export interface NavMenuItem {
+export interface NavMenuSection {
   lastUUID: number
-  items: NavSection[]
+  items: NavSectionLinks[]
 }
 
-export interface NavMenuRecord extends Model {
-  section: string
-  section_malayalam: string | null
-  items: NavMenuItem
-  isButton?: boolean
+export interface NavMenu extends Model {
+  title: string
+  title_malayalam: string | null
+  items: NavMenuSection
+  is_link: 1 | 0
+  link_info: LinkData | null
+  position: number
 }
 
 export interface FooterData extends Model {

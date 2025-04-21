@@ -1,26 +1,32 @@
 import SelectList from '@/Components/CustomUI/FormFields/SelectList'
 import { Button } from '@/Components/ui/button'
-import { Switch } from '@/Components/ui/switch'
 import use419Error from '@/hooks/use419Error'
 import { router } from '@inertiajs/react'
-import { useEffect, useReducer, useState } from 'react'
+import { useEffect, useMemo, useReducer, useState } from 'react'
+import { NavMenu } from '../page_interfaces'
 import useFetchNavSection from './fetch-nav-section'
-import AddNavSection from './Forms/AddNavSection'
+import AddNavMenuItem from './Forms/AddNavMenuItem'
 import DeleteNavSection from './Forms/DeleteNavSection'
-import RenameNavSection from './Forms/RenameNavSection'
+import UpdateNavMenu from './Forms/UpdateNavMenu'
 import navBuilder from './nav-builder'
 import NavEditorForm from './NavEditorForm'
 
-interface Properties {
-  sections: Array<{ section: string }>
+interface Props {
+  menuItems: Pick<
+    NavMenu,
+    'id' | 'title' | 'title_malayalam' | 'is_link' | 'link_info' | 'position'
+  >[]
 }
 
-const NavEditor = ({ sections }: Properties) => {
-  const [selectedNavSection, setSelectedNavSection] = useState('')
+const NavEditor = ({ menuItems }: Readonly<Props>) => {
+  const [selectedNavMenuItem, setSelectedNavMenuItem] = useState('')
   const [selectedLanguage, setSelectedLanguage] = useState('English')
-  const { menuItem, loading } = useFetchNavSection(selectedNavSection)
+  const { menuItem, loading } = useFetchNavSection(selectedNavMenuItem)
   const [selectedSection, sectionDispatch] = useReducer(navBuilder, null)
-  const [isButton, setIsButton] = useState(false)
+
+  const selectedMenuItem = useMemo(() => {
+    return menuItems.find((item) => item.title === selectedNavMenuItem)
+  }, [menuItems, selectedNavMenuItem])
 
   useEffect(() => {
     sectionDispatch({ action: 'CHANGE_SECTION', sections: menuItem })
@@ -30,8 +36,8 @@ const NavEditor = ({ sections }: Properties) => {
 
   const saveChanges = () => {
     router.post(`/nav-editor`, {
-      data: { ...selectedSection, isButton },
-      section: selectedNavSection,
+      data: { ...selectedSection },
+      section: selectedNavMenuItem,
     } as unknown as FormData)
   }
 
@@ -45,13 +51,13 @@ const NavEditor = ({ sections }: Properties) => {
 
   //if sections changes and selected section is not in the new sections, set selected section to ''
   useEffect(() => {
-    if (selectedNavSection == '') {
+    if (selectedNavMenuItem == '') {
       return
     }
-    if (!sections.some((section) => section.section === selectedNavSection)) {
-      setSelectedNavSection('')
+    if (!menuItems.some((section) => section.title === selectedNavMenuItem)) {
+      setSelectedNavMenuItem('')
     }
-  }, [sections, selectedNavSection])
+  }, [menuItems, selectedNavMenuItem])
 
   return (
     <div className='flex flex-col gap-5 p-5'>
@@ -65,42 +71,34 @@ const NavEditor = ({ sections }: Properties) => {
       </div>
       <div className='grid grid-cols-1 gap-3 md:grid-cols-3 xl:grid-cols-4 xl:gap-5'>
         <div className='flex flex-col'>
-          <SelectList<'section', 'section', { section: string }>
+          <SelectList
             label='Nav section'
-            list={sections}
-            value={selectedNavSection}
-            setValue={setSelectedNavSection}
-            dataKey='section'
-            displayKey='section'
+            list={menuItems}
+            value={selectedNavMenuItem}
+            setValue={setSelectedNavMenuItem}
+            dataKey='title'
+            displayKey='title'
           />
         </div>
         <div className='self-end'>
-          <AddNavSection />
+          <AddNavMenuItem />
         </div>
       </div>
-      {selectedNavSection != '' && (
+      {selectedMenuItem != null && (
         <>
           <span className='text-sm text-red-500'>
-            Make sure to save changes before changing nav section.
+            Make sure to save changes before changing nav menu item.
           </span>
           <div className='flex items-center gap-5'>
-            <div className='flex items-center gap-2'>
-              <Switch
-                id='is-button'
-                checked={isButton}
-                onCheckedChange={setIsButton}
-              />
-              <label htmlFor='is-button'>Display as Button</label>
-            </div>
             <div className=''>
               <Button onClick={saveChanges}>SAVE CHANGES</Button>
             </div>
-            <RenameNavSection section={selectedNavSection} />
-            <DeleteNavSection section={selectedNavSection} />
+            <UpdateNavMenu menuItem={selectedMenuItem} />
+            <DeleteNavSection menuItem={selectedMenuItem} />
           </div>
         </>
       )}
-      {selectedSection != null && selectedNavSection != '' && (
+      {selectedSection != null && selectedMenuItem != null && selectedMenuItem.is_link === 0 && (
         <NavEditorForm
           language={selectedLanguage}
           actionDispatch={sectionDispatch}
@@ -108,7 +106,7 @@ const NavEditor = ({ sections }: Properties) => {
           selectedSection={selectedSection}
         />
       )}
-      {selectedNavSection == '' && (
+      {selectedNavMenuItem == '' && (
         <div className='flex justify-center'>
           <span>Select a nav section to edit</span>
         </div>

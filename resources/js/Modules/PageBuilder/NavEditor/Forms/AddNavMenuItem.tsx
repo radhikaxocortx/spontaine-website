@@ -2,11 +2,12 @@ import AddButton from '@/Components/CustomUI/Button/AddButton'
 import FullSpinnerWrapper from '@/Components/CustomUI/FullSpinnerWrapper'
 import Modal from '@/Components/CustomUI/Modal/Modal'
 import useInertiaPost from '@/hooks/useInertiaPost'
-import TitleInput from '@/Modules/PageBuilder/Components/Forms/TitleInput'
-import { TextData } from '@/Modules/PageBuilder/page_interfaces'
+import NavMenuItemForm, {
+  NavMenuItemFormData,
+} from '@/Modules/PageBuilder/NavEditor/Forms/NavMenuItemForm'
 import { useCallback, useState } from 'react'
 
-const AddNavSection = () => {
+const AddNavMenuItem = () => {
   const [showModal, setShowModal] = useState(false)
 
   const onComplete = useCallback(() => {
@@ -19,10 +20,25 @@ const AddNavSection = () => {
   })
 
   const handleSubmit = useCallback(
-    (data: TextData | null) => {
+    (data: NavMenuItemFormData | null) => {
+      if (data == null) {
+        return
+      }
       post({
-        section: data?.english ?? '',
-        section_malayalam: data?.malayalam ?? '',
+        title: data.title,
+        title_malayalam: data.title_malayalam,
+        position: data.position,
+        is_link: data.is_link,
+        link_info: data.is_link
+          ? {
+              link: data.link,
+              name: {
+                english: data.name,
+                malayalam: null,
+              },
+              external: data.is_external,
+            }
+          : null,
         data: {
           lastUUID: 0,
           items: [],
@@ -39,14 +55,14 @@ const AddNavSection = () => {
       </FullSpinnerWrapper>
       {showModal && (
         <Modal
-          title='Add Section'
+          title='Add Nav Menu Item'
           setShowModal={setShowModal}
         >
-          <TitleInput onSubmit={handleSubmit} />
+          <NavMenuItemForm onSubmit={handleSubmit} />
         </Modal>
       )}
     </>
   )
 }
 
-export default AddNavSection
+export default AddNavMenuItem

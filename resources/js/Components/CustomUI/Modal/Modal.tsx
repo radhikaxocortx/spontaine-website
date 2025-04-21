@@ -6,7 +6,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import Heading from '@/typography/Heading'
 import { X } from 'lucide-react'
 import React from 'react'
 
@@ -24,7 +23,7 @@ export default function Modal({
   title,
   large = false,
   showCloseButton = false,
-}: Properties) {
+}: Readonly<Properties>) {
   return (
     <Dialog
       open
@@ -32,11 +31,7 @@ export default function Modal({
     >
       <DialogContent className={`mt-10 overflow-scroll ${large ? 'max-w-5xl' : 'max-w-lg'}`}>
         <DialogHeader>
-          {title && (
-            <DialogTitle>
-              <Heading>{title}</Heading>
-            </DialogTitle>
-          )}
+          {title && <DialogTitle>{title}</DialogTitle>}
           {showCloseButton && (
             <DialogClose asChild>
               <Button

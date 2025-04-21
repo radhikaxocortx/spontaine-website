@@ -1,4 +1,4 @@
-import { LinkData, NavMenuItem, RequiredTextData } from '../page_interfaces'
+import { LinkData, NavMenuSection, RequiredTextData } from '../page_interfaces'
 
 export interface NavBuilderAction {
   action:
@@ -9,14 +9,14 @@ export interface NavBuilderAction {
     | 'REMOVE_LINK'
     | 'UPDATE_LINK'
     | 'UPDATE_SECTION'
-  sections?: NavMenuItem | null
+  sections?: NavMenuSection | null
   sectionName?: RequiredTextData
   sectionId?: number
   link?: LinkData
   linkId?: number
 }
 
-const changeSection = (section: NavMenuItem | null) => {
+const changeSection = (section: NavMenuSection | null) => {
   if (section == null) {
     return null
   }
@@ -24,9 +24,9 @@ const changeSection = (section: NavMenuItem | null) => {
 }
 
 const addSection = (
-  state: NavMenuItem | null,
+  state: NavMenuSection | null,
   sectionName?: RequiredTextData
-): NavMenuItem | null => {
+): NavMenuSection | null => {
   if (sectionName == null || state == null) {
     return state
   }
@@ -45,10 +45,10 @@ const addSection = (
 }
 
 const updateSectionName = (
-  state: NavMenuItem | null,
+  state: NavMenuSection | null,
   sectionId?: number,
   sectionName?: RequiredTextData
-): NavMenuItem | null => {
+): NavMenuSection | null => {
   if (sectionId == null || sectionName == null || state == null) {
     return state
   }
@@ -66,7 +66,7 @@ const updateSectionName = (
   }
 }
 
-const removeSection = (state: NavMenuItem | null, sectionId?: number): NavMenuItem | null => {
+const removeSection = (state: NavMenuSection | null, sectionId?: number): NavMenuSection | null => {
   if (sectionId == null || state == null) {
     return state
   }
@@ -77,10 +77,10 @@ const removeSection = (state: NavMenuItem | null, sectionId?: number): NavMenuIt
 }
 
 const addLink = (
-  state: NavMenuItem | null,
+  state: NavMenuSection | null,
   sectionId?: number,
   link?: LinkData
-): NavMenuItem | null => {
+): NavMenuSection | null => {
   if (sectionId == null || link == null || state == null) {
     return state
   }
@@ -106,11 +106,11 @@ const addLink = (
 }
 
 const updateLink = (
-  state: NavMenuItem | null,
+  state: NavMenuSection | null,
   sectionId?: number,
   link?: LinkData,
   linkId?: number
-): NavMenuItem | null => {
+): NavMenuSection | null => {
   if (sectionId == null || link == null || linkId == null || state == null) {
     return state
   }
@@ -137,10 +137,10 @@ const updateLink = (
 }
 
 const removeLink = (
-  state: NavMenuItem | null,
+  state: NavMenuSection | null,
   sectionId?: number,
   linkId?: number
-): NavMenuItem | null => {
+): NavMenuSection | null => {
   if (sectionId == null || linkId == null || state == null) {
     return state
   }
@@ -158,7 +158,10 @@ const removeLink = (
   }
 }
 
-const navBuilder = (state: NavMenuItem | null, action: NavBuilderAction): NavMenuItem | null => {
+const navBuilder = (
+  state: NavMenuSection | null,
+  action: NavBuilderAction
+): NavMenuSection | null => {
   switch (action.action) {
     case 'ADD_SECTION': {
       return addSection(state, action.sectionName)

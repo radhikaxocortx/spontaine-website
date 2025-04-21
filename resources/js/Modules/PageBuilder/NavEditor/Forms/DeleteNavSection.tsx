@@ -1,8 +1,13 @@
 import DeleteButton from '@/Components/CustomUI/Button/DeleteButton'
 import DeleteModal from '@/Components/CustomUI/Modal/DeleteModal'
+import { NavMenu } from '@/Modules/PageBuilder/page_interfaces'
 import React from 'react'
 
-const DeleteNavSection = ({ section }: { section: string }) => {
+interface Props {
+  menuItem: Pick<NavMenu, 'id' | 'title' | 'title_malayalam' | 'is_link' | 'link_info' | 'position'>
+}
+
+const DeleteNavSection = ({ menuItem }: Readonly<Props>) => {
   const [showDeleteModal, setShowDeleteModal] = React.useState(false)
 
   return (
@@ -11,8 +16,8 @@ const DeleteNavSection = ({ section }: { section: string }) => {
       {showDeleteModal && (
         <DeleteModal
           setShowModal={setShowDeleteModal}
-          title={`Delete  ${section}`}
-          url={`/nav-editor/${section}`}
+          title={`Delete  ${menuItem.title}`}
+          url={`/nav-editor/${menuItem.id}`}
         >
           <p>Are you sure you want to delete this section?</p>
         </DeleteModal>

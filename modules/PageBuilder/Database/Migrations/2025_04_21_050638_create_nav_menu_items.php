@@ -15,8 +15,11 @@ return new class extends Migration
     {
         Schema::create('nav_menu_items', function (Blueprint $table) {
             $table->id();
-            $table->string('section');
-            $table->string('section_malayalam')->nullable();
+            $table->unsignedBigInteger('position');
+            $table->string('title');
+            $table->string('title_malayalam')->nullable();
+            $table->boolean('is_link')->default(false);
+            $table->json('link_info')->nullable();
             $table->json('items');
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
