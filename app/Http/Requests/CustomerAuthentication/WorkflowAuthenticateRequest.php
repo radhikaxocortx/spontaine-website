@@ -3,7 +3,6 @@
 namespace App\Http\Requests\CustomerAuthentication;
 
 use Spatie\LaravelData\Attributes\MapName;
-use Spatie\LaravelData\Attributes\Validation\RequiredIf;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 
@@ -16,7 +15,6 @@ class WorkflowAuthenticateRequest extends Data
         public ?string $status,
         public ?string $notes,
         public ?string $customer_notes,
-        #[RequiredIf('status', 'Approved')]
-        public ?string $kadodo_id,
+
     ) {}
 }

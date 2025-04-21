@@ -5,13 +5,17 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomerAuthentication\ModuleStatusUpdateRequest;
 use App\Http\Requests\CustomerAuthentication\WorkflowAuthenticateRequest;
+use App\Mail\ModuleUpdateEmailToCustomer;
+use App\Mail\StatusUpdateMailToCustomer;
 use App\Models\Customer\CustomerPricePlan;
 use App\Models\Customer\CustomerWorkflow;
 use App\Models\CustomerVerification\VerificationStatus;
 use App\Models\CustomerVerification\WorkflowModuleVerification;
+use App\Models\EntityTemplate\EntityTemplate;
 use App\Models\ReferenceData\ReferenceData;
 use App\Models\Workflow\Workflow;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 
 class CustomerAdminController extends Controller
@@ -77,8 +81,17 @@ class CustomerAdminController extends Controller
                 ]);
             }
         }
+
+        $customerDetail = CustomerPricePlan::where('id', $request->customer_workflow_id)
+            ->with('customer')
+            ->first();
+
+        /** @var \App\Models\Customer\Customer|null $customer */
+        $customer = $customerDetail->customer;
         try {
             VerificationStatus::create($request->all());
+            Mail::to($customer->email)->send(new StatusUpdateMailToCustomer($customer->email, $customer->first_name, $customerDetail->kadodo_id));
+
         } catch (\Exception $e) {
             return back()->with(['error' => $e->getMessage()]);
         }
@@ -105,8 +118,17 @@ class CustomerAdminController extends Controller
             return back()->with(['error' => 'Something went wrong: No record found.']);
         }
 
+        $customerDetail = CustomerPricePlan::where('id', $request->customer_workflow_id)
+            ->with('customer')
+            ->first();
+
+        /** @var \App\Models\Customer\Customer|null $customer */
+        $customer = $customerDetail->customer;
+
         try {
             $workflowAuthenticateModule->update($request->all());
+            Mail::to($customer->email)->send(new StatusUpdateMailToCustomer($customer->email, $customer->first_name, $customerDetail->kadodo_id));
+
         } catch (\Exception $e) {
             return back()->with(['error' => $e->getMessage()]);
         }
@@ -123,8 +145,22 @@ class CustomerAdminController extends Controller
         if ($exists) {
             return back()->with(['error' => 'Something went wrong: Duplicate entry.']);
         }
+        $customerDetail = CustomerPricePlan::where('id', $request->customer_workflow_id)
+            ->with('customer')
+            ->first();
+
+        /** @var \App\Models\Customer\Customer|null $customer */
+        $customer = $customerDetail->customer;
+
+        $moduleName = EntityTemplate::where('id', $request->module_id)->pluck('name');
         try {
             $workflowModuleVerification = WorkflowModuleVerification::create($request->all());
+            Mail::to($customer->email)->send(new ModuleUpdateEmailToCustomer([
+                'email' => $customer->email,
+                'name' => $customer->first_name,
+                'moduleName' => $moduleName[0],
+                'kadodo_id' => $customerDetail->kadodo_id,
+            ]));
         } catch (\Exception $e) {
             return back()->with(['error' => $e->getMessage()]);
         }
@@ -141,9 +177,22 @@ class CustomerAdminController extends Controller
         if (! $workflowModuleVerification) {
             return back()->with(['error' => 'Something went wrong: No record found.']);
         }
+        $customerDetail = CustomerPricePlan::where('id', $request->customer_workflow_id)
+            ->with('customer')
+            ->first();
+
+        /** @var \App\Models\Customer\Customer|null $customer */
+        $customer = $customerDetail->customer;
+        $moduleName = EntityTemplate::where('id', $request->module_id)->pluck('name');
 
         try {
             $workflowModuleVerification->update($request->all());
+            Mail::to($customer->email)->send(new ModuleUpdateEmailToCustomer([
+                'email' => $customer->email,
+                'name' => $customer->first_name,
+                'moduleName' => $moduleName[0],
+                'kadodo_id' => $customerDetail->kadodo_id,
+            ]));
         } catch (\Exception $e) {
             return back()->with(['error' => $e->getMessage()]);
         }

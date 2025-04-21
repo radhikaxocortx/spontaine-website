@@ -22,7 +22,6 @@ const UpdateCustomerWorkflowStatus = ({
     status: customerWorkflowStatus?.status ?? 'processing',
     notes: customerWorkflowStatus?.notes ?? '',
     customer_notes: customerWorkflowStatus?.customer_notes ?? '',
-    kadodo_id: customerWorkflowStatus?.kadodo_id ?? '',
   })
   const statusDate = formatDate(new Date())
 
@@ -67,13 +66,6 @@ const UpdateCustomerWorkflowStatus = ({
         placeholder: 'Enter Customer Notes',
         label: 'Customer Notes',
         setValue: setFormValue('customer_notes'),
-      },
-
-      kadodo_id: {
-        label: 'Kadodo ID',
-        type: 'text',
-        placeholder: 'Enter Kadodo ID',
-        setValue: setFormValue('kadodo_id'),
       },
     } as Record<U, FormItem<T[U], K, G, L>>
   }, [setFormValue, statuses])

@@ -116,6 +116,7 @@ export interface CustomerPricePlan extends Model {
   customer_id: number
   priceplan_id: number
   price_plan: PricePlan
+  kadodo_id: string
   customer: Customer
 }
 
@@ -146,6 +147,5 @@ export interface CustomerWorkflowStatus extends Model {
   status: string
   notes: string
   customer_notes: string
-  kadodo_id: string
   status_date: string
 }

@@ -14,7 +14,7 @@ class VerificationStatus extends Model
         'status',
         'notes',
         'customer_notes',
-        'kadodo_id',
+
         'status_date',
     ];
 }
