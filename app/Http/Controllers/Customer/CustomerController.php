@@ -5,15 +5,19 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Customer\CustomerFormRequest;
 use App\Libs\ExceptionMessage;
+use App\Mail\WorkflowAdminMail;
+use App\Mail\WorkflowCustomerMail;
 use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerOrganization;
 use App\Models\Customer\CustomerPricePlan;
 use App\Models\Customer\CustomerWorkflow;
+use App\Models\User;
 use App\Services\ProcessWorkflowInfo;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
@@ -74,7 +78,7 @@ class CustomerController extends Controller
             ]);
 
             return redirect()
-                ->route('customer-verification', ['customerId' => $customer->email])
+                ->route('customer-register-admin-email', ['email' => $request->email, 'kadodo_id' => $customer->id, 'name' => $customer->first_name])
                 ->with(['message' => 'Customer Created Successfully']);
         } catch (Exception $e) {
 
@@ -123,6 +127,8 @@ class CustomerController extends Controller
         ]);
         try {
             $customerPriceplan = CustomerPricePlan::create($request->all());
+            $kadodoId = 'KD'.time().$customerPriceplan->id;
+            $customerPriceplan->update(['kadodo_id' => $kadodoId]);
         } catch (\Exception $e) {
             return back()->with(['error' => $e->getMessage()]);
         }
@@ -155,8 +161,24 @@ class CustomerController extends Controller
             foreach ($infoRecords as &$infoRecord) {
                 $infoRecord['customer_priceplan_id'] = $customerPriceplanId;
             }
+            $customerDetail = CustomerPricePlan::where('id', $request->customerPriceplanId)
+                ->with('customer')
+                ->first();
 
+            /** @var \App\Models\Customer\Customer|null $customer */
+            $customer = $customerDetail->customer;
             CustomerWorkflow::insert($infoRecords);
+            Mail::to(User::pluck('email')->toArray())
+                ->send(new WorkflowAdminMail([
+                    'email' => $customer->email,
+                    'name' => $customer->first_name,
+                    'kadodo_id' => $customerDetail->kadodo_id,
+                ]));
+            Mail::to($customer->email)->send(new WorkflowCustomerMail([
+                'email' => $customer->email,
+                'name' => $customer->first_name,
+                'kadodo_id' => $customerDetail->kadodo_id,
+            ]));
         } catch (Exception $e) {
             DB::rollBack();
             Storage::delete($filesToCleanUp);

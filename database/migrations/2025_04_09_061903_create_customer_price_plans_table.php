@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('customer_id')->constrained('customers')->unique();
             $table->foreignId('price_plan_id')->constrained('price_plans');
+            $table->string('kadodo_id')->unique()->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

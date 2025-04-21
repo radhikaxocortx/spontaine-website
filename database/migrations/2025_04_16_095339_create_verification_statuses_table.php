@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('status')->nullable();
             $table->string('notes')->nullable();
             $table->string('customer_notes')->nullable();
-            $table->string('kadodo_id')->nullable();
             $table->date('status_date')->nullable();
             $table->softDeletes();
             $table->timestamps();
