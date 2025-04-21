@@ -9,12 +9,14 @@ import { PageBuilderAction } from '@/Modules/PageBuilder/hooks/pageBuilderServic
 import { Block, PageDataDependencies } from '@/Modules/PageBuilder/page_interfaces'
 import { Language } from '@/Modules/PageBuilder/Pages/PageBuilder'
 import React from 'react'
+import ContactUS from '../Blocks/ContactUS'
 import FAQ, { FAQBlockInfo } from '../Blocks/FAQ'
 import FullWidthImageWithTItle, {
   FullWidthImageWithTItleBlock,
 } from '../Blocks/FullWidthImageWithTItle'
 import GridWithVideo, { GridWithVideoBlock } from '../Blocks/GridWithVideo'
 import ImageCards, { ImageCardsBlock } from '../Blocks/ImageCards'
+import PricePlan, { PricePlanBlock } from '../Blocks/PricePlan'
 import SectionBanner, { BannerBlock } from '../Blocks/SectionBanner'
 import SectionCallToAction, { TextBlock } from '../Blocks/SectionCallToAction'
 import SectionHero, { HeroImageBlock } from '../Blocks/SectionHero'
@@ -132,6 +134,14 @@ const ResolveComponent = ({
           onFieldEdit={onFieldEdit}
           blockData={block as unknown as FAQBlockInfo}
           dispatch={dispatch}
+        />
+      )}
+      {blockName === 'Content Section - Contact Us' && (
+        <ContactUS
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          blockData={block as unknown as RichTextBlockData}
+          language={language}
         />
       )}
       {blockName === 'Home - Call To Action' && (
