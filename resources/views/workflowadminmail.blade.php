@@ -1,5 +1,6 @@
-A new customer has registered with Kadodo Africa.
+A new workflow has submitted by customer on Kadodo Africa.
 <br/>
+with ID {{ $kadodo_id }}
 <br/>
 Name: {{ $name }}
 <br/>

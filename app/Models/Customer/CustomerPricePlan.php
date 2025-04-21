@@ -16,6 +16,7 @@ class CustomerPricePlan extends Model
     protected $fillable = [
         'customer_id',
         'price_plan_id',
+        'kadodo_id',
     ];
 
     public function pricePlan(): BelongsTo

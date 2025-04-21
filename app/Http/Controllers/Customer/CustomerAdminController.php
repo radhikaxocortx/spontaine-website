@@ -90,7 +90,7 @@ class CustomerAdminController extends Controller
         $customer = $customerDetail->customer;
         try {
             VerificationStatus::create($request->all());
-            Mail::to($customer->email)->send(new StatusUpdateMailToCustomer($customer->email, $customer->name, (string) $request->customer_workflow_id));
+            Mail::to($customer->email)->send(new StatusUpdateMailToCustomer($customer->email, $customer->name, $customerDetail->kadodo_id));
 
         } catch (\Exception $e) {
             return back()->with(['error' => $e->getMessage()]);
@@ -127,7 +127,7 @@ class CustomerAdminController extends Controller
 
         try {
             $workflowAuthenticateModule->update($request->all());
-            Mail::to($customer->email)->send(new StatusUpdateMailToCustomer($customer->email, $customer->name, (string) $request->customer_workflow_id));
+            Mail::to($customer->email)->send(new StatusUpdateMailToCustomer($customer->email, $customer->name, $customerDetail->kadodo_id));
 
         } catch (\Exception $e) {
             return back()->with(['error' => $e->getMessage()]);
@@ -155,7 +155,12 @@ class CustomerAdminController extends Controller
         $moduleName = EntityTemplate::where('id', $request->module_id)->pluck('name');
         try {
             $workflowModuleVerification = WorkflowModuleVerification::create($request->all());
-            Mail::to($customer->email)->send(new ModuleUpdateEmailToCustomer(['email' => $customer->email, 'name' => $customer->name, 'moduleName' => $moduleName[0], 'kadodo_id' => (string) $request->customer_workflow_id]));
+            Mail::to($customer->email)->send(new ModuleUpdateEmailToCustomer([
+                'email' => $customer->email,
+                'name' => $customer->name,
+                'moduleName' => $moduleName[0],
+                'kadodo_id' => $customerDetail->kadodo_id,
+            ]));
         } catch (\Exception $e) {
             return back()->with(['error' => $e->getMessage()]);
         }
@@ -182,7 +187,12 @@ class CustomerAdminController extends Controller
 
         try {
             $workflowModuleVerification->update($request->all());
-            Mail::to($customer->email)->send(new ModuleUpdateEmailToCustomer(['email' => $customer->email, 'name' => $customer->name, 'moduleName' => $moduleName[0], 'kadodo_id' => (string) $request->customer_workflow_id]));
+            Mail::to($customer->email)->send(new ModuleUpdateEmailToCustomer([
+                'email' => $customer->email,
+                'name' => $customer->name,
+                'moduleName' => $moduleName[0],
+                'kadodo_id' => $customerDetail->kadodo_id,
+            ]));
         } catch (\Exception $e) {
             return back()->with(['error' => $e->getMessage()]);
         }
