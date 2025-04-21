@@ -1,4 +1,4 @@
-import { LinkData, NavMenuItem, RequiredTextData } from '../PageBuilder/page_interfaces'
+import { LinkData, NavMenuItem, RequiredTextData } from '../page_interfaces'
 
 export interface NavBuilderAction {
   action:

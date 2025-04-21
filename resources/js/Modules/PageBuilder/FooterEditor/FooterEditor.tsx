@@ -11,8 +11,8 @@ import {
 } from '@/Modules/PageBuilder/page_interfaces'
 import { router } from '@inertiajs/react'
 import { useReducer, useState } from 'react'
-import BlockEditor from '../PageBuilder/Components/BlockEditor/BlockEditor'
-import PageBuilderService from '../PageBuilder/hooks/pageBuilderService'
+import BlockEditor from '../Components/BlockEditor/BlockEditor'
+import PageBuilderService from '../hooks/pageBuilderService'
 
 export interface FooterDataInterface {
   image?: BlockImage | null

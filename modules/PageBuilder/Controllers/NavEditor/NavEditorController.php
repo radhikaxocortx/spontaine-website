@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\NavEditor;
+namespace Modules\PageBuilder\Controllers\NavEditor;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RenameNavSectionRequest;
 use App\Http\Requests\UIEditor\NavMenuFormRequest;
-use App\Repository\NavMenu\NavMenuRepository;
 use App\Services\NavMenu\ManageNavMenu;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Inertia\Inertia;
 use Inertia\Response;
+use Modules\PageBuilder\Repository\NavMenu\NavMenuRepository;
 
 class NavEditorController extends Controller implements HasMiddleware
 {

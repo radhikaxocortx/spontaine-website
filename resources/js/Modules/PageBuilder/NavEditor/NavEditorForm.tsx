@@ -1,6 +1,6 @@
 import FullSpinnerWrapper from '@/Components/CustomUI/FullSpinnerWrapper'
 import React, { useCallback } from 'react'
-import { NavMenuItem, RequiredTextData } from '../PageBuilder/page_interfaces'
+import { NavMenuItem, RequiredTextData } from '../page_interfaces'
 import AddNavSubSection from './Forms/AddNavSubSection'
 import { NavBuilderAction } from './nav-builder'
 import NavSectionEdit from './NavSection/NavSectionEdit'

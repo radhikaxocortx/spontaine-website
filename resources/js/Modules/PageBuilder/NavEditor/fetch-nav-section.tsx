@@ -1,7 +1,7 @@
 import { handleHttpErrors } from '@/Components/ui/alerts'
 import axios from 'axios'
 import { useCallback, useEffect, useState } from 'react'
-import { NavMenuItem } from '../PageBuilder/page_interfaces'
+import { NavMenuItem } from '../page_interfaces'
 
 const useFetchNavSection = (section: string) => {
   const [menuItem, setMenuItem] = useState<NavMenuItem | null>(null)

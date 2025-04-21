@@ -1,5 +1,5 @@
 import Navbar from '@/Layouts/Navbar/Navbar'
-import { FooterDataInterface } from '@/Modules/FooterEditor/FooterEditor'
+import { FooterDataInterface } from '@/Modules/PageBuilder/FooterEditor/FooterEditor'
 import { PageProps } from '@/types'
 import { usePage } from '@inertiajs/react'
 import React from 'react'

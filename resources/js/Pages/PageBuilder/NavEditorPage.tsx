@@ -1,4 +1,4 @@
-import NavEditor from '@/Modules/NavEditor/NavEditor'
+import NavEditor from '@/Modules/PageBuilder/NavEditor/NavEditor'
 import Dashboard from '../Dashboard'
 
 interface Properties {

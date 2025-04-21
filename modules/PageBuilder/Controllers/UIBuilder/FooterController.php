@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\UIBuilder;
+namespace Modules\PageBuilder\Controllers\UIBuilder;
 
 use App\Http\Controllers\Controller;
-use App\Models\UIBuilder\Footer;
 use App\Services\Footer\FooterCreate;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use Modules\PageBuilder\Models\UIBuilder\Footer;
 
 class FooterController extends Controller
 {

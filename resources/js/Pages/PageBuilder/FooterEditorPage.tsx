@@ -1,5 +1,5 @@
 import AppLayoutPadding from '@/Layouts/AppLayoutPadding'
-import FooterEditor from '@/Modules/FooterEditor/FooterEditor'
+import FooterEditor from '@/Modules/PageBuilder/FooterEditor/FooterEditor'
 import { FooterData } from '@/Modules/PageBuilder/page_interfaces'
 import Dashboard from '../Dashboard'
 

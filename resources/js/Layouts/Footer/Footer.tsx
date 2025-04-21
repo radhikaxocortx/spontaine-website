@@ -1,10 +1,10 @@
 import ApplicationLogo from '@/Components/CustomUI/ApplicationLogo'
 import { Language } from '@/Components/ui/ui_interfaces'
-import { FooterDataInterface } from '@/Modules/FooterEditor/FooterEditor'
 import { BlocKFieldInfo } from '@/Modules/PageBuilder/Components/BlockEditor/BlockEditor'
 import EditLabel from '@/Modules/PageBuilder/Components/EditLabel'
 import InertiaLink from '@/Modules/PageBuilder/Components/InertiaLink'
 import Localization from '@/Modules/PageBuilder/Components/Localization'
+import { FooterDataInterface } from '@/Modules/PageBuilder/FooterEditor/FooterEditor'
 import { Link } from '@inertiajs/react'
 
 interface Properties {
@@ -22,7 +22,7 @@ const Footer = ({ editMode, onFieldEdit, language, blockData }: Properties) => {
           <div className='col-span-2 grid grid-cols-4 gap-5 md:col-span-4 lg:md:col-span-1 lg:flex lg:flex-col'>
             <div className='col-span-2 md:col-span-1'>
               <Link
-                href='/'
+                href='/public'
                 className={`ttnc-logo text-primary-6000 inline-block w-36 focus:outline-none focus:ring-0`}
               >
                 <ApplicationLogo />

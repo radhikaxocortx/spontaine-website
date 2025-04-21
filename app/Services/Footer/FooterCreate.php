@@ -2,14 +2,12 @@
 
 namespace App\Services\Footer;
 
-use App\Repository\Footer\FooterRepository;
 use Illuminate\Http\RedirectResponse;
+use Modules\PageBuilder\Repository\Footer\FooterRepository;
 
 class FooterCreate
 {
-    public function __construct(private FooterRepository $footerRepository)
-    {
-    }
+    public function __construct(private FooterRepository $footerRepository) {}
 
     /**
      * @param  array<array-key, mixed>  $data

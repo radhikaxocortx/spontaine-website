@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Repository\NavMenu;
+namespace Modules\PageBuilder\Repository\NavMenu;
 
-use App\Models\UIBuilder\NavMenuItem;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Modules\PageBuilder\Models\UIBuilder\NavMenuItem;
 
 class NavMenuRepository
 {

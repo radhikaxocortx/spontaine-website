@@ -2,16 +2,14 @@
 
 namespace App\Services\NavMenu;
 
-use App\Models\UIBuilder\NavMenuItem;
-use App\Repository\NavMenu\NavMenuRepository;
 use Exception;
 use Illuminate\Http\RedirectResponse;
+use Modules\PageBuilder\Models\UIBuilder\NavMenuItem;
+use Modules\PageBuilder\Repository\NavMenu\NavMenuRepository;
 
 class ManageNavMenu
 {
-    public function __construct(private readonly NavMenuRepository $navMenuRepository)
-    {
-    }
+    public function __construct(private readonly NavMenuRepository $navMenuRepository) {}
 
     /**
      * Undocumented function

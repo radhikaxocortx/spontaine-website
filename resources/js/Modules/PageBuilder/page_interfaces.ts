@@ -1,5 +1,5 @@
 import { Model } from '@/Components/Interface/data_interface'
-import { FooterDataInterface } from '../FooterEditor/FooterEditor'
+import { FooterDataInterface } from '@/Modules/PageBuilder/FooterEditor/FooterEditor'
 
 export const loremIpsum = 'lorem ipsum'
 export const placeholderParagraph =
@@ -108,6 +108,7 @@ export interface CreateResponse<T> {
     record?: T
   }
 }
+
 export interface ImageBlock extends BlockConfiguration {
   title: TextData
   description: ItemListField<TextData>
@@ -119,6 +120,7 @@ export interface ImageBlock extends BlockConfiguration {
   categoryLink?: LinkData
   category?: TextData
 }
+
 export const imageBlock = {
   title: {
     english: placeholderTitle,
@@ -145,6 +147,7 @@ export interface NavSection {
   lastUUID: number
   links: BlockLink[]
 }
+
 export interface NavMenuItem {
   lastUUID: number
   items: NavSection[]
@@ -156,6 +159,7 @@ export interface NavMenuRecord extends Model {
   items: NavMenuItem
   isButton?: boolean
 }
+
 export interface FooterData extends Model {
   items: FooterDataInterface
 }

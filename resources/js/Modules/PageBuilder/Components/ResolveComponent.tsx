@@ -1,10 +1,10 @@
 import Footer from '@/Layouts/Footer/Footer'
-import { FooterDataInterface } from '@/Modules/FooterEditor/FooterEditor'
 import LeftImageBlock, { ImageBlock } from '@/Modules/PageBuilder/Blocks/LeftImageBlock'
 import RichTextBlock, {
   RichTextBlockData,
 } from '@/Modules/PageBuilder/Blocks/RichText/RichTextBlock'
 import { BlocKFieldInfo } from '@/Modules/PageBuilder/Components/BlockEditor/BlockEditor'
+import { FooterDataInterface } from '@/Modules/PageBuilder/FooterEditor/FooterEditor'
 import { PageBuilderAction } from '@/Modules/PageBuilder/hooks/pageBuilderService'
 import { Block, PageDataDependencies } from '@/Modules/PageBuilder/page_interfaces'
 import { Language } from '@/Modules/PageBuilder/Pages/PageBuilder'

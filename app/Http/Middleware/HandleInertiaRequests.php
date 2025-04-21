@@ -2,11 +2,11 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\UIBuilder\Footer;
-use App\Repository\NavMenu\NavMenuRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Middleware;
+use Modules\PageBuilder\Models\UIBuilder\Footer;
+use Modules\PageBuilder\Repository\NavMenu\NavMenuRepository;
 use Tighten\Ziggy\Ziggy;
 
 class HandleInertiaRequests extends Middleware

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\UIBuilder;
+namespace Modules\PageBuilder\Models\UIBuilder;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|NavMenuItem newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|NavMenuItem newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|NavMenuItem onlyTrashed()
@@ -33,6 +34,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|NavMenuItem whereUpdatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|NavMenuItem withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|NavMenuItem withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class NavMenuItem extends Model
