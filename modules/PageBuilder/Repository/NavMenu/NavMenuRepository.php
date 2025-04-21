@@ -8,13 +8,6 @@ use Modules\PageBuilder\Models\UIBuilder\NavMenuItem;
 
 class NavMenuRepository
 {
-    const MENU_CACHE_KEY = 'nav.all';
-
-    private function forgetCachedMenu(): void
-    {
-        cache()->forget(self::MENU_CACHE_KEY);
-    }
-
     /**
      * @return Builder<NavMenuItem>
      */
@@ -37,7 +30,6 @@ class NavMenuRepository
      */
     public function create(array $data): NavMenuItem
     {
-        $this->forgetCachedMenu();
         if (! isset($data['data']['items'])) {
             $data['data']['items'] = [];
         }
@@ -68,7 +60,6 @@ class NavMenuRepository
      */
     public function update(int $itemId, array $data): int
     {
-        $this->forgetCachedMenu();
 
         $updateData = [
             'title' => $data['title'],
@@ -92,7 +83,6 @@ class NavMenuRepository
 
     public function deleteSection(string $title): int
     {
-        $this->forgetCachedMenu();
 
         return NavMenuItem::where('title', $title)
             ->update([
@@ -110,7 +100,6 @@ class NavMenuRepository
      */
     public function updateSection(string $title, array $data): int
     {
-        $this->forgetCachedMenu();
 
         $updateData = [
             'title' => $data['title'],
@@ -147,8 +136,6 @@ class NavMenuRepository
 
     public function getAll(): Collection
     {
-        return cache()->remember(self::MENU_CACHE_KEY, 3600, function () {
-            return NavMenuItem::all();
-        });
+        return NavMenuItem::orderBy('position', 'asc')->get();
     }
 }

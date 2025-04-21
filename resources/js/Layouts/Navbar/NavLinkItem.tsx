@@ -18,7 +18,7 @@ interface Properties {
 
 const NavLinkItem = ({ item, lang = 'en' }: Properties) => {
   const hasSubMenuItems = item.items?.items && item.items.items.length > 0
-  const isButton = item.isButton ?? false
+  const isButton = item.is_link ?? false
 
   if (isButton) {
     return (

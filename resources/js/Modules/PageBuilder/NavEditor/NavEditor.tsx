@@ -35,9 +35,12 @@ const NavEditor = ({ menuItems }: Readonly<Props>) => {
   use419Error()
 
   const saveChanges = () => {
-    router.post(`/nav-editor`, {
+    if (!selectedMenuItem?.id) {
+      return
+    }
+
+    router.post(`/nav-editor/${selectedMenuItem.id}/sections`, {
       data: { ...selectedSection },
-      section: selectedNavMenuItem,
     } as unknown as FormData)
   }
 

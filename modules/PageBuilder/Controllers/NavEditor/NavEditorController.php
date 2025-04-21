@@ -8,7 +8,6 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 use Modules\PageBuilder\Models\UIBuilder\NavMenuItem;
@@ -57,8 +56,6 @@ class NavEditorController extends Controller implements HasMiddleware
         UpdateNavMenuFormRequest $request
     ): RedirectResponse {
         $validated = $request->validated();
-
-        Log::info($request->validated());
 
         try {
             NavMenuItem::where('id', $id)
