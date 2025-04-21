@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\ReferenceData;
 
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ReferenceDataRequests\RefDataFormRequest;
 use App\Http\Requests\ReferenceDataRequests\ReferenceDataSearchRequest;
@@ -10,9 +11,12 @@ use App\Models\ReferenceData\ReferenceDataDomain;
 use App\Services\ReferenceData\HasSecondValue;
 use Exception;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Inertia\Inertia;
 
-class ReferenceDataController extends Controller
+
+class ReferenceDataController extends Controller implements HasMiddleware
+
 {
     public static function middleware()
     {

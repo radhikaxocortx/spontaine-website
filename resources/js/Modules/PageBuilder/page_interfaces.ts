@@ -1,4 +1,5 @@
 import { Model } from '@/Components/Interface/data_interface'
+import { FooterDataInterface } from '../FooterEditor/FooterEditor'
 
 export const loremIpsum = 'lorem ipsum'
 export const placeholderParagraph =
@@ -136,4 +137,25 @@ export const imageBlock = {
     ],
   },
   image: placeholderImage,
+}
+
+export interface NavSection {
+  id: number
+  section: RequiredTextData
+  lastUUID: number
+  links: BlockLink[]
+}
+export interface NavMenuItem {
+  lastUUID: number
+  items: NavSection[]
+}
+
+export interface NavMenuRecord extends Model {
+  section: string
+  section_malayalam: string | null
+  items: NavMenuItem
+  isButton?: boolean
+}
+export interface FooterData extends Model {
+  items: FooterDataInterface
 }
