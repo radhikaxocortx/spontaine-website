@@ -11,6 +11,7 @@ use App\Models\Customer\CustomerPricePlan;
 use App\Models\Customer\CustomerWorkflow;
 use App\Models\CustomerVerification\VerificationStatus;
 use App\Models\CustomerVerification\WorkflowModuleVerification;
+use App\Models\EntityTemplate\EntityTemplate;
 use App\Models\ReferenceData\ReferenceData;
 use App\Models\Workflow\Workflow;
 use Illuminate\Http\Request;
@@ -150,9 +151,11 @@ class CustomerAdminController extends Controller
 
         /** @var \App\Models\Customer\Customer|null $customer */
         $customer = $customerDetail->customer;
+
+        $moduleName = EntityTemplate::where('id', $request->module_id)->pluck('name');
         try {
             $workflowModuleVerification = WorkflowModuleVerification::create($request->all());
-            Mail::to($customer->email)->send(new ModuleUpdateEmailToCustomer($customer->email, $customer->name, (string) $request->customer_workflow_id));
+            Mail::to($customer->email)->send(new ModuleUpdateEmailToCustomer(['email' => $customer->email, 'name' => $customer->name, 'moduleName' => $moduleName[0], 'kadodo_id' => (string) $request->customer_workflow_id]));
         } catch (\Exception $e) {
             return back()->with(['error' => $e->getMessage()]);
         }
@@ -175,10 +178,11 @@ class CustomerAdminController extends Controller
 
         /** @var \App\Models\Customer\Customer|null $customer */
         $customer = $customerDetail->customer;
+        $moduleName = EntityTemplate::where('id', $request->module_id)->pluck('name');
 
         try {
             $workflowModuleVerification->update($request->all());
-            Mail::to($customer->email)->send(new ModuleUpdateEmailToCustomer($customer->email, $customer->name, (string) $request->customer_workflow_id));
+            Mail::to($customer->email)->send(new ModuleUpdateEmailToCustomer(['email' => $customer->email, 'name' => $customer->name, 'moduleName' => $moduleName[0], 'kadodo_id' => (string) $request->customer_workflow_id]));
         } catch (\Exception $e) {
             return back()->with(['error' => $e->getMessage()]);
         }

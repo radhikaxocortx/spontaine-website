@@ -16,9 +16,20 @@ class ModuleUpdateEmailToCustomer extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(private string $email, private string $name, private string $kadodo_id)
+    public string $email;
+
+    public string $name;
+
+    public string $kadodo_id;
+
+    public string $moduleName;
+
+    public function __construct(array $data)
     {
-        //
+        $this->email = $data['email'];
+        $this->name = $data['name'];
+        $this->kadodo_id = $data['kadodo_id'];
+        $this->moduleName = $data['moduleName'];
     }
 
     /**
@@ -38,7 +49,7 @@ class ModuleUpdateEmailToCustomer extends Mailable
     {
         return new Content(
             view: 'moduleupdatemailtocustomer',
-            with: ['email' => $this->email, 'name' => $this->name, 'kadodo_id' => $this->kadodo_id],
+            with: ['email' => $this->email, 'name' => $this->name, 'kadodo_id' => $this->kadodo_id, 'moduleName' => $this->moduleName],
         );
     }
 
