@@ -10,7 +10,7 @@ import { Block, PageDataDependencies } from '@/Modules/PageBuilder/page_interfac
 import { Language } from '@/Modules/PageBuilder/Pages/PageBuilder'
 import React from 'react'
 import ContactUS from '../Blocks/ContactUS'
-import ContactUS from '../Blocks/ContactUS'
+
 import FAQ, { FAQBlockInfo } from '../Blocks/FAQ'
 import FullWidthImageWithTItle, {
   FullWidthImageWithTItleBlock,
@@ -135,6 +135,14 @@ const ResolveComponent = ({
           onFieldEdit={onFieldEdit}
           blockData={block as unknown as FAQBlockInfo}
           dispatch={dispatch}
+        />
+      )}
+      {blockName === 'Content Section - Contact Us' && (
+        <ContactUS
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          blockData={block as unknown as RichTextBlockData}
+          language={language}
         />
       )}
       {blockName === 'Content Section - Contact Us' && (
