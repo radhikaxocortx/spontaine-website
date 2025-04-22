@@ -6,6 +6,7 @@ import {
   ModuleStatusVerification,
   Workflow,
 } from '@/Components/Interface/data_interface'
+import { Button } from '@/components/ui/button'
 import CustomerPriceplanInfoModule from '@/Components/WorkflowModule/AdditionalInfoDisplay/CustomerPriceplanInfoModule'
 import StrongText from '@/typography/StrongText'
 
@@ -37,7 +38,10 @@ const CustomerWorkflowShow = ({
   return (
     <CustomerDashboardLayout>
       <div className='p-5'>
-        <BreadCrumbs breadcrumbItems={breadcrumbs} />
+        <div className='flex justify-between'>
+          <BreadCrumbs breadcrumbItems={breadcrumbs} />
+          <Button className='justify-end'>INVOICE</Button>
+        </div>
         <div>
           Business Verification for{''}
           <StrongText>

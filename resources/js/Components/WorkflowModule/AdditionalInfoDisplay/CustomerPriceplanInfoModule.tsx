@@ -11,6 +11,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion'
 import { Button } from '@/components/ui/button'
+import StrongText from '@/typography/StrongText'
 import { Bell } from 'lucide-react'
 import { useState } from 'react'
 
@@ -93,14 +94,10 @@ export default function CustomerPriceplanInfoModule({
       {statusOpen && (
         <Modal
           setShowModal={setStatusOpen}
-          title='Module Status Update'
+          title={`Your Request is ${moduleUpdateStatus?.status ?? 'Processing'}`}
         >
-          <div className='flex'>
-            <div> Your Request is</div>
-            <div className='pl-2'>{moduleUpdateStatus?.status ?? 'Processing'}</div>
-          </div>
           <div className='p-3'>
-            <div>{moduleUpdateStatus?.customer_notes ?? ''}</div>
+            <StrongText>{moduleUpdateStatus?.customer_notes ?? ''}</StrongText>
           </div>
           <Button
             onClick={() => setStatusOpen(false)}

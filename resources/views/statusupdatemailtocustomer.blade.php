@@ -1,7 +1,11 @@
 Dear {{ $name }}
 <br/>
 <br/>
-Your Application to Kadodo Africa with ID {{ $kadodo_id }} has been updated.
+Your Kadodo application status has been updated to {{ $note }}.
 <br/>
-please vist <link>kadodo.xocortx.com/customer-login</link> for more details
+<br/>
+You may review status at any time by logging on to your Kadodo account.
+<br/>
+Thanks,<br/>
+Team Kadodo
 <br/>

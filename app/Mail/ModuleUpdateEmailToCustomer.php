@@ -16,20 +16,15 @@ class ModuleUpdateEmailToCustomer extends Mailable
     /**
      * Create a new message instance.
      */
-    public string $email;
-
     public string $name;
 
-    public string $kadodo_id;
-
-    public string $moduleName;
+    public string $note;
 
     public function __construct(array $data)
     {
-        $this->email = $data['email'];
+
         $this->name = $data['name'];
-        $this->kadodo_id = $data['kadodo_id'];
-        $this->moduleName = $data['moduleName'];
+        $this->note = $data['note'];
     }
 
     /**
@@ -38,7 +33,7 @@ class ModuleUpdateEmailToCustomer extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'A status of your request of Kadodo Africa has been updated.',
+            subject: 'You have a new update from Kadodo.',
         );
     }
 
@@ -49,7 +44,7 @@ class ModuleUpdateEmailToCustomer extends Mailable
     {
         return new Content(
             view: 'moduleupdatemailtocustomer',
-            with: ['email' => $this->email, 'name' => $this->name, 'kadodo_id' => $this->kadodo_id, 'moduleName' => $this->moduleName],
+            with: ['name' => $this->name, 'note' => $this->note],
         );
     }
 
