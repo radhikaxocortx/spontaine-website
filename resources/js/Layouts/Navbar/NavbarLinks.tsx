@@ -10,7 +10,7 @@ const NavbarLinks = () => {
   }
 
   return (
-    <div className='hidden xl:flex'>
+    <div className='hidden space-x-2 xl:flex'>
       {nav?.map((menuItem) => {
         return (
           <NavMegaMenu

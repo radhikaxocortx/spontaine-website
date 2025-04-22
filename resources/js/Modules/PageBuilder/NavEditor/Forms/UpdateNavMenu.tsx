@@ -29,22 +29,19 @@ const UpdateNavMenu = ({ menuItem }: Properties) => {
       if (data == null || !menuItem?.id) {
         return
       }
-      console.log(data)
       post({
         title: data.title,
         title_malayalam: data.title_malayalam,
         position: data.position,
         is_link: data.is_link,
-        link_info: data.is_link
-          ? {
-              link: data.link,
-              name: {
-                english: data.name,
-                malayalam: null,
-              },
-              external: data.is_external,
-            }
-          : null,
+        link_info: {
+          link: data.link ?? '',
+          name: {
+            english: data.name ?? '',
+            malayalam: null,
+          },
+          external: data.is_external ?? false,
+        },
         _method: 'PUT',
       })
     },

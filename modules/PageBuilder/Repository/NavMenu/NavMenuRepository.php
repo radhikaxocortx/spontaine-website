@@ -39,7 +39,7 @@ class NavMenuRepository
             'title_malayalam' => $data['title_malayalam'] ?? '',
             'position' => $data['position'],
             'is_link' => $data['is_link'],
-            'link_info' => $data['is_link'] ? $data['link_info'] : null,
+            'link_info' => $data['link_info'] ?? null,
             'items' => $data['data'],
             'created_by' => request()->user()?->id,
             'updated_by' => request()->user()?->id,
@@ -60,7 +60,6 @@ class NavMenuRepository
      */
     public function update(int $itemId, array $data): int
     {
-
         $updateData = [
             'title' => $data['title'],
             'title_malayalam' => $data['title_malayalam'] ?? '',
@@ -74,7 +73,10 @@ class NavMenuRepository
 
         if (isset($data['is_link'])) {
             $updateData['is_link'] = $data['is_link'];
-            $updateData['link_info'] = $data['is_link'] && isset($data['link_info']) ? $data['link_info'] : null;
+        }
+
+        if (isset($data['link_info'])) {
+            $updateData['link_info'] = $data['link_info'];
         }
 
         return NavMenuItem::where('id', $itemId)

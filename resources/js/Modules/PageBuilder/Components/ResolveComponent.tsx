@@ -18,7 +18,6 @@ import FullWidthImageWithTItle, {
 import GridWithVideo, { GridWithVideoBlock } from '../Blocks/GridWithVideo'
 import ImageCards, { ImageCardsBlock } from '../Blocks/ImageCards'
 import PricePlan, { PricePlanBlock } from '../Blocks/PricePlan'
-import PricePlan, { PricePlanBlock } from '../Blocks/PricePlan'
 import SectionBanner, { BannerBlock } from '../Blocks/SectionBanner'
 import SectionCallToAction, { TextBlock } from '../Blocks/SectionCallToAction'
 import SectionHero, { HeroImageBlock } from '../Blocks/SectionHero'
