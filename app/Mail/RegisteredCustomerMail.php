@@ -16,7 +16,7 @@ class RegisteredCustomerMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(private string $email, private string $name, private string $kadodo_id)
+    public function __construct(private string $email, private string $name)
     {
         //
     }
@@ -38,7 +38,7 @@ class RegisteredCustomerMail extends Mailable
     {
         return new Content(
             view: 'registeredcustomer',
-            with: ['email' => $this->email, 'kadodo_id' => $this->kadodo_id],
+            with: ['email' => $this->email],
         );
     }
 

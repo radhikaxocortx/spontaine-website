@@ -1,13 +1,12 @@
 Dear {{ $name }}
 <br/>
 <br/>
-Status of your request with ID {{ $kadodo_id }} to Kadodo Africa has been updated.
+You have the following note from Kadodo:
 <br/>
-Module Name: {{ $moduleName }}
+{{ $note }}
 <br/>
-Please Login to  
+ You may review status at any time by logging on to your Kadodo account.
 <br/>
-<link>kadodo.xocortx.com/customer-login</link>
-<br/>
-for more details
+Thanks,<br/>
+Team Kadodo
 <br/>

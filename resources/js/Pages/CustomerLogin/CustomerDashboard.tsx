@@ -1,9 +1,8 @@
+import CustomerPriceplanDashboardView from '@/Components/Customer/CustomerPriceplan/CustomerPriceplanDashboardView'
 import CustomerDashboardLayout from '@/Components/Customer/Dashboard/CustomerDashboardLayouts'
 import { Customer, CustomerPricePlan } from '@/Components/Interface/data_interface'
 import useFetchRecord from '@/hooks/useFetchPagination'
 import Heading from '@/typography/Heading'
-import Paragraph from '@/typography/Paragraph'
-import StrongText from '@/typography/StrongText'
 import { usePage } from '@inertiajs/react'
 import { useMemo } from 'react'
 
@@ -14,7 +13,7 @@ export default function CustomerDashboard() {
   }, [userInfo])
   const customerId = User?.id
 
-  const [customerPriceplan, loading] = useFetchRecord<{ customerPriceplan: CustomerPricePlan }>(
+  const [customerPriceplan, loading] = useFetchRecord<{ customerPriceplan: CustomerPricePlan[] }>(
     route('find-customer-priceplan', {
       customerId: customerId,
     })
@@ -24,13 +23,10 @@ export default function CustomerDashboard() {
     <div>
       <CustomerDashboardLayout>
         <div className='m-5'>
-          <Heading>Hello {User?.first_name}</Heading>
-          <Paragraph>
-            You are subscribed to{' '}
-            <StrongText>
-              {customerPriceplan?.customerPriceplan?.price_plan?.name.toUpperCase()}
-            </StrongText>
-          </Paragraph>
+          <Heading>Welcome, {User?.first_name}</Heading>
+          <div>
+            <CustomerPriceplanDashboardView customerPriceplan={customerPriceplan} />
+          </div>
         </div>
       </CustomerDashboardLayout>
     </div>

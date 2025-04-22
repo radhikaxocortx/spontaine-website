@@ -4,7 +4,6 @@ namespace App\Http\Controllers\CustomerLogin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer\Customer;
-use App\Models\Customer\CustomerPricePlan;
 use App\Models\PricePlan\PricePlan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -41,12 +40,9 @@ class CustomerLoginController extends Controller
         }
     }
 
-    public function choosePriceplan(Request $request)
+    public function choosePriceplan()
     {
-        $customerId = $request->customerId;
-        if (CustomerPricePlan::where('customer_id', $customerId)->exists()) {
-            return redirect()->route('customer-dashboard');
-        }
+
         $priceplan = PricePlan::all();
 
         return Inertia::render('CustomerLogin/ChoosePriceplan', [

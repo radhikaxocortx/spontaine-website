@@ -118,6 +118,7 @@ export interface CustomerPricePlan extends Model {
   price_plan: PricePlan
   kadodo_id: string
   customer: Customer
+  verification_status?: CustomerWorkflowStatus
 }
 
 export interface WorkflowItem extends Model {
