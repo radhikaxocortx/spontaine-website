@@ -2,6 +2,7 @@
 
 namespace App\Models\Customer;
 
+use App\Models\CustomerVerification\VerificationStatus;
 use App\Models\PricePlan\PricePlan;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -27,5 +28,10 @@ class CustomerPricePlan extends Model
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class, 'customer_id', 'id');
+    }
+
+    public function verificationStatus(): BelongsTo
+    {
+        return $this->belongsTo(VerificationStatus::class, 'customer_workflow_id', 'id');
     }
 }

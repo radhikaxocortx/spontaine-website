@@ -11,7 +11,6 @@ use App\Models\Customer\CustomerPricePlan;
 use App\Models\Customer\CustomerWorkflow;
 use App\Models\CustomerVerification\VerificationStatus;
 use App\Models\CustomerVerification\WorkflowModuleVerification;
-use App\Models\EntityTemplate\EntityTemplate;
 use App\Models\ReferenceData\ReferenceData;
 use App\Models\Workflow\Workflow;
 use Illuminate\Http\Request;
@@ -89,8 +88,8 @@ class CustomerAdminController extends Controller
         /** @var \App\Models\Customer\Customer|null $customer */
         $customer = $customerDetail->customer;
         try {
-            VerificationStatus::create($request->all());
-            Mail::to($customer->email)->send(new StatusUpdateMailToCustomer($customer->email, $customer->first_name, $customerDetail->kadodo_id));
+            $VerificationStatus = VerificationStatus::create($request->all());
+            Mail::to($customer->email)->send(new StatusUpdateMailToCustomer(['name' => $customer->first_name, 'note' => $VerificationStatus->customer_notes]));
 
         } catch (\Exception $e) {
             return back()->with(['error' => $e->getMessage()]);
@@ -127,7 +126,7 @@ class CustomerAdminController extends Controller
 
         try {
             $workflowAuthenticateModule->update($request->all());
-            Mail::to($customer->email)->send(new StatusUpdateMailToCustomer($customer->email, $customer->first_name, $customerDetail->kadodo_id));
+            Mail::to($customer->email)->send(new StatusUpdateMailToCustomer(['name' => $customer->first_name, 'note' => $workflowAuthenticateModule->customer_notes]));
 
         } catch (\Exception $e) {
             return back()->with(['error' => $e->getMessage()]);
@@ -152,14 +151,12 @@ class CustomerAdminController extends Controller
         /** @var \App\Models\Customer\Customer|null $customer */
         $customer = $customerDetail->customer;
 
-        $moduleName = EntityTemplate::where('id', $request->module_id)->pluck('name');
         try {
             $workflowModuleVerification = WorkflowModuleVerification::create($request->all());
             Mail::to($customer->email)->send(new ModuleUpdateEmailToCustomer([
-                'email' => $customer->email,
+
                 'name' => $customer->first_name,
-                'moduleName' => $moduleName[0],
-                'kadodo_id' => $customerDetail->kadodo_id,
+                'note' => $workflowModuleVerification->customer_notes,
             ]));
         } catch (\Exception $e) {
             return back()->with(['error' => $e->getMessage()]);
@@ -183,15 +180,12 @@ class CustomerAdminController extends Controller
 
         /** @var \App\Models\Customer\Customer|null $customer */
         $customer = $customerDetail->customer;
-        $moduleName = EntityTemplate::where('id', $request->module_id)->pluck('name');
-
         try {
             $workflowModuleVerification->update($request->all());
             Mail::to($customer->email)->send(new ModuleUpdateEmailToCustomer([
-                'email' => $customer->email,
+
                 'name' => $customer->first_name,
-                'moduleName' => $moduleName[0],
-                'kadodo_id' => $customerDetail->kadodo_id,
+                'note' => $workflowModuleVerification->customer_notes,
             ]));
         } catch (\Exception $e) {
             return back()->with(['error' => $e->getMessage()]);

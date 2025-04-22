@@ -11,7 +11,9 @@ use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerOrganization;
 use App\Models\Customer\CustomerPricePlan;
 use App\Models\Customer\CustomerWorkflow;
+use App\Models\CustomerVerification\WorkflowModuleVerification;
 use App\Models\User;
+use App\Models\Workflow\Workflow;
 use App\Services\ProcessWorkflowInfo;
 use Exception;
 use Illuminate\Http\Request;
@@ -49,6 +51,8 @@ class CustomerController extends Controller
                 'company_postal_code' => 'Company postal code is required.',
             ]);
         }
+        DB::beginTransaction();
+
         try {
             $company = null;
             if ($request->haveCompany) {
@@ -77,13 +81,20 @@ class CustomerController extends Controller
                 'company_id' => $company?->id,
             ]);
 
-            return redirect()
-                ->route('customer-register-admin-email', ['email' => $request->email, 'kadodo_id' => $customer->id, 'name' => $customer->first_name])
-                ->with(['message' => 'Customer Created Successfully']);
         } catch (Exception $e) {
+            DB::rollBack();
 
             return redirect()->route('sign-up.create')->with(['error' => $e->getMessage()]);
         }
+        DB::commit();
+
+        return redirect()
+            ->route('customer-register-admin-email', [
+                'email' => $request->email,
+                'name' => $customer->first_name,
+                'phone' => $customer->telephone,
+            ])
+            ->with(['message' => 'Customer Created Successfully']);
 
     }
 
@@ -162,23 +173,26 @@ class CustomerController extends Controller
                 $infoRecord['customer_priceplan_id'] = $customerPriceplanId;
             }
             $customerDetail = CustomerPricePlan::where('id', $request->customerPriceplanId)
-                ->with('customer')
+                ->with('customer', 'pricePlan')
                 ->first();
 
             /** @var \App\Models\Customer\Customer|null $customer */
             $customer = $customerDetail->customer;
+            /** @var \App\Models\PricePlan\PricePlan|null $pricePlan */
+            $pricePlan = $customerDetail->pricePlan;
+
             CustomerWorkflow::insert($infoRecords);
             Mail::to(User::pluck('email')->toArray())
                 ->send(new WorkflowAdminMail([
+                    'type' => $pricePlan->type,
                     'email' => $customer->email,
                     'name' => $customer->first_name,
-                    'kadodo_id' => $customerDetail->kadodo_id,
+                    'phone' => $customer->telephone,
+                    'date' => $customerDetail->created_at->format('Y-m-d'),
+                    'time' => $customerDetail->created_at->format('H:i:s'),
+                    'address' => $customer->address_line_1,
                 ]));
-            Mail::to($customer->email)->send(new WorkflowCustomerMail([
-                'email' => $customer->email,
-                'name' => $customer->first_name,
-                'kadodo_id' => $customerDetail->kadodo_id,
-            ]));
+            Mail::to($customer->email)->send(new WorkflowCustomerMail($customer->first_name));
         } catch (Exception $e) {
             DB::rollBack();
             Storage::delete($filesToCleanUp);
@@ -195,11 +209,31 @@ class CustomerController extends Controller
     public function findCustomerPriceplan($customerId)
     {
         $customerPriceplan = CustomerPricePlan::where('customer_id', $customerId)
-            ->with('pricePlan', 'customer')
-            ->first();
+            ->with('pricePlan', 'customer', 'verificationStatus')
+            ->get();
 
         return response()->json([
             'customerPriceplan' => $customerPriceplan,
+        ]);
+    }
+
+    public function customerWorkflowShow(Request $request)
+    {
+        $customerPriceplan = CustomerPricePlan::where('id', $request->id)
+            ->with('pricePlan', 'customer', 'verificationStatus')
+            ->first();
+        $customerPriceplanInfo = CustomerWorkflow::where('customer_priceplan_id', $request->id)->get();
+        $CustomerPriceplanTemplate = Workflow::where('priceplan_id', $customerPriceplan->price_plan_id)
+            ->where('name', 'like', '%'.'Business Verification'.'%')
+            ->with('workflowModules.workflowItems')
+            ->first();
+        $moduleUpdateStatus = WorkflowModuleVerification::where('customer_workflow_id', $request->id)->get();
+
+        return Inertia::render('Customer/CustomerWorkflowShow', [
+            'customerPriceplan' => $customerPriceplan,
+            'customerPriceplanInfo' => $customerPriceplanInfo,
+            'CustomerPriceplanTemplate' => $CustomerPriceplanTemplate,
+            'moduleUpdateStatus' => $moduleUpdateStatus,
         ]);
     }
 }

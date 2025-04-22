@@ -1,11 +1,10 @@
-A new workflow has submitted by customer on Kadodo Africa.
+A new {{ $type }} verification request has been recieved. 
 <br/>
-with ID {{ $kadodo_id }}
+Requested:{{ $date}} at {{ $time }}
 <br/>
-Name: {{ $name }}
+Requestor: {{ $name }} 
+<br/>   {{ $address }}
+<br/>    {{ $phone }}
+<br/> {{ $email }}
 <br/>
-Email: {{ $email }}
-<br/>
-<br/>
-please vist <link>kadodo.xocortx.com/customer-admin-view</link> for more details
 <br/>

@@ -9,10 +9,12 @@ use App\Http\Controllers\Email\EmailController;
 use App\Http\Controllers\EntityTemplate\EntityTemplateController;
 use App\Http\Controllers\EntityTemplate\EntityTemplateItemController;
 use App\Http\Controllers\EntityTemplate\workflowAPIController;
+use App\Http\Controllers\NavEditor\NavEditorController;
 use App\Http\Controllers\PricePlan\PricePlanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReferenceData\ReferenceDataAPIController;
 use App\Http\Controllers\ReferenceData\ReferenceDataController;
+use App\Http\Controllers\UIBuilder\FooterController;
 use App\Http\Controllers\Workflow\WorkflowController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -107,9 +109,9 @@ Route::get('verify-otp/{customerId}', [VerifyOtpController::class, 'verifyOtp'])
     ->name('verify-otp');
 Route::post('validate-otp', [ValidateOtpController::class, 'validateOtp'])
     ->name('validate-otp');
-Route::get('customer-register-email/{email}/{kadodo_id}/{name}', [EmailController::class, 'customerRegisterEmail'])
+Route::get('customer-register-email/{email}/{name}', [EmailController::class, 'customerRegisterEmail'])
     ->name('customer-register-email');
-Route::get('customer-register-admin-email/{email}/{kadodo_id}/{name}', [EmailController::class, 'customerRegisterAdminEmail'])
+Route::get('customer-register-admin-email/{email}/{name}/{phone}', [EmailController::class, 'customerRegisterAdminEmail'])
     ->name('customer-register-admin-email');
 
 // customer
@@ -130,6 +132,11 @@ Route::middleware(['auth:customer'])->group(function () {
         ->name('find-customer-priceplan');
     Route::post('customer-workflow-save', [CustomerController::class, 'customerWorkflowSave'])
         ->name('customer-workflow-save');
+    Route::get('customer-workflow-show/{id}', [CustomerController::class, 'customerWorkflowShow'])
+        ->name('customer-workflow-show');
 });
 
+// Nav Editor
+Route::resource('nav-editor', NavEditorController::class);
+Route::resource('footer-editor', FooterController::class);
 require __DIR__.'/auth.php';

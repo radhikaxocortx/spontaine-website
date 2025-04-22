@@ -1,9 +1,12 @@
 Dear {{ $name }}
 <br/>
+We have received your verification request. 
+Our team will be carefully reviewing each item on the list and going through a rigorous vetting process. 
+You may review status at any time by logging on to your Kadodo account.
+
 <br/>
-Your Application to Kadodo Africa with ID {{ $kadodo_id }} has been Submitted.
+Please also keep an eye out for update emails or queries from our team.
 <br/>
-Please save this ID for future reference.
-<br/>
-please vist <link>kadodo.xocortx.com/customer-login</link> for more details
+Thanks,<br/>
+Team Kadodo
 <br/>

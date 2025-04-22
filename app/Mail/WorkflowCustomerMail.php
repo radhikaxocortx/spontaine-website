@@ -16,19 +16,7 @@ class WorkflowCustomerMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public string $email;
-
-    public string $name;
-
-    public string $kadodo_id;
-
-    public function __construct(array $data)
-    {
-        $this->email = $data['email'];
-        $this->name = $data['name'];
-        $this->kadodo_id = $data['kadodo_id'];
-
-    }
+    public function __construct(public string $name) {}
 
     /**
      * Get the message envelope.
@@ -36,7 +24,7 @@ class WorkflowCustomerMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Workflow Updated.',
+            subject: "{$this->name}, your Kadodo verification request has been received.",
         );
     }
 
@@ -47,7 +35,7 @@ class WorkflowCustomerMail extends Mailable
     {
         return new Content(
             view: 'workflowcustomermail',
-            with: ['email' => $this->email, 'name' => $this->name, 'kadodo_id' => $this->kadodo_id],
+            with: ['name' => $this->name],
         );
     }
 
