@@ -80,20 +80,21 @@ class CustomerController extends Controller
                 'password' => Hash::make($request->password),
                 'company_id' => $company?->id,
             ]);
-            DB::commit();
 
-            return redirect()
-                ->route('customer-register-admin-email', [
-                    'email' => $request->email,
-                    'name' => $customer->first_name,
-                    'phone' => $customer->telephone,
-                ])
-                ->with(['message' => 'Customer Created Successfully']);
         } catch (Exception $e) {
             DB::rollBack();
 
             return redirect()->route('sign-up.create')->with(['error' => $e->getMessage()]);
         }
+        DB::commit();
+
+        return redirect()
+            ->route('customer-register-admin-email', [
+                'email' => $request->email,
+                'name' => $customer->first_name,
+                'phone' => $customer->telephone,
+            ])
+            ->with(['message' => 'Customer Created Successfully']);
 
     }
 
