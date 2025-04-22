@@ -17,6 +17,8 @@ const pageBlocks = [
   { name: 'Home - Grid With Video' },
   { name: 'Home - Full Width Image With Title' },
   { name: 'Content Section - FAQ Style Accordion with Links' },
+  { name: 'Content Section - Contact Us' },
+  { name: 'Content Section - Price Plan' },
   { name: 'Sample - Left Image' },
   { name: 'Formatted Text' },
 ]
