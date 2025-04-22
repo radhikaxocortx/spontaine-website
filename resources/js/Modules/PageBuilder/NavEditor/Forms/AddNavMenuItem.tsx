@@ -29,16 +29,14 @@ const AddNavMenuItem = () => {
         title_malayalam: data.title_malayalam,
         position: data.position,
         is_link: data.is_link,
-        link_info: data.is_link
-          ? {
-              link: data.link,
-              name: {
-                english: data.name,
-                malayalam: null,
-              },
-              external: data.is_external,
-            }
-          : null,
+        link_info: {
+          link: data.link ?? '',
+          name: {
+            english: data.name ?? '',
+            malayalam: null,
+          },
+          external: data.is_external ?? false,
+        },
         data: {
           lastUUID: 0,
           items: [],

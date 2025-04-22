@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('position');
             $table->string('title');
             $table->string('title_malayalam')->nullable();
-            $table->boolean('is_link')->default(false);
+            $table->boolean('is_link')->default(0);
             $table->json('link_info')->nullable();
             $table->json('items');
             $table->string('created_by')->nullable();

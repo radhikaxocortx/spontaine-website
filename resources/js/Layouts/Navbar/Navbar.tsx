@@ -4,7 +4,6 @@ import { usePage } from '@inertiajs/react'
 import AppLayoutPadding from '../AppLayoutPadding'
 
 import CountrySelector from '@/Components/CustomUI/CountrySelector'
-import { Button } from '@/Components/ui/button'
 import { MobileNav } from '../Nav/MobileNav'
 import NavbarLinks from './NavbarLinks'
 
@@ -22,7 +21,7 @@ const Navbar = () => {
           </div>
           <div className='hidden items-center gap-4 lg:flex'>
             <NavbarLinks />
-            <Button size='md'>Verify Your Business</Button>
+            {/* <Button size='md'>Verify Your Business</Button> */}
             <CountrySelector />
           </div>
 

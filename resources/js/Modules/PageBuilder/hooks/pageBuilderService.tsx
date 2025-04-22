@@ -7,12 +7,12 @@ import { faqBlock } from '../Blocks/FAQ'
 import { fullWidthImageWithTItleBlock } from '../Blocks/FullWidthImageWithTItle'
 import { gridWithVideoBlock } from '../Blocks/GridWithVideo'
 import { imageCardsBlock } from '../Blocks/ImageCards'
+import { defaultPricePlanBlock } from '../Blocks/PricePlan'
 import { bannerBlock } from '../Blocks/SectionBanner'
 import { textBlock } from '../Blocks/SectionCallToAction'
 import { heroImageBlock } from '../Blocks/SectionHero'
 import { defaultTestimonialBlock } from '../Blocks/SectionTestimonial'
 import { videoBlock } from '../Blocks/SectionVideo'
-
 export interface PageBuilderAction {
   action:
     | 'ADD_BLOCK'
@@ -85,6 +85,13 @@ const getBlockDefaultData = (blockName: string) => {
         ...faqBlock,
       }
     }
+
+    case 'Content Section - Price Plan': {
+      return {
+        ...defaultPricePlanBlock,
+      }
+    }
+
     case 'Formatted Text': {
       return {
         ...richTextData,
