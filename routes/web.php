@@ -103,9 +103,9 @@ Route::get('country-list', [AutoCompleteController::class, 'findCountry'])
 Route::get('priceplan-list', [AutoCompleteController::class, 'findPriceplan'])
     ->name('priceplan-list');
 
-Route::get('customer-verification/{customerId}', [RegisterOtpController::class, 'sendOtp'])
+Route::get('customer-verification/{customerId}/{verifyingEmail}', [RegisterOtpController::class, 'sendOtp'])
     ->name('customer-verification');
-Route::get('verify-otp/{customerId}', [VerifyOtpController::class, 'verifyOtp'])
+Route::get('verify-otp/{customerId}/{verifyingEmail}', [VerifyOtpController::class, 'verifyOtp'])
     ->name('verify-otp');
 Route::post('validate-otp', [ValidateOtpController::class, 'validateOtp'])
     ->name('validate-otp');
@@ -117,10 +117,12 @@ Route::get('customer-register-admin-email/{email}/{name}/{phone}', [EmailControl
 // customer
 Route::get('customer-login', [CustomerLoginController::class, 'loginForm'])
     ->name('customer-login');
+Route::get('customer-create', [CustomerController::class, 'createCustomer'])
+    ->name('customer-create');
 Route::post('validate-customer', [CustomerLoginController::class, 'ValidatePassword'])
     ->name('validate-customer');
 Route::middleware(['auth:customer'])->group(function () {
-    Route::get('choose-priceplan/{customerId}', [CustomerLoginController::class, 'choosePriceplan'])
+    Route::get('choose-priceplan', [CustomerLoginController::class, 'choosePriceplan'])
         ->name('choose-priceplan');
     Route::get('customer-dashboard', [CustomerLoginController::class, 'customerDashboard'])
         ->name('customer-dashboard');

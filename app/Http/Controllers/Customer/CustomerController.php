@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Customer\CustomerFormRequest;
 use App\Libs\ExceptionMessage;
+use App\Mail\AdminMailForCustomerRegister;
+use App\Mail\RegisteredCustomerMail;
 use App\Mail\WorkflowAdminMail;
 use App\Mail\WorkflowCustomerMail;
 use App\Models\Customer\Customer;
@@ -17,6 +19,7 @@ use App\Models\Workflow\Workflow;
 use App\Services\ProcessWorkflowInfo;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -45,56 +48,15 @@ class CustomerController extends Controller
      */
     public function store(CustomerFormRequest $request)
     {
-
         if ($request->haveCompany === true && $request->companyCountry !== 'SIERRA LEONE' && empty($request->companyPostalCode)) {
             return redirect()->back()->withErrors([
                 'company_postal_code' => 'Company postal code is required.',
             ]);
         }
-        DB::beginTransaction();
-
-        try {
-            $company = null;
-            if ($request->haveCompany) {
-                $company = CustomerOrganization::create([
-                    'company_legal_entity_name' => $request->companyLegalEntityName,
-                    'company_address_line_1' => $request->companyAddressLine1,
-                    'company_address_line_2' => $request->companyAddressLine2,
-                    'company_city' => $request->companyCity,
-                    'company_country' => $request->companyCountry,
-                    'company_postal_code' => $request->companyPostalCode,
-                    'company_tax_id' => $request->companyTaxId,
-                    'company_registration_id' => $request->companyRegistrationId,
-                ]);
-            }
-            $customer = Customer::create([
-                'first_name' => $request->firstName,
-                'last_name' => $request->lastName,
-                'telephone' => $request->telephone,
-                'address_line_1' => $request->addressLine1,
-                'address_line_2' => $request->addressLine2,
-                'city' => $request->city,
-                'country' => $request->country,
-                'postal_code' => $request->postalCode,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'company_id' => $company?->id,
-            ]);
-
-        } catch (Exception $e) {
-            DB::rollBack();
-
-            return redirect()->route('sign-up.create')->with(['error' => $e->getMessage()]);
-        }
-        DB::commit();
+        session(['customer_registration_data' => $request->all()]);
 
         return redirect()
-            ->route('customer-register-admin-email', [
-                'email' => $request->email,
-                'name' => $customer->first_name,
-                'phone' => $customer->telephone,
-            ])
-            ->with(['message' => 'Customer Created Successfully']);
+            ->route('customer-verification', ['customerId' => $request->email, 'verifyingEmail' => 'true']);
 
     }
 
@@ -128,6 +90,61 @@ class CustomerController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function createCustomer()
+    {
+        $data = session('customer_registration_data');
+
+        if (! $data) {
+            return redirect()->route('sign-up.create')->with('error', 'Session expired. Please try again.');
+        }
+
+        DB::beginTransaction();
+        try {
+            $company = null;
+            if ($data['have_company']) {
+                $company = CustomerOrganization::create([
+                    'company_legal_entity_name' => $data['company_legal_entity_name'],
+                    'company_address_line_1' => $data['company_address_line1'],
+                    'company_address_line_2' => $data['company_address_line2'],
+                    'company_city' => $data['company_city'],
+                    'company_country' => $data['company_country'],
+                    'company_postal_code' => $data['company_postal_code'],
+                    'company_tax_id' => $data['company_tax_id'],
+                    'company_registration_id' => $data['company_registration_id'],
+                ]);
+            }
+
+            $customer = Customer::create([
+                'first_name' => $data['first_name'],
+                'last_name' => $data['last_name'],
+                'telephone' => $data['telephone'],
+                'address_line_1' => $data['address_line1'],
+                'address_line_2' => $data['address_line2'],
+                'city' => $data['city'],
+                'country' => $data['country'],
+                'postal_code' => $data['postal_code'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'email_verified' => true,
+                'company_id' => $company?->id,
+            ]);
+            Mail::to(User::pluck('email')->toArray())
+                ->send(new AdminMailForCustomerRegister(['email' => $data['email'], 'name' => $data['first_name'], 'phone' => $data['telephone']]));
+            Mail::to($data['email'])->send(new RegisteredCustomerMail($data['email'], $data['first_name']));
+            Auth::guard('customer')->login($customer);
+            session()->forget('customer_registration_data');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return redirect()->route('sign-up.create')->with('error', 'Registration failed. Try again.');
+        }
+        DB::commit();
+
+        return redirect()->route('choose-priceplan')->with('message', 'Registration complete and logged in.');
+
     }
 
     public function updatePriceplan(Request $request)

@@ -9,12 +9,14 @@ import { FormEvent, useCallback } from 'react'
 
 interface Props {
   customerId: string
+  verifyingEmail: boolean
 }
 
-const OtpPage = ({ customerId }: Props) => {
+const OtpPage = ({ customerId, verifyingEmail }: Props) => {
   const { formData, setFormValue } = useCustomForm({
     otp: '',
     customerId: customerId,
+    verifyingEmail: verifyingEmail,
   })
 
   const { post } = useInertiaPost(route('validate-otp'))
