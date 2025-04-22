@@ -27,11 +27,11 @@ final class UpdateNavMenuFormRequest extends FormRequest
             'position' => ['required', 'integer'],
             'is_link' => ['required', 'boolean'],
             'link_info' => ['nullable', 'array'],
-            'link_info.link' => ['nullable', 'string', 'max:255'],
-            'link_info.name' => ['nullable', 'array'],
-            'link_info.name.english' => ['nullable', 'string', 'max:255'],
+            'link_info.link' => ['required', 'string', 'max:255'],
+            'link_info.name' => ['required', 'array'],
+            'link_info.name.english' => ['required', 'string', 'max:255'],
             'link_info.name.malayalam' => ['nullable', 'string', 'max:255'],
-            'link_info.external' => ['nullable', 'boolean'],
+            'link_info.external' => ['required', 'boolean'],
         ];
     }
 }

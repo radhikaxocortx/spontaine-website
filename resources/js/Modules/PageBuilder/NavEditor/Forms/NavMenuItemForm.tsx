@@ -28,7 +28,7 @@ const NavMenuItemForm = ({ onSubmit, menuItem }: Properties) => {
     position: menuItem?.position.toString() ?? '0',
     title: menuItem?.title ?? '',
     title_malayalam: menuItem?.title_malayalam ?? '',
-    is_link: menuItem?.is_link === 1,
+    is_link: true,
     link: menuItem?.link_info?.link ?? '',
     name: menuItem?.link_info?.name.english ?? '',
     is_external: menuItem?.link_info?.external ?? false,
@@ -65,43 +65,39 @@ const NavMenuItemForm = ({ onSubmit, menuItem }: Properties) => {
           error=''
         />
       </div>
+
+      <div className='flex w-full flex-col p-2'>
+        <InputText
+          label='Link'
+          value={formData.link ?? ''}
+          setValue={setFormValue('link')}
+          error=''
+        />
+      </div>
+      <div className='flex w-full flex-col p-2'>
+        <InputText
+          label='Name'
+          value={formData.name ?? ''}
+          setValue={setFormValue('name')}
+          error=''
+        />
+      </div>
       <div className='flex w-full flex-col p-2'>
         <InputCheckBox
-          label='Is Link'
+          label='Is External Link'
+          value={formData.is_external ?? false}
+          toggleValue={toggleBoolean('is_external')}
+          error=''
+        />
+      </div>
+      <div className='flex w-full flex-col p-2'>
+        <InputCheckBox
+          label='Is Button'
           value={formData.is_link}
           toggleValue={toggleBoolean('is_link')}
           error=''
         />
       </div>
-
-      {formData.is_link && (
-        <>
-          <div className='flex w-full flex-col p-2'>
-            <InputText
-              label='Link'
-              value={formData.link ?? ''}
-              setValue={setFormValue('link')}
-              error=''
-            />
-          </div>
-          <div className='flex w-full flex-col p-2'>
-            <InputText
-              label='Name'
-              value={formData.name ?? ''}
-              setValue={setFormValue('name')}
-              error=''
-            />
-          </div>
-          <div className='flex w-full flex-col p-2'>
-            <InputCheckBox
-              label='Is External Link'
-              value={formData.is_external ?? false}
-              toggleValue={toggleBoolean('is_external')}
-              error=''
-            />
-          </div>
-        </>
-      )}
 
       <div className='flex w-full justify-end gap-x-2 p-2'>
         <ActionButton

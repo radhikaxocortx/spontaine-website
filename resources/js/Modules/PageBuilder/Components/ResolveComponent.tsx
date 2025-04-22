@@ -18,7 +18,6 @@ import FullWidthImageWithTItle, {
 import GridWithVideo, { GridWithVideoBlock } from '../Blocks/GridWithVideo'
 import ImageCards, { ImageCardsBlock } from '../Blocks/ImageCards'
 import PricePlan, { PricePlanBlock } from '../Blocks/PricePlan'
-import PricePlan, { PricePlanBlock } from '../Blocks/PricePlan'
 import SectionBanner, { BannerBlock } from '../Blocks/SectionBanner'
 import SectionCallToAction, { TextBlock } from '../Blocks/SectionCallToAction'
 import SectionHero, { HeroImageBlock } from '../Blocks/SectionHero'
@@ -168,6 +167,15 @@ const ResolveComponent = ({
           onFieldEdit={onFieldEdit}
           blockData={block as unknown as FooterDataInterface}
           language={language}
+        />
+      )}
+      {blockName === 'Content Section - Price Plan' && (
+        <PricePlan
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          blockData={block as unknown as PricePlanBlock}
+          language={language}
+          dispatch={dispatch}
         />
       )}
     </>
