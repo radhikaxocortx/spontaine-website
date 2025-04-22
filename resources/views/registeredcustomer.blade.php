@@ -1,7 +1,5 @@
 Thank you for starting your Kadodo Africa journey.
 <br/>
-{{-- <br/>
-Your Kadod Registration ID is {{ $kadodo_id }} --}}
 <br/>
 Please save this email for future reference. Your Kadodo username is {{ $email }}. All future communication will be delivered to your registered email id.
 <br/>

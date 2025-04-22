@@ -20,15 +20,13 @@ class AdminMailForCustomerRegister extends Mailable
 
     public string $name;
 
-    public string $kadodo_id;
-
     public string $phone;
 
     public function __construct(array $data)
     {
         $this->email = $data['email'];
         $this->name = $data['name'];
-        $this->kadodo_id = $data['kadodo_id'];
+
         $this->phone = $data['phone'];
     }
 

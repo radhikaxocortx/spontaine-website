@@ -109,9 +109,9 @@ Route::get('verify-otp/{customerId}', [VerifyOtpController::class, 'verifyOtp'])
     ->name('verify-otp');
 Route::post('validate-otp', [ValidateOtpController::class, 'validateOtp'])
     ->name('validate-otp');
-Route::get('customer-register-email/{email}/{kadodo_id}/{name}', [EmailController::class, 'customerRegisterEmail'])
+Route::get('customer-register-email/{email}/{name}', [EmailController::class, 'customerRegisterEmail'])
     ->name('customer-register-email');
-Route::get('customer-register-admin-email/{email}/{kadodo_id}/{name}/{phone}', [EmailController::class, 'customerRegisterAdminEmail'])
+Route::get('customer-register-admin-email/{email}/{name}/{phone}', [EmailController::class, 'customerRegisterAdminEmail'])
     ->name('customer-register-admin-email');
 
 // customer

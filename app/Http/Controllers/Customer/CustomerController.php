@@ -85,7 +85,6 @@ class CustomerController extends Controller
             return redirect()
                 ->route('customer-register-admin-email', [
                     'email' => $request->email,
-                    'kadodo_id' => $customer->id,
                     'name' => $customer->first_name,
                     'phone' => $customer->telephone,
                 ])

@@ -14,7 +14,7 @@ class EmailController extends Controller
     public function customerRegisterEmail(Request $request)
     {
 
-        Mail::to($request->email)->send(new RegisteredCustomerMail($request->email, $request->name, $request->kadodo_id));
+        Mail::to($request->email)->send(new RegisteredCustomerMail($request->email, $request->name));
 
         return redirect()->route('customer-login')->with(['message' => 'Your details are registered in Kadodo Africe, please check your email.']);
     }
@@ -23,8 +23,8 @@ class EmailController extends Controller
     {
 
         Mail::to(User::pluck('email')->toArray())
-            ->send(new AdminMailForCustomerRegister(['email' => $request->email, 'name' => $request->name, 'kadodo_id' => $request->kadodo_id, 'phone' => $request->phone]));
+            ->send(new AdminMailForCustomerRegister(['email' => $request->email, 'name' => $request->name, 'phone' => $request->phone]));
 
-        return redirect()->route('customer-register-email', ['email' => $request->email, 'kadodo_id' => $request->kadodo_id, 'name' => $request->name]);
+        return redirect()->route('customer-register-email', ['email' => $request->email, 'name' => $request->name]);
     }
 }
