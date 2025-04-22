@@ -51,6 +51,8 @@ class CustomerController extends Controller
                 'company_postal_code' => 'Company postal code is required.',
             ]);
         }
+        DB::beginTransaction();
+
         try {
             $company = null;
             if ($request->haveCompany) {
@@ -78,6 +80,7 @@ class CustomerController extends Controller
                 'password' => Hash::make($request->password),
                 'company_id' => $company?->id,
             ]);
+            DB::commit();
 
             return redirect()
                 ->route('customer-register-admin-email', [
@@ -88,6 +91,7 @@ class CustomerController extends Controller
                 ])
                 ->with(['message' => 'Customer Created Successfully']);
         } catch (Exception $e) {
+            DB::rollBack();
 
             return redirect()->route('sign-up.create')->with(['error' => $e->getMessage()]);
         }
@@ -169,23 +173,26 @@ class CustomerController extends Controller
                 $infoRecord['customer_priceplan_id'] = $customerPriceplanId;
             }
             $customerDetail = CustomerPricePlan::where('id', $request->customerPriceplanId)
-                ->with('customer')
+                ->with('customer', 'pricePlan')
                 ->first();
 
             /** @var \App\Models\Customer\Customer|null $customer */
             $customer = $customerDetail->customer;
+            /** @var \App\Models\PricePlan\PricePlan|null $pricePlan */
+            $pricePlan = $customerDetail->pricePlan;
+
             CustomerWorkflow::insert($infoRecords);
             Mail::to(User::pluck('email')->toArray())
                 ->send(new WorkflowAdminMail([
+                    'type' => $pricePlan->type,
                     'email' => $customer->email,
                     'name' => $customer->first_name,
-                    'kadodo_id' => $customerDetail->kadodo_id,
+                    'phone' => $customer->telephone,
+                    'date' => $customerDetail->created_at->format('Y-m-d'),
+                    'time' => $customerDetail->created_at->format('H:i:s'),
+                    'address' => $customer->address_line_1,
                 ]));
-            Mail::to($customer->email)->send(new WorkflowCustomerMail([
-                'email' => $customer->email,
-                'name' => $customer->first_name,
-                'kadodo_id' => $customerDetail->kadodo_id,
-            ]));
+            Mail::to($customer->email)->send(new WorkflowCustomerMail($customer->first_name));
         } catch (Exception $e) {
             DB::rollBack();
             Storage::delete($filesToCleanUp);

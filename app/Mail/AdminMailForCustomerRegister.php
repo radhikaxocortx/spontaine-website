@@ -49,7 +49,7 @@ class AdminMailForCustomerRegister extends Mailable
     {
         return new Content(
             view: 'adminmailforcustomerregister',
-            with: ['email' => $this->email, 'name' => $this->name, 'kadodo_id' => $this->kadodo_id, 'phone' => $this->phone],
+            with: ['email' => $this->email, 'name' => $this->name,  'phone' => $this->phone],
         );
     }
 

@@ -1,5 +1,6 @@
 import { showError, showSuccess } from '@/Components/ui/alerts'
 import { LaravelFlash } from '@/Components/ui/ui_interfaces'
+import CustomerSidebar from '@/Layouts/CustomerSidebar'
 import { usePage } from '@inertiajs/react'
 import { PropsWithChildren, ReactNode, useEffect } from 'react'
 import { ToastContainer } from 'react-toastify'
@@ -31,7 +32,7 @@ export default function CustomerDashboardLayout({
         theme='dark'
         toastClassName='toast-container'
       />
-      {/* <CustomerSidebar /> */}
+      <CustomerSidebar />
       <main>{children}</main>
     </div>
   )

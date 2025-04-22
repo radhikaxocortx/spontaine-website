@@ -6,7 +6,7 @@ import { router } from '@inertiajs/react'
 import { useState } from 'react'
 
 interface Props {
-  customerPriceplan: CustomerPricePlan[] | null
+  customerPriceplan: { customerPriceplan: CustomerPricePlan[] } | null
 }
 
 const tabItems = [
@@ -50,24 +50,55 @@ const CustomerPriceplanDashboardView = ({ customerPriceplan }: Props) => {
             <div>Status</div>
             <div>Expiry</div>
           </div>
-          {customerPriceplan?.customerPriceplan?.map((customerPriceplan) => (
-            <div
-              key={customerPriceplan.id}
-              className='grid w-full grid-cols-6 p-2'
-            >
-              <div>{getDisplayDate(customerPriceplan.created_at)}</div>
-              <div>{customerPriceplan.price_plan.name}</div>
-              <div>{customerPriceplan.kadodo_id}</div>
-              <div>{customerPriceplan.verification_status?.status ?? 'Processing'}</div>
-              <div></div>
+          {customerPriceplan?.customerPriceplan
+            ?.filter((plan) => plan.price_plan.type === 'Business')
+            ?.map((customerPriceplan) => (
               <div
-                onClick={() => handleCardClick(customerPriceplan.id)}
-                className='cursor-pointer'
+                key={customerPriceplan.id}
+                className='grid w-full grid-cols-6 p-2'
               >
-                <StrongText>View</StrongText>
+                <div>{getDisplayDate(customerPriceplan.created_at)}</div>
+                <div>{customerPriceplan.price_plan.name}</div>
+                <div></div>
+                <div>{customerPriceplan.verification_status?.status ?? 'Processing'}</div>
+                <div></div>
+                <div
+                  onClick={() => handleCardClick(customerPriceplan.id)}
+                  className='cursor-pointer'
+                >
+                  <StrongText>View</StrongText>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+        </TabsContent>
+        <TabsContent value='Individual Verification'>
+          <div className='grid w-full grid-cols-6 p-2'>
+            <div>Received On</div>
+            <div>Plan</div>
+            <div>Kadodo ID</div>
+            <div>Status</div>
+            <div>Expiry</div>
+          </div>
+          {customerPriceplan?.customerPriceplan
+            ?.filter((plan) => plan.price_plan.type === 'Individual')
+            ?.map((customerPriceplan) => (
+              <div
+                key={customerPriceplan.id}
+                className='grid w-full grid-cols-6 p-2'
+              >
+                <div>{getDisplayDate(customerPriceplan.created_at)}</div>
+                <div>{customerPriceplan.price_plan.name}</div>
+                <div></div>
+                <div>{customerPriceplan.verification_status?.status ?? 'Processing'}</div>
+                <div></div>
+                <div
+                  onClick={() => handleCardClick(customerPriceplan.id)}
+                  className='cursor-pointer'
+                >
+                  <StrongText>View</StrongText>
+                </div>
+              </div>
+            ))}
         </TabsContent>
       </Tabs>
     </div>

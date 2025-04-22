@@ -50,7 +50,7 @@ const CustomerWorkflowShow = ({
             {customerPriceplan.customer?.last_name}
           </StrongText>
           <br />
-          <StrongText>KADODO ID : {customerPriceplan.kadodo_id}</StrongText>
+          <StrongText>KADODO ID : not generated</StrongText>
         </div>{' '}
         {customerPriceplanInfo && (
           <div className='my-5 grid grid-cols-1 gap-5'>

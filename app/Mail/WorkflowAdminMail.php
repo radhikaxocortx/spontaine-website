@@ -16,17 +16,29 @@ class WorkflowAdminMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public string $email;
+    public string $type;
+
+    public string $date;
+
+    public string $time;
 
     public string $name;
 
-    public string $kadodo_id;
+    public string $address;
+
+    public string $phone;
+
+    public string $email;
 
     public function __construct(array $data)
     {
-        $this->email = $data['email'];
+        $this->type = $data['type'];
+        $this->date = $data['date'];
+        $this->time = $data['time'];
         $this->name = $data['name'];
-        $this->kadodo_id = $data['kadodo_id'];
+        $this->address = $data['address'];
+        $this->phone = $data['phone'];
+        $this->email = $data['email'];
     }
 
     /**
@@ -35,7 +47,7 @@ class WorkflowAdminMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Workflow Updated by customer.',
+            subject: "New {$this->type} verification request received from {$this->name}",
         );
     }
 
@@ -46,7 +58,15 @@ class WorkflowAdminMail extends Mailable
     {
         return new Content(
             view: 'workflowadminmail',
-            with: ['email' => $this->email, 'name' => $this->name, 'kadodo_id' => $this->kadodo_id],
+            with: [
+                'type' => $this->type,
+                'date' => $this->date,
+                'time' => $this->time,
+                'name' => $this->name,
+                'address' => $this->address,
+                'phone' => $this->phone,
+                'email' => $this->email,
+            ],
         );
     }
 

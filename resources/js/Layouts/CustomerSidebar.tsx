@@ -1,4 +1,3 @@
-import ApplicationLogo from '@/Components/CustomUI/ApplicationLogo'
 import { Customer } from '@/Components/Interface/data_interface'
 import { Button } from '@/components/ui/button'
 import {
@@ -7,9 +6,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Sheet, SheetContent, SheetFooter, SheetTrigger } from '@/components/ui/sheet'
+import { Sheet, SheetContent, SheetFooter } from '@/components/ui/sheet'
 import NormalText from '@/typography/NormalText'
-import SubHeading from '@/typography/SubHeading'
 import { Link, usePage } from '@inertiajs/react'
 import { useMemo, useRef } from 'react'
 
@@ -27,10 +25,10 @@ export default function CustomerSidebar() {
   const profileRef = useRef<HTMLDivElement>(null)
 
   return (
-    <div className='flex flex-row items-center justify-between px-4'>
+    <div className='flex flex-row justify-between p-4 px-4'>
       {SHEET_SIDES.map((side) => (
         <Sheet key={side}>
-          <SheetTrigger asChild>
+          {/* <SheetTrigger asChild>
             <div className='flex flex-row items-center gap-4 p-7 hover:cursor-pointer'>
               <svg
                 fill='#000000'
@@ -81,9 +79,9 @@ export default function CustomerSidebar() {
                 <ApplicationLogo className='block h-6 w-auto fill-current text-gray-800' />
               </Link>
             </div>
-          </SheetTrigger>
-
-          <div className='flex items-center justify-end space-x-2'>
+          </SheetTrigger> */}
+          <div className='flex justify-start'></div>
+          <div className='flex justify-end space-x-2'>
             <svg
               width={24}
               height={24}
@@ -153,7 +151,7 @@ export default function CustomerSidebar() {
                   className='w-48'
                 >
                   <DropdownMenuItem>
-                    <SubHeading>Logged in as {userName}</SubHeading>
+                    <NormalText>Logged in as {userName}</NormalText>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
                     <Link
