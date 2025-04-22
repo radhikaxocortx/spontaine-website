@@ -3,14 +3,14 @@ import AddLabel from '@/Modules/PageBuilder/Components/AddLabel'
 import LinkForm from '@/Modules/PageBuilder/Components/Forms/LinkForm'
 import TitleInput from '@/Modules/PageBuilder/Components/Forms/TitleInput'
 import Localization from '@/Modules/PageBuilder/Components/Localization'
-import { LinkData, NavSection, RequiredTextData } from '@/Modules/PageBuilder/page_interfaces'
+import { LinkData, NavSectionLinks, RequiredTextData } from '@/Modules/PageBuilder/page_interfaces'
 import { PencilIcon } from 'lucide-react'
 import React, { useCallback, useState } from 'react'
 import { NavBuilderAction } from '../nav-builder'
 import NavLinkEdit from './NavLinkEdit'
 
 interface Properties {
-  section: NavSection
+  section: NavSectionLinks
   actionDispatch: React.Dispatch<NavBuilderAction>
   language?: string
 }

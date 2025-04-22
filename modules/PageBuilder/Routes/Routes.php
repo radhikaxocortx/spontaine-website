@@ -3,7 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use Modules\PageBuilder\Controllers\ImageSearchController;
 use Modules\PageBuilder\Controllers\ImageUploadController;
+use Modules\PageBuilder\Controllers\NavEditor\NavEditorController;
+use Modules\PageBuilder\Controllers\NavEditor\UpdateNavMenuItemsController;
 use Modules\PageBuilder\Controllers\PagesController;
+use Modules\PageBuilder\Controllers\UIBuilder\FooterController;
 use Modules\PageBuilder\Controllers\UpdateBlockController;
 use Modules\PageBuilder\Controllers\VideoSearchController;
 use Modules\PageBuilder\Controllers\VideoUploadController;
@@ -22,6 +25,13 @@ Route::middleware('auth')->group(function () {
     Route::get('video-search', VideoSearchController::class)
         ->name('video-search');
 });
+
+// Nav Editor
+Route::resource('nav-editor', NavEditorController::class);
+Route::post('nav-editor/{id}/sections', UpdateNavMenuItemsController::class)
+    ->name('nav-editor.update-items');
+
+Route::resource('footer-editor', FooterController::class);
 
 Route::get('{slug}', ViewBuilderController::class)
     ->name('view-builder');

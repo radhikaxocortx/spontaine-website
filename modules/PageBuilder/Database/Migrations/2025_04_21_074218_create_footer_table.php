@@ -8,15 +8,11 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('nav_menu_items', function (Blueprint $table) {
+        Schema::create('footers', function (Blueprint $table) {
             $table->id();
-            $table->string('section');
-            $table->string('section_malayalam')->nullable();
             $table->json('items');
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
@@ -27,11 +23,9 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::dropIfExists('nav_menu_items');
+        Schema::dropIfExists('footers');
     }
 };

@@ -10,9 +10,9 @@ import {
   TextData,
 } from '@/Modules/PageBuilder/page_interfaces'
 import { router } from '@inertiajs/react'
-import { useEffect, useReducer, useState } from 'react'
-import BlockEditor from '../PageBuilder/Components/BlockEditor/BlockEditor'
-import PageBuilderService from '../PageBuilder/hooks/pageBuilderService'
+import { useReducer, useState } from 'react'
+import BlockEditor from '../Components/BlockEditor/BlockEditor'
+import PageBuilderService from '../hooks/pageBuilderService'
 
 export interface FooterDataInterface {
   image?: BlockImage | null
@@ -81,10 +81,6 @@ const FooterEditor = ({ footer }: Properties) => {
   const [selectedLanguage, setSelectedLanguage] = useState<Language>('en')
 
   use419Error()
-
-  useEffect(() => {
-    console.log(footerData)
-  }, [footerData])
 
   const saveChanges = () => {
     router.post('/footer-editor', {

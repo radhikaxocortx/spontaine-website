@@ -36,8 +36,6 @@ const LinkForm = ({ onLink, data, showRemove = false }: Properties) => {
     })
   }
 
-  console.log(link)
-
   return (
     <>
       <div className='flex w-full flex-col p-2'>

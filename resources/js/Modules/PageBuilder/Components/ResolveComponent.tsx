@@ -1,8 +1,10 @@
+import Footer from '@/Layouts/Footer/Footer'
 import LeftImageBlock, { ImageBlock } from '@/Modules/PageBuilder/Blocks/LeftImageBlock'
 import RichTextBlock, {
   RichTextBlockData,
 } from '@/Modules/PageBuilder/Blocks/RichText/RichTextBlock'
 import { BlocKFieldInfo } from '@/Modules/PageBuilder/Components/BlockEditor/BlockEditor'
+import { FooterDataInterface } from '@/Modules/PageBuilder/FooterEditor/FooterEditor'
 import { PageBuilderAction } from '@/Modules/PageBuilder/hooks/pageBuilderService'
 import { Block, PageDataDependencies } from '@/Modules/PageBuilder/page_interfaces'
 import { Language } from '@/Modules/PageBuilder/Pages/PageBuilder'
@@ -137,6 +139,14 @@ const ResolveComponent = ({
           editMode={editMode}
           onFieldEdit={onFieldEdit}
           blockData={block as unknown as TextBlock}
+          language={language}
+        />
+      )}
+      {blockName === 'Footer' && (
+        <Footer
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          blockData={block as unknown as FooterDataInterface}
           language={language}
         />
       )}

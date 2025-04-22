@@ -1,13 +1,13 @@
 import FullSpinnerWrapper from '@/Components/CustomUI/FullSpinnerWrapper'
 import React, { useCallback } from 'react'
-import { NavMenuItem, RequiredTextData } from '../PageBuilder/page_interfaces'
+import { NavMenuSection, RequiredTextData } from '../page_interfaces'
 import AddNavSubSection from './Forms/AddNavSubSection'
 import { NavBuilderAction } from './nav-builder'
 import NavSectionEdit from './NavSection/NavSectionEdit'
 
 interface Properties {
   actionDispatch: React.Dispatch<NavBuilderAction>
-  selectedSection: NavMenuItem
+  selectedSection: NavMenuSection
   loading: boolean
   language: string
 }

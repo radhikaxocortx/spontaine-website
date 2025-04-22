@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repository\Footer;
+namespace Modules\PageBuilder\Repository\Footer;
 
-use App\Models\UIBuilder\Footer;
+use Modules\PageBuilder\Models\UIBuilder\Footer;
 
 class FooterRepository
 {
@@ -18,7 +18,7 @@ class FooterRepository
         ]);
     }
 
-    public function getFooter(): Footer|null
+    public function getFooter(): ?Footer
     {
         return Footer::first();
     }

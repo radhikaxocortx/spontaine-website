@@ -2,12 +2,12 @@ import { Language } from '@/Components/ui/ui_interfaces'
 import useWindowResize from '@/hooks/useWindowResize'
 import InertiaLink from '@/Modules/PageBuilder/Components/InertiaLink'
 import Localization from '@/Modules/PageBuilder/Components/Localization'
-import { NavMenuRecord } from '@/Modules/PageBuilder/page_interfaces'
+import { NavMenu } from '@/Modules/PageBuilder/page_interfaces'
 import { useEffect, useRef, useState } from 'react'
 import NavLinkItem from './NavLinkItem'
 
 interface Properties {
-  menu: NavMenuRecord
+  menu: NavMenu
   lang?: Language
 }
 

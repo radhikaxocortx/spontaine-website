@@ -1,19 +1,25 @@
 <?php
 
-namespace App\Http\Requests\UIEditor;
+namespace Modules\PageBuilder\Request\UIEditor;
 
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
  * Class NavMenuFormRequest
  *
- * @property string $section
- * @property ?string $section_malayalam
+ * @property string $title
+ * @property ?string $title_malayalam
+ * @property int $position
+ * @property bool $is_link
+ * @property ?array{link: string, name: array{english: string, malayalam?: string}, external: bool} $link_info
  * @property array{lastUUID: int, items: array<array-key, mixed>} $data
  *
  * @method array{
- * section: string,
- * section_malayalam?: string|null,
+ * title: string,
+ * title_malayalam?: string|null,
+ * position: int,
+ * is_link: bool,
+ * link_info?: array{link: string, name: array{english: string, malayalam?: string}, external: bool}|null,
  * data: array{lastUUID: int, items: array<array-key, mixed>},
  * } validated()
  */
@@ -35,8 +41,16 @@ class NavMenuFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'section' => ['required', 'string', 'max:255'],
-            'section_malayalam' => ['nullable', 'string', 'max:255'],
+            'title' => ['required', 'string', 'max:255', 'unique:nav_menu_items,title'],
+            'title_malayalam' => ['nullable', 'string', 'max:255'],
+            'position' => ['required', 'integer', 'min:0'],
+            'is_link' => ['required', 'boolean'],
+            'link_info' => ['nullable', 'array', 'required_if:is_link,true'],
+            'link_info.link' => ['required_if:is_link,true', 'string', 'max:255'],
+            'link_info.name' => ['required_if:is_link,true', 'array'],
+            'link_info.name.english' => ['required_if:is_link,true', 'string', 'max:255'],
+            'link_info.name.malayalam' => ['nullable', 'string', 'max:255'],
+            'link_info.external' => ['required_if:is_link,true', 'boolean'],
             'data' => ['required', 'array'],
             'data.lastUUID' => ['required', 'integer', 'min:0'],
             'data.items' => ['nullable', 'array'],

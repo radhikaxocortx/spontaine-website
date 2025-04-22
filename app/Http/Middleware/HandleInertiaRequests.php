@@ -2,11 +2,11 @@
 
 namespace App\Http\Middleware;
 
-use App\Repository\NavMenu\NavMenuRepository;
-use App\Models\UIBuilder\Footer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Middleware;
+use Modules\PageBuilder\Models\UIBuilder\Footer;
+use Modules\PageBuilder\Repository\NavMenu\NavMenuRepository;
 use Tighten\Ziggy\Ziggy;
 
 class HandleInertiaRequests extends Middleware
@@ -39,16 +39,19 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
                 'customer' => Auth::guard('customer')->user(),
             ],
-            'ziggy' => fn() => [
+            'ziggy' => fn () => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],
             'flash' => [
-                'message' => fn() => $request->session()->get('message'),
-                'error' => fn() => $request->session()->get('error'),
+                'message' => fn () => $request->session()->get('message'),
+                'error' => fn () => $request->session()->get('error'),
             ],
-            'nav' => fn() => app(NavMenuRepository::class)->getAll(),
-            'lang' => fn() => $request->session()->get('lang', 'en'),
+            'nav' => fn () => app(NavMenuRepository::class)->getAll(),
+            'lang' => fn () => $request->session()->get('lang', 'en'),
+            'footer' => fn () => [
+                'items' => Footer::first()->items ?? [],
+            ],
         ];
     }
 }
