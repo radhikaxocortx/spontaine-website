@@ -40,7 +40,6 @@ class CustomerFormRequest extends Data
         #[Rule('same:password')]
         #[Max(255)]
         public string $retypePassword,
-        #[Max(255)]
         public bool $haveCompany,
         #[RequiredIf('haveCompany', 'true')]
         #[Rule('unique:customer_organizations,company_legal_entity_name')]
@@ -57,7 +56,6 @@ class CustomerFormRequest extends Data
         #[RequiredIf('haveCompany', 'true')]
         #[Max(255)]
         public ?string $companyCountry,
-
         #[Max(255)]
         public ?string $companyPostalCode,
         #[RequiredIf('haveCompany', 'true')]

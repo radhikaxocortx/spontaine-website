@@ -16,6 +16,7 @@ class ValidateOtpController extends Controller
         $request->validate([
             'otp' => 'required|digits:6',
             'customerId' => 'required|string',
+            'verifyingEmail' => 'required|boolean',
         ]);
 
         $otpRecord = OTP::otp($request->customerId, $request->otp)
@@ -28,14 +29,16 @@ class ValidateOtpController extends Controller
         }
 
         $otpRecord->delete();
+        if ($request->verifyingEmail) {
+            return redirect()
+                ->route('customer-create');
+        }
 
         $customer = Customer::where('email', $request->customerId)->first();
 
         if (! $customer) {
             return redirect()->back()->with('error', 'Customer not found.');
         }
-
-        $customer->update(['email_verified' => true]);
 
         // customer login
         Auth::guard('customer')->login($customer);

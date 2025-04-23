@@ -173,6 +173,7 @@ const CustomerCreate = () => {
       formItems={formItems}
       formData={formData}
       title='Sign Up'
+      buttonText='Verify Email'
       url={route('sign-up.store')}
     />
   )

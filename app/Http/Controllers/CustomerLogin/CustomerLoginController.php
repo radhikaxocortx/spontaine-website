@@ -24,9 +24,6 @@ class CustomerLoginController extends Controller
         ]);
 
         $customer = Customer::where('email', $request->email)
-            // ->where('email_verified', true)
-            ->first();
-        $verifiedCustomer = Customer::where('email', $request->email)
             ->where('email_verified', true)
             ->first();
 
@@ -36,7 +33,7 @@ class CustomerLoginController extends Controller
         if (! Hash::check($request->password, $customer->password)) {
             return back()->withErrors(['password' => 'Wrong Password!']);
         } else {
-            return redirect()->route('customer-verification', ['customerId' => $customer->email]);
+            return redirect()->route('customer-verification', ['customerId' => $customer->email, 'verifyingEmail' => 'false']);
         }
     }
 
