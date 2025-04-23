@@ -1,5 +1,5 @@
-import ApplicationLogo from '@/Components/CustomUI/ApplicationLogo'
-import { Language } from '@/Components/ui/ui_interfaces'
+import ApplicationLogo from '@/components/CustomUI/ApplicationLogo'
+import { Language } from '@/components/ui/ui_interfaces'
 import { BlocKFieldInfo } from '@/Modules/PageBuilder/Components/BlockEditor/BlockEditor'
 import EditLabel from '@/Modules/PageBuilder/Components/EditLabel'
 import InertiaLink from '@/Modules/PageBuilder/Components/InertiaLink'

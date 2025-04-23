@@ -1,4 +1,4 @@
-import ApplicationLogo from '@/Components/CustomUI/ApplicationLogo'
+import ApplicationLogo from '@/components/CustomUI/ApplicationLogo'
 import {
   Accordion,
   AccordionContent,

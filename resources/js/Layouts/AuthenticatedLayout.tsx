@@ -1,4 +1,4 @@
-import ApplicationLogo from '@/Components/CustomUI/ApplicationLogo'
+import ApplicationLogo from '@/components/CustomUI/ApplicationLogo'
 import { Link, usePage } from '@inertiajs/react'
 import { PropsWithChildren, ReactNode } from 'react'
 

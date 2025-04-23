@@ -1,4 +1,4 @@
-import FullSpinnerWrapper from '@/Components/CustomUI/FullSpinnerWrapper'
+import FullSpinnerWrapper from '@/components/CustomUI/FullSpinnerWrapper'
 import React, { useCallback } from 'react'
 import { NavMenuSection, RequiredTextData } from '../page_interfaces'
 import AddNavSubSection from './Forms/AddNavSubSection'

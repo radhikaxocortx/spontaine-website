@@ -1,4 +1,4 @@
-import { showError } from '@/Components/ui/alerts'
+import { showError } from '@/components/ui/alerts'
 import { imageBlock } from '@/Modules/PageBuilder/Blocks/LeftImageBlock'
 import { richTextData } from '@/Modules/PageBuilder/Blocks/RichText/RichTextBlock'
 import { BlockFieldValues } from '@/Modules/PageBuilder/Components/BlockEditor/BlockEditor'

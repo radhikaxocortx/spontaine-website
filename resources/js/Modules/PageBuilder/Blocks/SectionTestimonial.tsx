@@ -1,4 +1,4 @@
-import { Language } from '@/Components/ui/ui_interfaces'
+import { Language } from '@/components/ui/ui_interfaces'
 import AppLayoutPadding from '@/Layouts/AppLayoutPadding'
 import SubHeading from '@/typography/SubHeading'
 import { ButtonBack, ButtonNext, CarouselProvider, Slide, Slider } from 'pure-react-carousel'

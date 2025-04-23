@@ -1,4 +1,4 @@
-import Modal from '@/Components/CustomUI/Modal/Modal'
+import Modal from '@/components/CustomUI/Modal/Modal'
 import AddLabel from '@/Modules/PageBuilder/Components/AddLabel'
 import LinkForm from '@/Modules/PageBuilder/Components/Forms/LinkForm'
 import TitleInput from '@/Modules/PageBuilder/Components/Forms/TitleInput'

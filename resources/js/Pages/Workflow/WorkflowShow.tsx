@@ -1,10 +1,10 @@
-import DeleteModal from '@/Components/CustomUI/Modal/DeleteModal'
-import Modal from '@/Components/CustomUI/Modal/Modal'
-import { Workflow } from '@/Components/Interface/data_interface'
-import ShowResourcePage, { ShowPageItem } from '@/Components/ShowPage/ShowResourcePage'
+import DeleteModal from '@/components/CustomUI/Modal/DeleteModal'
+import Modal from '@/components/CustomUI/Modal/Modal'
+import { Workflow } from '@/components/Interface/data_interface'
+import ShowResourcePage, { ShowPageItem } from '@/components/ShowPage/ShowResourcePage'
 import { Button } from '@/components/ui/button'
-import EntityTemplateCreate from '@/Components/WorkflowModule/TemplateGroup/EntityTemplateCreate'
-import ManageWorkflowModule from '@/Components/WorkflowModule/TemplateGroup/ManageWorkflowModule'
+import EntityTemplateCreate from '@/components/WorkflowModule/TemplateGroup/EntityTemplateCreate'
+import ManageWorkflowModule from '@/components/WorkflowModule/TemplateGroup/ManageWorkflowModule'
 import { useMemo, useState } from 'react'
 interface Props {
   workflow: Workflow

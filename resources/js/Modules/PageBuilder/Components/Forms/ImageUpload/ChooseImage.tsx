@@ -1,4 +1,4 @@
-import SelectList from '@/Components/CustomUI/FormFields/SelectList'
+import SelectList from '@/components/CustomUI/FormFields/SelectList'
 import { Image } from '@/Modules/PageBuilder/page_interfaces'
 import { useState } from 'react'
 import SelectUploadedImage from './SelectUploadedImage'

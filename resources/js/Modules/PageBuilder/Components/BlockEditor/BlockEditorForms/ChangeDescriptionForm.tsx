@@ -1,4 +1,4 @@
-import Modal from '@/Components/CustomUI/Modal/Modal'
+import Modal from '@/components/CustomUI/Modal/Modal'
 import { BlocKFieldInfo } from '@/Modules/PageBuilder/Components/BlockEditor/BlockEditor'
 import DescriptionInput from '@/Modules/PageBuilder/Components/Forms/DescriptionInput'
 import { PageBuilderAction } from '@/Modules/PageBuilder/hooks/pageBuilderService'

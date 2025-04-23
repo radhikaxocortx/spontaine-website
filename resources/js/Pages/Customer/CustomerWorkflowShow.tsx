@@ -1,13 +1,13 @@
-import CustomerDashboardLayout from '@/Components/Customer/Dashboard/CustomerDashboardLayouts'
-import BreadCrumbs, { BreadcrumbItemLink } from '@/Components/CustomUI/BreadCrumb'
+import CustomerDashboardLayout from '@/components/Customer/Dashboard/CustomerDashboardLayouts'
+import BreadCrumbs, { BreadcrumbItemLink } from '@/components/CustomUI/BreadCrumb'
 import {
   CustomerPricePlan,
   CustomerPriceplanWorkflowItem,
   ModuleStatusVerification,
   Workflow,
-} from '@/Components/Interface/data_interface'
+} from '@/components/Interface/data_interface'
 import { Button } from '@/components/ui/button'
-import CustomerPriceplanInfoModule from '@/Components/WorkflowModule/AdditionalInfoDisplay/CustomerPriceplanInfoModule'
+import CustomerPriceplanInfoModule from '@/components/WorkflowModule/AdditionalInfoDisplay/CustomerPriceplanInfoModule'
 import StrongText from '@/typography/StrongText'
 
 interface Props {

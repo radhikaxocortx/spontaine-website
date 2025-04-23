@@ -1,5 +1,5 @@
-import ApplicationLogo from '@/Components/CustomUI/ApplicationLogo'
-import CountrySelector from '@/Components/CustomUI/CountrySelector'
+import ApplicationLogo from '@/components/CustomUI/ApplicationLogo'
+import CountrySelector from '@/components/CustomUI/CountrySelector'
 import { Button } from '@/components/ui/button'
 import AppLayoutPadding from './AppLayoutPadding'
 import { MobileNav } from './Nav/MobileNav'

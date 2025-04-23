@@ -1,4 +1,4 @@
-import { showError } from '@/Components/ui/alerts'
+import { showError } from '@/components/ui/alerts'
 import { usePage } from '@inertiajs/react'
 import { useEffect } from 'react'
 

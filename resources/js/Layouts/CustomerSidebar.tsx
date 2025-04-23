@@ -1,4 +1,4 @@
-import { Customer } from '@/Components/Interface/data_interface'
+import { Customer } from '@/components/Interface/data_interface'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,

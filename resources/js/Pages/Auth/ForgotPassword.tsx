@@ -1,9 +1,9 @@
-import LaravelInputError from '@/Components/LaravelInputError'
-import LaravelPrimaryButton from '@/Components/LaravelPrimaryButton'
+import LaravelInputError from '@/components/LaravelInputError'
+import LaravelPrimaryButton from '@/components/LaravelPrimaryButton'
 import GuestLayout from '@/Layouts/GuestLayout'
 import { Head, useForm } from '@inertiajs/react'
 import { FormEventHandler } from 'react'
-import LaravelTextInput from '@/Components/LaravelTextInput'
+import LaravelTextInput from '@/components/LaravelTextInput'
 
 export default function ForgotPassword({ status }: { status?: string }) {
     const { data, setData, post, processing, errors } = useForm({

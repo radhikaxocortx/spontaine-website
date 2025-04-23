@@ -1,4 +1,4 @@
-import { handleHttpErrors } from '@/Components/ui/alerts'
+import { handleHttpErrors } from '@/components/ui/alerts'
 import axios from 'axios'
 import { useCallback, useEffect, useState } from 'react'
 import { NavMenuSection } from '../page_interfaces'

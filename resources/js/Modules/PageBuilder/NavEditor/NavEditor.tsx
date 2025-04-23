@@ -1,5 +1,5 @@
-import SelectList from '@/Components/CustomUI/FormFields/SelectList'
-import { Button } from '@/Components/ui/button'
+import SelectList from '@/components/CustomUI/FormFields/SelectList'
+import { Button } from '@/components/ui/button'
 import use419Error from '@/hooks/use419Error'
 import { router } from '@inertiajs/react'
 import { useEffect, useMemo, useReducer, useState } from 'react'

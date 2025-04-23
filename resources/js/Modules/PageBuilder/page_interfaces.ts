@@ -1,4 +1,4 @@
-import { Model } from '@/Components/Interface/data_interface'
+import { Model } from '@/components/Interface/data_interface'
 import { FooterDataInterface } from '@/Modules/PageBuilder/FooterEditor/FooterEditor'
 
 export const loremIpsum = 'lorem ipsum'

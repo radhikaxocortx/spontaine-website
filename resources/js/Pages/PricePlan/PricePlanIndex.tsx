@@ -1,5 +1,5 @@
-import { PricePlan } from '@/Components/Interface/data_interface'
-import ListResourcePage from '@/Components/ListingPage/ListResourcePage'
+import { PricePlan } from '@/components/Interface/data_interface'
+import ListResourcePage from '@/components/ListingPage/ListResourcePage'
 import { FormItem } from '@/FormBuilder/FormBuilder'
 import useCustomForm from '@/hooks/useCustomForm'
 import { router } from '@inertiajs/react'

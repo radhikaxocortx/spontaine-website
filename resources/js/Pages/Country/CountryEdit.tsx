@@ -1,4 +1,4 @@
-import { Country, ReferenceData } from '@/Components/Interface/data_interface'
+import { Country, ReferenceData } from '@/components/Interface/data_interface'
 import { FormItem } from '@/FormBuilder/FormBuilder'
 import FormPage from '@/FormBuilder/FormPage'
 import useCustomForm from '@/hooks/useCustomForm'

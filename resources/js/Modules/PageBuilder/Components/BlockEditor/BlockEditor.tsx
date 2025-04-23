@@ -1,4 +1,4 @@
-import ButtonBorderIcon from '@/Components/CustomUI/Button/ButtonBorderIcon'
+import ButtonBorderIcon from '@/components/CustomUI/Button/ButtonBorderIcon'
 import { default as BlockConfigurationForm } from '@/Modules/PageBuilder/Components/BlockEditor/BlockEditorForms/BlockConfigurationForm'
 import ChangeDescriptionForm from '@/Modules/PageBuilder/Components/BlockEditor/BlockEditorForms/ChangeDescriptionForm'
 import ChangeImageForm from '@/Modules/PageBuilder/Components/BlockEditor/BlockEditorForms/ChangeImageForm'

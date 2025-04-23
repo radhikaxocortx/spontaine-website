@@ -1,4 +1,4 @@
-import Modal from '@/Components/CustomUI/Modal/Modal'
+import Modal from '@/components/CustomUI/Modal/Modal'
 import { BlocKFieldInfo } from '@/Modules/PageBuilder/Components/BlockEditor/BlockEditor'
 import ChooseImage from '@/Modules/PageBuilder/Components/Forms/ImageUpload/ChooseImage'
 import { PageBuilderAction } from '@/Modules/PageBuilder/hooks/pageBuilderService'

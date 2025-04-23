@@ -1,4 +1,4 @@
-import CardHeader from '@/Components/CustomUI/Card/CardHeader'
+import CardHeader from '@/components/CustomUI/Card/CardHeader'
 import DashboardPadding from '@/Layouts/DashboardLayout'
 import PageCreate from '@/Modules/PageBuilder/Pages/PageCreate'
 import Dashboard from '../Dashboard'

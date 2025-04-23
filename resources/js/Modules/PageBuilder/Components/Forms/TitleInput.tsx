@@ -1,5 +1,5 @@
-import ActionButton from '@/Components/CustomUI/FormFields/ActionButton'
-import InputText from '@/Components/CustomUI/FormFields/InputText'
+import ActionButton from '@/components/CustomUI/FormFields/ActionButton'
+import InputText from '@/components/CustomUI/FormFields/InputText'
 import { RequiredTextData } from '@/Modules/PageBuilder/page_interfaces'
 import { useCallback, useEffect } from 'react'
 import useCustomForm from '../../../../hooks/useCustomForm'
