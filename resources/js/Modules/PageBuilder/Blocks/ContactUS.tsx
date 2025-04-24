@@ -1,6 +1,6 @@
-import FullSpinnerWrapper from '@/Components/CustomUI/FullSpinnerWrapper'
-import { Button } from '@/Components/ui/button'
-import { Checkbox } from '@/Components/ui/checkbox'
+import FullSpinnerWrapper from '@/components/CustomUI/FullSpinnerWrapper'
+import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import {
   Select,
@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
-import { Language } from '@/Components/ui/ui_interfaces'
+import { Language } from '@/components/ui/ui_interfaces'
 import AppLayoutPadding from '@/Layouts/AppLayoutPadding'
 import HeroHeadline from '@/typography/HeroHeadline'
 import HeroTextBlock from '@/typography/HeroTextBlock'

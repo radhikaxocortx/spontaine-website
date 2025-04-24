@@ -1,4 +1,4 @@
-import Modal from '@/Components/CustomUI/Modal/Modal'
+import Modal from '@/components/CustomUI/Modal/Modal'
 import LinkForm from '@/Modules/PageBuilder/Components/Forms/LinkForm'
 import Localization from '@/Modules/PageBuilder/Components/Localization'
 import { BlockLink, LinkData } from '@/Modules/PageBuilder/page_interfaces'

@@ -1,6 +1,6 @@
-import DeleteModal from '@/Components/CustomUI/Modal/DeleteModal'
-import { PricePlan } from '@/Components/Interface/data_interface'
-import ShowResourcePage, { ShowPageItem } from '@/Components/ShowPage/ShowResourcePage'
+import DeleteModal from '@/components/CustomUI/Modal/DeleteModal'
+import { PricePlan } from '@/components/Interface/data_interface'
+import ShowResourcePage, { ShowPageItem } from '@/components/ShowPage/ShowResourcePage'
 import { useMemo, useState } from 'react'
 
 interface Props {

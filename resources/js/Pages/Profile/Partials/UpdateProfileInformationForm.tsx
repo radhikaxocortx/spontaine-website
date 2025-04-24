@@ -1,9 +1,9 @@
-import LaravelInputError from '@/Components/LaravelInputError'
-import LaravelInputLabel from '@/Components/LaravelInputLabel'
-import LaravelPrimaryButton from '@/Components/LaravelPrimaryButton'
+import LaravelInputError from '@/components/LaravelInputError'
+import LaravelInputLabel from '@/components/LaravelInputLabel'
+import LaravelPrimaryButton from '@/components/LaravelPrimaryButton'
 import { Link, useForm, usePage } from '@inertiajs/react'
 import { FormEventHandler } from 'react'
-import LaravelTextInput from '@/Components/LaravelTextInput'
+import LaravelTextInput from '@/components/LaravelTextInput'
 
 export default function UpdateProfileInformation({
                                                      mustVerifyEmail,

@@ -1,11 +1,11 @@
-import LaravelDangerButton from '@/Components/LaravelDangerButton'
-import LaravelInputError from '@/Components/LaravelInputError'
-import LaravelInputLabel from '@/Components/LaravelInputLabel'
-import LaravelModal from '@/Components/LaravelModal'
-import LaravelSecondaryButton from '@/Components/LaravelSecondaryButton'
+import LaravelDangerButton from '@/components/LaravelDangerButton'
+import LaravelInputError from '@/components/LaravelInputError'
+import LaravelInputLabel from '@/components/LaravelInputLabel'
+import LaravelModal from '@/components/LaravelModal'
+import LaravelSecondaryButton from '@/components/LaravelSecondaryButton'
 import { useForm } from '@inertiajs/react'
 import { FormEventHandler, useRef, useState } from 'react'
-import LaravelTextInput from '@/Components/LaravelTextInput'
+import LaravelTextInput from '@/components/LaravelTextInput'
 
 export default function DeleteUserForm({
                                            className = '',

@@ -1,5 +1,5 @@
-import { showError } from '@/Components/ui/alerts'
-import { LaravelFlash } from '@/Components/ui/ui_interfaces'
+import { showError } from '@/components/ui/alerts'
+import { LaravelFlash } from '@/components/ui/ui_interfaces'
 import { router } from '@inertiajs/react'
 import { useCallback, useState } from 'react'
 

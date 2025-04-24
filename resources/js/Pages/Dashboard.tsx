@@ -1,5 +1,5 @@
-import { showError, showSuccess } from '@/Components/ui/alerts'
-import { LaravelFlash } from '@/Components/ui/ui_interfaces'
+import { showError, showSuccess } from '@/components/ui/alerts'
+import { LaravelFlash } from '@/components/ui/ui_interfaces'
 import Sidebar from '@/Layouts/Sidebar'
 import { usePage } from '@inertiajs/react'
 import { PropsWithChildren, ReactNode, useEffect } from 'react'

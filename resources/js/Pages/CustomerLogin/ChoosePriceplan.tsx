@@ -1,5 +1,5 @@
-import CustomerDashboardLayout from '@/Components/Customer/Dashboard/CustomerDashboardLayouts'
-import { Customer, PricePlan } from '@/Components/Interface/data_interface'
+import CustomerDashboardLayout from '@/components/Customer/Dashboard/CustomerDashboardLayouts'
+import { Customer, PricePlan } from '@/components/Interface/data_interface'
 import { Card } from '@/components/ui/card'
 import FormBuilder, { FormItem } from '@/FormBuilder/FormBuilder'
 import useCustomForm from '@/hooks/useCustomForm'

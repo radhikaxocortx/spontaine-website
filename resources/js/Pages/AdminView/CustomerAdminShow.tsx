@@ -1,7 +1,3 @@
-import AddPayment from '@/Components/AdminCustomerVerification/AddPayment'
-import PaymentDetails from '@/Components/AdminCustomerVerification/PaymentDetails'
-import UpdateCustomerWorkflowStatus from '@/Components/AdminCustomerVerification/UpdateCustomerWorkflowStatus'
-import Modal from '@/Components/CustomUI/Modal/Modal'
 import {
   CustomerPricePlan,
   CustomerPriceplanWorkflowItem,
@@ -9,11 +5,11 @@ import {
   ModuleStatusVerification,
   ReferenceData,
   Workflow,
-} from '@/Components/Interface/data_interface'
-import ShowResourcePage, { ShowPageItem } from '@/Components/ShowPage/ShowResourcePage'
+} from '@/components/Interface/data_interface'
+import ShowResourcePage, { ShowPageItem } from '@/components/ShowPage/ShowResourcePage'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import AdminAdditionalInfoModule from '@/Components/WorkflowModule/AdditionalInfoDisplay/AdminAdditionalInfoModule'
+import AdminAdditionalInfoModule from '@/components/WorkflowModule/AdditionalInfoDisplay/AdminAdditionalInfoModule'
 import StrongText from '@/typography/StrongText'
 import { useMemo, useState } from 'react'
 

@@ -1,4 +1,4 @@
-import LaravelPrimaryButton from '@/Components/LaravelPrimaryButton'
+import LaravelPrimaryButton from '@/components/LaravelPrimaryButton'
 import GuestLayout from '@/Layouts/GuestLayout'
 import { Head, Link, useForm } from '@inertiajs/react'
 import { FormEventHandler } from 'react'

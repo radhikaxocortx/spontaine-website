@@ -1,4 +1,4 @@
-import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/Components/CustomUI/FormFields/InputOtp'
+import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/CustomUI/FormFields/InputOtp'
 import { Button } from '@/components/ui/button'
 import useCustomForm from '@/hooks/useCustomForm'
 import useInertiaPost from '@/hooks/useInertiaPost'

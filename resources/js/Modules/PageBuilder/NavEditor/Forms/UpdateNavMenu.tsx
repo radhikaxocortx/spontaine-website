@@ -1,6 +1,6 @@
-import EditButton from '@/Components/CustomUI/Button/EditButton'
-import FullSpinnerWrapper from '@/Components/CustomUI/FullSpinnerWrapper'
-import Modal from '@/Components/CustomUI/Modal/Modal'
+import EditButton from '@/components/CustomUI/Button/EditButton'
+import FullSpinnerWrapper from '@/components/CustomUI/FullSpinnerWrapper'
+import Modal from '@/components/CustomUI/Modal/Modal'
 import useInertiaPost from '@/hooks/useInertiaPost'
 import NavMenuItemForm, {
   NavMenuItemFormData,

@@ -1,11 +1,11 @@
-import { Button } from '@/Components/ui/button'
+import { Button } from '@/components/ui/button'
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuList,
   navigationMenuTriggerStyle,
-} from '@/Components/ui/navigation-menu'
-import { Language } from '@/Components/ui/ui_interfaces'
+} from '@/components/ui/navigation-menu'
+import { Language } from '@/components/ui/ui_interfaces'
 import Localization from '@/Modules/PageBuilder/Components/Localization'
 import { NavMenu } from '@/Modules/PageBuilder/page_interfaces'
 import { Link } from '@inertiajs/react'

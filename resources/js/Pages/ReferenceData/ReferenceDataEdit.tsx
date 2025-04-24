@@ -1,4 +1,4 @@
-import { ReferenceData, ReferenceDataDomain } from '@/Components/Interface/data_interface'
+import { ReferenceData, ReferenceDataDomain } from '@/components/Interface/data_interface'
 import { FormItem } from '@/FormBuilder/FormBuilder'
 import FormPage from '@/FormBuilder/FormPage'
 import useCustomForm from '@/hooks/useCustomForm'

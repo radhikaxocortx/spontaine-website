@@ -1,6 +1,6 @@
-import ActionButton from '@/Components/CustomUI/FormFields/ActionButton'
-import InputCheckBox from '@/Components/CustomUI/FormFields/InputCheckBox'
-import InputText from '@/Components/CustomUI/FormFields/InputText'
+import ActionButton from '@/components/CustomUI/FormFields/ActionButton'
+import InputCheckBox from '@/components/CustomUI/FormFields/InputCheckBox'
+import InputText from '@/components/CustomUI/FormFields/InputText'
 import { LinkData } from '@/Modules/PageBuilder/page_interfaces'
 import { useEffect, useState } from 'react'
 

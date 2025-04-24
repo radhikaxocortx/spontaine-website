@@ -1,5 +1,5 @@
-import DeleteModal from '@/Components/CustomUI/Modal/DeleteModal'
-import ListResourcePage, { ListItemKeys } from '@/Components/ListingPage/ListResourcePage'
+import DeleteModal from '@/components/CustomUI/Modal/DeleteModal'
+import ListResourcePage, { ListItemKeys } from '@/components/ListingPage/ListResourcePage'
 import { FormItem } from '@/FormBuilder/FormBuilder'
 import useCustomForm from '@/hooks/useCustomForm'
 import { Page } from '@/Modules/PageBuilder/page_interfaces'

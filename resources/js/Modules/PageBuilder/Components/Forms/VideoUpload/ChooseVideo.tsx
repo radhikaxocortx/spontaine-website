@@ -1,4 +1,4 @@
-import SelectList from '@/Components/CustomUI/FormFields/SelectList'
+import SelectList from '@/components/CustomUI/FormFields/SelectList'
 import SelectUploadedVideo from '@/Modules/PageBuilder/Components/Forms/VideoUpload/SelectUploadedVideo'
 import UploadNewVideo from '@/Modules/PageBuilder/Components/Forms/VideoUpload/UploadNewVideo'
 import VideoLinkInput from '@/Modules/PageBuilder/Components/Forms/VideoUpload/VideoLinkInput'

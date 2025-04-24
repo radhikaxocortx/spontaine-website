@@ -1,4 +1,4 @@
-import { Language } from '@/Components/ui/ui_interfaces'
+import { Language } from '@/components/ui/ui_interfaces'
 import { NavMenu } from '@/Modules/PageBuilder/page_interfaces'
 import { usePage } from '@inertiajs/react'
 import NavMegaMenu from './NavMegaMenu'

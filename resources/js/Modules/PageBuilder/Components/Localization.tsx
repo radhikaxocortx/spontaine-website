@@ -1,4 +1,4 @@
-import { Language } from '@/Components/ui/ui_interfaces'
+import { Language } from '@/components/ui/ui_interfaces'
 import { useMemo } from 'react'
 import { TextData } from '../page_interfaces'
 

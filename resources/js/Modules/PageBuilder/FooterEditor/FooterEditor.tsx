@@ -1,5 +1,5 @@
-import { Button } from '@/Components/ui/button'
-import { Language } from '@/Components/ui/ui_interfaces'
+import { Button } from '@/components/ui/button'
+import { Language } from '@/components/ui/ui_interfaces'
 import use419Error from '@/hooks/use419Error'
 import {
   BlockImage,

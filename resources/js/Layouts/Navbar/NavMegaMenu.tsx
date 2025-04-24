@@ -1,4 +1,4 @@
-import { Language } from '@/Components/ui/ui_interfaces'
+import { Language } from '@/components/ui/ui_interfaces'
 import useWindowResize from '@/hooks/useWindowResize'
 import InertiaLink from '@/Modules/PageBuilder/Components/InertiaLink'
 import Localization from '@/Modules/PageBuilder/Components/Localization'

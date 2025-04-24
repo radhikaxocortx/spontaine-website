@@ -1,5 +1,5 @@
-import DeleteButton from '@/Components/CustomUI/Button/DeleteButton'
-import DeleteModal from '@/Components/CustomUI/Modal/DeleteModal'
+import DeleteButton from '@/components/CustomUI/Button/DeleteButton'
+import DeleteModal from '@/components/CustomUI/Modal/DeleteModal'
 import { NavMenu } from '@/Modules/PageBuilder/page_interfaces'
 import React from 'react'
 

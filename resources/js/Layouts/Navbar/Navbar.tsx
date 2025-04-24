@@ -1,9 +1,9 @@
-import ApplicationLogo from '@/Components/CustomUI/ApplicationLogo'
-import { Language } from '@/Components/ui/ui_interfaces'
+import ApplicationLogo from '@/components/CustomUI/ApplicationLogo'
+import { Language } from '@/components/ui/ui_interfaces'
 import { usePage } from '@inertiajs/react'
 import AppLayoutPadding from '../AppLayoutPadding'
 
-import CountrySelector from '@/Components/CustomUI/CountrySelector'
+import CountrySelector from '@/components/CustomUI/CountrySelector'
 import { MobileNav } from '../Nav/MobileNav'
 import NavbarLinks from './NavbarLinks'
 

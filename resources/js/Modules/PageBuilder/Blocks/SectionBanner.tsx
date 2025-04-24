@@ -1,4 +1,4 @@
-import { Language } from '@/Components/ui/ui_interfaces'
+import { Language } from '@/components/ui/ui_interfaces'
 import AppLayoutPadding from '@/Layouts/AppLayoutPadding'
 import HeroHeadline from '@/typography/HeroHeadline'
 import HeroTextBlock from '@/typography/HeroTextBlock'

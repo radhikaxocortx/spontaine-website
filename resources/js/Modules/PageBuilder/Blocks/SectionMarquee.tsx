@@ -1,4 +1,4 @@
-import { Language } from '@/Components/ui/ui_interfaces'
+import { Language } from '@/components/ui/ui_interfaces'
 import useMounted from '@/hooks/useMounted'
 import AppLayoutPadding from '@/Layouts/AppLayoutPadding'
 import { Dispatch, useCallback } from 'react'

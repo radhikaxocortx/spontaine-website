@@ -1,4 +1,4 @@
-import ApplicationLogo from '@/Components/CustomUI/ApplicationLogo'
+import ApplicationLogo from '@/components/CustomUI/ApplicationLogo'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTrigger } from '@/components/ui/sheet'
 import { Link } from '@inertiajs/react'
