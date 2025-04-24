@@ -16,7 +16,6 @@ const PricePlanCreate = ({ type }: Props) => {
     validity: '',
     min_quantity_required: '',
     rate: '',
-    additional_rate: '',
   })
   const formItems = useMemo(<
     T,
@@ -63,11 +62,6 @@ const PricePlanCreate = ({ type }: Props) => {
         label: 'Rate',
         type: 'text',
         setValue: setFormValue('rate'),
-      },
-      additional_rate: {
-        label: 'Additional Rate',
-        type: 'text',
-        setValue: setFormValue('additional_rate'),
       },
     } as Record<U, FormItem<T[U], K, G, L>>
   }, [setFormValue, type])

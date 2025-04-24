@@ -57,12 +57,6 @@ const PricePlanShow = ({ pricePlan }: Props) => {
         id: 7,
         type: 'text',
       },
-      {
-        label: 'Additional Rate',
-        content: pricePlan.additional_rate,
-        id: 8,
-        type: 'text',
-      },
     ] as ShowPageItem[]
   }, [pricePlan])
   return (

@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('description');
             $table->string('min_quantity_required');
             $table->string('rate');
-            $table->string('additional_rate')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -162,8 +162,6 @@ const CustomerAdminShow = ({
                 <div>{customerPriceplan.price_plan.min_quantity_required}</div>
                 <div>Rate</div>
                 <div>{customerPriceplan.price_plan.rate}</div>
-                {/* <div>Additional Rate</div>
-                <div>{customerPriceplan.price_plan.additional_rate}</div> */}
               </div>
             </Card>
           </div>

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('payment_method');
             $table->string('notes');
             $table->string('payment_date');
-            $table->string('accounting_reference')->uniquue();
+            $table->string('accounting_reference')->unique();
             $table->softDeletes();
             $table->timestamps();
         });

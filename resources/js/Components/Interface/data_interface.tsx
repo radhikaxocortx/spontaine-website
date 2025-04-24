@@ -71,7 +71,6 @@ export interface PricePlan extends Model {
   type: string
   min_quantity_required: number
   rate: number
-  additional_rate: number | null
 }
 
 export interface Country extends Model {
