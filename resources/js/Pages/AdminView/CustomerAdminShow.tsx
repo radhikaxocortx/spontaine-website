@@ -1,3 +1,7 @@
+import AddPayment from '@/components/AdminCustomerVerification/AddPayment'
+import PaymentDetails from '@/components/AdminCustomerVerification/PaymentDetails'
+import UpdateCustomerWorkflowStatus from '@/components/AdminCustomerVerification/UpdateCustomerWorkflowStatus'
+import Modal from '@/components/CustomUI/Modal/Modal'
 import {
   CustomerPricePlan,
   CustomerPriceplanWorkflowItem,
