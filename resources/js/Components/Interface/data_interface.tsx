@@ -1,3 +1,5 @@
+import { User } from '@/types'
+
 export interface Model {
   id: number
   created_at?: string | null
@@ -119,6 +121,7 @@ export interface CustomerPricePlan extends Model {
   kadodo_id: string
   customer: Customer
   verification_status?: CustomerWorkflowStatus
+  payment_details?: AdminPayment
 }
 
 export interface WorkflowItem extends Model {
@@ -149,4 +152,14 @@ export interface CustomerWorkflowStatus extends Model {
   notes: string
   customer_notes: string
   status_date: string
+}
+
+export interface AdminPayment extends Omit<Model, 'updated_by'> {
+  customer_workflow_id: number
+  amount: number
+  payment_method: string
+  notes: string
+  payment_date: string
+  accounting_reference: string
+  updated_by: User
 }
