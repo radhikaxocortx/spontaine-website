@@ -100,7 +100,7 @@ export default function PricePlan({
 
   return (
     <div
-      className={`${blockData?.marginTop} ${blockData?.marginBottom} ${blockData?.paddingTop} ${blockData?.paddingBottom} pb-4`}
+      className={`flex items-center${blockData?.marginTop} ${blockData?.marginBottom} ${blockData?.paddingTop} ${blockData?.paddingBottom} pb-4`}
     >
       <AppLayoutPadding>
         <div className='overflow-y-hidden rounded-2xl'>

@@ -20,10 +20,12 @@ export interface FooterDataInterface {
   sectionTwo: TextData | null
   sectionThree: TextData | null
   sectionFour: TextData | null
+  sectionFive: TextData | null
   oneLinks?: ItemListField<LinkData>
   twoLinks?: ItemListField<LinkData>
   threeLinks?: ItemListField<LinkData>
   fourLinks?: ItemListField<LinkData>
+  fiveLinks?: ItemListField<LinkData>
   twitter?: LinkData
   facebook?: LinkData
   instagram?: LinkData
