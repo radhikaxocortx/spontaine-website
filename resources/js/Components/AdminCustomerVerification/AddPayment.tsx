@@ -82,9 +82,6 @@ const AddPayment = ({ customerWorkflowID, amount, setShowForm, paymentMethods }:
     [formData, post, customerWorkflowID, userId]
   )
 
-  console.log(formData)
-  console.log(customerWorkflowID)
-  console.log(new Date().toISOString())
   return (
     <div className='ml-4 w-full'>
       <FormBuilder

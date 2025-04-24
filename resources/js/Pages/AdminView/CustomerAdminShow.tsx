@@ -36,7 +36,6 @@ const CustomerAdminShow = ({
   statuses,
   paymentMethods,
 }: Props) => {
-  console.log(customerPriceplan)
   const displayValues = useMemo(() => {
     return [
       {
