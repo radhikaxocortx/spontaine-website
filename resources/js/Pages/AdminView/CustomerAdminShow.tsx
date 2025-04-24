@@ -1,3 +1,5 @@
+import AddPayment from '@/components/AdminCustomerVerification/AddPayment'
+import PaymentDetails from '@/components/AdminCustomerVerification/PaymentDetails'
 import UpdateCustomerWorkflowStatus from '@/components/AdminCustomerVerification/UpdateCustomerWorkflowStatus'
 import Modal from '@/components/CustomUI/Modal/Modal'
 import {
@@ -22,6 +24,7 @@ interface Props {
   customerModuleStatus?: ModuleStatusVerification[]
   customerWorkflowStatus: CustomerWorkflowStatus
   statuses: ReferenceData[]
+  paymentMethods: ReferenceData[]
 }
 
 const CustomerAdminShow = ({
@@ -31,8 +34,8 @@ const CustomerAdminShow = ({
   customerModuleStatus,
   customerWorkflowStatus,
   statuses,
+  paymentMethods,
 }: Props) => {
-  console.log(customerModuleStatus)
   const displayValues = useMemo(() => {
     return [
       {
@@ -123,6 +126,8 @@ const CustomerAdminShow = ({
   }, [customerPriceplan])
 
   const [updateStatus, setUpdateStatus] = useState<boolean>(false)
+  const [paymentModal, setPaymentModal] = useState<boolean>(false)
+  const [showPayment, setShowPayment] = useState<boolean>(false)
 
   return (
     <ShowResourcePage
@@ -137,8 +142,13 @@ const CustomerAdminShow = ({
             <Card className='p-4'>
               <div className='flex justify-between'>
                 <StrongText>{`${customerPriceplan.price_plan.name} (${customerPriceplan.price_plan.code})`}</StrongText>
-                <div className='justify-end'>
-                  <Button onClick={() => setUpdateStatus(true)}>Update Status</Button>
+                <div className='flex justify-end gap-4'>
+                  <Button onClick={() => setUpdateStatus(true)}>Update Status</Button>{' '}
+                  {customerPriceplan.payment_details ? (
+                    <Button onClick={() => setShowPayment(true)}>View Payment Details</Button>
+                  ) : (
+                    <Button onClick={() => setPaymentModal(true)}>Add Payment</Button>
+                  )}
                 </div>
               </div>
               <div className='px-6 pb-6'>
@@ -151,8 +161,6 @@ const CustomerAdminShow = ({
                 <div>{customerPriceplan.price_plan.min_quantity_required}</div>
                 <div>Rate</div>
                 <div>{customerPriceplan.price_plan.rate}</div>
-                <div>Additional Rate</div>
-                <div>{customerPriceplan.price_plan.additional_rate}</div>
               </div>
             </Card>
           </div>
@@ -168,6 +176,30 @@ const CustomerAdminShow = ({
             setShowForm={setUpdateStatus}
             customerWorkflowStatus={customerWorkflowStatus}
             statuses={statuses}
+          />
+        </Modal>
+      )}
+      {paymentModal && (
+        <Modal
+          setShowModal={setPaymentModal}
+          title='Add Payment'
+        >
+          <AddPayment
+            customerWorkflowID={customerPriceplan.id}
+            setShowForm={setPaymentModal}
+            amount={customerPriceplan.price_plan.rate}
+            paymentMethods={paymentMethods}
+          />
+        </Modal>
+      )}
+      {showPayment && (
+        <Modal
+          setShowModal={setShowPayment}
+          title='Payment Details'
+        >
+          <PaymentDetails
+            paymentDetails={customerPriceplan?.payment_details}
+            setShowForm={setShowPayment}
           />
         </Modal>
       )}

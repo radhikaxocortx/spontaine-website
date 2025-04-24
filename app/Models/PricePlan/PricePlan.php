@@ -19,6 +19,5 @@ class PricePlan extends Model
         'description',
         'min_quantity_required',
         'rate',
-        'additional_rate',
     ];
 }
