@@ -61,7 +61,7 @@ class CustomerAdminController extends Controller
             ->get();
         $paymentMethods = ReferenceData::fullData()
             ->where('domain', 'Payment')
-            ->where('parameter', 'PAyment Method')
+            ->where('parameter', 'Payment Method')
             ->get();
 
         return Inertia::render('AdminView/CustomerAdminShow', [
