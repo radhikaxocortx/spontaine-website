@@ -83,7 +83,6 @@ const CustomerWorkflowCreate = ({ pricePlanId, customerPriceplanId }: Props) => 
       }),
     }
   }, [additionalInfo, customerPriceplanId])
-  console.log(customFormData)
 
   const handleSubmit = () => {
     router.post(route('customer-workflow-save'), customFormData)

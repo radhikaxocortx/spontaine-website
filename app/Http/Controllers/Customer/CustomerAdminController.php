@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CustomerAuthentication\AdminPaymentRequest;
 use App\Http\Requests\CustomerAuthentication\ModuleStatusUpdateRequest;
 use App\Http\Requests\CustomerAuthentication\WorkflowAuthenticateRequest;
 use App\Mail\ModuleUpdateEmailToCustomer;
@@ -11,6 +12,7 @@ use App\Models\Customer\CustomerPricePlan;
 use App\Models\Customer\CustomerWorkflow;
 use App\Models\CustomerVerification\VerificationStatus;
 use App\Models\CustomerVerification\WorkflowModuleVerification;
+use App\Models\Payment\AdminPayment;
 use App\Models\ReferenceData\ReferenceData;
 use App\Models\Workflow\Workflow;
 use Illuminate\Http\Request;
@@ -43,7 +45,7 @@ class CustomerAdminController extends Controller
 
         $id = $request->id;
         $customerPriceplan = CustomerPricePlan::where('id', $id)
-            ->with('customer.company', 'pricePlan')
+            ->with('customer.company', 'pricePlan', 'paymentDetails.updatedBy')
             ->firstOrFail();
         $customerPriceplanInfo = CustomerWorkflow::where('customer_priceplan_id', $id)->get();
         $CustomerPriceplanTemplate = Workflow::where('priceplan_id', $customerPriceplan->price_plan_id)
@@ -57,6 +59,10 @@ class CustomerAdminController extends Controller
             ->where('domain', 'Customer Verification')
             ->where('parameter', 'Status')
             ->get();
+        $paymentMethods = ReferenceData::fullData()
+            ->where('domain', 'Payment')
+            ->where('parameter', 'PAyment Method')
+            ->get();
 
         return Inertia::render('AdminView/CustomerAdminShow', [
             'customerPriceplan' => $customerPriceplan,
@@ -65,7 +71,19 @@ class CustomerAdminController extends Controller
             'customerModuleStatus' => $customerModuleStatus,
             'customerWorkflowStatus' => $customerWorkflowStatus,
             'statuses' => $status,
+            'paymentMethods' => $paymentMethods,
         ]);
+    }
+
+    public function addPayment(AdminPaymentRequest $request)
+    {
+        try {
+            $adminPayment = AdminPayment::create($request->all());
+        } catch (\Exception $e) {
+            return back()->with(['error' => $e->getMessage()]);
+        }
+
+        return back()->with(['message' => 'Payment Added Successfully']);
     }
 
     public function workflowAuthenticate(WorkflowAuthenticateRequest $request)

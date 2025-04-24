@@ -22,6 +22,20 @@ export const splitDateTime = (date: string): string[] => {
 
   return []
 }
+export const getTime = (date?: string): string => {
+  if (!date) return ''
+
+  const dateObj = new Date(date)
+
+  const hours = dateObj.getHours()
+  const minutes = dateObj.getMinutes()
+
+  const ampm = hours >= 12 ? 'PM' : 'AM'
+  const formattedHours = hours % 12 || 12
+  const formattedMinutes = minutes.toString().padStart(2, '0')
+
+  return `${formattedHours}:${formattedMinutes} ${ampm}`
+}
 
 export const shortMonthNames = [
   'Jan',

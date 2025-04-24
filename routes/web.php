@@ -56,6 +56,10 @@ Route::middleware('auth')->group(function () {
         ->name('workflow-module-authenticate');
     Route::patch('workflow-module-authenticate-update', [CustomerAdminController::class, 'workflowModuleAuthenticateUpdate'])
         ->name('workflow-module-authenticate-update');
+
+    // Add Payment
+    Route::post('add-payment', [CustomerAdminController::class, 'addPayment'])
+        ->name('add-payment');
 });
 // Sign Up Form
 Route::middleware('guest')->group(function () {
@@ -138,11 +142,11 @@ Route::middleware(['auth:customer'])->group(function () {
         ->name('customer-workflow-show');
 });
 
-//Nav Editor
+// Nav Editor
 Route::resource('nav-editor', NavEditorController::class);
 Route::resource('footer-editor', FooterController::class);
 
-//contact form
+// contact form
 Route::post('send-contact-mail', [ContactController::class, 'sendMail']);
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

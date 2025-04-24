@@ -3,9 +3,11 @@
 namespace App\Models\Customer;
 
 use App\Models\CustomerVerification\VerificationStatus;
+use App\Models\Payment\AdminPayment;
 use App\Models\PricePlan\PricePlan;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CustomerPricePlan extends Model
@@ -33,5 +35,10 @@ class CustomerPricePlan extends Model
     public function verificationStatus(): BelongsTo
     {
         return $this->belongsTo(VerificationStatus::class, 'customer_workflow_id', 'id');
+    }
+
+    public function paymentDetails(): HasOne
+    {
+        return $this->hasOne(AdminPayment::class, 'customer_workflow_id', 'id');
     }
 }

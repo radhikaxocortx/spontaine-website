@@ -95,9 +95,6 @@ const ChoosePriceplan = ({ pricePlan }: Props) => {
                       Rate : <StrongText>{selectedPriceplan.rate}</StrongText>
                     </NormalText>
                     <br />
-                    <NormalText>
-                      Additional Rate : <StrongText>{selectedPriceplan.additional_rate}</StrongText>
-                    </NormalText>
                   </div>
                 </div>
               </Card>
