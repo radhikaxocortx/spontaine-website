@@ -142,6 +142,8 @@ Route::middleware(['auth:customer'])->group(function () {
         ->name('customer-workflow-update');
     Route::get('customer-workflow-show/{id}', [CustomerController::class, 'customerWorkflowShow'])
         ->name('customer-workflow-show');
+    Route::post('customer-workflow-status-update', [CustomerController::class, 'customerWorkflowStatusUpdate'])
+        ->name('customer-workflow-status-update');
 });
 
 // Nav Editor

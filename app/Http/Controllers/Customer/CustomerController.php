@@ -289,4 +289,19 @@ class CustomerController extends Controller
             'moduleUpdateStatus' => $moduleUpdateStatus,
         ]);
     }
+
+    public function customerWorkflowStatusUpdate(Request $request)
+    {
+        $validatedRequest = $request->validate([
+            'customer_workflow_id' => ['required', 'integer', 'exists:customer_price_plans,id'],
+            'module_id' => ['required', 'integer', 'exists:entity_templates,id'],
+            'customer_status' => ['required', 'boolean'],
+        ]);
+        $updated = WorkflowModuleVerification::where('customer_workflow_id', $validatedRequest['customer_workflow_id'])
+            ->where('module_id', $validatedRequest['module_id'])
+            ->update(['customer_updated' => $validatedRequest['customer_status']]);
+
+        return back()->with(['message' => 'This Module is marked as completed.']);
+
+    }
 }

@@ -21,10 +21,20 @@ const ModuleEdit = ({
 
   const [formData, setFormValue] = useState(() => {
     return moduleItems.map((item) => {
-      const values = additionalInfo.find((info) => info.workflow_item_id === item.id)
+      const matchedValues = additionalInfo.filter((info) => info.workflow_item_id === item.id)
+
+      let value: string[] | string = ''
+      if (item.type === 'multi_list_pills') {
+        value = matchedValues.flatMap((info) =>
+          Array.isArray(info.value) ? info.value : [info.value]
+        )
+      } else {
+        value = matchedValues[0]?.value ?? ''
+      }
+
       return {
         ...item,
-        value: values?.value ?? '',
+        value,
         file: null,
       }
     })
@@ -49,7 +59,6 @@ const ModuleEdit = ({
       })),
     }
   }, [formData, customerPriceplanId])
-
   const handleSubmit = () => {
     router.post(route('customer-workflow-update'), customFormData, {
       onSuccess: () => setShowForm(false),
