@@ -138,8 +138,12 @@ Route::middleware(['auth:customer'])->group(function () {
         ->name('find-customer-priceplan');
     Route::post('customer-workflow-save', [CustomerController::class, 'customerWorkflowSave'])
         ->name('customer-workflow-save');
+    Route::post('customer-workflow-update', [CustomerController::class, 'customerWorkflowUpdate'])
+        ->name('customer-workflow-update');
     Route::get('customer-workflow-show/{id}', [CustomerController::class, 'customerWorkflowShow'])
         ->name('customer-workflow-show');
+    Route::post('customer-workflow-status-update', [CustomerController::class, 'customerWorkflowStatusUpdate'])
+        ->name('customer-workflow-status-update');
 });
 
 // Nav Editor

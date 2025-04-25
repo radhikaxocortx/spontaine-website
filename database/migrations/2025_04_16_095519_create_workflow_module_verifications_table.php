@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('internal_notes')->nullable();
             $table->string('verification_date')->nullable();
             $table->boolean('allow_update')->default(false);
+            $table->boolean('customer_updated')->default(false);
             $table->softDeletes();
             $table->timestamps();
         });

@@ -17,5 +17,6 @@ class WorkflowModuleVerification extends Model
         'internal_notes',
         'verification_date',
         'allow_update',
+        'customer_updated',
     ];
 }

@@ -61,7 +61,7 @@ class CustomerAdminController extends Controller
             ->get();
         $paymentMethods = ReferenceData::fullData()
             ->where('domain', 'Payment')
-            ->where('parameter', 'PAyment Method')
+            ->where('parameter', 'Payment Method')
             ->get();
 
         return Inertia::render('AdminView/CustomerAdminShow', [
@@ -199,7 +199,10 @@ class CustomerAdminController extends Controller
         /** @var \App\Models\Customer\Customer|null $customer */
         $customer = $customerDetail->customer;
         try {
-            $workflowModuleVerification->update($request->all());
+            $workflowModuleVerification->update([
+                ...$request->all(),
+                'customer_updated' => false,
+            ]);
             Mail::to($customer->email)->send(new ModuleUpdateEmailToCustomer([
 
                 'name' => $customer->first_name,
