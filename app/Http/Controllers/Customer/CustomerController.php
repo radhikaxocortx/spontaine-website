@@ -223,6 +223,42 @@ class CustomerController extends Controller
             ->with(['message' => 'Customer Workflow Saved Successfully']);
     }
 
+    public function customerWorkflowUpdate(Request $request)
+    {
+        DB::beginTransaction();
+        $filesToCleanUp = [];
+
+        try {
+            $customerPriceplanId = $request->customerPriceplanId;
+            $itemIds = collect($request->additionalInfo)->pluck('workflow_item_id')->all();
+            CustomerWorkflow::where('customer_priceplan_id', $customerPriceplanId)
+                ->whereIn('workflow_item_id', $itemIds)
+                ->delete();
+
+            [$infoRecords, $filesToCleanUp] = $this->process(
+                $request->additionalInfo ?? [],
+                'customer_workflow',
+            );
+
+            foreach ($infoRecords as &$infoRecord) {
+                $infoRecord['customer_priceplan_id'] = $customerPriceplanId;
+            }
+
+            CustomerWorkflow::insert($infoRecords);
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Storage::delete($filesToCleanUp);
+
+            return back()->with(['error' => ExceptionMessage::getMessage($e)]);
+        }
+
+        DB::commit();
+
+        return back()
+            ->with(['message' => 'Customer Workflow Updated Successfully']);
+    }
+
     public function findCustomerPriceplan($customerId)
     {
         $customerPriceplan = CustomerPricePlan::where('customer_id', $customerId)

@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/button'
 import StrongText from '@/typography/StrongText'
 import { Bell } from 'lucide-react'
 import { useState } from 'react'
+import ModuleEdit from './ModuleEdit'
 
 interface Props {
   workflowModule: WorkflowModule
@@ -27,9 +28,10 @@ export default function CustomerPriceplanInfoModule({
   additionalInfo,
   moduleUpdateStatus,
 }: Readonly<Props>) {
+  console.log('moduleUpdateStatus', moduleUpdateStatus)
   const [expandedValue, setExpandedValue] = useState<string | undefined>()
   const [statusOpen, setStatusOpen] = useState<boolean>(false)
-
+  const [editModule, setEditModule] = useState<boolean>(false)
   const hasFieldsWithValues = workflowModule.workflow_items.some(
     (item) => additionalInfo.find((info) => info.workflow_item_id === item.id)?.value
   )
@@ -48,11 +50,25 @@ export default function CustomerPriceplanInfoModule({
         <AccordionItem value='item-1'>
           <AccordionTrigger className='cursor-pointer px-6 transition-colors duration-200 hover:bg-[#F1F5F9]'>
             <span className='font-semibold'>{workflowModule.name}</span>
+            {moduleUpdateStatus?.allow_update && (
+              <span
+                className='ml-auto cursor-pointer font-normal text-blue-600 hover:font-semibold hover:text-blue-700'
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setEditModule(true)
+                }}
+              >
+                Edit
+              </span>
+            )}
             <Button
               className='ml-auto'
               variant='outline'
               size='sm'
-              onClick={() => setStatusOpen(true)}
+              onClick={(e) => {
+                e.stopPropagation()
+                setStatusOpen(true)
+              }}
             >
               <Bell className='h-4 w-4' />
             </Button>
@@ -105,6 +121,20 @@ export default function CustomerPriceplanInfoModule({
           >
             OK
           </Button>
+        </Modal>
+      )}
+      {editModule && (
+        <Modal
+          setShowModal={setEditModule}
+          title={`Edit ${workflowModule.name}`}
+        >
+          <ModuleEdit
+            key={workflowModule.id}
+            customerPriceplanId={moduleUpdateStatus?.customer_workflow_id ?? 0}
+            workflowModule={workflowModule}
+            setShowForm={setEditModule}
+            additionalInfo={additionalInfo}
+          />
         </Modal>
       )}
     </div>
