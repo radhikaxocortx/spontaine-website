@@ -25,7 +25,7 @@ class ValidateOtpController extends Controller
             ->first();
 
         if (! $otpRecord) {
-            return redirect()->back()->with('error', 'Invalid OTP.');
+            return redirect()->back()->with('error', 'Invalid one time use key.');
         }
 
         $otpRecord->delete();
@@ -47,6 +47,6 @@ class ValidateOtpController extends Controller
             return redirect()->route('customer-dashboard');
         }
 
-        return redirect()->route('choose-priceplan')->with('message', 'OTP verified and logged in successfully.');
+        return redirect()->route('choose-priceplan')->with('message', 'One time use key verified and logged in successfully.');
     }
 }

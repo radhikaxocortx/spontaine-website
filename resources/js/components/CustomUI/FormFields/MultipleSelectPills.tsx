@@ -26,7 +26,7 @@ export function MultiSelectPills({ options, values, setValues, label }: MultiSel
         {options.map((option) => (
           <Button
             key={option}
-            variant={values.includes(option) ? 'outline' : 'ghost'}
+            variant={values.includes(option) ? 'secondary' : 'ghost'}
             className={`rounded-full border px-4 py-1 ${
               values.includes(option) ? '' : 'border-muted'
             }`}
