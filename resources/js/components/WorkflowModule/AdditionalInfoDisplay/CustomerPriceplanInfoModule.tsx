@@ -59,30 +59,28 @@ export default function CustomerPriceplanInfoModule({
           </AccordionTrigger>
           <AccordionContent className='px-6 pb-6'>
             {hasFieldsWithValues ? (
-              <>
-                <div className='grid gap-4'>
-                  {workflowModule.workflow_items
-                    .sort((a, b) => a.field_number - b.field_number)
-                    .map((item) => {
-                      const matchingInfo = additionalInfo.filter(
-                        (info) => info.workflow_item_id === item.id
-                      )
-                      const values = matchingInfo.map((info) => info.value).filter(Boolean)
-                      if (values.length === 0) return null
-                      return (
-                        <div
-                          key={item.id}
-                          className='flex flex-col gap-1'
-                        >
-                          <span className='text-muted-foreground text-xs font-medium'>
-                            {item.field_name}
-                          </span>
-                          <span className='text-sm'>{values.join(', ')}</span>
-                        </div>
-                      )
-                    })}
-                </div>
-              </>
+              <div className='grid gap-4'>
+                {workflowModule.workflow_items
+                  .sort((a, b) => a.field_number - b.field_number)
+                  .map((item) => {
+                    const matchingInfo = additionalInfo.filter(
+                      (info) => info.workflow_item_id === item.id
+                    )
+                    const values = matchingInfo.map((info) => info.value).filter(Boolean)
+                    if (values.length === 0) return null
+                    return (
+                      <div
+                        key={item.id}
+                        className='flex flex-col gap-1'
+                      >
+                        <span className='text-muted-foreground text-xs font-medium'>
+                          {item.field_name}
+                        </span>
+                        <span className='text-sm'>{values.join(', ')}</span>
+                      </div>
+                    )
+                  })}
+              </div>
             ) : (
               <div className='flex h-full items-center justify-center py-4'>
                 <span className='text-muted-foreground text-sm'>No information available</span>

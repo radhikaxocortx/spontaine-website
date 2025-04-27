@@ -49,6 +49,10 @@ class CustomerLoginController extends Controller
 
     public function customerDashboard()
     {
-        return Inertia::render('CustomerLogin/CustomerDashboard');
+        $priceplan = PricePlan::all();
+
+        return Inertia::render('CustomerLogin/CustomerDashboard', [
+            'pricePlan' => $priceplan,
+        ]);
     }
 }

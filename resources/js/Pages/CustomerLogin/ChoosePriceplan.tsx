@@ -1,4 +1,3 @@
-import CustomerDashboardLayout from '@/components/Customer/Dashboard/CustomerDashboardLayouts'
 import { Customer, PricePlan } from '@/components/Interface/data_interface'
 import { Card } from '@/components/ui/card'
 import FormBuilder, { FormItem } from '@/FormBuilder/FormBuilder'
@@ -73,35 +72,33 @@ const ChoosePriceplan = ({ pricePlan }: Props) => {
 
   return (
     <>
-      <CustomerDashboardLayout>
-        <FormBuilder
-          loading={loading}
-          errors={errors}
-          formData={formData}
-          formItems={formItems}
-          onFormSubmit={handleSubmit}
-          buttonText='Next'
-          formStyles='items-center p-5'
-        >
-          <br />
-          {selectedPriceplan && (
-            <>
-              <Card className='w-full p-2'>
-                <div className='flex flex-col p-5'>
-                  <Heading>{`${selectedPriceplan.name} (${selectedPriceplan.code})`}</Heading>
-                  <Paragraph>{selectedPriceplan.description}</Paragraph>
-                  <div className='p-3'>
-                    <NormalText>
-                      Rate : <StrongText>{selectedPriceplan.rate}</StrongText>
-                    </NormalText>
-                    <br />
-                  </div>
-                </div>
-              </Card>
-            </>
-          )}
-        </FormBuilder>
-      </CustomerDashboardLayout>
+      {/* <CustomerDashboardLayout> */}
+      <FormBuilder
+        loading={loading}
+        errors={errors}
+        formData={formData}
+        formItems={formItems}
+        onFormSubmit={handleSubmit}
+        buttonText='Next'
+        formStyles='items-center p-5'
+      >
+        <br />
+        {selectedPriceplan && (
+          <Card className='w-full p-2'>
+            <div className='flex flex-col p-5'>
+              <Heading>{`${selectedPriceplan.name} (${selectedPriceplan.code})`}</Heading>
+              <Paragraph>{selectedPriceplan.description}</Paragraph>
+              <div className='p-3'>
+                <NormalText>
+                  Rate : <StrongText>{selectedPriceplan.rate}</StrongText>
+                </NormalText>
+                <br />
+              </div>
+            </div>
+          </Card>
+        )}
+      </FormBuilder>
+      {/* </CustomerDashboardLayout> */}
     </>
   )
 }
