@@ -1,6 +1,9 @@
 import { FormItem } from '@/FormBuilder/FormBuilder'
-import FormPage from '@/FormBuilder/FormPage'
+import StepperFormPage from '@/FormBuilder/StepperFormPage'
 import useCustomForm from '@/hooks/useCustomForm'
+import AppLayout from '@/Layouts/AppLayout'
+import HeroHeadline from '@/typography/HeroHeadline'
+import HeroTextBlock from '@/typography/HeroTextBlock'
 import { useMemo } from 'react'
 
 const CustomerCreate = () => {
@@ -26,13 +29,8 @@ const CustomerCreate = () => {
     company_tax_id: '',
     company_registration_id: '',
   })
-  const formItems = useMemo(<
-    T,
-    U extends keyof T,
-    K extends keyof L,
-    G extends keyof L,
-    L extends Record<K, string | number> & Record<G, string | number | null>,
-  >() => {
+
+  const formItems = useMemo(() => {
     return {
       first_name: {
         label: 'First Name',
@@ -55,13 +53,13 @@ const CustomerCreate = () => {
       address_line1: {
         label: 'Address Line 1',
         placeholder: 'Enter Address ',
-        type: 'textarea',
+        type: 'text',
         setValue: setFormValue('address_line1'),
       },
       address_line2: {
         label: 'Address Line 2',
         placeholder: 'Enter Address ',
-        type: 'textarea',
+        type: 'text',
         setValue: setFormValue('address_line2'),
       },
       city: {
@@ -165,17 +163,109 @@ const CustomerCreate = () => {
         setValue: setFormValue('company_registration_id'),
         hidden: formData.have_company === false,
       },
-    } as Record<U, FormItem<T[U], K, G, L>>
+    } as Record<
+      keyof typeof formData,
+      FormItem<string | boolean, string, string, Record<string, string>>
+    >
   }, [setFormValue, formData])
 
+  const steps = [
+    {
+      title: 'Personal Information',
+      fields: ['first_name', 'last_name', 'telephone', 'email'] as const,
+      requiredFields: ['first_name', 'last_name', 'telephone', 'email'] as const,
+      validationRules: {
+        email: (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
+        first_name: (value: string) => value.length > 0,
+        telephone: (value: string) => /^\+?[\d\s-]{10,}$/.test(value),
+      },
+    },
+    {
+      title: 'Address Details',
+      fields: [
+        'address_line1',
+        'address_line2',
+        'city',
+        'country',
+        'postal_code',
+        'have_company',
+      ] as const,
+      requiredFields: ['address_line1', 'city', 'country'] as const,
+    },
+    {
+      title: 'Company Information',
+      fields: [
+        'company_legal_entity_name',
+        'company_address_line1',
+        'company_address_line2',
+        'company_city',
+        'company_country',
+        'company_postal_code',
+        'company_tax_id',
+        'company_registration_id',
+      ] as const,
+      requiredFields: [
+        'company_legal_entity_name',
+        'company_address_line1',
+        'company_city',
+        'company_country',
+      ] as const,
+      hidden: !formData.have_company,
+    },
+    {
+      title: 'Account Security',
+      fields: ['password', 'retype_password'] as const,
+      requiredFields: ['password', 'retype_password'] as const,
+      validationRules: {
+        password: (value: string) => value.length >= 8,
+        retype_password: (value: string) => value === formData.password,
+      },
+    },
+  ] as const
+
   return (
-    <FormPage
+    <AppLayout>
+      <div className='m-4 grid min-h-screen grid-cols-1 rounded-xl bg-primary-100 md:grid-cols-2'>
+        <div className='relative flex flex-col'>
+          <div className='flex flex-1 flex-col gap-8 p-8 md:p-12 lg:p-16'>
+            {/* Header */}
+            <div className='gap-4'>
+              <HeroHeadline className='text-primary-950'>Get Started</HeroHeadline>
+              <HeroTextBlock className='text-neutral-graige-600'>
+                Verify your business or individual profile to build trust, gain credibility, and
+                unlock new opportunities across Africa.
+              </HeroTextBlock>
+            </div>
+
+            {/* Form */}
+            <div className='flex-1'>
+              <div className='min-h-[600px]'>
+                <StepperFormPage
       formItems={formItems}
       formData={formData}
-      title='Sign Up'
+                  steps={steps}
       buttonText='Verify Email'
       url={route('sign-up.store')}
-    />
+                  onStepChange={(step) => {
+                    console.log(`Moving to step ${step + 1}`)
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Image Section */}
+        <div className='relative hidden h-full rounded-xl md:block'>
+          <img
+            src='/imge/signup.png'
+            alt='Verification Process'
+            className='absolute inset-0 h-full w-full rounded-xl object-cover object-center'
+          />
+          <div className='absolute inset-0 bg-black/10' />
+        </div>
+      </div>
+    </AppLayout>
   )
 }
 export default CustomerCreate

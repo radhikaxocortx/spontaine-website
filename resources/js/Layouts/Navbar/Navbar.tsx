@@ -1,16 +1,28 @@
 import ApplicationLogo from '@/components/CustomUI/ApplicationLogo'
-import { Language } from '@/components/ui/ui_interfaces'
 import { usePage } from '@inertiajs/react'
 import AppLayoutPadding from '../AppLayoutPadding'
 
 import CountrySelector from '@/components/CustomUI/CountrySelector'
-import { MobileNav } from '../Nav/MobileNav'
+import CustomerSidebar from '../CustomerSidebar'
+import { MobileNav } from './MobileNav/MobileNav'
 import NavbarLinks from './NavbarLinks'
 
+interface AuthUser {
+  id: number
+  name: string
+  email: string
+}
+
+interface AuthCustomer {
+  id: number
+  first_name: string
+  last_name: string
+  email: string
+}
+
 const Navbar = () => {
-  const { lang = 'en' } = usePage().props as unknown as {
-    lang?: Language
-  }
+  const { auth } = usePage().props as { auth: { user?: AuthUser; customer?: AuthCustomer } }
+  const isCustomerLoggedIn = !!auth.customer
 
   return (
     <nav className='sticky top-0 z-50 place-items-center bg-white shadow-md'>
@@ -23,6 +35,7 @@ const Navbar = () => {
             <NavbarLinks />
             {/* <Button size='md'>Verify Your Business</Button> */}
             <CountrySelector />
+            {isCustomerLoggedIn && <CustomerSidebar />}
           </div>
 
           <MobileNav />

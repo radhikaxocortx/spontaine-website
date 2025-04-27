@@ -1,7 +1,6 @@
-import ApplicationLogo from '@/components/CustomUI/ApplicationLogo'
 import { showError, showSuccess } from '@/components/ui/alerts'
 import { LaravelFlash } from '@/components/ui/ui_interfaces'
-import { Link, usePage } from '@inertiajs/react'
+import { usePage } from '@inertiajs/react'
 import { PropsWithChildren, useEffect } from 'react'
 import { ToastContainer } from 'react-toastify'
 
@@ -30,11 +29,11 @@ export default function Guest({ children }: PropsWithChildren) {
         theme='dark'
         toastClassName='toast-container'
       />
-      <div>
+      {/* <div>
         <Link href='/'>
           <ApplicationLogo className='h-20 w-20 fill-current text-gray-500' />
         </Link>
-      </div>
+      </div> */}
 
       <div className='mt-6 w-full overflow-hidden bg-white px-6 py-4 shadow-md sm:max-w-md sm:rounded-lg'>
         {children}

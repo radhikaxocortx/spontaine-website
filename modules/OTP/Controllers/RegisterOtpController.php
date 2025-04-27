@@ -23,7 +23,7 @@ class RegisterOtpController extends Controller
 
         return redirect()->route('verify-otp', ['customerId' => $customerId, 'verifyingEmail' => $verify])
             ->with([
-                'message' => 'OTP sent successfully',
+                'message' => 'One time use key sent successfully',
             ]);
     }
 }
