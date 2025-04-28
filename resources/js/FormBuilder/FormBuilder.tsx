@@ -5,6 +5,7 @@ import DynamicSelectList from '@/components/CustomUI/FormFields/DynamicSelectLis
 import FileInput from '@/components/CustomUI/FormFields/FileInput'
 import InputDescription from '@/components/CustomUI/FormFields/InputDescription'
 import InputText from '@/components/CustomUI/FormFields/InputText'
+import RadioButton from '@/components/CustomUI/FormFields/RadioButton'
 import SelectList from '@/components/CustomUI/FormFields/SelectList'
 import TimePicker from '@/components/CustomUI/FormFields/TimePicker'
 import FullSpinnerWrapper from '@/components/CustomUI/FullSpinnerWrapper'
@@ -296,6 +297,24 @@ export default function FormBuilder<
                 />
               </div>
             )}
+          {formItems[keyValue].type === 'radio' && !formItems[keyValue].hidden && (
+            <div className={cn('flex flex-col', formItems[keyValue].colPositionAdjustment ?? '')}>
+              {formItems[keyValue].description != null && (
+                <NormalText>{formItems[keyValue].description}</NormalText>
+              )}
+              <RadioButton
+                list={formItems[keyValue].list}
+                dataKey={formItems[keyValue].dataKey}
+                displayKey={formItems[keyValue].displayKey}
+                setValue={formItems[keyValue].setValue as (value: string | number) => unknown}
+                value={formData[keyValue] as string | number}
+                label={formItems[keyValue].label}
+                error={errors != null ? errors[keyValue] : undefined}
+                disabled={formItems[keyValue].disabled}
+              />
+            </div>
+          )}
+
           {formItems[keyValue].type === 'autocomplete' &&
             !formItems[keyValue].hidden &&
             formItems[keyValue].selectListUrl != null &&

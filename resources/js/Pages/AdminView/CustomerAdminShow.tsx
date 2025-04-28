@@ -219,7 +219,6 @@ const CustomerAdminShow = ({
                   additionalInfo={customerPriceplanInfo}
                   customerWorkflowID={customerPriceplan.id}
                   moduleStatus={ModuleStatus}
-                  statuses={statuses}
                 />
               )
             })}
