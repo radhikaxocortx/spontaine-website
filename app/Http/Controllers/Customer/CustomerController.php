@@ -134,7 +134,7 @@ class CustomerController extends Controller
                 'email_verified' => true,
                 'company_id' => $company?->id,
             ]);
-            if ($data['priceplan_id']) {
+            if (! empty($data['priceplan_id'])) {
                 CustomerPricePlan::create([
                     'customer_id' => $customer->id,
                     'price_plan_id' => $data['priceplan_id'],
