@@ -23,6 +23,7 @@ const OtpPage = ({ customerId, verifyingEmail }: Props) => {
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
   const [countdown, setCountdown] = useState(0)
+  const [sentOtp, setSentOtp] = useState(30)
   const { formData, setFormValue } = useCustomForm({
     otp: '',
     customerId: customerId,
@@ -37,6 +38,7 @@ const OtpPage = ({ customerId, verifyingEmail }: Props) => {
     onError: () => {
       setError('The secret key you have entered is incorrect.')
       setCountdown(30)
+      setSentOtp(30)
     },
   })
 
@@ -49,6 +51,16 @@ const OtpPage = ({ customerId, verifyingEmail }: Props) => {
     }
     return () => clearInterval(timer)
   }, [countdown])
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout
+    if (sentOtp > 0) {
+      timer = setInterval(() => {
+        setSentOtp((prev) => prev - 1)
+      }, 1000)
+    }
+    return () => clearInterval(timer)
+  }, [sentOtp])
 
   const onFormSubmit = useCallback(
     (event: FormEvent<HTMLFormElement>) => {
@@ -119,11 +131,12 @@ const OtpPage = ({ customerId, verifyingEmail }: Props) => {
                     </InputOTPGroup>
                   </InputOTP>
                   <div
-                    onClick={regenerateOtp}
-                    className='cursor-pointer text-xs text-blue-900 hover:underline'
+                    onClick={sentOtp === 0 ? regenerateOtp : undefined}
+                    className={`cursor-pointer text-xs ${sentOtp === 0 ? 'text-blue-900 hover:underline' : 'text-gray-400'} `}
                   >
                     Regenerate One Time Secret Key
                   </div>
+
                   <AnimatePresence>
                     {error && (
                       <motion.div
