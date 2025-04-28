@@ -126,6 +126,9 @@ export default function CustomerDashboard() {
       </div>
     )
   }
+  const handleSignUp = () => {
+    router.get(route('sign-up.create', { priceplan_id: 2 }))
+  }
 
   return (
     <div className='min-h-screen bg-primary-graige-50'>
@@ -144,6 +147,7 @@ export default function CustomerDashboard() {
                 !
               </LargeText>
               <br />
+              <div onClick={handleSignUp}>SignUp Create</div>
               <NormalText className='mt-2 text-neutral-600'>
                 {hasPricePlan
                   ? hasWorkflow

@@ -15,6 +15,7 @@ use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 class CustomerFormRequest extends Data
 {
     public function __construct(
+        public ?int $priceplanId,
         #[Max(255)]
         public string $firstName,
         #[Max(255)]

@@ -38,9 +38,13 @@ class CustomerController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        return Inertia::render('Customer/CustomerCreate');
+
+        return Inertia::render('Customer/CustomerCreate', [
+            'priceplan_id' => $request->priceplan_id ?? null,
+        ]);
+
     }
 
     /**
@@ -130,6 +134,12 @@ class CustomerController extends Controller
                 'email_verified' => true,
                 'company_id' => $company?->id,
             ]);
+            if ($data['priceplan_id']) {
+                CustomerPricePlan::create([
+                    'customer_id' => $customer->id,
+                    'price_plan_id' => $data['priceplan_id'],
+                ]);
+            }
             Mail::to(User::pluck('email')->toArray())
                 ->send(new AdminMailForCustomerRegister(['email' => $data['email'], 'name' => $data['first_name'], 'phone' => $data['telephone']]));
             Mail::to($data['email'])->send(new RegisteredCustomerMail($data['email'], $data['first_name']));
@@ -143,7 +153,7 @@ class CustomerController extends Controller
         }
         DB::commit();
 
-        return redirect()->route('choose-priceplan')->with('message', 'Registration complete and logged in.');
+        return redirect()->route('customer-login-check')->with('message', 'Registration complete and logged in.');
 
     }
 

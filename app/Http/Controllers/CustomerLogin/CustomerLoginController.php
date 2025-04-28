@@ -4,6 +4,8 @@ namespace App\Http\Controllers\CustomerLogin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer\Customer;
+use App\Models\Customer\CustomerPricePlan;
+use App\Models\Customer\CustomerWorkflow;
 use App\Models\PricePlan\PricePlan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -61,5 +63,30 @@ class CustomerLoginController extends Controller
         return Inertia::render('CustomerLogin/CustomerDashboard', [
             'pricePlan' => $priceplan,
         ]);
+    }
+
+    public function customerLoginConditionalcheck()
+    {
+        $customer = Auth::guard('customer')->user();
+        $customerId = $customer->id;
+
+        $priceplanExist = CustomerPricePlan::where('customer_id', $customerId)->exists();
+
+        if ($priceplanExist) {
+            $customerPriceplan = CustomerPricePlan::where('customer_id', $customerId)
+                ->latest()
+                ->first();
+            $workflowExist = CustomerWorkflow::where('customer_priceplan_id', $customerPriceplan->id)->exists();
+
+            if ($workflowExist) {
+                return redirect()->route('customer-dashboard');
+            } else {
+                return redirect()->route('customer-workflow-create', ['pricePlanId' => $customerPriceplan->price_plan_id, 'customerPriceplanId' => $customerPriceplan]);
+            }
+
+        } else {
+            return redirect()->route('choose-priceplan');
+        }
+
     }
 }

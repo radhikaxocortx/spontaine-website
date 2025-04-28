@@ -98,12 +98,13 @@ const CustomerAdminShow = ({
         id: 10,
         type: 'text',
       },
-      customerPriceplan.customer.company?.company_postal_code && {
-        label: 'Organization Postal Code',
-        content: customerPriceplan.customer.company?.company_postal_code,
-        id: 11,
-        type: 'text',
-      },
+      // customerPriceplan.customer.company_id &&
+      //   customerPriceplan.customer.company?.company_postal_code && {
+      //     label: 'Organization Postal Code',
+      //     content: customerPriceplan.customer.company?.company_postal_code,
+      //     id: 11,
+      //     type: 'text',
+      //   },
       customerPriceplan.customer.company_id && {
         label: 'Organizaton Country',
         content: customerPriceplan.customer.company?.company_country,

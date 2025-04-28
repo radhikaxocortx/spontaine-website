@@ -126,6 +126,8 @@ Route::get('customer-create', [CustomerController::class, 'createCustomer'])
 Route::post('validate-customer', [CustomerLoginController::class, 'ValidatePassword'])
     ->name('validate-customer');
 Route::middleware(['auth:customer'])->group(function () {
+    Route::get('customer-login-check', [CustomerLoginController::class, 'customerLoginConditionalcheck'])
+        ->name('customer-login-check');
     Route::get('choose-priceplan', [CustomerLoginController::class, 'choosePriceplan'])
         ->name('choose-priceplan');
     Route::get('customer-dashboard', [CustomerLoginController::class, 'customerDashboard'])
