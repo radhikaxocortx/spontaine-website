@@ -8,6 +8,7 @@ import ErrorText from '@/typography/ErrorText'
 import NormalText from '@/typography/NormalText'
 import Paragraph from '@/typography/Paragraph'
 import StrongText from '@/typography/StrongText'
+import { router } from '@inertiajs/react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from 'input-otp'
 import { CheckCircle2, XCircle } from 'lucide-react'
@@ -59,7 +60,13 @@ const OtpPage = ({ customerId, verifyingEmail }: Props) => {
 
   const handleOtpChange = (value: string) => {
     setFormValue('otp')(value)
-    setError(null) // Clear error when user starts typing
+    setError(null)
+  }
+
+  const regenerateOtp = () => {
+    router.get(
+      route('customer-verification', { customerId: customerId, verifyingEmail: verifyingEmail })
+    )
   }
 
   return (
@@ -111,7 +118,12 @@ const OtpPage = ({ customerId, verifyingEmail }: Props) => {
                       <InputOTPSlot index={5} />
                     </InputOTPGroup>
                   </InputOTP>
-
+                  <div
+                    onClick={regenerateOtp}
+                    className='cursor-pointer text-xs text-blue-900 hover:underline'
+                  >
+                    Regenerate One Time Secret Key
+                  </div>
                   <AnimatePresence>
                     {error && (
                       <motion.div
