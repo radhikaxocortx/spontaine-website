@@ -8,6 +8,7 @@ import ErrorText from '@/typography/ErrorText'
 import NormalText from '@/typography/NormalText'
 import Paragraph from '@/typography/Paragraph'
 import StrongText from '@/typography/StrongText'
+import { router } from '@inertiajs/react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from 'input-otp'
 import { CheckCircle2, XCircle } from 'lucide-react'
@@ -22,6 +23,7 @@ const OtpPage = ({ customerId, verifyingEmail }: Props) => {
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
   const [countdown, setCountdown] = useState(0)
+  const [sentOtp, setSentOtp] = useState(30)
   const { formData, setFormValue } = useCustomForm({
     otp: '',
     customerId: customerId,
@@ -36,6 +38,7 @@ const OtpPage = ({ customerId, verifyingEmail }: Props) => {
     onError: () => {
       setError('The secret key you have entered is incorrect.')
       setCountdown(30)
+      setSentOtp(30)
     },
   })
 
@@ -49,6 +52,16 @@ const OtpPage = ({ customerId, verifyingEmail }: Props) => {
     return () => clearInterval(timer)
   }, [countdown])
 
+  useEffect(() => {
+    let timer: NodeJS.Timeout
+    if (sentOtp > 0) {
+      timer = setInterval(() => {
+        setSentOtp((prev) => prev - 1)
+      }, 1000)
+    }
+    return () => clearInterval(timer)
+  }, [sentOtp])
+
   const onFormSubmit = useCallback(
     (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault()
@@ -59,7 +72,13 @@ const OtpPage = ({ customerId, verifyingEmail }: Props) => {
 
   const handleOtpChange = (value: string) => {
     setFormValue('otp')(value)
-    setError(null) // Clear error when user starts typing
+    setError(null)
+  }
+
+  const regenerateOtp = () => {
+    router.get(
+      route('customer-verification', { customerId: customerId, verifyingEmail: verifyingEmail })
+    )
   }
 
   return (
@@ -127,7 +146,12 @@ const OtpPage = ({ customerId, verifyingEmail }: Props) => {
                       </motion.div>
                     )}
                   </AnimatePresence>
-
+                  <div
+                    onClick={sentOtp === 0 ? regenerateOtp : undefined}
+                    className={`cursor-pointer text-xs ${sentOtp === 0 ? 'text-blue-900 hover:underline' : 'text-gray-400'} `}
+                  >
+                    Regenerate One Time Secret Key
+                  </div>
                   <Button
                     type='submit'
                     className='mt-4'

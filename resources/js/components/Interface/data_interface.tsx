@@ -50,7 +50,7 @@ export interface WorkflowModuleItem extends Model {
 }
 
 export interface WorflowFormItem extends WorkflowModuleItem {
-  value: string
+  value: string | string[]
   file: File | null
 }
 export interface ReferenceData extends Model {
@@ -143,6 +143,7 @@ export interface ModuleStatusVerification extends Model {
   internal_notes: string
   verification_date: string
   allow_update: boolean
+  customer_updated: boolean
 }
 
 export interface CustomerWorkflowStatus extends Model {

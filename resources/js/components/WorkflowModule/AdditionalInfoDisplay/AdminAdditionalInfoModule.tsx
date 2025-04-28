@@ -2,7 +2,6 @@ import ModuleStatusUpdate from '@/components/AdminCustomerVerification/ModuleSta
 import Modal from '@/components/CustomUI/Modal/Modal'
 import {
   ModuleStatusVerification,
-  ReferenceData,
   WorkflowItem,
   WorkflowModule,
 } from '@/components/Interface/data_interface'
@@ -20,7 +19,6 @@ interface Props {
   additionalInfo: WorkflowItem[]
   customerWorkflowID: number
   moduleStatus?: ModuleStatusVerification
-  statuses: ReferenceData[]
 }
 
 export default function AdminAdditionalInfoModule({
@@ -28,7 +26,6 @@ export default function AdminAdditionalInfoModule({
   additionalInfo,
   customerWorkflowID,
   moduleStatus,
-  statuses,
 }: Readonly<Props>) {
   const [updateModuleStatus, setUpdateModuleStatus] = useState(false)
   const [expandedValue, setExpandedValue] = useState<string | undefined>()
@@ -99,7 +96,6 @@ export default function AdminAdditionalInfoModule({
             customerWorkflowID={customerWorkflowID}
             setShowForm={setUpdateModuleStatus}
             moduleStatus={moduleStatus}
-            statuses={statuses}
           />
         </Modal>
       )}

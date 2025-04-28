@@ -3,22 +3,25 @@ import useCustomForm from '@/hooks/useCustomForm'
 import useInertiaPost from '@/hooks/useInertiaPost'
 import { formatDate } from '@/lib/utils'
 import { Dispatch, FormEvent, SetStateAction, useCallback, useMemo } from 'react'
-import { ModuleStatusVerification, ReferenceData } from '../Interface/data_interface'
+import { ModuleStatusVerification } from '../Interface/data_interface'
 
 interface Props {
   customerWorkflowID: number
   workflowModuleID: number
   setShowForm: Dispatch<SetStateAction<boolean>>
   moduleStatus: ModuleStatusVerification | undefined
-  statuses: ReferenceData[]
 }
-
+const status = [
+  { label: 'Not Started', value: 'Not Started' },
+  { label: 'In Process', value: 'In Process' },
+  { label: 'Inadequate', value: 'Inadequate' },
+  { label: 'Verified', value: 'Verified' },
+]
 const ModuleStatusUpdate = ({
   customerWorkflowID,
   workflowModuleID,
   setShowForm,
   moduleStatus,
-  statuses,
 }: Props) => {
   const { formData, setFormValue } = useCustomForm({
     status: moduleStatus?.status ?? 'processing',
@@ -51,12 +54,11 @@ const ModuleStatusUpdate = ({
   >() => {
     return {
       status: {
-        type: 'select',
-        placeholder: 'Select Status',
-        label: 'Select Status',
-        list: statuses,
-        dataKey: 'value_one',
-        displayKey: 'value_one',
+        type: 'radio',
+        label: 'Status',
+        list: status,
+        dataKey: 'label',
+        displayKey: 'value',
         setValue: setFormValue('status'),
       },
       customer_notes: {
@@ -77,7 +79,7 @@ const ModuleStatusUpdate = ({
         setValue: setFormValue('allow_update'),
       },
     } as Record<U, FormItem<T[U], K, G, L>>
-  }, [setFormValue, statuses])
+  }, [setFormValue])
 
   const handleFormSubmit = useCallback(
     (event: FormEvent<HTMLFormElement>) => {

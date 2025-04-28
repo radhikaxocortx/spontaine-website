@@ -15,6 +15,8 @@ use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 class CustomerFormRequest extends Data
 {
     public function __construct(
+        #[Rule('nullable|exists:price_plans,id')]
+        public ?int $priceplanId,
         #[Max(255)]
         public string $firstName,
         #[Max(255)]

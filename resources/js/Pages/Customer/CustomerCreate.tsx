@@ -6,8 +6,12 @@ import HeroHeadline from '@/typography/HeroHeadline'
 import HeroTextBlock from '@/typography/HeroTextBlock'
 import { useMemo } from 'react'
 
-const CustomerCreate = () => {
+interface Props {
+  priceplan_id: number | null
+}
+const CustomerCreate = ({ priceplan_id }: Props) => {
   const { formData, setFormValue } = useCustomForm({
+    priceplan_id: priceplan_id,
     first_name: '',
     last_name: '',
     telephone: '',
@@ -241,11 +245,11 @@ const CustomerCreate = () => {
             <div className='flex-1'>
               <div className='min-h-[600px]'>
                 <StepperFormPage
-      formItems={formItems}
-      formData={formData}
+                  formItems={formItems}
+                  formData={formData}
                   steps={steps}
-      buttonText='Verify Email'
-      url={route('sign-up.store')}
+                  buttonText='Verify Email'
+                  url={route('sign-up.store')}
                   onStepChange={(step) => {
                     console.log(`Moving to step ${step + 1}`)
                   }}

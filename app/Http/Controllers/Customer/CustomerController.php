@@ -38,9 +38,13 @@ class CustomerController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        return Inertia::render('Customer/CustomerCreate');
+
+        return Inertia::render('Customer/CustomerCreate', [
+            'priceplan_id' => $request->priceplan_id ?? null,
+        ]);
+
     }
 
     /**
@@ -130,6 +134,12 @@ class CustomerController extends Controller
                 'email_verified' => true,
                 'company_id' => $company?->id,
             ]);
+            if (! empty($data['priceplan_id'])) {
+                CustomerPricePlan::create([
+                    'customer_id' => $customer->id,
+                    'price_plan_id' => $data['priceplan_id'],
+                ]);
+            }
             Mail::to(User::pluck('email')->toArray())
                 ->send(new AdminMailForCustomerRegister(['email' => $data['email'], 'name' => $data['first_name'], 'phone' => $data['telephone']]));
             Mail::to($data['email'])->send(new RegisteredCustomerMail($data['email'], $data['first_name']));
@@ -143,7 +153,7 @@ class CustomerController extends Controller
         }
         DB::commit();
 
-        return redirect()->route('choose-priceplan')->with('message', 'Registration complete and logged in.');
+        return redirect()->route('customer-login-check')->with('message', 'Registration complete and logged in.');
 
     }
 
@@ -223,6 +233,42 @@ class CustomerController extends Controller
             ->with(['message' => 'Customer Workflow Saved Successfully']);
     }
 
+    public function customerWorkflowUpdate(Request $request)
+    {
+        DB::beginTransaction();
+        $filesToCleanUp = [];
+
+        try {
+            $customerPriceplanId = $request->customerPriceplanId;
+            $itemIds = collect($request->additionalInfo)->pluck('workflow_item_id')->all();
+            CustomerWorkflow::where('customer_priceplan_id', $customerPriceplanId)
+                ->whereIn('workflow_item_id', $itemIds)
+                ->delete();
+
+            [$infoRecords, $filesToCleanUp] = $this->process(
+                $request->additionalInfo ?? [],
+                'customer_workflow',
+            );
+
+            foreach ($infoRecords as &$infoRecord) {
+                $infoRecord['customer_priceplan_id'] = $customerPriceplanId;
+            }
+
+            CustomerWorkflow::insert($infoRecords);
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Storage::delete($filesToCleanUp);
+
+            return back()->with(['error' => ExceptionMessage::getMessage($e)]);
+        }
+
+        DB::commit();
+
+        return back()
+            ->with(['message' => 'Customer Workflow Updated Successfully']);
+    }
+
     public function findCustomerPriceplan($customerId)
     {
         $customerPriceplan = CustomerPricePlan::where('customer_id', $customerId)
@@ -252,5 +298,20 @@ class CustomerController extends Controller
             'CustomerPriceplanTemplate' => $CustomerPriceplanTemplate,
             'moduleUpdateStatus' => $moduleUpdateStatus,
         ]);
+    }
+
+    public function customerWorkflowStatusUpdate(Request $request)
+    {
+        $validatedRequest = $request->validate([
+            'customer_workflow_id' => ['required', 'integer', 'exists:customer_price_plans,id'],
+            'module_id' => ['required', 'integer', 'exists:entity_templates,id'],
+            'customer_status' => ['required', 'boolean'],
+        ]);
+        $updated = WorkflowModuleVerification::where('customer_workflow_id', $validatedRequest['customer_workflow_id'])
+            ->where('module_id', $validatedRequest['module_id'])
+            ->update(['customer_updated' => $validatedRequest['customer_status']]);
+
+        return back()->with(['message' => 'This Module is marked as completed.']);
+
     }
 }
