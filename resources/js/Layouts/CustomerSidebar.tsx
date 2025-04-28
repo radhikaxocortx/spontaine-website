@@ -7,7 +7,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import NormalText from '@/typography/NormalText'
-import { Link, usePage } from '@inertiajs/react'
+import { router, usePage } from '@inertiajs/react'
 import { useMemo, useRef } from 'react'
 
 export default function CustomerSidebar() {
@@ -20,6 +20,17 @@ export default function CustomerSidebar() {
   const userName = User?.first_name || ''
 
   const profileRef = useRef<HTMLDivElement>(null)
+
+  const handleLogout = () => {
+    router.visit(route('customer-login'), {
+      method: 'get',
+      preserveState: false,
+      replace: true,
+      onSuccess: () => {
+        window.location.reload()
+      },
+    })
+  }
 
   return (
     <div className='flex flex-row p-4 px-4'>
@@ -44,9 +55,8 @@ export default function CustomerSidebar() {
               <NormalText>Logged in as {userName}</NormalText>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <Link
-                href='/customer-login'
-                method='get'
+              <div
+                onClick={handleLogout}
                 className='flex w-full items-center px-4 py-2'
               >
                 <svg
@@ -69,7 +79,7 @@ export default function CustomerSidebar() {
                   <path d='M7 12h14l-3 -3m0 6l3 -3' />
                 </svg>
                 <NormalText>Sign out</NormalText>
-              </Link>
+              </div>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

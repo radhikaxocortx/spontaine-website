@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Customer\Customer;
 use App\Models\PricePlan\PricePlan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 
@@ -13,6 +14,12 @@ class CustomerLoginController extends Controller
 {
     public function loginForm()
     {
+        if (Auth::guard('customer')->check()) {
+            Auth::guard('customer')->logout();
+            request()->session()->invalidate();
+            request()->session()->regenerateToken();
+        }
+
         return Inertia::render('CustomerLogin/CustomerLoginForm');
     }
 
