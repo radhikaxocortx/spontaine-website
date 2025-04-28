@@ -98,7 +98,7 @@ const CustomerAdminShow = ({
         id: 10,
         type: 'text',
       },
-      customerPriceplan.customer.company.company_postal_code && {
+      customerPriceplan.customer.company?.company_postal_code && {
         label: 'Organization Postal Code',
         content: customerPriceplan.customer.company?.company_postal_code,
         id: 11,
