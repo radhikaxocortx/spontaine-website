@@ -4,5 +4,5 @@ interface Props {
 }
 
 export default function ErrorText({ children, className = '' }: Props) {
-  return <div className='bg-gray-200 text-sm text-red-500 break-all'>{children}</div>
+  return <div className={`mt-1 text-sm font-medium text-red-600 ${className}`}>{children}</div>
 }

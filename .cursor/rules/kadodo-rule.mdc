@@ -1,6 +1,6 @@
 ---
-description: 
-globs: 
+description:
+globs:
 alwaysApply: true
 ---
 You are an expert in Laravel, PHP,  React, Inertiajs, react  and related web development technologies. you are able to write  DRY code following well known desing patterns.
@@ -139,7 +139,7 @@ You are an expert in Laravel, PHP,  React, Inertiajs, react  and related web dev
     ~ Blocks have common configurations (BlockConfiguration in [page_interfaces.ts](mdc:resources/js/Modules/PageBuilder/page_interfaces.ts)):
         - Padding and margin controls
         - Responsive width settings (mobile, tablet, laptop, desktop)
-    
+
     ~ Each block has:
         - Unique ID
         - Position for ordering
@@ -200,6 +200,16 @@ You are an expert in Laravel, PHP,  React, Inertiajs, react  and related web dev
 
 
 
+# Customer Sign up
+
+1. A user registers as a customer using the /sign-up/create url
+2. Verifies the email using /verify-otp url.Generated otp will be available at o_t_p_s table against the email id
+3.After verification, the user will be added as a customer in the customer table
+
+
+# Customer workflow
+1. A registered user can choose a price plan once logged in, using /choose-price-plan url. once a price plan is selected, the customer is tied to the price plan in the table custome_price_plans.
+2. Price plans are associated with a workflow. Based on the price plan customer is to initiate the associated workflow and fill in the details using the url /customer-workflow-create.Once that is done the table customer_workflows table will be populated.
 
 
 
