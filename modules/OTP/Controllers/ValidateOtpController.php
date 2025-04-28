@@ -4,7 +4,6 @@ namespace Modules\OTP\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer\Customer;
-use App\Models\Customer\CustomerPricePlan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Modules\OTP\Models\OTP;
@@ -42,11 +41,7 @@ class ValidateOtpController extends Controller
 
         // customer login
         Auth::guard('customer')->login($customer);
-        $priceplanExist = CustomerPricePlan::where('customer_id', $customer->id)->exists();
-        if ($priceplanExist) {
-            return redirect()->route('customer-dashboard');
-        }
 
-        return redirect()->route('choose-priceplan')->with('message', 'One time use key verified and logged in successfully.');
+        return redirect()->route('customer-login-check')->with('message', 'One time use key verified and logged in successfully.');
     }
 }

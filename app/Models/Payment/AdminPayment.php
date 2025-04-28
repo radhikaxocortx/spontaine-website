@@ -22,7 +22,7 @@ class AdminPayment extends Model
         'updated_by',
     ];
 
-    public function customerWorkflow(): BelongsTo
+    public function customerPriceplan(): BelongsTo
     {
         return $this->belongsTo(CustomerPricePlan::class, 'customer_workflow_id', 'id');
     }

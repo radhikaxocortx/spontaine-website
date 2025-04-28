@@ -19,6 +19,7 @@ class AdminPaymentRequest extends Data
         public string $payment_method,
         public string $notes,
         public string $payment_date,
+        #[Rule('string|max:50')]
         public string $accounting_reference,
     ) {}
 }
