@@ -14,6 +14,7 @@ export interface Paginator<T> {
   links: { active: boolean; label: string; url: string | null }[]
   total: number
   last_page: number
+  per_page: number
 }
 
 export interface FormFieldProp {
