@@ -1,85 +1,113 @@
 import CardHeader from '@/components/CustomUI/Card/CardHeader'
-import Pagination from '@/components/CustomUI/Pagination/Pagination'
 import { CustomerPricePlan } from '@/components/Interface/data_interface'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Paginator } from '@/components/ui/ui_interfaces'
 import FormBuilder, { FormItem } from '@/FormBuilder/FormBuilder'
 import useCustomForm from '@/hooks/useCustomForm'
 import DashboardPadding from '@/Layouts/DashboardLayout'
-import { getDisplayDate } from '@/lib/utils'
-import NormalText from '@/typography/NormalText'
-import Paragraph from '@/typography/Paragraph'
 import { router } from '@inertiajs/react'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import Dashboard from '../Dashboard'
+import VerificationTabContent from './components/VerificationTabContent'
 
 interface Props {
   customerPriceplans: Paginator<CustomerPricePlan>
 }
 
 const CustomerAdminView = ({ customerPriceplans }: Props) => {
+  const [activeTab, setActiveTab] = useState('business')
   const { formData, setFormValue } = useCustomForm({
     search: '',
   })
+
   const formItems = useMemo(() => {
     return {
       search: {
         label: 'Search',
         type: 'text',
         setValue: setFormValue('search'),
-        placeholder: 'Search by Customer,priceplan',
+        placeholder: 'Search by Customer, price plan',
       } as FormItem<string, never, never, never>,
     }
   }, [setFormValue])
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
     router.get(route('customer-admin-view'), {
       ...formData,
+      type: activeTab,
     } as Record<string, string | number>)
   }
 
   const handleCardClick = useCallback((id: number | string) => {
     router.get(route('customer-admin-show', id))
   }, [])
+
+  const filteredRequests = useMemo(() => {
+    return customerPriceplans.data.filter((request) => {
+      const pricePlanType = request.price_plan.type.toLowerCase()
+      return activeTab === 'business'
+        ? pricePlanType.includes('business')
+        : pricePlanType.includes('individual')
+    })
+  }, [customerPriceplans.data, activeTab])
+
+  const paginatedData = useMemo(() => {
+    const total = filteredRequests.length
+    const perPage = customerPriceplans.per_page
+    const currentPage = customerPriceplans.current_page
+    const lastPage = Math.ceil(total / perPage)
+
+    return {
+      ...customerPriceplans,
+      data: filteredRequests,
+      total,
+      last_page: lastPage,
+      from: (currentPage - 1) * perPage + 1,
+      to: Math.min(currentPage * perPage, total),
+    }
+  }, [filteredRequests, customerPriceplans])
+
   return (
     <Dashboard>
       <DashboardPadding>
-        <CardHeader title='CUSTOMERS' />
+        <CardHeader title='VERIFICATION REQUESTS' />
+        <div className='mt-4 flex flex-col gap-5'>
+          <FormBuilder
+            formData={formData}
+            onFormSubmit={handleSearch}
+            formItems={formItems}
+            loading={false}
+            buttonText='Search'
+            formStyles={`md:grid-cols-3 lg:grid-cols-4`}
+          />
+        </div>
         <div className='flex flex-col gap-10 py-5'>
-          <div className='flex flex-col gap-5'>
-            <FormBuilder
-              formData={formData}
-              onFormSubmit={handleSearch}
-              formItems={formItems}
-              loading={false}
-              buttonText='Search'
-              formStyles={`md:grid-cols-3 lg:grid-cols-4 `}
-            />
-          </div>
-        </div>
-        <div className='space-y-2 py-5'>
-          <div className='grid grid-cols-4 gap-4 rounded-md bg-gray-50 p-3'>
-            <NormalText>CUSTOMER</NormalText>
-            <NormalText>TELEPHONE</NormalText>
-            <NormalText>PRICE PLAN</NormalText>
-            <NormalText>SUBSCRIBED ON</NormalText>
-          </div>
+          <Tabs
+            defaultValue='business'
+            className='w-full'
+            onValueChange={setActiveTab}
+          >
+            <TabsList className='grid w-full grid-cols-2'>
+              <TabsTrigger value='business'>Business Verifications</TabsTrigger>
+              <TabsTrigger value='personal'>Individual Verifications</TabsTrigger>
+            </TabsList>
 
-          {customerPriceplans.data.map((customerPriceplan) => (
-            <div
-              key={customerPriceplan.id}
-              className='rounded-mdp-3 group relative grid grid-cols-4 items-center gap-4 p-2 hover:cursor-pointer hover:bg-white'
-              onClick={() => handleCardClick(customerPriceplan.id)}
-            >
-              <Paragraph>{customerPriceplan.customer.first_name}</Paragraph>
-              <Paragraph>{customerPriceplan.customer.telephone}</Paragraph>
-              <Paragraph>{customerPriceplan.price_plan.name}</Paragraph>
-              <Paragraph>{getDisplayDate(customerPriceplan.created_at)}</Paragraph>
-            </div>
-          ))}
+            <VerificationTabContent
+              value='business'
+              requests={filteredRequests}
+              pagination={paginatedData}
+              onViewClick={handleCardClick}
+            />
+
+            <VerificationTabContent
+              value='personal'
+              requests={filteredRequests}
+              pagination={paginatedData}
+              onViewClick={handleCardClick}
+            />
+          </Tabs>
         </div>
-        <Pagination pagination={customerPriceplans} />
       </DashboardPadding>
     </Dashboard>
   )

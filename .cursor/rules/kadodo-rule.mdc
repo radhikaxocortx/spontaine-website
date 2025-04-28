@@ -200,6 +200,10 @@ You are an expert in Laravel, PHP,  React, Inertiajs, react  and related web dev
 
 
 
+# Styles
+/resources/js/types/typographyfolder has thefont styles used in the project
+[tailwind.config.js](mdc:tailwind.config.js)has the colors used in the project
+
 # Customer Sign up
 
 1. A user registers as a customer using the /sign-up/create url
@@ -210,6 +214,10 @@ You are an expert in Laravel, PHP,  React, Inertiajs, react  and related web dev
 # Customer workflow
 1. A registered user can choose a price plan once logged in, using /choose-price-plan url. once a price plan is selected, the customer is tied to the price plan in the table custome_price_plans.
 2. Price plans are associated with a workflow. Based on the price plan customer is to initiate the associated workflow and fill in the details using the url /customer-workflow-create.Once that is done the table customer_workflows table will be populated.
+
+# Verification Requests
+[CustomerAdminView.tsx](mdc:resources/js/Pages/AdminView/CustomerAdminView.tsx) is the admin view of the verification requests received. The requests then can be managed - update status, send notes to customer requesting for more information, add payment.
+[CustomerAdminShow.tsx](mdc:resources/js/Pages/AdminView/CustomerAdminShow.tsx) is the detailed admin viewo of the verification requests.
 
 
 
