@@ -33,7 +33,7 @@ const CustomerCreate = ({ priceplan_id }: Props) => {
     company_tax_id: '',
     company_registration_id: '',
   })
-  console.log(formData)
+
   const formItems = useMemo(() => {
     return {
       first_name: {

@@ -130,12 +130,6 @@ const OtpPage = ({ customerId, verifyingEmail }: Props) => {
                       <InputOTPSlot index={5} />
                     </InputOTPGroup>
                   </InputOTP>
-                  <div
-                    onClick={sentOtp === 0 ? regenerateOtp : undefined}
-                    className={`cursor-pointer text-xs ${sentOtp === 0 ? 'text-blue-900 hover:underline' : 'text-gray-400'} `}
-                  >
-                    Regenerate One Time Secret Key
-                  </div>
 
                   <AnimatePresence>
                     {error && (
@@ -152,7 +146,12 @@ const OtpPage = ({ customerId, verifyingEmail }: Props) => {
                       </motion.div>
                     )}
                   </AnimatePresence>
-
+                  <div
+                    onClick={sentOtp === 0 ? regenerateOtp : undefined}
+                    className={`cursor-pointer text-xs ${sentOtp === 0 ? 'text-blue-900 hover:underline' : 'text-gray-400'} `}
+                  >
+                    Regenerate One Time Secret Key
+                  </div>
                   <Button
                     type='submit'
                     className='mt-4'
