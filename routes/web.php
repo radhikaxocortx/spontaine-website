@@ -128,6 +128,10 @@ Route::post('validate-customer', [CustomerLoginController::class, 'ValidatePassw
 Route::middleware(['auth:customer'])->group(function () {
     Route::get('customer-login-check', [CustomerLoginController::class, 'customerLoginConditionalcheck'])
         ->name('customer-login-check');
+    Route::get('customer-payment/{id}', [CustomerLoginController::class, 'customerPayment'])
+        ->name('customer-payment');
+    Route::post('kadodo-id-generate', [CustomerLoginController::class, 'kadodoIdGenerate'])
+        ->name('kadodo-id-generate');
     Route::get('choose-priceplan', [CustomerLoginController::class, 'choosePriceplan'])
         ->name('choose-priceplan');
     Route::get('customer-dashboard', [CustomerLoginController::class, 'customerDashboard'])

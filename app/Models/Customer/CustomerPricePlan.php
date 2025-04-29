@@ -41,4 +41,9 @@ class CustomerPricePlan extends Model
     {
         return $this->hasOne(AdminPayment::class, 'customer_workflow_id', 'id');
     }
+
+    public function kadodoID(): HasOne
+    {
+        return $this->hasOne(KadodoID::class, 'customer_priceplan_id', 'id');
+    }
 }

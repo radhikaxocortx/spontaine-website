@@ -121,6 +121,14 @@ export interface CustomerPricePlan extends Model {
   customer: Customer
   verification_status?: CustomerWorkflowStatus
   payment_details?: AdminPayment
+  kadodo_i_d?: KadodoID
+}
+
+export interface KadodoID extends Model {
+  customer_priceplan_id: number
+  kadodo_id: string
+  valid_from: string
+  valid_to: string
 }
 
 export interface WorkflowItem extends Model {
