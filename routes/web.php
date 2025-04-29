@@ -66,6 +66,11 @@ Route::middleware('guest')->group(function () {
     Route::resource('sign-up', CustomerController::class)
         ->parameters(['sign-up' => 'customer']);
 });
+
+// Kadodo ID
+Route::get('verification-details/{kadodoId}', [CustomerLoginController::class, 'verificationDetails'])
+    ->name('verification-details');
+
 // Reference Data
 Route::resource('/reference-data', ReferenceDataController::class);
 Route::get('domain-list', [ReferenceDataAPIController::class, 'domainList'])

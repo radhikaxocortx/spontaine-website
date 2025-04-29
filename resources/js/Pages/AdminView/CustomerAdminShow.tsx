@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button'
 import AdminAdditionalInfoModule from '@/components/WorkflowModule/AdditionalInfoDisplay/AdminAdditionalInfoModule'
 import DashboardPadding from '@/Layouts/DashboardLayout'
 import StrongText from '@/typography/StrongText'
+import { router } from '@inertiajs/react'
 import { useMemo, useState } from 'react'
 import Dashboard from '../Dashboard'
 import ContactDetails from './components/ContactDetails'
@@ -66,6 +67,11 @@ const CustomerAdminShow = ({
     )
   }
 
+  const handleKadodoId = () => {
+    console.log(customerPriceplan.kadodo_id)
+    router.get(route('verification-details', { kadodoId: customerPriceplan.kadodo_id }))
+  }
+
   return (
     <Dashboard>
       <DashboardPadding>
@@ -76,7 +82,13 @@ const CustomerAdminShow = ({
 
         <div className='flex items-center space-x-2 py-2'>
           <StrongText className='text-xl'>{`${customerPriceplan.price_plan.name} (${customerPriceplan.price_plan.code})`}</StrongText>
-          {getStatusBadge(customerWorkflowStatus.status)}
+          {getStatusBadge(customerWorkflowStatus?.status)}
+        </div>
+        <div
+          onClick={handleKadodoId}
+          className='cursor-pointer'
+        >
+          Kadodo Id
         </div>
         <div className='flex'>
           <Button
@@ -125,7 +137,6 @@ const CustomerAdminShow = ({
                       additionalInfo={customerPriceplanInfo}
                       customerWorkflowID={customerPriceplan.id}
                       moduleStatus={ModuleStatus}
-                      statuses={statuses}
                     />
                   )
                 })}

@@ -7,6 +7,7 @@ use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerPricePlan;
 use App\Models\Customer\CustomerWorkflow;
 use App\Models\Customer\KadodoID;
+use App\Models\CustomerVerification\WorkflowModuleVerification;
 use App\Models\PricePlan\PricePlan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -122,6 +123,23 @@ class CustomerLoginController extends Controller
         }
 
         return redirect()->route('customer-login-check');
+
+    }
+
+    public function verificationDetails($kadodoId)
+    {
+
+        $kadodoId = KadodoID::where('kadodo_id', $kadodoId)->first();
+        $customerPriceplan = CustomerPricePlan::where('id', $kadodoId->customer_priceplan_id)
+            ->with('pricePlan', 'customer.company', 'verificationStatus', 'paymentDetails')
+            ->first();
+        $moduleVerification = WorkflowModuleVerification::where('customer_workflow_id', $customerPriceplan->id)->get();
+
+        return Inertia::render('Customer/VerificationDetails', [
+            'kadodoId' => $kadodoId,
+            'customerPriceplan' => $customerPriceplan,
+            'moduleVerification' => $moduleVerification,
+        ]);
 
     }
 }
