@@ -70,6 +70,8 @@ Route::middleware('guest')->group(function () {
 // Kadodo ID
 Route::get('verification-details/{kadodoId}', [CustomerLoginController::class, 'verificationDetails'])
     ->name('verification-details');
+Route::post('kadodo-id-generate', [CustomerAdminController::class, 'kadodoIdGenerate'])
+    ->name('kadodo-id-generate');
 
 // Reference Data
 Route::resource('/reference-data', ReferenceDataController::class);
@@ -135,8 +137,6 @@ Route::middleware(['auth:customer'])->group(function () {
         ->name('customer-login-check');
     Route::get('customer-payment/{id}', [CustomerLoginController::class, 'customerPayment'])
         ->name('customer-payment');
-    Route::post('kadodo-id-generate', [CustomerLoginController::class, 'kadodoIdGenerate'])
-        ->name('kadodo-id-generate');
     Route::get('choose-priceplan', [CustomerLoginController::class, 'choosePriceplan'])
         ->name('choose-priceplan');
     Route::get('customer-dashboard', [CustomerLoginController::class, 'customerDashboard'])
