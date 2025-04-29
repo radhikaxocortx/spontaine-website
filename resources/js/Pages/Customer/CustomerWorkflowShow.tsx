@@ -8,6 +8,7 @@ import {
 } from '@/components/Interface/data_interface'
 import { Button } from '@/components/ui/button'
 import CustomerPriceplanInfoModule from '@/components/WorkflowModule/AdditionalInfoDisplay/CustomerPriceplanInfoModule'
+import { getDisplayDate } from '@/lib/utils'
 import StrongText from '@/typography/StrongText'
 
 interface Props {
@@ -34,6 +35,7 @@ const CustomerWorkflowShow = ({
   CustomerPriceplanTemplate,
   moduleUpdateStatus,
 }: Props) => {
+  console.log(customerPriceplan)
   return (
     <CustomerDashboardLayout>
       <div className='p-5'>
@@ -49,8 +51,18 @@ const CustomerWorkflowShow = ({
             {customerPriceplan.customer?.last_name}
           </StrongText>
           <br />
-          <StrongText>KADODO ID : not generated</StrongText>
-        </div>{' '}
+          <StrongText>
+            KADODO ID : {customerPriceplan.kadodo_i_d?.kadodo_id || 'not generated'}
+            <br />
+            {customerPriceplan.kadodo_i_d?.valid_from && (
+              <>
+                Valid From : {getDisplayDate(customerPriceplan.kadodo_i_d?.valid_from)}
+                <br />
+                Valid To : {getDisplayDate(customerPriceplan.kadodo_i_d?.valid_to)}
+              </>
+            )}
+          </StrongText>
+        </div>
         {customerPriceplanInfo && (
           <div className='my-5 grid grid-cols-1 gap-5'>
             {CustomerPriceplanTemplate?.workflow_modules

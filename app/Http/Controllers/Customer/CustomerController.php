@@ -283,7 +283,7 @@ class CustomerController extends Controller
     public function customerWorkflowShow(Request $request)
     {
         $customerPriceplan = CustomerPricePlan::where('id', $request->id)
-            ->with('pricePlan', 'customer', 'verificationStatus')
+            ->with('pricePlan', 'customer', 'verificationStatus', 'kadodoID')
             ->first();
         $customerPriceplanInfo = CustomerWorkflow::where('customer_priceplan_id', $request->id)->get();
         $CustomerPriceplanTemplate = Workflow::where('priceplan_id', $customerPriceplan->price_plan_id)
