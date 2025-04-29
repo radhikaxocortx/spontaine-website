@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('kadodo_i_d_s', function (Blueprint $table) {
             $table->id();
             $table->foreignId('customer_priceplan_id')->constrained('customer_price_plans');
-            $table->string('kadodo_id');
-            $table->string('valid_from');
-            $table->string('valid_to');
+            $table->string('kadodo_id')->unique();
+            $table->date('valid_from');
+            $table->date('valid_to');
             $table->softDeletes();
             $table->timestamps();
         });

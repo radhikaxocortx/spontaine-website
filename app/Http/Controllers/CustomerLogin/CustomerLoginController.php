@@ -110,8 +110,8 @@ class CustomerLoginController extends Controller
         $validatedData = $request->validate([
             'customer_priceplan_id' => 'required|exists:customer_price_plans,id',
             'kadodo_id' => 'required|unique:kadodo_i_d_s,kadodo_id',
-            'valid_from' => 'required',
-            'valid_to' => 'required',
+            'valid_from' => 'required|date|date_format:Y-m-d',
+            'valid_to' => 'required|date|date_format:Y-m-d|after:valid_from',
         ]);
 
         try {
