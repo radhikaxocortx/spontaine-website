@@ -37,6 +37,11 @@ export default function ManageTemplateItems({ workflowModule }: Props) {
         isShownInCard: true,
       },
       {
+        key: 'external_field_name',
+        label: 'External Field Name',
+        isShownInCard: true,
+      },
+      {
         key: 'type',
         label: 'Type',
         isShownInCard: true,

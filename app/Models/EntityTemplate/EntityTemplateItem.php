@@ -11,6 +11,7 @@ class EntityTemplateItem extends Model
 
     protected $fillable = [
         'workflow_module_id',
+        'external_field_name',
         'field_number',
         'field_name',
         'type',

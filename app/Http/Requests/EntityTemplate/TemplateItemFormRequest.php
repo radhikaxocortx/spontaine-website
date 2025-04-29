@@ -15,6 +15,7 @@ class TemplateItemFormRequest extends Data
         public int $workflowModuleId,
         public int $fieldNumber,
         public string $fieldName,
+        public ?string $externalFieldName,
         public string $type,
         public ?string $defaultValue,
         public ?string $domain,
