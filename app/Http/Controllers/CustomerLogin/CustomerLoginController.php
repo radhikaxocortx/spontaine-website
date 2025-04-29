@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerPricePlan;
 use App\Models\Customer\CustomerWorkflow;
+use App\Models\Customer\KadodoID;
 use App\Models\PricePlan\PricePlan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -79,7 +80,14 @@ class CustomerLoginController extends Controller
             $workflowExist = CustomerWorkflow::where('customer_priceplan_id', $customerPriceplan->id)->exists();
 
             if ($workflowExist) {
-                return redirect()->route('customer-dashboard');
+
+                $kadodoIDExist = KadodoID::where('customer_priceplan_id', $customerPriceplan->id)->exists();
+                if ($kadodoIDExist) {
+                    return redirect()->route('customer-dashboard');
+                } else {
+                    return redirect()->route('customer-payment', ['id' => $customerPriceplan->id]);
+                }
+
             } else {
                 return redirect()->route('customer-workflow-create', ['pricePlanId' => $customerPriceplan->price_plan_id, 'customerPriceplanId' => $customerPriceplan]);
             }
@@ -87,6 +95,33 @@ class CustomerLoginController extends Controller
         } else {
             return redirect()->route('choose-priceplan');
         }
+
+    }
+
+    public function customerPayment(Request $request)
+    {
+        $customerPriceplan = CustomerPricePlan::where('id', $request->id)->with('pricePlan')->first();
+
+        return Inertia::render('CustomerLogin/CustomerPayment', ['customerPriceplan' => $customerPriceplan]);
+    }
+
+    public function kadodoIdGenerate(Request $request)
+    {
+        $validatedData = $request->validate([
+            'customer_priceplan_id' => 'required|exists:customer_price_plans,id',
+            'kadodo_id' => 'required|unique:kadodo_i_d_s,kadodo_id',
+            'valid_from' => 'required',
+            'valid_to' => 'required',
+        ]);
+
+        try {
+
+            $kadodoId = KadodoID::create($validatedData);
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+
+        return redirect()->route('customer-login-check');
 
     }
 }
