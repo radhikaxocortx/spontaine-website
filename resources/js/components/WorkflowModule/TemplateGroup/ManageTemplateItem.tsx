@@ -67,6 +67,7 @@ export default function ManageTemplateItems({ workflowModule }: Props) {
           id: record.id,
           field_name: `${record.field_number}) ${record.field_name}`,
           type: record.type,
+          external_field_name: record.external_field_name,
           default_value: record.default_value,
           placeholder: record.placeholder,
           actions: [

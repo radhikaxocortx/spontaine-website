@@ -42,7 +42,7 @@ export interface WorkflowModuleItem extends Model {
   workflow_module_id: number
   field_number: number
   field_name: string
-  external_field_name: string
+  external_field_name: string | null
   type: string
   domain: string | null
   parameter: string | null
