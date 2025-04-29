@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedInteger('field_number')->default(1);
 
             $table->string('field_name');
+            $table->string('external_field_name')->nullable();
             $table->string('type');
             $table->string('default_value')->nullable();
             $table->string('placeholder')->nullable();

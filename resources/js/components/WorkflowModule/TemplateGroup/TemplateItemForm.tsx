@@ -50,6 +50,7 @@ export default function TemplateItemForm({
   const { formData, setFormValue } = useCustomForm({
     field_number: item?.field_number.toString() ?? '',
     field_name: item?.field_name ?? '',
+    external_field_name: item?.external_field_name ?? '',
     type: item?.type ?? 'text',
     domain: item?.domain ?? '',
     parameter: item?.parameter ?? '',
@@ -75,7 +76,11 @@ export default function TemplateItemForm({
         label: 'Field Name',
         setValue: setFormValue('field_name'),
       },
-
+      external_field_name: {
+        type: 'text',
+        label: 'External Field Name',
+        setValue: setFormValue('external_field_name'),
+      },
       type: {
         type: 'select',
         label: 'Field Type',

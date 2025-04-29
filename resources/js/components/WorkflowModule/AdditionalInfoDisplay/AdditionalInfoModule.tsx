@@ -51,7 +51,7 @@ export default function AdditionalInfoModule({ workflowModule, additionalInfo }:
                         className='flex flex-col gap-1'
                       >
                         <span className='text-muted-foreground text-xs font-medium'>
-                          {item.field_name}
+                          {item.external_field_name ?? item.field_name}
                         </span>
                         <span className='text-sm'>{values.join(', ')}</span>
                       </div>
