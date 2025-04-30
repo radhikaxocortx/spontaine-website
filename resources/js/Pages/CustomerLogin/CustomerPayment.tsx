@@ -17,12 +17,10 @@ const CustomerPayment = ({ customerPriceplan }: Props) => {
 
   console.log({ validFrom, validTo })
   const handleIDGenerate = () => {
-    router.post(
-      route('kadodo-id-generate', {
-        customer_priceplan_id: customerPriceplan.id,
-        kadodo_id: customerPriceplan.kadodo_id,
-        valid_from: validFrom,
-        valid_to: validTo,
+    router.get(
+      route('customer-workflow-create', {
+        pricePlanId: customerPriceplan.price_plan_id,
+        customerPriceplanId: customerPriceplan.id,
       })
     )
   }

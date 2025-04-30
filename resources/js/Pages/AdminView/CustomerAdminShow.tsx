@@ -19,6 +19,7 @@ import StrongText from '@/typography/StrongText'
 import { useMemo, useState } from 'react'
 import Dashboard from '../Dashboard'
 import ContactDetails from './components/ContactDetails'
+import KadodoIdDetails from './components/KadodoIdDetails'
 import OrganizationDetails from './components/OrganizationDetails'
 
 interface Props {
@@ -102,6 +103,9 @@ const CustomerAdminShow = ({
           )}
         </div>
         <div className='space-y-6'>
+          {customerPriceplan?.kadodo_i_d && (
+            <KadodoIdDetails kadodoID={customerPriceplan.kadodo_i_d} />
+          )}
           {/* Organization Details - Shown prominently for business verifications */}
           {isBusinessVerification && <OrganizationDetails customerPriceplan={customerPriceplan} />}
 

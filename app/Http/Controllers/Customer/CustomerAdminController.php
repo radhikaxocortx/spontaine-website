@@ -47,7 +47,7 @@ class CustomerAdminController extends Controller
 
         $id = $request->id;
         $customerPriceplan = CustomerPricePlan::where('id', $id)
-            ->with('customer.company', 'pricePlan', 'paymentDetails.updatedBy')
+            ->with('customer.company', 'pricePlan', 'paymentDetails.updatedBy', 'kadodoID')
             ->firstOrFail();
         $customerPriceplanInfo = CustomerWorkflow::where('customer_priceplan_id', $id)->get();
         $CustomerPriceplanTemplate = Workflow::where('priceplan_id', $customerPriceplan->price_plan_id)
