@@ -1,6 +1,7 @@
 import AddPayment from '@/components/AdminCustomerVerification/AddPayment'
 import PaymentDetails from '@/components/AdminCustomerVerification/PaymentDetails'
 import UpdateCustomerWorkflowStatus from '@/components/AdminCustomerVerification/UpdateCustomerWorkflowStatus'
+import VerificationStatus from '@/components/AdminCustomerVerification/VerificationStatus'
 import CardHeader from '@/components/CustomUI/Card/CardHeader'
 import Modal from '@/components/CustomUI/Modal/Modal'
 import {
@@ -13,12 +14,16 @@ import {
 } from '@/components/Interface/data_interface'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
 import AdminAdditionalInfoModule from '@/components/WorkflowModule/AdditionalInfoDisplay/AdminAdditionalInfoModule'
 import DashboardPadding from '@/Layouts/DashboardLayout'
+import NormalText from '@/typography/NormalText'
 import StrongText from '@/typography/StrongText'
+import { router } from '@inertiajs/react'
 import { useMemo, useState } from 'react'
 import Dashboard from '../Dashboard'
 import ContactDetails from './components/ContactDetails'
+import KadodoIdDetails from './components/KadodoIdDetails'
 import OrganizationDetails from './components/OrganizationDetails'
 
 interface Props {
@@ -43,7 +48,8 @@ const CustomerAdminShow = ({
   const [updateStatus, setUpdateStatus] = useState<boolean>(false)
   const [paymentModal, setPaymentModal] = useState<boolean>(false)
   const [showPayment, setShowPayment] = useState<boolean>(false)
-
+  const [updated, setUpdated] = useState<boolean>(false)
+  const [viewStatus, setViewStatus] = useState<boolean>(false)
   const isBusinessVerification = useMemo(() => {
     return customerPriceplan.price_plan.type.toLowerCase().includes('business')
   }, [customerPriceplan.price_plan.type])
@@ -66,6 +72,11 @@ const CustomerAdminShow = ({
     )
   }
 
+  const handleUpdated = () => {
+    router.get(route('verification-completed', { customerPriceplanId: customerPriceplan.id }))
+  }
+
+  console.log(customerPriceplan?.verification_status?.mark_as_updated)
   return (
     <Dashboard>
       <DashboardPadding>
@@ -76,15 +87,33 @@ const CustomerAdminShow = ({
 
         <div className='flex items-center space-x-2 py-2'>
           <StrongText className='text-xl'>{`${customerPriceplan.price_plan.name} (${customerPriceplan.price_plan.code})`}</StrongText>
-          {getStatusBadge(customerWorkflowStatus.status)}
+          {getStatusBadge(customerWorkflowStatus?.status)}
         </div>
         <div className='flex'>
-          <Button
-            variant='link'
-            onClick={() => setUpdateStatus(true)}
-          >
-            Update Status
-          </Button>
+          {!customerPriceplan?.verification_status?.mark_as_updated && (
+            <div className='flex p-2'>
+              <Checkbox
+                onCheckedChange={(checked) => setUpdated(!!checked)}
+                checked={updated}
+              />
+              <NormalText className='pl-2'>Mark verification Completed</NormalText>
+            </div>
+          )}
+          {!customerPriceplan?.verification_status?.mark_as_updated ? (
+            <Button
+              variant='link'
+              onClick={() => setUpdateStatus(true)}
+            >
+              Update Status
+            </Button>
+          ) : (
+            <Button
+              variant={'link'}
+              onClick={() => setViewStatus(true)}
+            >
+              View Status
+            </Button>
+          )}
           {customerPriceplan.payment_details ? (
             <Button
               variant='link'
@@ -102,6 +131,9 @@ const CustomerAdminShow = ({
           )}
         </div>
         <div className='space-y-6'>
+          {customerPriceplan?.kadodo_i_d && (
+            <KadodoIdDetails kadodoID={customerPriceplan.kadodo_i_d} />
+          )}
           {/* Organization Details - Shown prominently for business verifications */}
           {isBusinessVerification && <OrganizationDetails customerPriceplan={customerPriceplan} />}
 
@@ -125,7 +157,9 @@ const CustomerAdminShow = ({
                       additionalInfo={customerPriceplanInfo}
                       customerWorkflowID={customerPriceplan.id}
                       moduleStatus={ModuleStatus}
-                      statuses={statuses}
+                      statusUpdate={
+                        customerPriceplan?.verification_status?.mark_as_updated ? false : true
+                      }
                     />
                   )
                 })}
@@ -168,6 +202,26 @@ const CustomerAdminShow = ({
             title='Payment Details'
           >
             <PaymentDetails paymentDetails={customerPriceplan.payment_details} />
+          </Modal>
+        )}
+        {updated && (
+          <Modal
+            setShowModal={setUpdated}
+            title='Verification Completed'
+          >
+            <div>By marking as completed You can't able to add or change Verification Status.</div>
+            <div className='flex justify-end gap-2'>
+              <Button onClick={() => setUpdated(false)}>Cancel</Button>
+              <Button onClick={handleUpdated}>Mark as updated</Button>
+            </div>
+          </Modal>
+        )}
+        {viewStatus && (
+          <Modal
+            setShowModal={setViewStatus}
+            title='Verification Status'
+          >
+            <VerificationStatus verificationStatus={customerWorkflowStatus} />
           </Modal>
         )}
       </DashboardPadding>

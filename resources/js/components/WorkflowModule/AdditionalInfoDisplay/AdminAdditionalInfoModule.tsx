@@ -1,3 +1,4 @@
+import ModuleStatus from '@/components/AdminCustomerVerification/ModuleStatus'
 import ModuleStatusUpdate from '@/components/AdminCustomerVerification/ModuleStatusUpdate'
 import Modal from '@/components/CustomUI/Modal/Modal'
 import {
@@ -19,6 +20,7 @@ interface Props {
   additionalInfo: WorkflowItem[]
   customerWorkflowID: number
   moduleStatus?: ModuleStatusVerification
+  statusUpdate: boolean
 }
 
 export default function AdminAdditionalInfoModule({
@@ -26,14 +28,16 @@ export default function AdminAdditionalInfoModule({
   additionalInfo,
   customerWorkflowID,
   moduleStatus,
+  statusUpdate,
 }: Readonly<Props>) {
   const [updateModuleStatus, setUpdateModuleStatus] = useState(false)
   const [expandedValue, setExpandedValue] = useState<string | undefined>()
+  const [statusOpen, setStatusOpen] = useState<boolean>(false)
 
   const hasFieldsWithValues = workflowModule.workflow_items.some(
     (item) => additionalInfo.find((info) => info.workflow_item_id === item.id)?.value
   )
-
+  console.log(statusUpdate)
   return (
     <div
       className={`bg-1stop-accent2 rounded-lg border shadow-sm transition-all duration-200 ${expandedValue ? 'h-full' : 'h-[60px]'}`}
@@ -50,9 +54,25 @@ export default function AdminAdditionalInfoModule({
             <span className='font-semibold'>{workflowModule.name}</span>
           </AccordionTrigger>
           <AccordionContent className='px-6 pb-6'>
-            <div className='mr-auto p-2'>
-              <Button onClick={() => setUpdateModuleStatus(true)}>Update Status</Button>
-            </div>
+            {statusUpdate ? (
+              <div className='mr-auto p-2'>
+                <Button
+                  variant='link'
+                  onClick={() => setUpdateModuleStatus(true)}
+                >
+                  Update Status
+                </Button>
+              </div>
+            ) : (
+              <div className='px-6 pb-6'>
+                <Button
+                  variant='link'
+                  onClick={() => setStatusOpen(true)}
+                >
+                  View Module Status
+                </Button>
+              </div>
+            )}
             {hasFieldsWithValues ? (
               <>
                 <div className='grid gap-4'>
@@ -97,6 +117,14 @@ export default function AdminAdditionalInfoModule({
             setShowForm={setUpdateModuleStatus}
             moduleStatus={moduleStatus}
           />
+        </Modal>
+      )}
+      {statusOpen && (
+        <Modal
+          setShowModal={setStatusOpen}
+          title='Module Status'
+        >
+          <ModuleStatus moduleStatus={moduleStatus}></ModuleStatus>
         </Modal>
       )}
     </div>

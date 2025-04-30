@@ -14,7 +14,7 @@ class VerificationStatus extends Model
         'status',
         'notes',
         'customer_notes',
-
         'status_date',
+        'mark_as_updated',
     ];
 }

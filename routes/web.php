@@ -56,6 +56,8 @@ Route::middleware('auth')->group(function () {
         ->name('workflow-module-authenticate');
     Route::patch('workflow-module-authenticate-update', [CustomerAdminController::class, 'workflowModuleAuthenticateUpdate'])
         ->name('workflow-module-authenticate-update');
+    Route::get('verification-completed/{customerPriceplanId}', [CustomerAdminController::class, 'verificationCompleted'])
+        ->name('verification-completed');
 
     // Add Payment
     Route::post('add-payment', [CustomerAdminController::class, 'addPayment'])
@@ -66,6 +68,13 @@ Route::middleware('guest')->group(function () {
     Route::resource('sign-up', CustomerController::class)
         ->parameters(['sign-up' => 'customer']);
 });
+
+// Kadodo ID
+Route::get('verification-details/{kadodoId}', [CustomerLoginController::class, 'verificationDetails'])
+    ->name('verification-details');
+Route::post('kadodo-id-generate', [CustomerAdminController::class, 'kadodoIdGenerate'])
+    ->name('kadodo-id-generate');
+
 // Reference Data
 Route::resource('/reference-data', ReferenceDataController::class);
 Route::get('domain-list', [ReferenceDataAPIController::class, 'domainList'])
@@ -130,8 +139,6 @@ Route::middleware(['auth:customer'])->group(function () {
         ->name('customer-login-check');
     Route::get('customer-payment/{id}', [CustomerLoginController::class, 'customerPayment'])
         ->name('customer-payment');
-    Route::post('kadodo-id-generate', [CustomerLoginController::class, 'kadodoIdGenerate'])
-        ->name('kadodo-id-generate');
     Route::get('choose-priceplan', [CustomerLoginController::class, 'choosePriceplan'])
         ->name('choose-priceplan');
     Route::get('customer-dashboard', [CustomerLoginController::class, 'customerDashboard'])
