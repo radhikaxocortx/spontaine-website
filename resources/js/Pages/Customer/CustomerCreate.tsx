@@ -51,7 +51,7 @@ const CustomerCreate = ({ priceplan_id }: Props) => {
       telephone: {
         label: 'Telephone',
         placeholder: 'Enter Telephone No.',
-        type: 'text',
+        type: 'phone',
         setValue: setFormValue('telephone'),
       },
       address_line1: {

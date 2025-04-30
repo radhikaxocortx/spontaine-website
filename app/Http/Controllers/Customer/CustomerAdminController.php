@@ -10,9 +10,11 @@ use App\Mail\ModuleUpdateEmailToCustomer;
 use App\Mail\StatusUpdateMailToCustomer;
 use App\Models\Customer\CustomerPricePlan;
 use App\Models\Customer\CustomerWorkflow;
+use App\Models\Customer\KadodoID;
 use App\Models\CustomerVerification\VerificationStatus;
 use App\Models\CustomerVerification\WorkflowModuleVerification;
 use App\Models\Payment\AdminPayment;
+use App\Models\PricePlan\PricePlan;
 use App\Models\ReferenceData\ReferenceData;
 use App\Models\Workflow\Workflow;
 use Illuminate\Http\Request;
@@ -45,7 +47,7 @@ class CustomerAdminController extends Controller
 
         $id = $request->id;
         $customerPriceplan = CustomerPricePlan::where('id', $id)
-            ->with('customer.company', 'pricePlan', 'paymentDetails.updatedBy')
+            ->with('customer.company', 'pricePlan', 'verificationStatus', 'paymentDetails.updatedBy', 'kadodoID')
             ->firstOrFail();
         $customerPriceplanInfo = CustomerWorkflow::where('customer_priceplan_id', $id)->get();
         $CustomerPriceplanTemplate = Workflow::where('priceplan_id', $customerPriceplan->price_plan_id)
@@ -79,25 +81,57 @@ class CustomerAdminController extends Controller
     {
         try {
             $adminPayment = AdminPayment::create($request->all());
+            $customerPriceplan = CustomerPricePlan::where('id', $adminPayment->customer_workflow_id)->first();
+            $pricePlan = PricePlan::where('id', $customerPriceplan->price_plan_id)->first();
+            $validFrom = $adminPayment->created_at->format('Y-m-d');
+            $validTo = $adminPayment->created_at->copy()->addMonths($pricePlan->validity)->format('Y-m-d');
+
+            $kadodoIdData = [
+                'customer_priceplan_id' => $customerPriceplan->id,
+                'kadodo_id' => $customerPriceplan->kadodo_id,
+                'valid_from' => $validFrom,
+                'valid_to' => $validTo,
+            ];
+            KadodoID::create($kadodoIdData);
         } catch (\Exception $e) {
             return back()->with(['error' => $e->getMessage()]);
         }
 
-        return back()->with(['message' => 'Payment Added Successfully']);
+        return back()->with(['message' => 'Payment Added And Kadodo ID Generated Successfully']);
+    }
+
+    public function kadodoIdGenerate(Request $request)
+    {
+        $validatedData = $request->validate([
+            'customer_priceplan_id' => 'required|exists:customer_price_plans,id',
+            'kadodo_id' => 'required|unique:kadodo_i_d_s,kadodo_id',
+            'valid_from' => 'required|date|date_format:Y-m-d',
+            'valid_to' => 'required|date|date_format:Y-m-d|after:valid_from',
+        ]);
+
+        try {
+
+            $kadodoId = KadodoID::create($validatedData);
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+
+        return back()->with('Payment Added and Kadodo ID Generated Successfully');
+
     }
 
     public function workflowAuthenticate(WorkflowAuthenticateRequest $request)
     {
-        if ($request->status == 'Approved') {
-            $allApproved = WorkflowModuleVerification::where('customer_workflow_id', $request->customer_workflow_id)
-                ->where('status', '!=', 'Approved')
-                ->doesntExist();
-            if (! $allApproved) {
-                return back()->with([
-                    'error' => 'Approve all modules before approving the workflow.',
-                ]);
-            }
-        }
+        // if ($request->status == 'Approved') {
+        //     $allApproved = WorkflowModuleVerification::where('customer_workflow_id', $request->customer_workflow_id)
+        //         ->where('status', '!=', 'Approved')
+        //         ->doesntExist();
+        //     if (! $allApproved) {
+        //         return back()->with([
+        //             'error' => 'Approve all modules before approving the workflow.',
+        //         ]);
+        //     }
+        // }
 
         $customerDetail = CustomerPricePlan::where('id', $request->customer_workflow_id)
             ->with('customer')
@@ -151,6 +185,21 @@ class CustomerAdminController extends Controller
         }
 
         return redirect()->back()->with(['message' => 'Workflow Status Updates Successfully']);
+    }
+
+    public function verificationCompleted($customerPriceplanId)
+    {
+        $VerificationStatus = VerificationStatus::where('customer_workflow_id', $customerPriceplanId)->first();
+
+        if (! $VerificationStatus) {
+            return back()->withErrors(['error' => 'Verification record not found.']);
+        }
+
+        $VerificationStatus->update([
+            'mark_as_updated' => true,
+        ]);
+
+        return back()->with(['message' => 'Verification marked as completed']);
     }
 
     public function workflowModuleAuthenticate(ModuleStatusUpdateRequest $request)

@@ -7,6 +7,7 @@ use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerPricePlan;
 use App\Models\Customer\CustomerWorkflow;
 use App\Models\Customer\KadodoID;
+use App\Models\CustomerVerification\WorkflowModuleVerification;
 use App\Models\PricePlan\PricePlan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -81,12 +82,12 @@ class CustomerLoginController extends Controller
 
             if ($workflowExist) {
 
-                $kadodoIDExist = KadodoID::where('customer_priceplan_id', $customerPriceplan->id)->exists();
-                if ($kadodoIDExist) {
-                    return redirect()->route('customer-dashboard');
-                } else {
-                    return redirect()->route('customer-payment', ['id' => $customerPriceplan->id]);
-                }
+                // $kadodoIDExist = KadodoID::where('customer_priceplan_id', $customerPriceplan->id)->exists();
+                // if ($kadodoIDExist) {
+                return redirect()->route('customer-dashboard');
+                // } else {
+                //     return redirect()->route('customer-payment', ['id' => $customerPriceplan->id]);
+                // }
 
             } else {
                 return redirect()->route('customer-workflow-create', ['pricePlanId' => $customerPriceplan->price_plan_id, 'customerPriceplanId' => $customerPriceplan]);
@@ -105,23 +106,20 @@ class CustomerLoginController extends Controller
         return Inertia::render('CustomerLogin/CustomerPayment', ['customerPriceplan' => $customerPriceplan]);
     }
 
-    public function kadodoIdGenerate(Request $request)
+    public function verificationDetails($kadodoId)
     {
-        $validatedData = $request->validate([
-            'customer_priceplan_id' => 'required|exists:customer_price_plans,id',
-            'kadodo_id' => 'required|unique:kadodo_i_d_s,kadodo_id',
-            'valid_from' => 'required|date|date_format:Y-m-d',
-            'valid_to' => 'required|date|date_format:Y-m-d|after:valid_from',
+
+        $kadodoId = KadodoID::where('kadodo_id', $kadodoId)->first();
+        $customerPriceplan = CustomerPricePlan::where('id', $kadodoId->customer_priceplan_id)
+            ->with('pricePlan', 'customer.company', 'verificationStatus', 'paymentDetails')
+            ->first();
+        $moduleVerification = WorkflowModuleVerification::where('customer_workflow_id', $customerPriceplan->id)->get();
+
+        return Inertia::render('Customer/VerificationDetails', [
+            'kadodoId' => $kadodoId,
+            'customerPriceplan' => $customerPriceplan,
+            'moduleVerification' => $moduleVerification,
         ]);
-
-        try {
-
-            $kadodoId = KadodoID::create($validatedData);
-        } catch (\Exception $e) {
-            return back()->with('error', $e->getMessage());
-        }
-
-        return redirect()->route('customer-login-check');
 
     }
 }

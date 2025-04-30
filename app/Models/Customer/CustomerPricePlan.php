@@ -32,9 +32,9 @@ class CustomerPricePlan extends Model
         return $this->belongsTo(Customer::class, 'customer_id', 'id');
     }
 
-    public function verificationStatus(): BelongsTo
+    public function verificationStatus(): HasOne
     {
-        return $this->belongsTo(VerificationStatus::class, 'customer_workflow_id', 'id');
+        return $this->hasOne(VerificationStatus::class, 'customer_workflow_id', 'id');
     }
 
     public function paymentDetails(): HasOne

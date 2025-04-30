@@ -165,14 +165,14 @@ class CustomerController extends Controller
         ]);
         try {
             $customerPriceplan = CustomerPricePlan::create($request->all());
-            $kadodoId = 'KD'.time().$customerPriceplan->id;
+            $kadodoId = 'KD-'.time().$customerPriceplan->id;
             $customerPriceplan->update(['kadodo_id' => $kadodoId]);
         } catch (\Exception $e) {
             return back()->with(['error' => $e->getMessage()]);
         }
 
         return redirect()
-            ->route('customer-workflow-create', ['pricePlanId' => $request->price_plan_id, 'customerPriceplanId' => $customerPriceplan->id]);
+            ->route('customer-payment', ['id' => $customerPriceplan->id]);
     }
 
     public function createCustomerWorkflow($pricePlanId, $customerPriceplanId)
