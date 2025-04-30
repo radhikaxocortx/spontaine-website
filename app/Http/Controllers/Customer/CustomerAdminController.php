@@ -47,7 +47,7 @@ class CustomerAdminController extends Controller
 
         $id = $request->id;
         $customerPriceplan = CustomerPricePlan::where('id', $id)
-            ->with('customer.company', 'pricePlan', 'paymentDetails.updatedBy', 'kadodoID')
+            ->with('customer.company', 'pricePlan', 'verificationStatus', 'paymentDetails.updatedBy', 'kadodoID')
             ->firstOrFail();
         $customerPriceplanInfo = CustomerWorkflow::where('customer_priceplan_id', $id)->get();
         $CustomerPriceplanTemplate = Workflow::where('priceplan_id', $customerPriceplan->price_plan_id)
@@ -122,16 +122,16 @@ class CustomerAdminController extends Controller
 
     public function workflowAuthenticate(WorkflowAuthenticateRequest $request)
     {
-        if ($request->status == 'Approved') {
-            $allApproved = WorkflowModuleVerification::where('customer_workflow_id', $request->customer_workflow_id)
-                ->where('status', '!=', 'Approved')
-                ->doesntExist();
-            if (! $allApproved) {
-                return back()->with([
-                    'error' => 'Approve all modules before approving the workflow.',
-                ]);
-            }
-        }
+        // if ($request->status == 'Approved') {
+        //     $allApproved = WorkflowModuleVerification::where('customer_workflow_id', $request->customer_workflow_id)
+        //         ->where('status', '!=', 'Approved')
+        //         ->doesntExist();
+        //     if (! $allApproved) {
+        //         return back()->with([
+        //             'error' => 'Approve all modules before approving the workflow.',
+        //         ]);
+        //     }
+        // }
 
         $customerDetail = CustomerPricePlan::where('id', $request->customer_workflow_id)
             ->with('customer')
@@ -185,6 +185,21 @@ class CustomerAdminController extends Controller
         }
 
         return redirect()->back()->with(['message' => 'Workflow Status Updates Successfully']);
+    }
+
+    public function verificationCompleted($customerPriceplanId)
+    {
+        $VerificationStatus = VerificationStatus::where('customer_workflow_id', $customerPriceplanId)->first();
+
+        if (! $VerificationStatus) {
+            return back()->withErrors(['error' => 'Verification record not found.']);
+        }
+
+        $VerificationStatus->update([
+            'mark_as_updated' => true,
+        ]);
+
+        return back()->with(['message' => 'Verification marked as completed']);
     }
 
     public function workflowModuleAuthenticate(ModuleStatusUpdateRequest $request)

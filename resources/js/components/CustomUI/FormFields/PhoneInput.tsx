@@ -16,17 +16,19 @@ import { Input } from '@/components/ui/input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { cn } from '@/lib/utils'
+import ErrorText from '@/typography/ErrorText'
 
 type PhoneInputProps = Omit<React.ComponentProps<'input'>, 'onChange' | 'value' | 'ref'> &
   Omit<RPNInput.Props<typeof RPNInput.default>, 'onChange'> & {
     onChange?: (value: RPNInput.Value) => void
     label?: string
+    error?: string
   }
 
 const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> = React.forwardRef<
   React.ElementRef<typeof RPNInput.default>,
   PhoneInputProps
->(({ className, onChange, label, ...props }, ref) => {
+>(({ className, onChange, error, label, ...props }, ref) => {
   return (
     <div className='flex flex-col gap-1'>
       {label && <label className='text-muted-foreground text-sm font-medium'>{label}</label>}
@@ -40,6 +42,7 @@ const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> = React.forwa
         onChange={(value) => onChange?.(value || ('' as RPNInput.Value))}
         {...props}
       />
+      {error && <ErrorText>{error}</ErrorText>}
     </div>
   )
 })

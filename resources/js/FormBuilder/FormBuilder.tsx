@@ -5,6 +5,7 @@ import DynamicSelectList from '@/components/CustomUI/FormFields/DynamicSelectLis
 import FileInput from '@/components/CustomUI/FormFields/FileInput'
 import InputDescription from '@/components/CustomUI/FormFields/InputDescription'
 import InputText from '@/components/CustomUI/FormFields/InputText'
+import { PhoneInput } from '@/components/CustomUI/FormFields/PhoneInput'
 import RadioButton from '@/components/CustomUI/FormFields/RadioButton'
 import SelectList from '@/components/CustomUI/FormFields/SelectList'
 import TimePicker from '@/components/CustomUI/FormFields/TimePicker'
@@ -36,6 +37,7 @@ export interface FormItem<
     | 'time'
     | 'autocomplete'
     | 'number'
+    | 'phone'
   hidden?: boolean
   disabled?: boolean
   list?: L[]
@@ -163,6 +165,22 @@ export default function FormBuilder<
               />
             </div>
           )}
+          {formItems[keyValue].type === 'phone' && !formItems[keyValue].hidden && (
+            <div className={cn('flex flex-col', formItems[keyValue].colPositionAdjustment ?? '')}>
+              {formItems[keyValue].description != null && (
+                <NormalText>{formItems[keyValue].description}</NormalText>
+              )}
+              <PhoneInput
+                label={formItems[keyValue].label}
+                value={formData[keyValue] !== undefined ? String(formData[keyValue]) : undefined}
+                onChange={formItems[keyValue].setValue as (value: string) => unknown}
+                error={errors != null ? errors[keyValue] : undefined}
+                disabled={formItems[keyValue].disabled}
+                placeholder={formItems[keyValue].placeholder}
+              />
+            </div>
+          )}
+
           {formItems[keyValue].type === 'password' && !formItems[keyValue].hidden && (
             <div className={cn('flex flex-col', formItems[keyValue].colPositionAdjustment ?? '')}>
               {formItems[keyValue].description != null && (

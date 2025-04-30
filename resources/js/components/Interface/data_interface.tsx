@@ -161,6 +161,7 @@ export interface CustomerWorkflowStatus extends Model {
   notes: string
   customer_notes: string
   status_date: string
+  mark_as_updated: boolean
 }
 
 export interface AdminPayment extends Omit<Model, 'updated_by'> {

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('notes')->nullable();
             $table->string('customer_notes')->nullable();
             $table->date('status_date')->nullable();
+            $table->boolean('mark_as_updated')->default(false);
             $table->softDeletes();
             $table->timestamps();
         });

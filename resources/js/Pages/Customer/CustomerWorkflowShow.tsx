@@ -35,7 +35,6 @@ const CustomerWorkflowShow = ({
   CustomerPriceplanTemplate,
   moduleUpdateStatus,
 }: Props) => {
-  console.log(customerPriceplan)
   return (
     <CustomerDashboardLayout>
       <div className='p-5'>

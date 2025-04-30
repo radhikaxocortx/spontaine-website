@@ -56,6 +56,8 @@ Route::middleware('auth')->group(function () {
         ->name('workflow-module-authenticate');
     Route::patch('workflow-module-authenticate-update', [CustomerAdminController::class, 'workflowModuleAuthenticateUpdate'])
         ->name('workflow-module-authenticate-update');
+    Route::get('verification-completed/{customerPriceplanId}', [CustomerAdminController::class, 'verificationCompleted'])
+        ->name('verification-completed');
 
     // Add Payment
     Route::post('add-payment', [CustomerAdminController::class, 'addPayment'])
