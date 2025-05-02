@@ -1,5 +1,6 @@
 import { showError } from '@/components/ui/alerts'
 import { imageBlock } from '@/Modules/PageBuilder/Blocks/LeftImageBlock'
+import { defaultPricePlanBlock } from '@/Modules/PageBuilder/Blocks/PricePlanCards/PricePlanCardTypes'
 import { richTextData } from '@/Modules/PageBuilder/Blocks/RichText/RichTextBlock'
 import { BlockFieldValues } from '@/Modules/PageBuilder/Components/BlockEditor/BlockEditor'
 import { Block, ItemListField, PageBlock } from '@/Modules/PageBuilder/page_interfaces'
@@ -7,12 +8,12 @@ import { faqBlock } from '../Blocks/FAQ'
 import { fullWidthImageWithTItleBlock } from '../Blocks/FullWidthImageWithTItle'
 import { gridWithVideoBlock } from '../Blocks/GridWithVideo'
 import { imageCardsBlock } from '../Blocks/ImageCards'
-import { defaultPricePlanBlock } from '../Blocks/PricePlan'
 import { bannerBlock } from '../Blocks/SectionBanner'
 import { textBlock } from '../Blocks/SectionCallToAction'
 import { heroImageBlock } from '../Blocks/SectionHero'
 import { defaultTestimonialBlock } from '../Blocks/SectionTestimonial'
 import { videoBlock } from '../Blocks/SectionVideo'
+
 export interface PageBuilderAction {
   action:
     | 'ADD_BLOCK'

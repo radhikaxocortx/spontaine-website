@@ -17,7 +17,8 @@ import FullWidthImageWithTItle, {
 } from '../Blocks/FullWidthImageWithTItle'
 import GridWithVideo, { GridWithVideoBlock } from '../Blocks/GridWithVideo'
 import ImageCards, { ImageCardsBlock } from '../Blocks/ImageCards'
-import PricePlan, { PricePlanBlock } from '../Blocks/PricePlan'
+import PricePlanCards from '../Blocks/PricePlanCards/PricePlanCards'
+import { PricePlanBlock } from '../Blocks/PricePlanCards/PricePlanCardTypes'
 import SectionBanner, { BannerBlock } from '../Blocks/SectionBanner'
 import SectionCallToAction, { TextBlock } from '../Blocks/SectionCallToAction'
 import SectionHero, { HeroImageBlock } from '../Blocks/SectionHero'
@@ -43,7 +44,6 @@ const ResolveComponent = ({
   block,
   language = 'en',
   dispatch,
-  dependencies,
 }: Properties) => {
   return (
     <>
@@ -170,7 +170,7 @@ const ResolveComponent = ({
         />
       )}
       {blockName === 'Content Section - Price Plan' && (
-        <PricePlan
+        <PricePlanCards
           editMode={editMode}
           onFieldEdit={onFieldEdit}
           blockData={block as unknown as PricePlanBlock}
