@@ -116,7 +116,7 @@ class CustomerAdminController extends Controller
             return back()->with('error', $e->getMessage());
         }
 
-        return back()->with('Payment Added and Kadodo ID Generated Successfully');
+        return back()->with('message', 'Payment Added and Kadodo ID Generated Successfully');
 
     }
 
@@ -192,7 +192,7 @@ class CustomerAdminController extends Controller
         $VerificationStatus = VerificationStatus::where('customer_workflow_id', $customerPriceplanId)->first();
 
         if (! $VerificationStatus) {
-            return back()->withErrors(['error' => 'Verification record not found.']);
+            return back()->with(['error' => 'Verification record not found.']);
         }
 
         $VerificationStatus->update([
