@@ -10,18 +10,18 @@ use App\Http\Controllers\Email\EmailController;
 use App\Http\Controllers\EntityTemplate\EntityTemplateController;
 use App\Http\Controllers\EntityTemplate\EntityTemplateItemController;
 use App\Http\Controllers\EntityTemplate\workflowAPIController;
-use App\Http\Controllers\NavEditor\NavEditorController;
 use App\Http\Controllers\PricePlan\PricePlanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReferenceData\ReferenceDataAPIController;
 use App\Http\Controllers\ReferenceData\ReferenceDataController;
-use App\Http\Controllers\UIBuilder\FooterController;
 use App\Http\Controllers\Workflow\WorkflowController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Modules\OTP\Controllers\RegisterOtpController;
 use Modules\OTP\Controllers\ValidateOtpController;
 use Modules\OTP\Controllers\VerifyOtpController;
+use Modules\PageBuilder\Controllers\NavEditor\NavEditorController as NavEditorNavEditorController;
+use Modules\PageBuilder\Controllers\UIBuilder\FooterController as UIBuilderFooterController;
 use Modules\PageBuilder\Models\Page;
 
 Route::get('/', function () {
@@ -160,8 +160,8 @@ Route::middleware(['auth:customer'])->group(function () {
 });
 
 // Nav Editor
-Route::resource('nav-editor', NavEditorController::class);
-Route::resource('footer-editor', FooterController::class);
+Route::resource('nav-editor', NavEditorNavEditorController::class);
+Route::resource('footer-editor', UIBuilderFooterController::class);
 
 // contact form
 Route::post('send-contact-mail', [ContactController::class, 'sendMail']);

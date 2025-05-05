@@ -2,7 +2,9 @@
 
 namespace Database\Seeders\Providers;
 
+use App\Models\Country\Country;
 use App\Models\ReferenceData\ReferenceData;
+use App\Policies\CountryPolicy;
 use App\Policies\ReferenceDataPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Vite;
@@ -25,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Vite::prefetch(concurrency: 3);
         Gate::policy(ReferenceData::class, ReferenceDataPolicy::class);
+        Gate::policy(Country::class, CountryPolicy::class);
 
     }
 }
