@@ -6,16 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\EntityTemplate\EntityTemplateFormRequest;
 use App\Libs\ExceptionMessage;
 use App\Models\EntityTemplate\EntityTemplate;
-use App\Models\EntityTemplate\EntityTemplateGroup;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
+use Illuminate\Support\Facades\Gate;
 
 class EntityTemplateController extends Controller
 {
     public function store(EntityTemplateFormRequest $request)
     {
+        Gate::authorize('create', EntityTemplate::class);
 
         try {
 
@@ -35,23 +35,11 @@ class EntityTemplateController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        $entityTemplate = EntityTemplate::find($id);
-        $groups = EntityTemplateGroup::where('entity_template_id', $entityTemplate->id)
-            ->with(['items' => function ($query) {
-                $query->orderBy('field_number');
-            }])
-            ->get();
-
-        return Inertia::render('EntityTemplate/EntityTemplateShow', [
-            'entityTemplate' => $entityTemplate,
-            'groups' => $groups,
-        ]);
-    }
+    public function show(string $id) {}
 
     public function update(Request $request, string $id): RedirectResponse
     {
+        Gate::authorize('update', EntityTemplate::class);
         try {
 
             $entityTemplate = EntityTemplate::find($id);
@@ -78,6 +66,7 @@ class EntityTemplateController extends Controller
      */
     public function destroy(string $id)
     {
+        Gate::authorize('delete', EntityTemplate::class);
         try {
             EntityTemplate::find($id)->delete();
         } catch (Exception $e) {

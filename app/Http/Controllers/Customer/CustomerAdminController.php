@@ -18,6 +18,7 @@ use App\Models\PricePlan\PricePlan;
 use App\Models\ReferenceData\ReferenceData;
 use App\Models\Workflow\Workflow;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 
@@ -25,6 +26,8 @@ class CustomerAdminController extends Controller
 {
     public function customerAdminView(Request $request)
     {
+        Gate::authorize('viewAny', CustomerPricePlan::class);
+
         $customerPriceplans = CustomerPricePlan::with('customer', 'pricePlan')
             ->when($request->search, function ($query, $search) {
                 $query->where(function ($query) use ($search) {
@@ -44,6 +47,7 @@ class CustomerAdminController extends Controller
 
     public function customerAdminShow(Request $request)
     {
+        Gate::authorize('view', CustomerPricePlan::class);
 
         $id = $request->id;
         $customerPriceplan = CustomerPricePlan::where('id', $id)

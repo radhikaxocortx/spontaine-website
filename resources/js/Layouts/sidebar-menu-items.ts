@@ -52,7 +52,7 @@ const SidebarMenuItems: SidebarMenuItem[] = [
         name: 'Pages',
         url: '/pages',
         value: 'pages',
-        permission: '',
+        permission: 'pages.viewAny',
         image: {
           svg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -66,7 +66,7 @@ const SidebarMenuItems: SidebarMenuItem[] = [
         name: 'Nav Editor',
         url: '/nav-editor',
         value: 'nav-editor',
-        permission: '',
+        permission: 'nav-editor.viewAny',
         image: {
           svg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M3 12H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -79,7 +79,7 @@ const SidebarMenuItems: SidebarMenuItem[] = [
         name: 'Footer Editor',
         url: '/footer-editor',
         value: 'footer-editor',
-        permission: '',
+        permission: 'foot-editor.viewAny',
         image: {
           svg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M3 12H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -99,7 +99,7 @@ const SidebarMenuItems: SidebarMenuItem[] = [
         name: 'Price Plans',
         url: '/price-plan',
         value: 'price-plan',
-        permission: '',
+        permission: 'price-plan.viewAny',
         image: {
           svg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 1V23" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -112,7 +112,7 @@ const SidebarMenuItems: SidebarMenuItem[] = [
         name: 'Workflows',
         url: '/workflow',
         value: 'workflow',
-        permission: '',
+        permission: 'workflow.viewAny',
         image: {
           svg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M3 12H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -133,7 +133,7 @@ const SidebarMenuItems: SidebarMenuItem[] = [
         name: 'Verification Requests',
         url: '/customer-admin-view',
         value: 'customer-priceplan',
-        permission: '',
+        permission: 'customer-priceplan.viewAny',
         image: {
           svg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>

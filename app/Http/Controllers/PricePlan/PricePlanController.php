@@ -7,6 +7,7 @@ use App\Http\Requests\PricePlanRequest\PricePlanFormRequest;
 use App\Models\PricePlan\PricePlan;
 use App\Models\ReferenceData\ReferenceData;
 use Exception;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 
 class PricePlanController extends Controller
@@ -16,6 +17,7 @@ class PricePlanController extends Controller
      */
     public function index()
     {
+        Gate::authorize('viewAny', PricePlan::class);
         $pricePlans = PricePlan::all();
 
         return Inertia::render('PricePlan/PricePlanIndex', [
@@ -28,6 +30,7 @@ class PricePlanController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create', PricePlan::class);
         $type = ReferenceData::fullData()
             ->where('domain', 'Price Plan')
             ->where('parameter', 'Type')
@@ -60,6 +63,7 @@ class PricePlanController extends Controller
      */
     public function show(string $id)
     {
+        Gate::authorize('view', PricePlan::class);
         $pricePlan = PricePlan::find($id);
 
         return Inertia::render('PricePlan/PricePlanShow', [
@@ -73,6 +77,7 @@ class PricePlanController extends Controller
      */
     public function edit(string $id)
     {
+        Gate::authorize('create', PricePlan::class);
         $pricePlan = PricePlan::find($id);
         $type = ReferenceData::fullData()
             ->where('domain', 'Price Plan')
@@ -107,6 +112,7 @@ class PricePlanController extends Controller
      */
     public function destroy(string $id)
     {
+        Gate::authorize('delete', PricePlan::class);
         try {
             PricePlan::where('id', $id)
                 ->delete();

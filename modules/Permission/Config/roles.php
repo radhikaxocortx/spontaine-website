@@ -15,18 +15,12 @@ return [
             'role' => 'Verifier',
             'is_admin' => false,
             'actions' => [
-                ['action' => 'reference-data.viewAny', 'allowed_attributes' => null],
-                ['action' => 'reference-data.view', 'allowed_attributes' => null],
+                ['action' => 'customer-priceplan.viewAny', 'allowed_attributes' => null],
+                ['action' => 'customer-priceplan.view', 'allowed_attributes' => null],
+                ['action' => 'customer-priceplan.create', 'allowed_attributes' => null],
+                ['action' => 'customer-priceplan.update', 'allowed_attributes' => null],
+                ['action' => 'customer-priceplan.delete', 'allowed_attributes' => null],
 
-                ['action' => 'country.viewAny', 'allowed_attributes' => null],
-                ['action' => 'country.view', 'allowed_attributes' => null],
-
-                ['action' => 'training-activity.viewAny', 'allowed_attributes' => null],
-                ['action' => 'training-activity.view', 'allowed_attributes' => null],
-                ['action' => 'training-activity.create', 'allowed_attributes' => null],
-                ['action' => 'training-activity.update', 'allowed_attributes' => null],
-                ['action' => 'training-activity.delete', 'allowed_attributes' => null],
-                ['action' => 'training.viewAny', 'allowed_attributes' => null],
             ],
         ],
 

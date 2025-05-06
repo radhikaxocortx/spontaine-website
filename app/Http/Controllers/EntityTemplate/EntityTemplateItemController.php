@@ -9,6 +9,7 @@ use App\Models\EntityTemplate\EntityTemplateItem;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class EntityTemplateItemController extends Controller
 {
@@ -24,6 +25,7 @@ class EntityTemplateItemController extends Controller
 
     public function store(TemplateItemFormRequest $formRequest): RedirectResponse
     {
+        Gate::authorize('create', EntityTemplateItem::class);
         DB::beginTransaction();
 
         try {
@@ -49,7 +51,7 @@ class EntityTemplateItemController extends Controller
 
     public function update(TemplateItemFormRequest $formRequest, EntityTemplateItem $templateItem): RedirectResponse
     {
-
+        Gate::authorize('update', EntityTemplateItem::class);
         DB::beginTransaction();
         try {
             $templateItem->update([
@@ -74,7 +76,7 @@ class EntityTemplateItemController extends Controller
 
     public function destroy(EntityTemplateItem $templateItem): RedirectResponse
     {
-
+        Gate::authorize('delete', EntityTemplateItem::class);
         try {
             $templateItem->delete();
 
