@@ -7,6 +7,7 @@ use App\Http\Requests\CountryRequest\CountryFormRequest;
 use App\Models\Country\Country;
 use App\Models\ReferenceData\ReferenceData;
 use Exception;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 
 class CountryController extends Controller
@@ -16,6 +17,9 @@ class CountryController extends Controller
      */
     public function index()
     {
+
+        Gate::authorize('viewAny', Country::class);
+
         $countries = Country::all();
 
         return Inertia::render('Country/CountryIndex', [
@@ -28,6 +32,8 @@ class CountryController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create', Country::class);
+
         $currency = ReferenceData::fullData()
             ->where('domain', 'Country')
             ->where('parameter', 'Currency')
@@ -59,6 +65,8 @@ class CountryController extends Controller
      */
     public function show(string $id)
     {
+        Gate::authorize('view', Country::class);
+
         $country = Country::find($id);
 
         return Inertia::render('Country/CountryShow', [
@@ -72,6 +80,8 @@ class CountryController extends Controller
      */
     public function edit(string $id)
     {
+        Gate::authorize('create', Country::class);
+
         $country = Country::find($id);
         $currency = ReferenceData::fullData()
             ->where('domain', 'Country')
@@ -106,6 +116,8 @@ class CountryController extends Controller
      */
     public function destroy(string $id)
     {
+        Gate::authorize('delete', Country::class);
+
         try {
             $country = Country::where('id', $id)
                 ->delete();
