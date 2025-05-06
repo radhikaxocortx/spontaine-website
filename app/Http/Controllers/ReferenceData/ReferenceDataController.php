@@ -101,7 +101,7 @@ class ReferenceDataController extends Controller implements HasMiddleware
      */
     public function edit(string $id)
     {
-        Gate::authorize('create', ReferenceData::class);
+        Gate::authorize('update', ReferenceData::class);
 
         $domains = ReferenceDataDomain::get();
 

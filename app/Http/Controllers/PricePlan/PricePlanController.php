@@ -77,7 +77,7 @@ class PricePlanController extends Controller
      */
     public function edit(string $id)
     {
-        Gate::authorize('create', PricePlan::class);
+        Gate::authorize('update', PricePlan::class);
         $pricePlan = PricePlan::find($id);
         $type = ReferenceData::fullData()
             ->where('domain', 'Price Plan')
