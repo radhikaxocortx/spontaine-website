@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Inertia\Middleware;
 use Modules\PageBuilder\Models\UIBuilder\Footer;
 use Modules\PageBuilder\Repository\NavMenu\NavMenuRepository;
+use Modules\Permission\Services\Roles\FindRoleInfo;
 use Tighten\Ziggy\Ziggy;
 
 class HandleInertiaRequests extends Middleware
@@ -33,11 +34,18 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $role = null;
+        if ($user = $request->user()) {
+            $role = app(FindRoleInfo::class)->findRole($user->role ?? '');
+        }
+
         return [
             ...parent::share($request),
+
             'auth' => [
                 'user' => $request->user(),
                 'customer' => Auth::guard('customer')->user(),
+                'role' => $role,
             ],
             'ziggy' => fn () => [
                 ...(new Ziggy)->toArray(),

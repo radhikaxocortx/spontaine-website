@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\ReferenceData;
 
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ReferenceDataRequests\RefDataFormRequest;
 use App\Http\Requests\ReferenceDataRequests\ReferenceDataSearchRequest;
@@ -12,11 +11,10 @@ use App\Services\ReferenceData\HasSecondValue;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 
-
 class ReferenceDataController extends Controller implements HasMiddleware
-
 {
     public static function middleware()
     {
@@ -31,6 +29,7 @@ class ReferenceDataController extends Controller implements HasMiddleware
     public function index(ReferenceDataSearchRequest $searchRequest)
     {
         //
+        Gate::authorize('viewAny', ReferenceData::class);
 
         $referenceData = ReferenceData::fullData()
             ->filter($searchRequest)
@@ -52,6 +51,8 @@ class ReferenceDataController extends Controller implements HasMiddleware
      */
     public function create()
     {
+        Gate::authorize('create', ReferenceData::class);
+
         $domains = ReferenceDataDomain::get();
 
         return Inertia::render('ReferenceData/ReferenceDataCreate', [
@@ -100,9 +101,12 @@ class ReferenceDataController extends Controller implements HasMiddleware
      */
     public function edit(string $id)
     {
+        Gate::authorize('update', ReferenceData::class);
+
         $domains = ReferenceDataDomain::get();
 
         $referenceData = ReferenceData::findOrFail($id);
+        Gate::authorize('view', $referenceData);
 
         return Inertia::render('ReferenceData/ReferenceDataEdit', [
             'referenceData' => $referenceData,

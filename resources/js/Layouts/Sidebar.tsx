@@ -26,7 +26,7 @@ import NormalText from '@/typography/NormalText'
 import SubHeading from '@/typography/SubHeading'
 import { Link, router, usePage } from '@inertiajs/react'
 import { useMemo, useRef, useState } from 'react'
-import SidebarMenuItems from './sidebar-menu-items'
+import useFilteredSidebarItems from './useFilteredSidebarItems'
 
 const SHEET_SIDES = ['left'] as const
 
@@ -45,6 +45,7 @@ export default function Sidebar() {
 
   const profileRef = useRef<HTMLDivElement>(null)
   const [isProfileDropdown, setIsProfileDropdown] = useState(false)
+  const filteredItems = useFilteredSidebarItems()
 
   return (
     <div className='flex flex-row items-center justify-between px-4'>
@@ -219,7 +220,7 @@ export default function Sidebar() {
                   type='single'
                   collapsible
                 >
-                  {SidebarMenuItems.map((menu) => (
+                  {filteredItems.map((menu) => (
                     <AccordionItem
                       key={menu.title}
                       value={menu.title}
