@@ -144,10 +144,7 @@ const CustomerPriceplanDashboardView = ({ customerPriceplan }: Props) => {
                       <Clock className='h-4 w-4' />
                       <NormalText>
                         <StrongText>Expiry:</StrongText>{' '}
-                        {calculateExpiryDate(
-                          customerPriceplan.created_at,
-                          customerPriceplan.price_plan.validity
-                        )}
+                        {getDisplayDate(customerPriceplan.kadodo_i_d?.valid_to) || 'Not set'}
                       </NormalText>
                     </div>
                     {customerPriceplan.verification_status?.customer_notes && (

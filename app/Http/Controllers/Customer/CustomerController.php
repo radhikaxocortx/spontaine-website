@@ -272,7 +272,7 @@ class CustomerController extends Controller
     public function findCustomerPriceplan($customerId)
     {
         $customerPriceplan = CustomerPricePlan::where('customer_id', $customerId)
-            ->with('pricePlan', 'customer', 'verificationStatus')
+            ->with('pricePlan', 'customer', 'verificationStatus', 'kadodoID')
             ->get();
 
         return response()->json([
