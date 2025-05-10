@@ -2,7 +2,6 @@ import ApplicationLogoWhite from '@/components/CustomUI/ApplicationLogoWhite'
 import { CustomerPricePlan, KadodoID } from '@/components/Interface/data_interface'
 import clsx from 'clsx'
 import { QRCodeSVG } from 'qrcode.react'
-import React from 'react'
 
 interface VerifiedIdentityCardProps {
   customerPricePlan: CustomerPricePlan
@@ -30,9 +29,7 @@ const cardBackgrounds = {
   blurred: '/imge/KadodoIdPending.png',
 }
 
-const VerifiedIdentityCard: React.FC<Readonly<VerifiedIdentityCardProps>> = ({
-  customerPricePlan,
-}) => {
+const VerifiedIdentityCard = ({ customerPricePlan }: VerifiedIdentityCardProps) => {
   const kadodoIdObj: KadodoID | undefined = customerPricePlan.kadodo_i_d
   const isGenerated = Boolean(kadodoIdObj && kadodoIdObj.kadodo_id)
   const cardType = getCardType(customerPricePlan.price_plan?.type)
@@ -66,7 +63,7 @@ const VerifiedIdentityCard: React.FC<Readonly<VerifiedIdentityCardProps>> = ({
         <ApplicationLogoWhite className='h-7' />
       </div>
       <div className='pl-2'>
-        <div className='font-id-font truncate text-base'>{name}</div>
+        <div className='truncate font-id-font text-base'>{name}</div>
 
         <div className='flex justify-between'>
           <div className='mt-4 flex flex-col gap-4'>

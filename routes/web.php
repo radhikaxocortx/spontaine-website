@@ -14,6 +14,7 @@ use App\Http\Controllers\PricePlan\PricePlanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReferenceData\ReferenceDataAPIController;
 use App\Http\Controllers\ReferenceData\ReferenceDataController;
+use App\Http\Controllers\VerifiedIdentity\VerifiedIdentityController;
 use App\Http\Controllers\Workflow\WorkflowController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -158,6 +159,9 @@ Route::middleware(['auth:customer'])->group(function () {
     Route::post('customer-workflow-status-update', [CustomerController::class, 'customerWorkflowStatusUpdate'])
         ->name('customer-workflow-status-update');
 });
+
+Route::get('verified-identity/{customer}', VerifiedIdentityController::class)
+    ->name('verified-identity');
 
 // Nav Editor
 Route::resource('nav-editor', NavEditorNavEditorController::class);

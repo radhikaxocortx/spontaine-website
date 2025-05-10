@@ -41,6 +41,8 @@ class CustomerController extends Controller
     public function create(Request $request)
     {
 
+        return session()->get('customer_registration_data');
+
         return Inertia::render('Customer/CustomerCreate', [
             'priceplan_id' => $request->priceplan_id ?? null,
         ]);
