@@ -17,6 +17,7 @@ import { router, usePage } from '@inertiajs/react'
 import { motion } from 'framer-motion'
 import { useMemo } from 'react'
 import ChoosePriceplan from './ChoosePriceplan'
+import VerifiedIdentityCard from './VerifiedIdentityCard'
 
 interface DashboardPageProps {
   auth: {
@@ -130,7 +131,7 @@ export default function CustomerDashboard() {
   return (
     <div className='min-h-screen bg-primary-graige-50'>
       <CustomerDashboardLayout>
-        <div className='mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8'>
+        <div className='mx-auto px-4 py-8 sm:px-6 lg:px-8'>
           {/* Welcome Section */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -138,19 +139,29 @@ export default function CustomerDashboard() {
             transition={{ duration: 0.5 }}
             className='mb-8'
           >
-            <div className='border-primary rounded-lg border-l-4 bg-white p-6 shadow-lg transition-shadow duration-300 hover:shadow-xl'>
-              <LargeText className='text-black-tertiary-950'>
-                Welcome back, <LargeText className='text-primary-500'>{User?.first_name}</LargeText>
-                !
-              </LargeText>
-              <br />
-              <NormalText className='mt-2 text-neutral-600'>
-                {hasPricePlan
-                  ? hasWorkflow
-                    ? "Here's an overview of your current plan and usage."
-                    : "Let's get started with your business verification process."
-                  : "Let's get you started with a price plan that suits your needs."}
-              </NormalText>
+            <div className='border-primary rounded-lg p-6'>
+              <div className='flex w-full flex-col gap-6 md:flex-row'>
+                <div className='flex w-full flex-col'>
+                  <LargeText className='text-black-tertiary-950'>
+                    Welcome back,{' '}
+                    <LargeText className='text-primary-500'>{User?.first_name}</LargeText>!
+                  </LargeText>
+                  <div>
+                    <NormalText className='text-neutral-600'>
+                      {hasPricePlan
+                        ? hasWorkflow
+                          ? "Here's an overview of your current plan and usage."
+                          : "Let's get started with your business verification process."
+                        : "Let's get you started with a price plan that suits your needs."}
+                    </NormalText>
+                  </div>
+                </div>
+                {hasPricePlan && currentPricePlan && (
+                  <div className='w-full'>
+                    <VerifiedIdentityCard customerPricePlan={currentPricePlan} />
+                  </div>
+                )}
+              </div>
             </div>
           </motion.div>
 
