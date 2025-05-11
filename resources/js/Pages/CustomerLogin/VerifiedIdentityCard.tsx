@@ -31,7 +31,7 @@ const cardBackgrounds = {
 
 const VerifiedIdentityCard = ({ customerPricePlan }: VerifiedIdentityCardProps) => {
   const kadodoIdObj: KadodoID | undefined = customerPricePlan.kadodo_i_d
-  const isGenerated = Boolean(kadodoIdObj && kadodoIdObj.kadodo_id)
+  const isGenerated = Boolean(customerPricePlan.kadodo_i_d?.kadodo_id)
   const cardType = getCardType(customerPricePlan.price_plan?.type)
   const cardClass = isGenerated ? cardStyles[cardType] : cardStyles.blurred
   const label = isGenerated ? cardLabels[cardType] : 'Verified'
@@ -49,7 +49,8 @@ const VerifiedIdentityCard = ({ customerPricePlan }: VerifiedIdentityCardProps) 
     <div
       className={clsx(
         'relative flex h-[220px] w-[340px] flex-col justify-between overflow-hidden rounded-2xl p-6 text-white shadow-xl',
-        isGenerated ? '' : 'pointer-events-none select-none blur-sm filter backdrop-blur-lg'
+        cardClass,
+        !isGenerated && 'pointer-events-none select-none blur-sm filter backdrop-blur-lg'
       )}
       style={{
         letterSpacing: '1.5px',
