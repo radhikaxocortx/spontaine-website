@@ -11,11 +11,9 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion'
 import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
-import NormalText from '@/typography/NormalText'
 import StrongText from '@/typography/StrongText'
 import { router } from '@inertiajs/react'
-import { Bell } from 'lucide-react'
+import { AlertCircle, Bell, Info, User } from 'lucide-react'
 import { useState } from 'react'
 import ModuleEdit from './ModuleEdit'
 
@@ -56,9 +54,15 @@ export default function CustomerPriceplanInfoModule({
     )
   }
 
+  const isUpdateAllowed = moduleUpdateStatus?.allow_update && !moduleUpdateStatus?.customer_updated
+  const hasCustomerNotes = Boolean(moduleUpdateStatus?.customer_notes)
+  const hasInternalNotes = Boolean(moduleUpdateStatus?.internal_notes)
+
   return (
     <div
-      className={`bg-1stop-accent2 rounded-lg border shadow-sm transition-all duration-200 ${expandedValue ? 'h-full' : 'h-[60px]'}`}
+      className={`rounded-xl border border-gray-200 bg-white shadow-sm transition-all duration-200 ${
+        expandedValue ? 'h-full' : 'h-[60px]'
+      }`}
     >
       <Accordion
         type='single'
@@ -67,48 +71,102 @@ export default function CustomerPriceplanInfoModule({
         onValueChange={setExpandedValue}
         className='w-full'
       >
-        <AccordionItem value='item-1'>
-          <AccordionTrigger className='cursor-pointer px-6 transition-colors duration-200 hover:bg-[#F1F5F9]'>
-            <span className='font-semibold'>{workflowModule.name}</span>
-            {moduleUpdateStatus?.allow_update && !moduleUpdateStatus?.customer_updated && (
-              <span
-                className='ml-auto cursor-pointer font-normal text-blue-600 hover:font-semibold hover:text-blue-700'
-                onClick={(e) => {
-                  e.stopPropagation()
-                  setEditModule(true)
-                }}
-              >
-                Edit
-              </span>
-            )}
-            <Button
-              className='ml-auto'
-              variant='outline'
-              size='sm'
-              onClick={(e) => {
-                e.stopPropagation()
-                setStatusOpen(true)
-              }}
-            >
-              <Bell className='h-4 w-4' />
-            </Button>
-          </AccordionTrigger>
-          <AccordionContent className='px-6 pb-6'>
-            <div>
-              {moduleUpdateStatus?.allow_update && !moduleUpdateStatus?.customer_updated && (
-                <div className='flex items-center gap-2'>
-                  <div className='flex p-2'>
-                    <Checkbox
-                      onCheckedChange={(checked) => setUpdated(!!checked)}
-                      checked={updated}
-                    />
-                    <NormalText className='pl-2'>Mark as updated</NormalText>
-                  </div>
-                  <span className='text-muted-foreground text-sm'></span>
+        <AccordionItem
+          value='item-1'
+          className='border-none'
+        >
+          <AccordionTrigger
+            className={`cursor-pointer px-6 transition-colors duration-200 hover:bg-gray-50 ${
+              isUpdateAllowed ? 'bg-primary-graige-100' : ''
+            }`}
+          >
+            <div className='flex items-center'>
+              <div className='flex items-center gap-3'>
+                <div className='flex h-8 w-8 items-center justify-center rounded-full'>
+                  <Info className='h-4 w-4 text-primary-600' />
                 </div>
+                <span className='font-semibold'>{workflowModule.name}</span>
+              </div>
+              {hasCustomerNotes && (
+                <Button
+                  className='ml-auto'
+                  variant='ghost'
+                  size='sm'
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setStatusOpen(true)
+                  }}
+                >
+                  <Bell className='h-6 w-6 font-bold text-red-500' />
+                </Button>
               )}
-              {hasFieldsWithValues ? (
-                <>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className='px-6 pb-6 pt-4'>
+            <div className='space-y-6'>
+              {/* Status Section */}
+              <div className='overflow-hidden rounded-xl bg-gray-100 p-4 shadow-sm'>
+                <div className='mb-4 flex items-center justify-end'>
+                  <div className='flex items-center gap-2'>
+                    <span className='text-sm font-medium text-gray-600'>Current Status:</span>
+                    <span className='rounded-full bg-secondary-100 px-3 py-1 text-sm font-medium text-secondary-700'>
+                      {moduleUpdateStatus?.status ?? 'Not Started'}
+                    </span>
+                  </div>
+                </div>
+                <div className='mb-4 space-y-4'>
+                  {hasCustomerNotes && (
+                    <div className='flex items-start gap-3'>
+                      <div className='flex h-8 w-8 items-center justify-center rounded-full bg-secondary-100 ring-2 ring-secondary-50'>
+                        <User className='h-4 w-4 text-secondary-600' />
+                      </div>
+                      <div className='flex-1'>
+                        <div className='mb-1 flex items-center gap-2'>
+                          <span className='text-sm font-medium text-gray-700'>
+                            Verification Team
+                          </span>
+                          <span className='text-xs text-gray-500'>
+                            {moduleUpdateStatus?.updated_at
+                              ? new Date(moduleUpdateStatus.updated_at).toLocaleDateString()
+                              : ''}
+                          </span>
+                        </div>
+                        <div className='relative rounded-xl rounded-tl-none bg-white p-3 shadow-sm ring-1 ring-gray-100 before:absolute before:left-[-8px] before:top-0 before:border-8 before:border-transparent before:border-r-white before:border-t-white'>
+                          <p className='text-sm text-gray-600'>
+                            {moduleUpdateStatus?.customer_notes}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {hasInternalNotes && (
+                    <div className='flex items-start gap-3'>
+                      <div className='flex h-8 w-8 items-center justify-center rounded-full bg-primary-100 ring-2 ring-primary-50'>
+                        <AlertCircle className='h-4 w-4 text-primary-600' />
+                      </div>
+                      <div className='flex-1'>
+                        <div className='mb-1 flex items-center gap-2'>
+                          <span className='text-sm font-medium text-gray-700'>Admin</span>
+                          <span className='text-xs text-gray-500'>
+                            {moduleUpdateStatus?.updated_at
+                              ? new Date(moduleUpdateStatus.updated_at).toLocaleDateString()
+                              : ''}
+                          </span>
+                        </div>
+                        <div className='relative rounded-xl rounded-tl-none bg-white p-3 shadow-sm ring-1 ring-gray-100 before:absolute before:left-[-8px] before:top-0 before:border-8 before:border-transparent before:border-r-white before:border-t-white'>
+                          <p className='text-sm text-gray-600'>
+                            {moduleUpdateStatus?.internal_notes}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Selected Options Section */}
+              {hasFieldsWithValues && (
+                <div className='overflow-hidden rounded-xl bg-gradient-to-br from-gray-50 to-white p-4 shadow-sm'>
                   <div className='grid gap-4'>
                     {workflowModule.workflow_items
                       .sort((a, b) => a.field_number - b.field_number)
@@ -121,7 +179,7 @@ export default function CustomerPriceplanInfoModule({
                         return (
                           <div
                             key={item.id}
-                            className='flex flex-col gap-1'
+                            className='flex flex-col gap-1 rounded-lg bg-white p-3 shadow-sm ring-1 ring-gray-100'
                           >
                             <span className='text-muted-foreground text-xs font-medium'>
                               {item.field_name}
@@ -131,12 +189,39 @@ export default function CustomerPriceplanInfoModule({
                         )
                       })}
                   </div>
-                </>
-              ) : (
-                <div className='flex h-full items-center justify-center py-4'>
-                  <span className='text-muted-foreground text-sm'>No information available</span>
                 </div>
               )}
+
+              <div className='flex items-center justify-end gap-4'>
+                {/* Update Controls */}
+                {hasFieldsWithValues && (
+                  <div className='flex items-center'>
+                    {isUpdateAllowed && (
+                      <Button
+                        variant='default'
+                        size='sm'
+                        onClick={() => setEditModule(true)}
+                        className='flex items-center gap-2'
+                      >
+                        Edit Details
+                      </Button>
+                    )}
+                  </div>
+                )}
+                {isUpdateAllowed && (
+                  <div className='flex items-center justify-end rounded-xl shadow-sm'>
+                    <Button
+                      variant={updated ? 'default' : 'outline'}
+                      size='sm'
+                      onClick={() => setUpdated(!updated)}
+                      disabled={updated}
+                      className={updated ? 'cursor-not-allowed opacity-50' : ''}
+                    >
+                      {updated ? 'Marked' : 'Mark Completed'}
+                    </Button>
+                  </div>
+                )}
+              </div>
             </div>
           </AccordionContent>
         </AccordionItem>
@@ -144,7 +229,7 @@ export default function CustomerPriceplanInfoModule({
       {statusOpen && (
         <Modal
           setShowModal={setStatusOpen}
-          title={`Your Request is ${moduleUpdateStatus?.status ?? 'Processing'}`}
+          title={`Your Request is ${moduleUpdateStatus?.status ?? 'Not Started'}`}
         >
           <div className='p-3'>
             <StrongText>{moduleUpdateStatus?.customer_notes ?? ''}</StrongText>
@@ -176,7 +261,10 @@ export default function CustomerPriceplanInfoModule({
           setShowModal={setUpdated}
           title='Confirm update?'
         >
-          <div>By marking as updated You can't able to add or remove data you added.</div>
+          <div>
+            You are about to submit the module to the verification team. This action is
+            irreversible. Are you sure?
+          </div>
           <div className='flex justify-end gap-2'>
             <Button onClick={() => setUpdated(false)}>Cancel</Button>
             <Button onClick={handleUpdated}>Mark as updated</Button>
