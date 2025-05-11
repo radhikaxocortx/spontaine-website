@@ -14,6 +14,7 @@ use App\Models\Customer\CustomerOrganization;
 use App\Models\Customer\CustomerPricePlan;
 use App\Models\Customer\CustomerWorkflow;
 use App\Models\CustomerVerification\WorkflowModuleVerification;
+use App\Models\PricePlan\PricePlan;
 use App\Models\User;
 use App\Models\Workflow\Workflow;
 use App\Services\ProcessWorkflowInfo;
@@ -40,9 +41,6 @@ class CustomerController extends Controller
      */
     public function create(Request $request)
     {
-
-        return session()->get('customer_registration_data');
-
         return Inertia::render('Customer/CustomerCreate', [
             'priceplan_id' => $request->priceplan_id ?? null,
         ]);
@@ -148,7 +146,7 @@ class CustomerController extends Controller
             Auth::guard('customer')->login($customer);
             session()->forget('customer_registration_data');
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
 
             return redirect()->route('sign-up.create')->with('error', 'Registration failed. Try again.');
@@ -169,7 +167,7 @@ class CustomerController extends Controller
             $customerPriceplan = CustomerPricePlan::create($request->all());
             $kadodoId = 'KD-'.time().$customerPriceplan->id;
             $customerPriceplan->update(['kadodo_id' => $kadodoId]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->with(['error' => $e->getMessage()]);
         }
 
@@ -205,9 +203,9 @@ class CustomerController extends Controller
                 ->with('customer', 'pricePlan')
                 ->first();
 
-            /** @var \App\Models\Customer\Customer|null $customer */
+            /** @var Customer|null $customer */
             $customer = $customerDetail->customer;
-            /** @var \App\Models\PricePlan\PricePlan|null $pricePlan */
+            /** @var PricePlan|null $pricePlan */
             $pricePlan = $customerDetail->pricePlan;
 
             CustomerWorkflow::insert($infoRecords);
