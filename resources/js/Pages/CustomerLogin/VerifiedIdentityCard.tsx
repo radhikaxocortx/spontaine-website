@@ -42,7 +42,8 @@ const VerifiedIdentityCard = ({ customerPricePlan }: VerifiedIdentityCardProps) 
   const validTo = kadodoIdObj?.valid_to
     ? new Date(kadodoIdObj.valid_to).toLocaleDateString()
     : 'DD/MM/YYYY'
-  const qrValue = isGenerated ? `/verification-details/${kadodoId}` : '/'
+
+  const qrValue = isGenerated ? route('verification-details', kadodoId) : ''
   const cardBg = isGenerated ? cardBackgrounds[cardType] : cardBackgrounds.blurred
 
   return (

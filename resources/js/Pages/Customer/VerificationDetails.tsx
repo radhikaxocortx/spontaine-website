@@ -71,7 +71,7 @@ const VerificationDetails = ({ kadodoId, customerPriceplan }: Props) => {
           {/* QR Code */}
           <div className='my-4 flex flex-col items-center gap-2'>
             <QRCodeSVG
-              value={kadodoID}
+              value={route('verification-details', kadodoID)}
               size={80}
             />
             {/* Kadodo ID */}
