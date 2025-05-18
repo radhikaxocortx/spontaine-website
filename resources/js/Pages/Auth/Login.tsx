@@ -1,3 +1,4 @@
+import ApplicationLogo from '@/components/CustomUI/ApplicationLogo'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
@@ -34,6 +35,9 @@ export default function Login({ status, canResetPassword }: Readonly<Props>) {
         onSubmit={submit}
         className='space-y-4'
       >
+        <div className='flex justify-center'>
+          <ApplicationLogo className='w-28 2xl:w-36' />
+        </div>
         <div>
           <StrongText>Email</StrongText>
           <Input
@@ -71,14 +75,14 @@ export default function Login({ status, canResetPassword }: Readonly<Props>) {
         </div>
 
         <div className='flex items-center justify-end'>
-          {canResetPassword && (
+          {/* {canResetPassword && (
             <Link
               href={route('password.request')}
               className='text-sm text-gray-600 underline hover:text-gray-900'
             >
               Forgot your password?
             </Link>
-          )}
+          )} */}
 
           <Button
             type='submit'

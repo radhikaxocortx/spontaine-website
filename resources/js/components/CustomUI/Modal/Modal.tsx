@@ -29,8 +29,10 @@ export default function Modal({
       open
       onOpenChange={setShowModal}
     >
-      <DialogContent className={`mt-10 overflow-scroll ${large ? 'max-w-5xl' : 'max-w-lg'}`}>
-        <DialogHeader>
+      <DialogContent
+        className={`mt-10 max-h-[90vh] overflow-y-auto ${large ? 'max-w-5xl' : 'max-w-lg'}`}
+      >
+        <DialogHeader className='pb-4'>
           {title && <DialogTitle>{title}</DialogTitle>}
           {showCloseButton && (
             <DialogClose asChild>
@@ -43,7 +45,7 @@ export default function Modal({
             </DialogClose>
           )}
         </DialogHeader>
-        <div>{children}</div>
+        <div className='overflow-y-auto'>{children}</div>
       </DialogContent>
     </Dialog>
   )

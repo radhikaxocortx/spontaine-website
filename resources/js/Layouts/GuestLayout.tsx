@@ -15,7 +15,10 @@ export default function Guest({ children }: PropsWithChildren) {
     }
   }, [flash])
   return (
-    <div className='flex min-h-screen flex-col items-center bg-gray-100 pt-6 sm:justify-center sm:pt-0'>
+    <div
+      className='flex min-h-screen flex-col items-center justify-center bg-cover bg-center bg-no-repeat pt-6 sm:justify-center sm:pt-0'
+      style={{ backgroundImage: 'url(/imge/admin-login.jpeg)' }}
+    >
       <ToastContainer
         position='bottom-center'
         autoClose={5000}

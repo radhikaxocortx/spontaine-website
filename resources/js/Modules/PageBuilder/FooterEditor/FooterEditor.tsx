@@ -28,6 +28,8 @@ export interface FooterDataInterface {
   facebook?: LinkData
   instagram?: LinkData
   youtube?: LinkData
+  copyright?: TextData | null
+  copyrightLink?: LinkData | null
 }
 
 const defaultFooterData: FooterDataInterface = {

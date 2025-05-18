@@ -6,9 +6,10 @@ import ButtonBorderIcon from './ButtonBorderIcon'
 interface Props {
   link?: string
   onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => unknown
+  className?: string
 }
 
-export default function DeleteButton({ link, onClick }: Props) {
+export default function DeleteButton({ link, onClick, className }: Props) {
   const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (link != null) {
       router.get(link)
@@ -20,8 +21,11 @@ export default function DeleteButton({ link, onClick }: Props) {
   }
 
   return (
-    <ButtonBorderIcon onClick={handleClick}>
-      <Trash className='h-6 w-6' />
+    <ButtonBorderIcon
+      onClick={handleClick}
+      className={className}
+    >
+      <Trash className='h-4 w-4' />
     </ButtonBorderIcon>
   )
 }
