@@ -99,7 +99,7 @@ export default function Sidebar() {
                 </g>
               </svg>
               <Link href='/'>
-                <ApplicationLogo className='block h-6 w-auto fill-current text-gray-800' />
+                <ApplicationLogo className='block w-32 2xl:w-36' />
               </Link>
             </div>
           </SheetTrigger>
@@ -232,7 +232,7 @@ export default function Sidebar() {
                           <Button
                             key={item.name}
                             onClick={() => router.get(item.url || '')}
-                            className='items-left flex w-full p-2 text-left'
+                            className='flex w-full items-center justify-start p-2 text-left'
                             variant='ghost'
                           >
                             {typeof item.image !== 'string' && item.image?.svg && (

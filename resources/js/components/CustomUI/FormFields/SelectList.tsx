@@ -34,6 +34,7 @@ export interface Properties<
   showAllOption?: boolean
   allOptionText?: string
   showLabel?: boolean
+  className?: string
 }
 
 const getStyle = (style: 'normal' | 'bottom-border' | 'dark') => {
@@ -72,6 +73,7 @@ export default function SelectList<
   style = 'normal',
   disabled = false,
   showLabel = true,
+  className,
 }: Properties<K, G, T>) {
   const selectedOption = useMemo(() => {
     const index = list.findIndex((item) => {
@@ -81,8 +83,10 @@ export default function SelectList<
   }, [value, dataKey, list])
 
   return (
-    <>
-      {label != null && showLabel && <NormalText>{label}</NormalText>}
+    <div className={`flex flex-col gap-2 ${className}`}>
+      {showLabel && label != null && (
+        <NormalText className='text-sm font-medium'>{label}</NormalText>
+      )}
       <Select
         onValueChange={setValue}
         value={selectedOption}
@@ -113,6 +117,6 @@ export default function SelectList<
       </Select>
 
       {error && <ErrorText>{error}</ErrorText>}
-    </>
+    </div>
   )
 }

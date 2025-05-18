@@ -42,55 +42,68 @@ const PageBuilder = ({ page, dependencies }: Properties) => {
     })
   }
   return (
-    <>
-      <div className='h-64 bg-tertiary-950 px-2 pt-10 shadow-2xl'>
-        <div className='mb-2 mt-5 flex w-full flex-wrap items-start justify-start'>
-          <span className='text-sm text-white'>/{page.url}</span>
-        </div>
-        <div className='flex flex-wrap justify-between'>
-          <div className='flex flex-wrap gap-4'>
-            <BackButton link={`/pages`} />
-            <ActionButton
-              onClick={save}
-              label='Save'
+    <div className='min-h-screen bg-primary-50'>
+      <div className='mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8'>
+        <div className='hover:shadow-3xl overflow-hidden rounded-2xl bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-8 shadow-2xl backdrop-blur-sm transition-all duration-300'>
+          <div className='mb-6 flex items-center justify-between border-b border-white/10 pb-4'>
+            <div className='flex items-center space-x-4'>
+              <BackButton link='/pages' />
+              <span className='text-lg font-medium text-white/90'>/{page.url}</span>
+            </div>
+            <div className='flex items-center space-x-3'>
+              <ActionButton
+                onClick={save}
+                label='Save'
+                className='bg-emerald-500 text-white transition-colors duration-200 hover:bg-emerald-600'
+              />
+              <EditButton
+                link={`/pages/${page.id}/edit`}
+                className='bg-blue-500 text-white transition-colors duration-200 hover:bg-blue-600'
+              />
+              <DeleteButton
+                onClick={() => setShowDeleteModal((old) => !old)}
+                className='bg-red-500 text-white transition-colors duration-200 hover:bg-red-600'
+              />
+            </div>
+          </div>
+
+          {showDeleteModal && (
+            <DeleteModal
+              url={`/pages/${page.id}`}
+              setShowModal={setShowDeleteModal}
+              title={`Delete ${page.id}`}
+            >
+              <p className='text-gray-900'>Confirm Deleting {page.title}?</p>
+            </DeleteModal>
+          )}
+
+          <div className='mt-8 text-center'>
+            <h3 className='text-2xl font-bold text-white'>Add/Edit Blocks</h3>
+          </div>
+
+          <div className='mt-6 flex flex-wrap items-end justify-end gap-6 p-4'>
+            <div className='flex flex-col'>
+              <SelectList
+                label='Language'
+                list={languages}
+                displayKey='label'
+                dataKey='value'
+                value={language}
+                setValue={(value: string) => setLanguage(value as Language)}
+                style='dark'
+                className='rounded-lg border border-white/20 bg-white/5 text-white backdrop-blur-sm'
+              />
+            </div>
+            <AddPageBlock
+              onBlockAdd={addComponent}
+              page={page}
+              className='rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-white transition-colors duration-200 hover:bg-white/10'
             />
-            <EditButton link={`/pages/${page.id}/edit`} />
-            <DeleteButton onClick={() => setShowDeleteModal((old) => !old)} />
           </div>
         </div>
-        {showDeleteModal && (
-          <DeleteModal
-            url={`/pages/${page.id}`}
-            setShowModal={setShowDeleteModal}
-            title={`Delete ${page.id}`}
-          >
-            <p>Confirm Deleting {page.title}?</p>
-          </DeleteModal>
-        )}
-        <div className='mt-1 flex justify-center'>
-          <h3 className='text-white'>Add/Edit Blocks</h3>
-        </div>
-        <div className='mb-32 flex flex-wrap items-end justify-end gap-5 p-4'>
-          <div className='flex flex-col'>
-            <SelectList
-              label='Language'
-              list={languages}
-              displayKey='label'
-              dataKey='value'
-              value={language}
-              setValue={(value: string) => setLanguage(value as Language)}
-              style='dark'
-            />
-          </div>
-          <AddPageBlock
-            onBlockAdd={addComponent}
-            page={page}
-          />
-        </div>
-      </div>
-      <div className='mt-56'>
-        {pageBlock.blocks.map((block) => {
-          return (
+
+        <div className='mt-8 space-y-6 bg-white'>
+          {pageBlock.blocks.map((block) => (
             <Fragment key={block.id.toString()}>
               <BlockEditor
                 block={block}
@@ -99,10 +112,10 @@ const PageBuilder = ({ page, dependencies }: Properties) => {
                 dependencies={dependencies}
               />
             </Fragment>
-          )
-        })}
+          ))}
+        </div>
       </div>
-    </>
+    </div>
   )
 }
 

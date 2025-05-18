@@ -12,6 +12,7 @@ interface Properties {
   disabled?: boolean
   link?: string
   type?: 'reset' | 'submit' | 'button'
+  className?: string
 }
 
 export default function ActionButton({
@@ -21,7 +22,7 @@ export default function ActionButton({
   processing = false,
   disabled = false,
   type = 'submit',
-
+  className,
   link,
 }: Properties) {
   return (
@@ -30,6 +31,7 @@ export default function ActionButton({
         <Link
           href={link}
           as='a'
+          className={className}
         >
           <NormalText>{label}</NormalText>
         </Link>
@@ -40,6 +42,7 @@ export default function ActionButton({
           disabled={disabled}
           type={type}
           variant={variant}
+          className={className}
         >
           <StrongText>{label}</StrongText>
         </Button>

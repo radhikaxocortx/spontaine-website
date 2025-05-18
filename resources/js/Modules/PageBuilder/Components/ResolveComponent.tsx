@@ -145,14 +145,7 @@ const ResolveComponent = ({
           language={language}
         />
       )}
-      {blockName === 'Content Section - Contact Us' && (
-        <ContactUS
-          editMode={editMode}
-          onFieldEdit={onFieldEdit}
-          blockData={block as unknown as RichTextBlockData}
-          language={language}
-        />
-      )}
+
       {blockName === 'Home - Call To Action' && (
         <SectionCallToAction
           editMode={editMode}

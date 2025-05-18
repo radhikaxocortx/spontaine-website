@@ -99,7 +99,7 @@ const FullWidthImageWithTItle = ({
       <AppLayoutPadding>
         <div className={`flex w-full flex-col gap-2`}>
           <div className='w-full justify-start'>
-            <HeroHeadline className='text-black-tertiary-950'>
+            <HeroHeadline className='text-primary-950'>
               <Localization
                 text={blockData.title}
                 language={language}
