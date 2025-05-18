@@ -7,9 +7,10 @@ interface Props {
   link?: string
   onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => unknown
   buttonText?: string
+  className?: string
 }
 
-export default function AddButton({ link, onClick, buttonText }: Props) {
+export default function AddButton({ link, onClick, buttonText, className }: Props) {
   const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (link != null) {
       router.get(link)
@@ -21,9 +22,12 @@ export default function AddButton({ link, onClick, buttonText }: Props) {
   }
 
   return (
-    <ButtonBorderIcon onClick={handleClick}>
+    <ButtonBorderIcon
+      onClick={handleClick}
+      className={className}
+    >
       <div className='flex flex-col items-center'>
-        <PlusIcon className='h-6 w-6' />
+        <PlusIcon className='h-4 w-4' />
         {buttonText}
       </div>
     </ButtonBorderIcon>

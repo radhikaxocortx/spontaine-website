@@ -26,9 +26,10 @@ const pageBlocks = [
 interface Properties {
   onBlockAdd: (block: string) => void
   page: Page
+  className?: string
 }
 
-const AddPageBlock = ({ onBlockAdd }: Properties) => {
+const AddPageBlock = ({ onBlockAdd, page, className }: Properties) => {
   const [showModal, setShowModal] = useState(false)
   const [selectedBlock, setSelectedBlock] = useState('')
 
@@ -40,7 +41,10 @@ const AddPageBlock = ({ onBlockAdd }: Properties) => {
   return (
     <>
       <>
-        <AddButton onClick={() => setShowModal(true)} />
+        <AddButton
+          onClick={() => setShowModal(true)}
+          className={className}
+        />
       </>
       {showModal && (
         <Modal

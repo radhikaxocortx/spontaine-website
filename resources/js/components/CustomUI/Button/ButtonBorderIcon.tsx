@@ -48,6 +48,7 @@ interface Properties {
   processing?: boolean
   disabled?: boolean
   children: React.ReactNode
+  className?: string
 }
 
 const ButtonBorderIcon = ({
@@ -56,6 +57,7 @@ const ButtonBorderIcon = ({
   processing = false,
   disabled = false,
   children,
+  className,
 }: Properties) => {
   const [buttonStyle, svgStyle] = useMemo(() => chooseBorderButtonColor(type), [type])
 
@@ -66,7 +68,7 @@ const ButtonBorderIcon = ({
           type='button'
           onClick={onClick}
           disabled={disabled}
-          className={`flex items-center justify-center rounded-lg border px-2 py-2 text-left text-sm tracking-wider ring-offset-2 transition duration-150 ease-in-out focus:outline-none focus:ring-1 ${buttonStyle}`}
+          className={`flex items-center justify-center rounded-lg border px-2 py-2 text-left text-sm tracking-wider ring-offset-2 transition duration-150 ease-in-out focus:outline-none focus:ring-1 ${buttonStyle} ${className}`}
         >
           {children}
         </button>
