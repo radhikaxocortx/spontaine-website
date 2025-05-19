@@ -8,6 +8,7 @@ use Inertia\Middleware;
 use Modules\PageBuilder\Models\UIBuilder\Footer;
 use Modules\PageBuilder\Repository\NavMenu\NavMenuRepository;
 use Modules\Permission\Services\Roles\FindRoleInfo;
+use Session;
 use Tighten\Ziggy\Ziggy;
 
 class HandleInertiaRequests extends Middleware
@@ -37,6 +38,11 @@ class HandleInertiaRequests extends Middleware
         $role = null;
         if ($user = $request->user()) {
             $role = app(FindRoleInfo::class)->findRole($user->role ?? '');
+        }
+
+        // set language
+        if ($request->filled('lang')) {
+            Session::put('lang', $request->input('lang', 'en'));
         }
 
         return [

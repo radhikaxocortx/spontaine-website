@@ -69,7 +69,7 @@ const NavEditor = ({ menuItems }: Readonly<Props>) => {
           variant='secondary'
           onClick={changeLanguage}
         >
-          {selectedLanguage}
+          {selectedLanguage === 'en' ? 'English' : 'Alt Lang'}
         </Button>
       </div>
       <div className='grid grid-cols-1 gap-3 md:grid-cols-3 xl:grid-cols-4 xl:gap-5'>

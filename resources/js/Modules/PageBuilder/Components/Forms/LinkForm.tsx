@@ -48,7 +48,7 @@ const LinkForm = ({ onLink, data, showRemove = false }: Properties) => {
       </div>
       <div className='flex w-full flex-col p-2'>
         <InputText
-          label='Malayalam Name'
+          label='Name (Alternate Language)'
           value={malayalamName}
           setValue={setMalayalamName}
           error=''

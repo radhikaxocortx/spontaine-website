@@ -87,7 +87,7 @@ const FooterEditor = ({ footer }: Properties) => {
   const saveChanges = () => {
     router.post('/footer-editor', {
       data: footerData.blocks[0],
-    } as any)
+    } as unknown as FormData)
   }
 
   const changeLanguage = () => {
@@ -106,7 +106,7 @@ const FooterEditor = ({ footer }: Properties) => {
           variant='secondary'
           onClick={changeLanguage}
         >
-          {selectedLanguage}
+          {selectedLanguage === 'en' ? 'English' : 'Alt Lang'}
         </Button>
       </div>
       {footerData.blocks.length > 0 && (

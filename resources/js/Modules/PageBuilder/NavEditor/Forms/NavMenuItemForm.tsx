@@ -59,7 +59,7 @@ const NavMenuItemForm = ({ onSubmit, menuItem }: Properties) => {
       </div>
       <div className='flex w-full flex-col p-2'>
         <InputText
-          label='Title (Malayalam)'
+          label='Title (Alternate Language)'
           value={formData.title_malayalam}
           setValue={setFormValue('title_malayalam')}
           error=''

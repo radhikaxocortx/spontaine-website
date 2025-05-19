@@ -41,7 +41,7 @@ const TitleInput = ({ onSubmit, showRemove = false, data }: Properties) => {
       </div>
       <div className='flex w-full flex-col p-2'>
         <InputText
-          label='Value (Malayalam)'
+          label='Value (Alternate Language)'
           value={formData.malayalam ?? ''}
           setValue={setFormValue('malayalam')}
           error=''
