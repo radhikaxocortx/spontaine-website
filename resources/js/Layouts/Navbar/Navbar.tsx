@@ -1,5 +1,5 @@
 import ApplicationLogo from '@/components/CustomUI/ApplicationLogo'
-import { usePage } from '@inertiajs/react'
+import { Link, usePage } from '@inertiajs/react'
 import AppLayoutPadding from '../AppLayoutPadding'
 
 import CountrySelector from '@/components/CustomUI/CountrySelector'
@@ -29,7 +29,9 @@ const Navbar = () => {
       <AppLayoutPadding>
         <div className='flex items-center justify-between py-4'>
           <div className='flex items-center'>
-            <ApplicationLogo className='w-28 2xl:w-36' />
+            <Link href='/'>
+              <ApplicationLogo className='w-32 2xl:w-36' />
+            </Link>
           </div>
           <div className='hidden items-center gap-4 lg:flex'>
             <NavbarLinks />

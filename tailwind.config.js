@@ -15,6 +15,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Geist', ...defaultTheme.fontFamily.sans],
+        'id-font': ['FragmentMono-Regular', ...defaultTheme.fontFamily.sans],
         'h1-stop': ['var(--font-h1-1stop)', ...defaultTheme.fontFamily.sans],
         'h2-1stop': ['var(--font-h2-1stop)', ...defaultTheme.fontFamily.sans],
         'h3-1stop': ['var(--font-h3-1stop)', ...defaultTheme.fontFamily.sans],
@@ -221,20 +222,20 @@ export default {
           '0%': {
             clipPath: 'inset(0 0 100% 0)',
             transform: 'translateY(20px)',
-            opacity: '0'
+            opacity: '0',
           },
           '100%': {
             clipPath: 'inset(0 0 0 0)',
             transform: 'translateY(0)',
-            opacity: '1'
-          }
-        }
+            opacity: '1',
+          },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         shimmer: 'shimmer 2s linear infinite',
-        reveal: 'reveal 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards'
+        reveal: 'reveal 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
       },
     },
   },

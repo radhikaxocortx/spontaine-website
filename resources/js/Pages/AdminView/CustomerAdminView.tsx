@@ -73,14 +73,14 @@ const CustomerAdminView = ({ customerPriceplans }: Props) => {
       <DashboardPadding>
         <CardHeader title='VERIFICATION REQUESTS' />
         <div className='mt-4 flex flex-col gap-5'>
-          <FormBuilder
-            formData={formData}
-            onFormSubmit={handleSearch}
-            formItems={formItems}
-            loading={false}
-            buttonText='Search'
+            <FormBuilder
+              formData={formData}
+              onFormSubmit={handleSearch}
+              formItems={formItems}
+              loading={false}
+              buttonText='Search'
             formStyles={`md:grid-cols-3 lg:grid-cols-4`}
-          />
+            />
         </div>
         <div className='flex flex-col gap-10 py-5'>
           <Tabs

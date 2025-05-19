@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
 import useInertiaPost from '@/hooks/useInertiaPost'
-import React, { FormEvent, useCallback, useRef, useState } from 'react'
+import React, { FormEvent, useCallback, useEffect, useRef, useState } from 'react'
 import FormBuilder, { FormItem } from './FormBuilder'
 
 // Step interface to define the structure of each form step
@@ -209,6 +209,10 @@ export default function StepperFormPage<
       })
   ) as Record<U, FormItem<T[U], K, G, L> & { error?: string; className?: string }>
 
+  useEffect(() => {
+    console.log(fieldErrors)
+  }, [fieldErrors])
+
   return (
     <div className=''>
       <div ref={cardRef}>
@@ -247,7 +251,7 @@ export default function StepperFormPage<
                 onFormSubmit={handleSubmit}
                 formItems={currentFormItems}
                 loading={loading}
-                errors={errors}
+                errors={fieldErrors as Record<string, string | undefined>}
                 hideSubmitButton={true}
               >
                 <div className='col-span-2 flex flex-row justify-end gap-4'>
