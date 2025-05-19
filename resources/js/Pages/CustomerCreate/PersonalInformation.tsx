@@ -1,3 +1,5 @@
+import { PersonalInfo } from '@/components/Interface/data_interface'
+import { Button } from '@/components/ui/button'
 import FormBuilder, { FormItem } from '@/FormBuilder/FormBuilder'
 import useCustomForm from '@/hooks/useCustomForm'
 import useInertiaPost from '@/hooks/useInertiaPost'
@@ -5,15 +7,16 @@ import { FormEvent, useCallback, useMemo } from 'react'
 
 interface Props {
   priceplan_id: number | null
+  personalInformation?: PersonalInfo
 }
 
-const PersonalInformation = ({ priceplan_id }: Props) => {
+const PersonalInformation = ({ priceplan_id, personalInformation }: Props) => {
   const { formData, setFormValue } = useCustomForm({
     priceplan_id: priceplan_id,
-    first_name: '',
-    last_name: '',
-    telephone: '',
-    email: '',
+    first_name: personalInformation?.first_name ?? '',
+    last_name: personalInformation?.last_name ?? '',
+    telephone: personalInformation?.telephone ?? '',
+    email: personalInformation?.email ?? '',
   })
 
   const formItems = useMemo(() => {
@@ -66,9 +69,12 @@ const PersonalInformation = ({ priceplan_id }: Props) => {
       onFormSubmit={handleFormSubmit}
       loading={loading}
       errors={errors}
-      buttonText='Next'
-      buttonAlignment='end'
-    />
+      hideSubmitButton={true}
+    >
+      <div className='col-span-2 flex flex-row justify-end gap-4'>
+        <Button type='submit'>Next</Button>
+      </div>
+    </FormBuilder>
   )
 }
 

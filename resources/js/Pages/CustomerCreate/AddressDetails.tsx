@@ -1,16 +1,23 @@
+import { AddressDetail } from '@/components/Interface/data_interface'
+import { Button } from '@/components/ui/button'
 import FormBuilder, { FormItem } from '@/FormBuilder/FormBuilder'
 import useCustomForm from '@/hooks/useCustomForm'
 import useInertiaPost from '@/hooks/useInertiaPost'
+import { router } from '@inertiajs/react'
 import { FormEvent, useCallback, useMemo } from 'react'
 
-const AddressDetails = () => {
+interface Props {
+  addressDetails?: AddressDetail
+}
+
+const AddressDetails = ({ addressDetails }: Props) => {
   const { formData, setFormValue } = useCustomForm({
-    address_line1: '',
-    address_line2: '',
-    city: '',
-    country: '',
-    postal_code: '',
-    have_company: false,
+    address_line1: addressDetails?.address_line1 ?? '',
+    address_line2: addressDetails?.address_line2 ?? '',
+    city: addressDetails?.city ?? '',
+    country: addressDetails?.country ?? '',
+    postal_code: addressDetails?.postal_code ?? '',
+    have_company: addressDetails?.have_company ?? false,
   })
 
   const formItems = useMemo(() => {
@@ -74,8 +81,21 @@ const AddressDetails = () => {
       onFormSubmit={handleFormSubmit}
       loading={loading}
       errors={errors}
-      buttonText='Next'
-    />
+      hideSubmitButton={true}
+    >
+      <div className='col-span-2 flex flex-row justify-between gap-4'>
+        <Button
+          type='button'
+          variant='outline'
+          onClick={() => {
+            router.get(route('previous-address-details'))
+          }}
+        >
+          Previous
+        </Button>
+        <Button type='submit'>Next</Button>
+      </div>
+    </FormBuilder>
   )
 }
 

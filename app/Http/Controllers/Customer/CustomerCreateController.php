@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Customer\AccountSecurityFormRequest;
 use App\Http\Requests\Customer\AddressDetailFormRequest;
 use App\Http\Requests\Customer\CompanyInformationFormRequest;
 use App\Http\Requests\Customer\PersonalInformationFormRequest;
@@ -12,7 +13,6 @@ use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerOrganization;
 use App\Models\Customer\CustomerPricePlan;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -23,30 +23,40 @@ class CustomerCreateController extends Controller
 {
     public function personalInformation(PersonalInformationFormRequest $request)
     {
+        session()->forget('customer_personal_information');
         session(['customer_personal_information' => $request->all()]);
+
+        $addressDetails = session('customer_address_details');
 
         return Inertia::render('CustomerCreate/CustomerCreatePage', [
             'step' => 2,
+            'addressDetails' => $addressDetails,
         ]);
     }
 
     public function addressDetails(AddressDetailFormRequest $request)
     {
+        session()->forget('customer_address_details');
         session(['customer_address_details' => $request->all()]);
+
+        $companyInformation = session('customer_company_information');
 
         if ($request->haveCompany === false) {
             return Inertia::render('CustomerCreate/CustomerCreatePage', [
                 'step' => 4,
+                'companyInformation' => $companyInformation,
             ]);
         }
 
         return Inertia::render('CustomerCreate/CustomerCreatePage', [
             'step' => 3,
+            'companyInformation' => $companyInformation,
         ]);
     }
 
     public function companyInformation(CompanyInformationFormRequest $request)
     {
+        session()->forget('customer_company_information');
         session(['customer_company_information' => $request->all()]);
 
         return Inertia::render('CustomerCreate/CustomerCreatePage', [
@@ -54,8 +64,9 @@ class CustomerCreateController extends Controller
         ]);
     }
 
-    public function accountSecurity(Request $request)
+    public function accountSecurity(AccountSecurityFormRequest $request)
     {
+        session()->forget('customer_account_security');
         $data = session('customer_personal_information');
 
         session(['customer_account_security' => Hash::make($request->password)]);
@@ -129,5 +140,44 @@ class CustomerCreateController extends Controller
 
         return redirect()->route('customer-login-check')->with('message', 'Registration complete and logged in.');
 
+    }
+
+    public function previousAddressDetails()
+    {
+        $personalInformation = session('customer_personal_information');
+
+        return Inertia::render('CustomerCreate/CustomerCreatePage', [
+            'step' => 1,
+            'personalInformation' => $personalInformation,
+        ]);
+    }
+
+    public function previousCompanyInformation()
+    {
+        $addressDetails = session('customer_address_details');
+
+        return Inertia::render('CustomerCreate/CustomerCreatePage', [
+            'step' => 2,
+            'addressDetails' => $addressDetails,
+        ]);
+    }
+
+    public function previousAccountSecurity()
+    {
+        $data = session('customer_address_details');
+
+        if ($data['have_company'] === false) {
+            return Inertia::render('CustomerCreate/CustomerCreatePage', [
+                'step' => 2,
+                'addressDetails' => $data,
+            ]);
+        }
+
+        $companyInformation = session('customer_company_information');
+
+        return Inertia::render('CustomerCreate/CustomerCreatePage', [
+            'step' => 3,
+            'companyInformation' => $companyInformation,
+        ]);
     }
 }

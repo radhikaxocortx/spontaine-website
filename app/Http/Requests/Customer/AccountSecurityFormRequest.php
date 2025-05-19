@@ -11,7 +11,7 @@ use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 class AccountSecurityFormRequest extends Data
 {
     public function __construct(
-        #[Rule('required|string|min:8|confirmed')]
+        #[Rule('required|string|min:8')]
         public string $password,
         #[Rule('required|string|min:8|same:password')]
         public string $retypePassword,

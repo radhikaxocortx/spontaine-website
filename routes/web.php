@@ -77,6 +77,12 @@ Route::middleware('guest')->group(function () {
         ->name('company-information');
     Route::post('account-security', [CustomerCreateController::class, 'accountSecurity'])
         ->name('account-security');
+    Route::get('previous-address-details', [CustomerCreateController::class, 'previousAddressDetails'])
+        ->name('previous-address-details');
+    Route::get('previous-company-information', [CustomerCreateController::class, 'previousCompanyInformation'])
+        ->name('previous-company-information');
+    Route::get('previous-account-security', [CustomerCreateController::class, 'previousAccountSecurity'])
+        ->name('previous-account-security');
 });
 
 // Kadodo ID

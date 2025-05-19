@@ -1,18 +1,25 @@
+import { CompanyInfo } from '@/components/Interface/data_interface'
+import { Button } from '@/components/ui/button'
 import FormBuilder, { FormItem } from '@/FormBuilder/FormBuilder'
 import useCustomForm from '@/hooks/useCustomForm'
 import useInertiaPost from '@/hooks/useInertiaPost'
+import { router } from '@inertiajs/react'
 import { FormEvent, useCallback, useMemo } from 'react'
 
-const CompanyInformation = () => {
+interface Props {
+  companyInformation?: CompanyInfo
+}
+
+const CompanyInformation = ({ companyInformation }: Props) => {
   const { formData, setFormValue } = useCustomForm({
-    company_legal_entity_name: '',
-    company_address_line1: '',
-    company_address_line2: '',
-    company_city: '',
-    company_country: '',
-    company_postal_code: '',
-    company_tax_id: '',
-    company_registration_id: '',
+    company_legal_entity_name: companyInformation?.company_legal_entity_name ?? '',
+    company_address_line1: companyInformation?.company_address_line1 ?? '',
+    company_address_line2: companyInformation?.company_address_line2 ?? '',
+    company_city: companyInformation?.company_city ?? '',
+    company_country: companyInformation?.company_country ?? '',
+    company_postal_code: companyInformation?.company_postal_code ?? '',
+    company_tax_id: companyInformation?.company_tax_id ?? '',
+    company_registration_id: companyInformation?.company_registration_id ?? '',
   })
 
   const formItems = useMemo(() => {
@@ -89,8 +96,21 @@ const CompanyInformation = () => {
       onFormSubmit={handleFormSubmit}
       loading={loading}
       errors={errors}
-      buttonText='Next'
-    />
+      hideSubmitButton={true}
+    >
+      <div className='col-span-2 flex flex-row justify-between gap-4'>
+        <Button
+          type='button'
+          variant='outline'
+          onClick={() => {
+            router.get(route('previous-company-information'))
+          }}
+        >
+          Previous
+        </Button>
+        <Button type='submit'>Next</Button>
+      </div>
+    </FormBuilder>
   )
 }
 

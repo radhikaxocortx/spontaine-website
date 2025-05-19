@@ -1,3 +1,4 @@
+import { AddressDetail, CompanyInfo, PersonalInfo } from '@/components/Interface/data_interface'
 import { Progress } from '@/components/ui/progress'
 import AppLayout from '@/Layouts/AppLayout'
 import HeroHeadline from '@/typography/HeroHeadline'
@@ -10,9 +11,18 @@ import PersonalInformation from './PersonalInformation'
 interface Props {
   priceplan_id?: number | null
   step: number
+  personalInformation?: PersonalInfo
+  addressDetails?: AddressDetail
+  companyInformation?: CompanyInfo
 }
 
-const CustomerCreatePage = ({ priceplan_id, step }: Props) => {
+const CustomerCreatePage = ({
+  priceplan_id,
+  step,
+  personalInformation,
+  addressDetails,
+  companyInformation,
+}: Props) => {
   const heading =
     step === 1
       ? 'Personal Information'
@@ -52,9 +62,14 @@ const CustomerCreatePage = ({ priceplan_id, step }: Props) => {
               </div>
               {/* Form */}
               <div className='px-5'>
-                {step === 1 && <PersonalInformation priceplan_id={priceplan_id ?? null} />}
-                {step === 2 && <AddressDetails />}
-                {step === 3 && <CompanyInformation />}
+                {step === 1 && (
+                  <PersonalInformation
+                    priceplan_id={priceplan_id ?? null}
+                    personalInformation={personalInformation}
+                  />
+                )}
+                {step === 2 && <AddressDetails addressDetails={addressDetails} />}
+                {step === 3 && <CompanyInformation companyInformation={companyInformation} />}
                 {step === 4 && <AccountSecurity />}
               </div>
             </div>

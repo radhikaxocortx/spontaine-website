@@ -1,6 +1,8 @@
+import { Button } from '@/components/ui/button'
 import FormBuilder, { FormItem } from '@/FormBuilder/FormBuilder'
 import useCustomForm from '@/hooks/useCustomForm'
 import useInertiaPost from '@/hooks/useInertiaPost'
+import { router } from '@inertiajs/react'
 import { FormEvent, useCallback, useMemo } from 'react'
 
 const AccountSecurity = () => {
@@ -46,8 +48,21 @@ const AccountSecurity = () => {
       onFormSubmit={handleFormSubmit}
       loading={loading}
       errors={errors}
-      buttonText='Next'
-    />
+      hideSubmitButton={true}
+    >
+      <div className='col-span-2 flex flex-row justify-between gap-4'>
+        <Button
+          type='button'
+          variant='outline'
+          onClick={() => {
+            router.get(route('previous-account-security'))
+          }}
+        >
+          Previous
+        </Button>
+        <Button type='submit'>Next</Button>
+      </div>
+    </FormBuilder>
   )
 }
 
