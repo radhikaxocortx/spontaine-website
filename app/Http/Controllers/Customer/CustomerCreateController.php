@@ -13,11 +13,14 @@ use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerOrganization;
 use App\Models\Customer\CustomerPricePlan;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
+use Modules\OTP\Models\OTP;
+use Modules\OTP\SendOtp;
 
 class CustomerCreateController extends Controller
 {
@@ -69,10 +72,48 @@ class CustomerCreateController extends Controller
         session()->forget('customer_account_security');
         $data = session('customer_personal_information');
 
+        $email = $data['email'];
+
         session(['customer_account_security' => Hash::make($request->password)]);
 
+        // sending otp for customer verification
+        $response = (new SendOtp)->sendOtp('email')->send($email, 'email');
+        if ($response['error']) {
+            return redirect()->back()->with([
+                [
+                    'error' => $response['message'],
+                ],
+            ]);
+        }
+
+        return Inertia::render('OTP/OtpPage', [
+            'customerId' => $email,
+            'verifyingEmail' => 'true',
+            'submitUrl' => route('verify-customer-otp'),
+        ]);
+    }
+
+    public function verifyCustomerOtp(Request $request)
+    {
+        $request->validate([
+            'otp' => 'required|digits:6',
+            'customerId' => 'required|string',
+            'verifyingEmail' => 'required|boolean',
+        ]);
+
+        $otpRecord = OTP::otp($request->customerId, $request->otp)
+            ->valid()
+            ->latest()
+            ->first();
+
+        if (! $otpRecord) {
+            return redirect()->back()->with('error', 'Invalid one time use key.');
+        }
+
+        $otpRecord->delete();
+
         return redirect()
-            ->route('customer-verification', ['customerId' => $data['email'], 'verifyingEmail' => 'true']);
+            ->route('customer-create');
     }
 
     public function createCustomer()
