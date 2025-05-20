@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Customer\AccountSecurityFormRequest;
 use App\Http\Requests\Customer\AddressDetailFormRequest;
 use App\Http\Requests\Customer\CompanyInformationFormRequest;
+use App\Http\Requests\Customer\OtpRequest;
 use App\Http\Requests\Customer\PersonalInformationFormRequest;
 use App\Mail\AdminMailForCustomerRegister;
 use App\Mail\RegisteredCustomerMail;
@@ -14,7 +15,6 @@ use App\Models\Customer\CustomerOrganization;
 use App\Models\Customer\CustomerPricePlan;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -95,14 +95,8 @@ class CustomerCreateController extends Controller
         ]);
     }
 
-    public function verifyCustomerOtp(Request $request): RedirectResponse
+    public function verifyCustomerOtp(OtpRequest $request): RedirectResponse
     {
-        $request->validate([
-            'otp' => 'required|digits:6',
-            'customerId' => 'required|string',
-            'verifyingEmail' => 'required|boolean',
-        ]);
-
         $otpRecord = OTP::otp($request->customerId, $request->otp)
             ->valid()
             ->latest()
