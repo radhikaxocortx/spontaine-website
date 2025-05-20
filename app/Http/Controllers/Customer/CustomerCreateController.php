@@ -13,18 +13,20 @@ use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerOrganization;
 use App\Models\Customer\CustomerPricePlan;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
+use Inertia\Response;
 use Modules\OTP\Models\OTP;
 use Modules\OTP\SendOtp;
 
 class CustomerCreateController extends Controller
 {
-    public function personalInformation(PersonalInformationFormRequest $request)
+    public function personalInformation(PersonalInformationFormRequest $request): Response
     {
         session()->forget('customer_personal_information');
         session(['customer_personal_information' => $request->all()]);
@@ -37,7 +39,7 @@ class CustomerCreateController extends Controller
         ]);
     }
 
-    public function addressDetails(AddressDetailFormRequest $request)
+    public function addressDetails(AddressDetailFormRequest $request): Response
     {
         session()->forget('customer_address_details');
         session(['customer_address_details' => $request->all()]);
@@ -57,7 +59,7 @@ class CustomerCreateController extends Controller
         ]);
     }
 
-    public function companyInformation(CompanyInformationFormRequest $request)
+    public function companyInformation(CompanyInformationFormRequest $request): Response
     {
         session()->forget('customer_company_information');
         session(['customer_company_information' => $request->all()]);
@@ -67,7 +69,7 @@ class CustomerCreateController extends Controller
         ]);
     }
 
-    public function accountSecurity(AccountSecurityFormRequest $request)
+    public function accountSecurity(AccountSecurityFormRequest $request): RedirectResponse|Response
     {
         session()->forget('customer_account_security');
         $data = session('customer_personal_information');
@@ -93,7 +95,7 @@ class CustomerCreateController extends Controller
         ]);
     }
 
-    public function verifyCustomerOtp(Request $request)
+    public function verifyCustomerOtp(Request $request): RedirectResponse
     {
         $request->validate([
             'otp' => 'required|digits:6',
@@ -116,7 +118,7 @@ class CustomerCreateController extends Controller
             ->route('customer-create');
     }
 
-    public function createCustomer()
+    public function createCustomer(): RedirectResponse
     {
         $personalInformation = session('customer_personal_information');
         $addressDetails = session('customer_address_details');
@@ -164,9 +166,17 @@ class CustomerCreateController extends Controller
                 ]);
             }
             Mail::to(User::pluck('email')->toArray())
-                ->send(new AdminMailForCustomerRegister(['email' => $personalInformation['email'], 'name' => $personalInformation['first_name'], 'phone' => $personalInformation['telephone']]));
-            Mail::to($personalInformation['email'])->send(new RegisteredCustomerMail($personalInformation['email'], $personalInformation['first_name']));
+                ->send(new AdminMailForCustomerRegister([
+                    'email' => $personalInformation['email'],
+                    'name' => $personalInformation['first_name'],
+                    'phone' => $personalInformation['telephone']]));
+            Mail::to($personalInformation['email'])
+                ->send(new RegisteredCustomerMail(
+                    $personalInformation['email'],
+                    $personalInformation['first_name']));
+
             Auth::guard('customer')->login($customer);
+
             session()->forget('customer_address_details');
             session()->forget('customer_company_information');
             session()->forget('customer_personal_information');
@@ -183,7 +193,7 @@ class CustomerCreateController extends Controller
 
     }
 
-    public function previousAddressDetails()
+    public function previousAddressDetails(): Response
     {
         $personalInformation = session('customer_personal_information');
 
@@ -193,7 +203,7 @@ class CustomerCreateController extends Controller
         ]);
     }
 
-    public function previousCompanyInformation()
+    public function previousCompanyInformation(): Response
     {
         $addressDetails = session('customer_address_details');
 
@@ -203,7 +213,7 @@ class CustomerCreateController extends Controller
         ]);
     }
 
-    public function previousAccountSecurity()
+    public function previousAccountSecurity(): Response
     {
         $data = session('customer_address_details');
 
