@@ -21,7 +21,7 @@ interface Props {
 const breadcrumbs: BreadcrumbItemLink[] = [
   {
     item: 'Dashboard',
-    link: 'customer-dashboard',
+    link: '/customer-dashboard',
   },
   {
     item: 'Plan Detail',

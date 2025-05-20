@@ -9,14 +9,16 @@ use App\Models\Customer\CustomerWorkflow;
 use App\Models\Customer\KadodoID;
 use App\Models\CustomerVerification\WorkflowModuleVerification;
 use App\Models\PricePlan\PricePlan;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class CustomerLoginController extends Controller
 {
-    public function loginForm()
+    public function loginForm(): Response
     {
         if (Auth::guard('customer')->check()) {
             Auth::guard('customer')->logout();
@@ -27,7 +29,7 @@ class CustomerLoginController extends Controller
         return Inertia::render('CustomerLogin/CustomerLoginForm');
     }
 
-    public function ValidatePassword(Request $request)
+    public function ValidatePassword(Request $request): RedirectResponse
     {
         $request->validate([
             'email' => 'required|email',
@@ -48,7 +50,7 @@ class CustomerLoginController extends Controller
         }
     }
 
-    public function choosePriceplan()
+    public function choosePriceplan(): Response
     {
 
         $priceplan = PricePlan::all();
@@ -58,7 +60,7 @@ class CustomerLoginController extends Controller
         ]);
     }
 
-    public function customerDashboard()
+    public function customerDashboard(): Response
     {
         $priceplan = PricePlan::all();
 
@@ -67,10 +69,10 @@ class CustomerLoginController extends Controller
         ]);
     }
 
-    public function customerLoginConditionalcheck()
+    public function customerLoginConditionalcheck(): RedirectResponse
     {
         $customer = Auth::guard('customer')->user();
-        $customerId = $customer->id;
+        $customerId = $customer?->id;
 
         $priceplanExist = CustomerPricePlan::where('customer_id', $customerId)->exists();
 
@@ -78,7 +80,7 @@ class CustomerLoginController extends Controller
             $customerPriceplan = CustomerPricePlan::where('customer_id', $customerId)
                 ->latest()
                 ->first();
-            $workflowExist = CustomerWorkflow::where('customer_priceplan_id', $customerPriceplan->id)->exists();
+            $workflowExist = CustomerWorkflow::where('customer_priceplan_id', $customerPriceplan?->id)->exists();
 
             if ($workflowExist) {
 
@@ -90,7 +92,7 @@ class CustomerLoginController extends Controller
                 // }
 
             } else {
-                return redirect()->route('customer-workflow-create', ['pricePlanId' => $customerPriceplan->price_plan_id, 'customerPriceplanId' => $customerPriceplan]);
+                return redirect()->route('customer-workflow-create', ['pricePlanId' => $customerPriceplan?->price_plan_id, 'customerPriceplanId' => $customerPriceplan]);
             }
 
         } else {
@@ -99,21 +101,21 @@ class CustomerLoginController extends Controller
 
     }
 
-    public function customerPayment(Request $request)
+    public function customerPayment(Request $request): Response
     {
         $customerPriceplan = CustomerPricePlan::where('id', $request->id)->with('pricePlan')->first();
 
         return Inertia::render('CustomerLogin/CustomerPayment', ['customerPriceplan' => $customerPriceplan]);
     }
 
-    public function verificationDetails($kadodoId)
+    public function verificationDetails(string $kadodoId): Response
     {
 
         $kadodoId = KadodoID::where('kadodo_id', $kadodoId)->first();
-        $customerPriceplan = CustomerPricePlan::where('id', $kadodoId->customer_priceplan_id)
+        $customerPriceplan = CustomerPricePlan::where('id', $kadodoId?->customer_priceplan_id)
             ->with('pricePlan', 'customer.company', 'verificationStatus', 'paymentDetails')
             ->first();
-        $moduleVerification = WorkflowModuleVerification::where('customer_workflow_id', $customerPriceplan->id)->get();
+        $moduleVerification = WorkflowModuleVerification::where('customer_workflow_id', $customerPriceplan?->id)->get();
 
         return Inertia::render('Customer/VerificationDetails', [
             'kadodoId' => $kadodoId,
