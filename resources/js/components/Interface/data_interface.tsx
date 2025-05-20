@@ -173,3 +173,30 @@ export interface AdminPayment extends Omit<Model, 'updated_by'> {
   accounting_reference: string
   updated_by: User
 }
+
+export interface PersonalInfo {
+  first_name: string
+  last_name: string
+  telephone: string
+  email: string
+}
+
+export interface AddressDetail {
+  address_line1: string
+  address_line2: string
+  city: string
+  country: string
+  postal_code: string
+  have_company: boolean
+}
+
+export interface CompanyInfo {
+  company_legal_entity_name: string
+  company_address_line1: string
+  company_address_line2: string
+  company_city: string
+  company_country: string
+  company_postal_code: string
+  company_tax_id: string
+  company_registration_id: string
+}

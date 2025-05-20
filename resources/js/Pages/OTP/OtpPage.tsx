@@ -17,9 +17,10 @@ import { FormEvent, useCallback, useEffect, useState } from 'react'
 interface Props {
   customerId: string
   verifyingEmail: boolean
+  submitUrl?: string
 }
 
-const OtpPage = ({ customerId, verifyingEmail }: Props) => {
+const OtpPage = ({ customerId, verifyingEmail, submitUrl }: Props) => {
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
   const [countdown, setCountdown] = useState(0)
@@ -30,7 +31,7 @@ const OtpPage = ({ customerId, verifyingEmail }: Props) => {
     verifyingEmail: verifyingEmail,
   })
 
-  const { post } = useInertiaPost(route('validate-otp'), {
+  const { post } = useInertiaPost(submitUrl || route('validate-otp'), {
     onComplete: () => {
       setSuccess(true)
       setError(null)

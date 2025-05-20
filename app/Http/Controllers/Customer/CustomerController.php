@@ -41,8 +41,10 @@ class CustomerController extends Controller
      */
     public function create(Request $request)
     {
-        return Inertia::render('Customer/CustomerCreate', [
+
+        return Inertia::render('CustomerCreate/CustomerCreatePage', [
             'priceplan_id' => $request->priceplan_id ?? null,
+            'step' => $request->step ?? 1,
         ]);
 
     }
@@ -272,7 +274,7 @@ class CustomerController extends Controller
     public function findCustomerPriceplan($customerId)
     {
         $customerPriceplan = CustomerPricePlan::where('customer_id', $customerId)
-            ->with('pricePlan', 'customer', 'verificationStatus')
+            ->with('pricePlan', 'customer', 'verificationStatus', 'kadodoID')
             ->get();
 
         return response()->json([
