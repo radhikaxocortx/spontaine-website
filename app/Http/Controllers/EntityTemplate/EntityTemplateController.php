@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Gate;
 
 class EntityTemplateController extends Controller
 {
-    public function store(EntityTemplateFormRequest $request)
+    public function store(EntityTemplateFormRequest $request): RedirectResponse
     {
         Gate::authorize('create', EntityTemplate::class);
 
@@ -35,14 +35,13 @@ class EntityTemplateController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id) {}
-
     public function update(Request $request, string $id): RedirectResponse
     {
-        Gate::authorize('update', EntityTemplate::class);
+
         try {
 
-            $entityTemplate = EntityTemplate::find($id);
+            $entityTemplate = EntityTemplate::findOrFail($id);
+            Gate::authorize('update', $entityTemplate);
 
             $entityTemplate->update($request->all());
 
@@ -64,15 +63,21 @@ class EntityTemplateController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): RedirectResponse
     {
-        Gate::authorize('delete', EntityTemplate::class);
         try {
-            EntityTemplate::find($id)->delete();
+            $entityTemplate = EntityTemplate::findOrFail($id);
+            Gate::authorize('delete', $entityTemplate);
+            $entityTemplate->delete();
         } catch (Exception $e) {
             return back()
                 ->with(['error' => ExceptionMessage::getMessage($e)]);
         }
 
+        return redirect()
+            ->back()
+            ->with([
+                'message' => 'Workflow Module deleted successfully',
+            ]);
     }
 }

@@ -51,7 +51,7 @@ class EntityTemplateItemController extends Controller
 
     public function update(TemplateItemFormRequest $formRequest, EntityTemplateItem $templateItem): RedirectResponse
     {
-        Gate::authorize('update', EntityTemplateItem::class);
+        Gate::authorize('update', $templateItem);
         DB::beginTransaction();
         try {
             $templateItem->update([
@@ -76,7 +76,7 @@ class EntityTemplateItemController extends Controller
 
     public function destroy(EntityTemplateItem $templateItem): RedirectResponse
     {
-        Gate::authorize('delete', EntityTemplateItem::class);
+        Gate::authorize('delete', $templateItem);
         try {
             $templateItem->delete();
 
