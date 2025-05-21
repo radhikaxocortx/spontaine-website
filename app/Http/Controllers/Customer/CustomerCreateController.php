@@ -18,7 +18,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -103,14 +102,13 @@ class CustomerCreateController extends Controller
 
     public function verifyCustomerOtp(Request $request): RedirectResponse
     {
-        Log::info('Reached customer otp verification');
+
         $otpRecord = OTP::otp($request->customerId, $request->otp)
             ->valid()
             ->latest()
             ->first();
-        Log::info('Otp record: '.$otpRecord);
+
         if (! $otpRecord) {
-            Log::info('Invalid one time use key');
 
             return redirect()->route('sign-up.create')->with([
                 'error' => 'Invalid one time use key.',
@@ -118,7 +116,6 @@ class CustomerCreateController extends Controller
         }
 
         $otpRecord->delete();
-        Log::info('Otp record deleted');
 
         return redirect()
             ->route('customer-create');
@@ -126,7 +123,7 @@ class CustomerCreateController extends Controller
 
     public function createCustomer(): RedirectResponse
     {
-        Log::info('Reached customer create');
+
         $personalInformation = session('customer_personal_information');
         $addressDetails = session('customer_address_details');
         $companyInformation = session('customer_company_information');
