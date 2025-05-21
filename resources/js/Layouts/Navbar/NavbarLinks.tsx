@@ -1,7 +1,7 @@
 import { Language } from '@/components/ui/ui_interfaces'
 import { NavMenu } from '@/Modules/PageBuilder/page_interfaces'
 import { usePage } from '@inertiajs/react'
-import NavMegaMenu from './NavMegaMenu'
+import DropdownMenuComponent from './DropdownMenu'
 
 const NavbarLinks = () => {
   const { nav, lang = 'en' } = usePage().props as unknown as {
@@ -10,10 +10,10 @@ const NavbarLinks = () => {
   }
 
   return (
-    <div className='hidden space-x-2 xl:flex'>
+    <div className='hidden space-x-2 lg:flex'>
       {nav?.map((menuItem) => {
         return (
-          <NavMegaMenu
+          <DropdownMenuComponent
             menu={menuItem}
             lang={lang}
             key={menuItem.id.toString()}

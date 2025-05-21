@@ -39,8 +39,9 @@ const Navbar = () => {
             <CountrySelector />
             {isCustomerLoggedIn && <CustomerSidebar />}
           </div>
-
-          <MobileNav />
+          <div className='lg:hidden'>
+            <MobileNav />
+          </div>
         </div>
       </AppLayoutPadding>
     </nav>
