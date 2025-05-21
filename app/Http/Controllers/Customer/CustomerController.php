@@ -40,17 +40,18 @@ class CustomerController extends Controller
     public function create(Request $request): RedirectResponse|Response
     {
         $customer = Auth::guard('customer')->user();
-        if ($customer && $request->priceplan_id) {
+
+        if ($customer && $request->price_plan) {
             CustomerPricePlan::create([
                 'customer_id' => $customer->id,
-                'price_plan_id' => $request->priceplan_id,
+                'price_plan_id' => $request->price_plan,
             ]);
 
             return redirect()->route('customer-login-check');
         }
 
         return Inertia::render('CustomerCreate/CustomerCreatePage', [
-            'priceplan_id' => $request->priceplan_id ?? null,
+            'priceplan_id' => $request->price_plan ?? null,
             'step' => $request->step ?? 1,
         ]);
 

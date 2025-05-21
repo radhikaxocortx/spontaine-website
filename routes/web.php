@@ -85,6 +85,8 @@ Route::middleware('guest')->group(function () {
         ->name('previous-account-security');
     Route::post('verify-customer-otp', [CustomerCreateController::class, 'verifyCustomerOtp'])
         ->name('verify-customer-otp');
+    Route::get('account-security', [CustomerCreateController::class, 'getAccountSecurity'])
+        ->name('account-security');
 });
 
 // Kadodo ID
