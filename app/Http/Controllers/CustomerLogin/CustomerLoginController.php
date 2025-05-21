@@ -96,7 +96,7 @@ class CustomerLoginController extends Controller
             }
 
         } else {
-            return redirect()->route('choose-priceplan');
+            return redirect('/pricing');
         }
 
     }

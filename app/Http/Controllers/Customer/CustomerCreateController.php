@@ -18,6 +18,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -81,10 +82,8 @@ class CustomerCreateController extends Controller
         // sending otp for customer verification
         $response = (new SendOtp)->sendOtp('email')->send($email, 'email');
         if ($response['error']) {
-            return redirect()->back()->with([
-                [
-                    'error' => $response['message'],
-                ],
+            return redirect()->route('sign-up.create')->with([
+                'error' => $response['message'],
             ]);
         }
 
@@ -97,16 +96,22 @@ class CustomerCreateController extends Controller
 
     public function verifyCustomerOtp(OtpRequest $request): RedirectResponse
     {
+        Log::info('Reached customer otp verification');
         $otpRecord = OTP::otp($request->customerId, $request->otp)
             ->valid()
             ->latest()
             ->first();
-
+        Log::info('Otp record: '.$otpRecord);
         if (! $otpRecord) {
-            return redirect()->back()->with('error', 'Invalid one time use key.');
+            Log::info('Invalid one time use key');
+
+            return redirect()->route('sign-up.create')->with([
+                'error' => 'Invalid one time use key.',
+            ]);
         }
 
         $otpRecord->delete();
+        Log::info('Otp record deleted');
 
         return redirect()
             ->route('customer-create');
@@ -114,13 +119,16 @@ class CustomerCreateController extends Controller
 
     public function createCustomer(): RedirectResponse
     {
+        Log::info('Reached customer create');
         $personalInformation = session('customer_personal_information');
         $addressDetails = session('customer_address_details');
         $companyInformation = session('customer_company_information');
         $accountSecurity = session('customer_account_security');
 
         if (! $personalInformation || ! $addressDetails || ! $accountSecurity) {
-            return redirect()->route('sign-up.create')->with('error', 'Session expired. Please try again.');
+            return redirect()->route('sign-up.create')->with([
+                'error' => 'Session expired. Please try again.',
+            ]);
         }
 
         DB::beginTransaction();
@@ -179,11 +187,11 @@ class CustomerCreateController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
 
-            return redirect()->route('sign-up.create')->with('error', 'Registration failed. Try again.');
+            return redirect()->route('sign-up.create')->with(['error' => 'Registration failed. Try again.']);
         }
         DB::commit();
 
-        return redirect()->route('customer-login-check')->with('message', 'Registration complete and logged in.');
+        return redirect()->route('customer-login-check')->with(['message' => 'Registration complete and logged in.']);
 
     }
 

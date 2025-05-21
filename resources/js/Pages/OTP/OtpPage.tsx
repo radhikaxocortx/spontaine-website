@@ -68,7 +68,7 @@ const OtpPage = ({ customerId, verifyingEmail, submitUrl }: Props) => {
       event.preventDefault()
       post(formData)
     },
-    [post, formData]
+    [formData, post]
   )
 
   const handleOtpChange = (value: string) => {

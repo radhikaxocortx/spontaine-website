@@ -13,7 +13,6 @@ class OtpRequest extends Data
     public function __construct(
         #[Rule('email')]
         public string $customerId,
-        #[Rule('numeric|length:6')]
         public string $otp,
         public ?bool $verifyingEmail,
     ) {}
