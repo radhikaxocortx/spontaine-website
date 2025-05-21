@@ -5,6 +5,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Country\CountryController;
 use App\Http\Controllers\Customer\CustomerAdminController;
 use App\Http\Controllers\Customer\CustomerController;
+use App\Http\Controllers\Customer\CustomerCreateController;
 use App\Http\Controllers\CustomerLogin\CustomerLoginController;
 use App\Http\Controllers\Email\EmailController;
 use App\Http\Controllers\EntityTemplate\EntityTemplateController;
@@ -43,8 +44,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Customer-Priceplan-Admin
-
     Route::get('customer-admin-view', [CustomerAdminController::class, 'customerAdminView'])
         ->name('customer-admin-view');
     Route::get('customer-admin-show/{id}', [CustomerAdminController::class, 'customerAdminShow'])
@@ -68,6 +67,22 @@ Route::middleware('auth')->group(function () {
 Route::middleware('guest')->group(function () {
     Route::resource('sign-up', CustomerController::class)
         ->parameters(['sign-up' => 'customer']);
+    Route::post('personal-information', [CustomerCreateController::class, 'personalInformation'])
+        ->name('personal-information');
+    Route::post('address-details', [CustomerCreateController::class, 'addressDetails'])
+        ->name('address-details');
+    Route::post('company-information', [CustomerCreateController::class, 'companyInformation'])
+        ->name('company-information');
+    Route::post('account-security', [CustomerCreateController::class, 'accountSecurity'])
+        ->name('account-security');
+    Route::get('previous-address-details', [CustomerCreateController::class, 'previousAddressDetails'])
+        ->name('previous-address-details');
+    Route::get('previous-company-information', [CustomerCreateController::class, 'previousCompanyInformation'])
+        ->name('previous-company-information');
+    Route::get('previous-account-security', [CustomerCreateController::class, 'previousAccountSecurity'])
+        ->name('previous-account-security');
+    Route::post('verify-customer-otp', [CustomerCreateController::class, 'verifyCustomerOtp'])
+        ->name('verify-customer-otp');
 });
 
 // Kadodo ID
@@ -131,10 +146,12 @@ Route::get('customer-register-admin-email/{email}/{name}/{phone}', [EmailControl
 // customer
 Route::get('customer-login', [CustomerLoginController::class, 'loginForm'])
     ->name('customer-login');
-Route::get('customer-create', [CustomerController::class, 'createCustomer'])
+Route::get('customer-create', [CustomerCreateController::class, 'createCustomer'])
     ->name('customer-create');
 Route::post('validate-customer', [CustomerLoginController::class, 'ValidatePassword'])
     ->name('validate-customer');
+
+
 Route::middleware(['auth:customer'])->group(function () {
     Route::get('customer-login-check', [CustomerLoginController::class, 'customerLoginConditionalcheck'])
         ->name('customer-login-check');
@@ -163,11 +180,9 @@ Route::middleware(['auth:customer'])->group(function () {
 Route::get('verified-identity/{customer}', VerifiedIdentityController::class)
     ->name('verified-identity');
 
-// Nav Editor
 Route::resource('nav-editor', NavEditorNavEditorController::class);
 Route::resource('footer-editor', UIBuilderFooterController::class);
 
-// contact form
 Route::post('send-contact-mail', [ContactController::class, 'sendMail']);
 
 require __DIR__.'/auth.php';
