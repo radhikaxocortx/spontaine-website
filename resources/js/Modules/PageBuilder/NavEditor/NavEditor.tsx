@@ -52,7 +52,6 @@ const NavEditor = ({ menuItems }: Readonly<Props>) => {
     }
   }
 
-  //if sections changes and selected section is not in the new sections, set selected section to ''
   useEffect(() => {
     if (selectedNavMenuItem == '') {
       return
@@ -63,57 +62,125 @@ const NavEditor = ({ menuItems }: Readonly<Props>) => {
   }, [menuItems, selectedNavMenuItem])
 
   return (
-    <div className='flex flex-col gap-5 p-5'>
-      <div className='flex justify-end'>
-        <Button
-          variant='secondary'
-          onClick={changeLanguage}
-        >
-          {selectedLanguage === 'en' ? 'English' : 'Alt Lang'}
-        </Button>
-      </div>
-      <div className='grid grid-cols-1 gap-3 md:grid-cols-3 xl:grid-cols-4 xl:gap-5'>
-        <div className='flex flex-col'>
-          <SelectList
-            label='Nav section'
-            list={menuItems}
-            value={selectedNavMenuItem}
-            setValue={setSelectedNavMenuItem}
-            dataKey='title'
-            displayKey='title'
-          />
+    <div className='min-h-screen bg-gray-50 p-6'>
+      <div className='mx-auto max-w-7xl'>
+        {/* Header Section */}
+        <div className='mb-8 flex items-center justify-between'>
+          <h1 className='text-lg font-semibold text-gray-900'>Navigation Editor</h1>
+          <Button
+            variant='outline'
+            onClick={changeLanguage}
+            className='flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50'
+          >
+            <span className='capitalize'>{selectedLanguage}</span>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              className='h-4 w-4'
+              viewBox='0 0 20 20'
+              fill='currentColor'
+            >
+              <path
+                fillRule='evenodd'
+                d='M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z'
+                clipRule='evenodd'
+              />
+            </svg>
+          </Button>
         </div>
-        <div className='self-end'>
-          <AddNavMenuItem />
-        </div>
-      </div>
-      {selectedMenuItem != null && (
-        <>
-          <span className='text-sm text-red-500'>
-            Make sure to save changes before changing nav menu item.
-          </span>
-          <div className='flex items-center gap-5'>
-            <div className=''>
-              <Button onClick={saveChanges}>SAVE CHANGES</Button>
+
+        {/* Main Content */}
+        <div className='rounded-lg bg-white p-6 shadow-sm'>
+          {/* Selection Controls */}
+          <div className='mb-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
+            <div className='flex flex-col'>
+              <SelectList
+                label='Select Navigation Section'
+                list={menuItems}
+                value={selectedNavMenuItem}
+                setValue={setSelectedNavMenuItem}
+                dataKey='title'
+                displayKey='title'
+              />
             </div>
-            <UpdateNavMenu menuItem={selectedMenuItem} />
-            <DeleteNavSection menuItem={selectedMenuItem} />
+            <div className='flex items-end'>
+              <AddNavMenuItem />
+            </div>
           </div>
-        </>
-      )}
-      {selectedSection != null && selectedMenuItem != null && selectedMenuItem.is_link === 0 && (
-        <NavEditorForm
-          language={selectedLanguage}
-          actionDispatch={sectionDispatch}
-          loading={loading}
-          selectedSection={selectedSection}
-        />
-      )}
-      {selectedNavMenuItem == '' && (
-        <div className='flex justify-center'>
-          <span>Select a nav section to edit</span>
+
+          {/* Action Bar */}
+          {selectedMenuItem != null && (
+            <div className='mb-6 rounded-lg border border-yellow-100 bg-yellow-50 p-4'>
+              <div className='flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between'>
+                <div className='flex items-center gap-2 text-sm text-yellow-700'>
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    className='h-5 w-5'
+                    viewBox='0 0 20 20'
+                    fill='currentColor'
+                  >
+                    <path
+                      fillRule='evenodd'
+                      d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z'
+                      clipRule='evenodd'
+                    />
+                  </svg>
+                  <span>Make sure to save changes before changing nav menu item</span>
+                </div>
+                <div className='flex flex-wrap items-center gap-3'>
+                  <Button
+                    onClick={saveChanges}
+                    className='bg-blue-600 hover:bg-blue-700'
+                  >
+                    Save Changes
+                  </Button>
+                  <UpdateNavMenu menuItem={selectedMenuItem} />
+                  <DeleteNavSection menuItem={selectedMenuItem} />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Editor Form */}
+          {selectedSection != null &&
+            selectedMenuItem != null &&
+            selectedMenuItem.is_link === 0 && (
+              <div className='rounded-lg border border-gray-200 bg-white p-6'>
+                <NavEditorForm
+                  language={selectedLanguage}
+                  actionDispatch={sectionDispatch}
+                  loading={loading}
+                  selectedSection={selectedSection}
+                />
+              </div>
+            )}
+
+          {/* Empty State */}
+          {selectedNavMenuItem === '' && (
+            <div className='flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-200 p-12 text-center'>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                className='h-12 w-12 text-gray-400'
+                fill='none'
+                viewBox='0 0 24 24'
+                stroke='currentColor'
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  strokeWidth={2}
+                  d='M4 6h16M4 12h16M4 18h16'
+                />
+              </svg>
+              <h3 className='mt-4 text-lg font-medium text-gray-900'>
+                No Navigation Section Selected
+              </h3>
+              <p className='mt-2 text-sm text-gray-500'>
+                Select a navigation section from the dropdown above to begin editing
+              </p>
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   )
 }
