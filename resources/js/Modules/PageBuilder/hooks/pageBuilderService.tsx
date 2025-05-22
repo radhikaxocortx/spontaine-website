@@ -35,6 +35,7 @@ export interface PageBuilderAction {
   fieldValue?: BlockFieldValues
   itemId?: number
   blockData?: Record<string, BlockFieldValues>
+  position?: 'top' | 'end'
 }
 
 const getBlockDefaultData = (blockName: string) => {
@@ -113,22 +114,34 @@ const sortBlocks = (blocks: Block[]): Block[] => {
   return blocks.sort((a, b) => a.position - b.position)
 }
 
-const addNewBlock = (page: PageBlock, blockName?: string): PageBlock => {
+const addNewBlock = (
+  page: PageBlock,
+  blockName?: string,
+  position: 'top' | 'end' = 'end'
+): PageBlock => {
   if (blockName == null) {
     return page
   }
   const defaultContent = getBlockDefaultData(blockName)
+  const newBlock = {
+    id: page.lastUUID + 1,
+    position: position === 'top' ? 1 : page.blocks.length + 1,
+    blockName: blockName,
+    ...defaultContent,
+  }
+
+  // If adding to top, increment positions of existing blocks
+  const updatedBlocks =
+    position === 'top'
+      ? page.blocks.map((block) => ({
+          ...block,
+          position: block.position + 1,
+        }))
+      : page.blocks
+
   return {
     lastUUID: page.lastUUID + 1,
-    blocks: [
-      ...page.blocks,
-      {
-        id: page.lastUUID + 1,
-        position: page.blocks.length + 1,
-        blockName: blockName,
-        ...defaultContent,
-      },
-    ],
+    blocks: position === 'top' ? [newBlock, ...updatedBlocks] : [...updatedBlocks, newBlock],
   }
 }
 
@@ -485,7 +498,7 @@ const updateBlockFields = (
 const PageBuilderService = (state: PageBlock, action: PageBuilderAction): PageBlock => {
   switch (action.action) {
     case 'ADD_BLOCK': {
-      return addNewBlock(state, action.blockName)
+      return addNewBlock(state, action.blockName, action.position)
     }
     case 'MOVE_LIST_ITEM_UP': {
       return moveListItemUp(state, action.blockId, action.fieldName, action.itemId)
