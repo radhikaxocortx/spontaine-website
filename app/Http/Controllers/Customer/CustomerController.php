@@ -49,6 +49,10 @@ class CustomerController extends Controller
 
             return redirect()->route('customer-login-check');
         }
+        session()->forget('customer_personal_information');
+        session()->forget('customer_company_information');
+        session()->forget('customer_address_details');
+        session()->forget('customer_additional_information');
 
         return Inertia::render('CustomerCreate/CustomerCreatePage', [
             'priceplan_id' => $request->price_plan ?? null,

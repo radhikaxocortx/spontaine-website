@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\CustomerLogin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Customer\PaymentRequest;
+use App\Models\Country\Country;
 use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerPricePlan;
 use App\Models\Customer\CustomerWorkflow;
 use App\Models\Customer\KadodoID;
 use App\Models\CustomerVerification\WorkflowModuleVerification;
+use App\Models\Payment\PaymentDetail;
 use App\Models\PricePlan\PricePlan;
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -80,19 +84,22 @@ class CustomerLoginController extends Controller
             $customerPriceplan = CustomerPricePlan::where('customer_id', $customerId)
                 ->latest()
                 ->first();
+            $paymentExist = PaymentDetail::where('customer_priceplan_id', $customerPriceplan?->id)
+                ->where('payment_status', 'completed')
+                ->exists();
             $workflowExist = CustomerWorkflow::where('customer_priceplan_id', $customerPriceplan?->id)->exists();
+            $customerPriceplan?->with('pricePlan');
 
-            if ($workflowExist) {
+            if ($paymentExist) {
 
-                // $kadodoIDExist = KadodoID::where('customer_priceplan_id', $customerPriceplan->id)->exists();
-                // if ($kadodoIDExist) {
-                return redirect()->route('customer-dashboard');
-                // } else {
-                //     return redirect()->route('customer-payment', ['id' => $customerPriceplan->id]);
-                // }
+                if ($workflowExist) {
 
+                    return redirect()->route('customer-dashboard');
+                } else {
+                    return redirect()->route('customer-workflow-create', ['pricePlanId' => $customerPriceplan?->price_plan_id, 'customerPriceplanId' => $customerPriceplan]);
+                }
             } else {
-                return redirect()->route('customer-workflow-create', ['pricePlanId' => $customerPriceplan?->price_plan_id, 'customerPriceplanId' => $customerPriceplan]);
+                return redirect()->route('customer-payment', ['id' => $customerPriceplan?->id]);
             }
 
         } else {
@@ -104,8 +111,26 @@ class CustomerLoginController extends Controller
     public function customerPayment(Request $request): Response
     {
         $customerPriceplan = CustomerPricePlan::where('id', $request->id)->with('pricePlan')->first();
+        $countryDetail = Country::where('name', 'Ghana')->first();
 
-        return Inertia::render('CustomerLogin/CustomerPayment', ['customerPriceplan' => $customerPriceplan]);
+        return Inertia::render('CustomerLogin/CustomerPayment', [
+            'customerPriceplan' => $customerPriceplan,
+            'countryDetail' => $countryDetail,
+        ]);
+    }
+
+    public function updateCustomerPayment(PaymentRequest $request): RedirectResponse
+    {
+        try {
+            $paymentDetail = PaymentDetail::create(
+                $request->all()
+            );
+        } catch (Exception $e) {
+            return back()->with(['error' => $e->getMessage()]);
+        }
+
+        return redirect()->route('customer-login-check')
+            ->with(['message' => 'Payment Added Successfully']);
     }
 
     public function verificationDetails(string $kadodoId): Response
