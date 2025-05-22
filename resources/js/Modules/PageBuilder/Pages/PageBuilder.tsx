@@ -23,7 +23,7 @@ export const languages: {
   value: string
 }[] = [
   { label: 'English', value: 'en' },
-  { label: 'Malayalam', value: 'mal' },
+  { label: 'Alternate Language', value: 'mal' },
 ]
 
 const PageBuilder = ({ page, dependencies }: Properties) => {

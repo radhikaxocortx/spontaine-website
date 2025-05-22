@@ -44,8 +44,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Customer-Priceplan-Admin
-
     Route::get('customer-admin-view', [CustomerAdminController::class, 'customerAdminView'])
         ->name('customer-admin-view');
     Route::get('customer-admin-show/{id}', [CustomerAdminController::class, 'customerAdminShow'])
@@ -154,6 +152,8 @@ Route::get('customer-create', [CustomerCreateController::class, 'createCustomer'
     ->name('customer-create');
 Route::post('validate-customer', [CustomerLoginController::class, 'ValidatePassword'])
     ->name('validate-customer');
+
+
 Route::middleware(['auth:customer'])->group(function () {
     Route::get('customer-login-check', [CustomerLoginController::class, 'customerLoginConditionalcheck'])
         ->name('customer-login-check');
@@ -182,11 +182,9 @@ Route::middleware(['auth:customer'])->group(function () {
 Route::get('verified-identity/{customer}', VerifiedIdentityController::class)
     ->name('verified-identity');
 
-// Nav Editor
 Route::resource('nav-editor', NavEditorNavEditorController::class);
 Route::resource('footer-editor', UIBuilderFooterController::class);
 
-// contact form
 Route::post('send-contact-mail', [ContactController::class, 'sendMail']);
 
 require __DIR__.'/auth.php';

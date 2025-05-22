@@ -20,7 +20,7 @@ class ManageNavMenu
      *  position: int,
      *  is_link: bool,
      *  link_info?: array|null,
-     *  data: array{lastUUID: int, items: array<array-key, mixed>},
+     *  data: array{lastUUID: int, items: array<array-key, mixed>}
      * } $data
      */
     public function create(array $data): RedirectResponse
