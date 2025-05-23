@@ -8,7 +8,6 @@ use App\Services\RateLimiter\RateLimitingService;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
@@ -28,7 +27,6 @@ class ContactController extends Controller
         ]);
 
         // mail content
-        Log::info($request->all());
         $mailContent = "Name: $request->name <br />"
             ."Email: $request->email <br />"
             ."Phone: $request->phone <br />"
@@ -50,7 +48,6 @@ class ContactController extends Controller
                         actionLink: '',
                         emailSubject: $subject
                     ));
-                Log::info('Mail Sent');
             } catch (Exception $exception) {
                 return redirect()->back()->with(['error' => $exception->getMessage()]);
             }

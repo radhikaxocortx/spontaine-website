@@ -8,7 +8,6 @@ use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
 
 class TemplateMail extends Mailable
 {
@@ -32,8 +31,6 @@ class TemplateMail extends Mailable
      */
     public function envelope(): Envelope
     {
-        Log::info($this->emailSubject);
-
         return new Envelope(
             subject: $this->emailSubject,
         );
@@ -44,8 +41,6 @@ class TemplateMail extends Mailable
      */
     public function content(): Content
     {
-        Log::info($this->mailContent);
-
         return new Content(
             view: 'contactusmail',
             with: [
