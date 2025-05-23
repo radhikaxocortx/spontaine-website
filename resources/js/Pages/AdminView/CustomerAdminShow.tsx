@@ -209,7 +209,10 @@ const CustomerAdminShow = ({
             setShowModal={setUpdated}
             title='Verification Completed'
           >
-            <div>By marking as completed You can't able to add or change Verification Status.</div>
+            <div>
+              Once marked as completed, you will no longer be able to change statuses on this
+              request. Are you sure?
+            </div>
             <div className='flex justify-end gap-2'>
               <Button onClick={() => setUpdated(false)}>Cancel</Button>
               <Button onClick={handleUpdated}>Mark as updated</Button>
