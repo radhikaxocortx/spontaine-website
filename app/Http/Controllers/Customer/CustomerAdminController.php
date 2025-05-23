@@ -17,14 +17,16 @@ use App\Models\Payment\AdminPayment;
 use App\Models\PricePlan\PricePlan;
 use App\Models\ReferenceData\ReferenceData;
 use App\Models\Workflow\Workflow;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class CustomerAdminController extends Controller
 {
-    public function customerAdminView(Request $request)
+    public function customerAdminView(Request $request): Response
     {
         Gate::authorize('viewAny', CustomerPricePlan::class);
 
@@ -45,7 +47,7 @@ class CustomerAdminController extends Controller
         return Inertia::render('AdminView/CustomerAdminView', ['customerPriceplans' => $customerPriceplans]);
     }
 
-    public function customerAdminShow(Request $request)
+    public function customerAdminShow(Request $request): Response
     {
         Gate::authorize('view', CustomerPricePlan::class);
 
@@ -86,13 +88,13 @@ class CustomerAdminController extends Controller
         try {
             $adminPayment = AdminPayment::create($request->all());
             $customerPriceplan = CustomerPricePlan::where('id', $adminPayment->customer_workflow_id)->first();
-            $pricePlan = PricePlan::where('id', $customerPriceplan->price_plan_id)->first();
-            $validFrom = $adminPayment->created_at->format('Y-m-d');
-            $validTo = $adminPayment->created_at->copy()->addMonths($pricePlan->validity)->format('Y-m-d');
+            $pricePlan = PricePlan::where('id', $customerPriceplan?->price_plan_id)->first();
+            $validFrom = $adminPayment?->created_at?->format('Y-m-d');
+            $validTo = $adminPayment?->created_at?->copy()->addMonths($pricePlan?->validity)->format('Y-m-d');
 
             $kadodoIdData = [
-                'customer_priceplan_id' => $customerPriceplan->id,
-                'kadodo_id' => $customerPriceplan->kadodo_id,
+                'customer_priceplan_id' => $customerPriceplan?->id,
+                'kadodo_id' => $customerPriceplan?->kadodo_id,
                 'valid_from' => $validFrom,
                 'valid_to' => $validTo,
             ];
@@ -124,28 +126,31 @@ class CustomerAdminController extends Controller
 
     }
 
-    public function workflowAuthenticate(WorkflowAuthenticateRequest $request)
+    public function workflowAuthenticate(WorkflowAuthenticateRequest $request): RedirectResponse
     {
-        // if ($request->status == 'Approved') {
-        //     $allApproved = WorkflowModuleVerification::where('customer_workflow_id', $request->customer_workflow_id)
-        //         ->where('status', '!=', 'Approved')
-        //         ->doesntExist();
-        //     if (! $allApproved) {
-        //         return back()->with([
-        //             'error' => 'Approve all modules before approving the workflow.',
-        //         ]);
-        //     }
-        // }
+        if ($request->status == 'Verified') {
+            $allApproved = WorkflowModuleVerification::where('customer_workflow_id', $request->customer_workflow_id)
+                ->where('status', '!=', 'Verified')
+                ->doesntExist();
+            if (! $allApproved) {
+                return back()->with([
+                    'error' => 'All modules must be validated  before setting application status as Verified',
+                ]);
+            }
+        }
 
         $customerDetail = CustomerPricePlan::where('id', $request->customer_workflow_id)
             ->with('customer')
             ->first();
 
         /** @var \App\Models\Customer\Customer|null $customer */
-        $customer = $customerDetail->customer;
+        $customer = $customerDetail?->customer;
         try {
             $VerificationStatus = VerificationStatus::create($request->all());
-            Mail::to($customer->email)->send(new StatusUpdateMailToCustomer(['name' => $customer->first_name, 'note' => $VerificationStatus->customer_notes]));
+            Mail::to($customer?->email)->send(new StatusUpdateMailToCustomer([
+                'name' => $customer?->first_name,
+                'note' => $VerificationStatus->customer_notes ?? '',
+            ]));
 
         } catch (\Exception $e) {
             return back()->with(['error' => $e->getMessage()]);
@@ -154,15 +159,15 @@ class CustomerAdminController extends Controller
         return redirect()->back()->with(['message' => 'Workflow Status Updates Successfully']);
     }
 
-    public function workflowAuthenticateUpdate(WorkflowAuthenticateRequest $request)
+    public function workflowAuthenticateUpdate(WorkflowAuthenticateRequest $request): RedirectResponse
     {
-        if ($request->status == 'Approved') {
+        if ($request->status == 'Verified') {
             $allApproved = WorkflowModuleVerification::where('customer_workflow_id', $request->customer_workflow_id)
-                ->where('status', '!=', 'Approved')
+                ->where('status', '!=', 'Verified')
                 ->doesntExist();
             if (! $allApproved) {
                 return back()->with([
-                    'error' => 'Approve all modules before approving the workflow.',
+                    'error' => 'All modules must be validated  before setting application status as Verified',
                 ]);
             }
         }
@@ -178,11 +183,14 @@ class CustomerAdminController extends Controller
             ->first();
 
         /** @var \App\Models\Customer\Customer|null $customer */
-        $customer = $customerDetail->customer;
+        $customer = $customerDetail?->customer;
 
         try {
             $workflowAuthenticateModule->update($request->all());
-            Mail::to($customer->email)->send(new StatusUpdateMailToCustomer(['name' => $customer->first_name, 'note' => $workflowAuthenticateModule->customer_notes]));
+            Mail::to($customer?->email)->send(new StatusUpdateMailToCustomer([
+                'name' => $customer?->first_name,
+                'note' => $workflowAuthenticateModule->customer_notes ?? '',
+            ]));
 
         } catch (\Exception $e) {
             return back()->with(['error' => $e->getMessage()]);
@@ -191,7 +199,7 @@ class CustomerAdminController extends Controller
         return redirect()->back()->with(['message' => 'Workflow Status Updates Successfully']);
     }
 
-    public function verificationCompleted($customerPriceplanId)
+    public function verificationCompleted($customerPriceplanId): RedirectResponse
     {
         $VerificationStatus = VerificationStatus::where('customer_workflow_id', $customerPriceplanId)->first();
 
@@ -206,7 +214,7 @@ class CustomerAdminController extends Controller
         return back()->with(['message' => 'Verification marked as completed']);
     }
 
-    public function workflowModuleAuthenticate(ModuleStatusUpdateRequest $request)
+    public function workflowModuleAuthenticate(ModuleStatusUpdateRequest $request): RedirectResponse
     {
         $exists = WorkflowModuleVerification::where('customer_workflow_id', $request->customer_workflow_id)
             ->where('module_id', $request->module_id)
@@ -220,14 +228,14 @@ class CustomerAdminController extends Controller
             ->first();
 
         /** @var \App\Models\Customer\Customer|null $customer */
-        $customer = $customerDetail->customer;
+        $customer = $customerDetail?->customer;
 
         try {
             $workflowModuleVerification = WorkflowModuleVerification::create($request->all());
-            Mail::to($customer->email)->send(new ModuleUpdateEmailToCustomer([
+            Mail::to($customer?->email)->send(new ModuleUpdateEmailToCustomer([
 
-                'name' => $customer->first_name,
-                'note' => $workflowModuleVerification->customer_notes,
+                'name' => $customer?->first_name,
+                'note' => $workflowModuleVerification->customer_notes ?? '',
             ]));
         } catch (\Exception $e) {
             return back()->with(['error' => $e->getMessage()]);
@@ -236,7 +244,7 @@ class CustomerAdminController extends Controller
         return redirect()->back()->with(['message' => 'Module Status Updates Successfully']);
     }
 
-    public function workflowModuleAuthenticateUpdate(ModuleStatusUpdateRequest $request)
+    public function workflowModuleAuthenticateUpdate(ModuleStatusUpdateRequest $request): RedirectResponse
     {
         $workflowModuleVerification = WorkflowModuleVerification::where('customer_workflow_id', $request->customer_workflow_id)
             ->where('module_id', $request->module_id)
@@ -256,10 +264,10 @@ class CustomerAdminController extends Controller
                 ...$request->all(),
                 'customer_updated' => false,
             ]);
-            Mail::to($customer->email)->send(new ModuleUpdateEmailToCustomer([
+            Mail::to($customer?->email)->send(new ModuleUpdateEmailToCustomer([
 
-                'name' => $customer->first_name,
-                'note' => $workflowModuleVerification->customer_notes,
+                'name' => $customer?->first_name,
+                'note' => $workflowModuleVerification->customer_notes ?? '',
             ]));
         } catch (\Exception $e) {
             return back()->with(['error' => $e->getMessage()]);

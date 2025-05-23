@@ -110,7 +110,7 @@ class CustomerController extends Controller
         //
     }
 
-    public function updatePriceplan(Request $request)
+    public function updatePriceplan(Request $request): RedirectResponse
     {
         $request->validate([
             'price_plan_id' => 'required|exists:price_plans,id',
@@ -128,7 +128,7 @@ class CustomerController extends Controller
             ->route('customer-payment', ['id' => $customerPriceplan->id]);
     }
 
-    public function createCustomerWorkflow($pricePlanId, $customerPriceplanId)
+    public function createCustomerWorkflow($pricePlanId, $customerPriceplanId): Response
     {
         return Inertia::render('Customer/CustomerWorkflowCreate', [
             'pricePlanId' => $pricePlanId,
@@ -136,7 +136,7 @@ class CustomerController extends Controller
         ]);
     }
 
-    public function customerWorkflowSave(Request $request)
+    public function customerWorkflowSave(Request $request): RedirectResponse
     {
         DB::beginTransaction();
         $filesToCleanUp = [];
@@ -157,22 +157,22 @@ class CustomerController extends Controller
                 ->first();
 
             /** @var Customer|null $customer */
-            $customer = $customerDetail->customer;
+            $customer = $customerDetail?->customer;
             /** @var PricePlan|null $pricePlan */
-            $pricePlan = $customerDetail->pricePlan;
+            $pricePlan = $customerDetail?->pricePlan;
 
             CustomerWorkflow::insert($infoRecords);
             Mail::to(User::pluck('email')->toArray())
                 ->send(new WorkflowAdminMail([
-                    'type' => $pricePlan->type,
-                    'email' => $customer->email,
-                    'name' => $customer->first_name,
-                    'phone' => $customer->telephone,
-                    'date' => $customerDetail->created_at->format('Y-m-d'),
-                    'time' => $customerDetail->created_at->format('H:i:s'),
-                    'address' => $customer->address_line_1,
+                    'type' => $pricePlan?->type,
+                    'email' => $customer?->email,
+                    'name' => $customer?->first_name,
+                    'phone' => $customer?->telephone,
+                    'date' => $customerDetail?->created_at?->format('Y-m-d'),
+                    'time' => $customerDetail?->created_at?->format('H:i:s'),
+                    'address' => $customer?->address_line_1,
                 ]));
-            Mail::to($customer->email)->send(new WorkflowCustomerMail($customer->first_name));
+            Mail::to($customer?->email)->send(new WorkflowCustomerMail($customer?->first_name));
         } catch (Exception $e) {
             DB::rollBack();
             Storage::delete($filesToCleanUp);
@@ -186,7 +186,7 @@ class CustomerController extends Controller
             ->with(['message' => 'Customer Workflow Saved Successfully']);
     }
 
-    public function customerWorkflowUpdate(Request $request)
+    public function customerWorkflowUpdate(Request $request): RedirectResponse
     {
         DB::beginTransaction();
         $filesToCleanUp = [];
@@ -233,7 +233,7 @@ class CustomerController extends Controller
         ]);
     }
 
-    public function customerWorkflowShow(Request $request)
+    public function customerWorkflowShow(Request $request): Response
     {
         $customerPriceplan = CustomerPricePlan::where('id', $request->id)
             ->with('pricePlan', 'customer', 'verificationStatus', 'kadodoID')
@@ -253,7 +253,7 @@ class CustomerController extends Controller
         ]);
     }
 
-    public function customerWorkflowStatusUpdate(Request $request)
+    public function customerWorkflowStatusUpdate(Request $request): RedirectResponse
     {
         $validatedRequest = $request->validate([
             'customer_workflow_id' => ['required', 'integer', 'exists:customer_price_plans,id'],

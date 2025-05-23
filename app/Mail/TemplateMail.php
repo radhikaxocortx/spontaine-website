@@ -18,10 +18,10 @@ class TemplateMail extends Mailable
      */
     public function __construct(
         private readonly string $title,
-        private readonly string $message,
+        private readonly string $mailContent,
         private readonly string $actionLink,
         private readonly string $emailSubject
-        
+
     ) {
         //
     }
@@ -42,10 +42,10 @@ class TemplateMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail-template',
+            view: 'contactusmail',
             with: [
                 'title' => $this->title,
-                'description' => $this->message,
+                'mailContent' => $this->mailContent,
                 'action_link' => $this->actionLink,
             ]
         );
