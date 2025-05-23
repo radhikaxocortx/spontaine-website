@@ -5,12 +5,9 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Customer\CustomerFormRequest;
 use App\Libs\ExceptionMessage;
-use App\Mail\AdminMailForCustomerRegister;
-use App\Mail\RegisteredCustomerMail;
 use App\Mail\WorkflowAdminMail;
 use App\Mail\WorkflowCustomerMail;
 use App\Models\Customer\Customer;
-use App\Models\Customer\CustomerOrganization;
 use App\Models\Customer\CustomerPricePlan;
 use App\Models\Customer\CustomerWorkflow;
 use App\Models\CustomerVerification\WorkflowModuleVerification;
@@ -19,13 +16,14 @@ use App\Models\User;
 use App\Models\Workflow\Workflow;
 use App\Services\ProcessWorkflowInfo;
 use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class CustomerController extends Controller
 {
@@ -39,11 +37,25 @@ class CustomerController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request)
+    public function create(Request $request): RedirectResponse|Response
     {
+        $customer = Auth::guard('customer')->user();
+
+        if ($customer && $request->price_plan) {
+            CustomerPricePlan::create([
+                'customer_id' => $customer->id,
+                'price_plan_id' => $request->price_plan,
+            ]);
+
+            return redirect()->route('customer-login-check');
+        }
+        session()->forget('customer_personal_information');
+        session()->forget('customer_company_information');
+        session()->forget('customer_address_details');
+        session()->forget('customer_additional_information');
 
         return Inertia::render('CustomerCreate/CustomerCreatePage', [
-            'priceplan_id' => $request->priceplan_id ?? null,
+            'priceplan_id' => $request->price_plan ?? null,
             'step' => $request->step ?? 1,
         ]);
 
@@ -52,7 +64,7 @@ class CustomerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CustomerFormRequest $request)
+    public function store(CustomerFormRequest $request): RedirectResponse
     {
         if ($request->haveCompany === true && $request->companyCountry !== 'SIERRA LEONE' && empty($request->companyPostalCode)) {
             return redirect()->back()->withErrors([
@@ -96,67 +108,6 @@ class CustomerController extends Controller
     public function destroy(string $id)
     {
         //
-    }
-
-    public function createCustomer()
-    {
-        $data = session('customer_registration_data');
-
-        if (! $data) {
-            return redirect()->route('sign-up.create')->with('error', 'Session expired. Please try again.');
-        }
-
-        DB::beginTransaction();
-        try {
-            $company = null;
-            if ($data['have_company']) {
-                $company = CustomerOrganization::create([
-                    'company_legal_entity_name' => $data['company_legal_entity_name'],
-                    'company_address_line_1' => $data['company_address_line1'],
-                    'company_address_line_2' => $data['company_address_line2'],
-                    'company_city' => $data['company_city'],
-                    'company_country' => $data['company_country'],
-                    'company_postal_code' => $data['company_postal_code'],
-                    'company_tax_id' => $data['company_tax_id'],
-                    'company_registration_id' => $data['company_registration_id'],
-                ]);
-            }
-
-            $customer = Customer::create([
-                'first_name' => $data['first_name'],
-                'last_name' => $data['last_name'],
-                'telephone' => $data['telephone'],
-                'address_line_1' => $data['address_line1'],
-                'address_line_2' => $data['address_line2'],
-                'city' => $data['city'],
-                'country' => $data['country'],
-                'postal_code' => $data['postal_code'],
-                'email' => $data['email'],
-                'password' => Hash::make($data['password']),
-                'email_verified' => true,
-                'company_id' => $company?->id,
-            ]);
-            if (! empty($data['priceplan_id'])) {
-                CustomerPricePlan::create([
-                    'customer_id' => $customer->id,
-                    'price_plan_id' => $data['priceplan_id'],
-                ]);
-            }
-            Mail::to(User::pluck('email')->toArray())
-                ->send(new AdminMailForCustomerRegister(['email' => $data['email'], 'name' => $data['first_name'], 'phone' => $data['telephone']]));
-            Mail::to($data['email'])->send(new RegisteredCustomerMail($data['email'], $data['first_name']));
-            Auth::guard('customer')->login($customer);
-            session()->forget('customer_registration_data');
-
-        } catch (Exception $e) {
-            DB::rollBack();
-
-            return redirect()->route('sign-up.create')->with('error', 'Registration failed. Try again.');
-        }
-        DB::commit();
-
-        return redirect()->route('customer-login-check')->with('message', 'Registration complete and logged in.');
-
     }
 
     public function updatePriceplan(Request $request)

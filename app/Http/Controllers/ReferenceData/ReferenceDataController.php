@@ -13,6 +13,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class ReferenceDataController extends Controller implements HasMiddleware
 {
@@ -26,7 +27,7 @@ class ReferenceDataController extends Controller implements HasMiddleware
     /**
      * Display a listing of the resource.
      */
-    public function index(ReferenceDataSearchRequest $searchRequest)
+    public function index(ReferenceDataSearchRequest $searchRequest): Response
     {
         //
         Gate::authorize('viewAny', ReferenceData::class);
@@ -49,7 +50,7 @@ class ReferenceDataController extends Controller implements HasMiddleware
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): Response
     {
         Gate::authorize('create', ReferenceData::class);
 
@@ -63,7 +64,7 @@ class ReferenceDataController extends Controller implements HasMiddleware
     /**
      * Store a newly created resource in storage.
      */
-    public function store(RefDataFormRequest $request, HasSecondValue $hasSecondValue)
+    public function store(RefDataFormRequest $request, HasSecondValue $hasSecondValue): RedirectResponse
     {
         $response = $hasSecondValue->check($request);
 
@@ -91,22 +92,17 @@ class ReferenceDataController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id): Response
     {
-        Gate::authorize('update', ReferenceData::class);
 
         $domains = ReferenceDataDomain::get();
 
         $referenceData = ReferenceData::findOrFail($id);
-        Gate::authorize('view', $referenceData);
+        Gate::authorize('update', $referenceData);
 
         return Inertia::render('ReferenceData/ReferenceDataEdit', [
             'referenceData' => $referenceData,
@@ -147,8 +143,4 @@ class ReferenceDataController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        //
-    }
 }
