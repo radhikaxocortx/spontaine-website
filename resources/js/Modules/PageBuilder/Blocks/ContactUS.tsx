@@ -55,7 +55,7 @@ const ContactUS = ({ editMode = false, onFieldEdit, blockData, language = 'en' }
     phone: '',
     about: '',
     message: '',
-    privacyPolicy: false,
+    privacy_policy: false,
   })
 
   const aboutOptions = [
@@ -217,8 +217,8 @@ const ContactUS = ({ editMode = false, onFieldEdit, blockData, language = 'en' }
               <div className='flex items-center space-x-2'>
                 <Checkbox
                   id='privacy-policy'
-                  checked={formData.privacyPolicy}
-                  onCheckedChange={(checked) => setFormValue('privacyPolicy')(!!checked)}
+                  checked={formData.privacy_policy}
+                  onCheckedChange={(checked) => setFormValue('privacy_policy')(!!checked)}
                 />
                 <label
                   htmlFor='privacy-policy'
@@ -239,7 +239,7 @@ const ContactUS = ({ editMode = false, onFieldEdit, blockData, language = 'en' }
                 <Button
                   className='w-full'
                   type='submit'
-                  disabled={!formData.privacyPolicy}
+                  disabled={!formData.privacy_policy}
                   variant='default'
                 >
                   Submit
