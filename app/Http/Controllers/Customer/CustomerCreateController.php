@@ -81,10 +81,8 @@ class CustomerCreateController extends Controller
         // sending otp for customer verification
         $response = (new SendOtp)->sendOtp('email')->send($email, 'email');
         if ($response['error']) {
-            return redirect()->back()->with([
-                [
-                    'error' => $response['message'],
-                ],
+            return redirect()->route('sign-up.create')->with([
+                'error' => $response['message'],
             ]);
         }
 
@@ -95,13 +93,15 @@ class CustomerCreateController extends Controller
         ]);
     }
 
+    public function getAccountSecurity(): Response
+    {
+        return Inertia::render('CustomerCreate/CustomerCreatePage', [
+            'step' => 5,
+        ]);
+    }
+
     public function verifyCustomerOtp(Request $request): RedirectResponse
     {
-        $request->validate([
-            'otp' => 'required|digits:6',
-            'customerId' => 'required|string',
-            'verifyingEmail' => 'required|boolean',
-        ]);
 
         $otpRecord = OTP::otp($request->customerId, $request->otp)
             ->valid()
@@ -109,7 +109,10 @@ class CustomerCreateController extends Controller
             ->first();
 
         if (! $otpRecord) {
-            return redirect()->back()->with('error', 'Invalid one time use key.');
+
+            return redirect()->route('sign-up.create')->with([
+                'error' => 'Invalid one time use key.',
+            ]);
         }
 
         $otpRecord->delete();
@@ -120,13 +123,16 @@ class CustomerCreateController extends Controller
 
     public function createCustomer(): RedirectResponse
     {
+
         $personalInformation = session('customer_personal_information');
         $addressDetails = session('customer_address_details');
         $companyInformation = session('customer_company_information');
         $accountSecurity = session('customer_account_security');
 
         if (! $personalInformation || ! $addressDetails || ! $accountSecurity) {
-            return redirect()->route('sign-up.create')->with('error', 'Session expired. Please try again.');
+            return redirect()->route('sign-up.create')->with([
+                'error' => 'Session expired. Please try again.',
+            ]);
         }
 
         DB::beginTransaction();
@@ -185,11 +191,11 @@ class CustomerCreateController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
 
-            return redirect()->route('sign-up.create')->with('error', 'Registration failed. Try again.');
+            return redirect()->route('sign-up.create')->with(['error' => 'Registration failed. Try again.']);
         }
         DB::commit();
 
-        return redirect()->route('customer-login-check')->with('message', 'Registration complete and logged in.');
+        return redirect()->route('customer-login-check')->with(['message' => 'Registration complete and logged in.']);
 
     }
 
