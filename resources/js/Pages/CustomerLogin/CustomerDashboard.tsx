@@ -1,5 +1,6 @@
 import CustomerPriceplanDashboardView from '@/components/Customer/CustomerPriceplan/CustomerPriceplanDashboardView'
 import CustomerDashboardLayout from '@/components/Customer/Dashboard/CustomerDashboardLayouts'
+import VerificationCertificateCard from '@/components/Customer/Dashboard/VerificationCertificateCard'
 import {
   Customer,
   CustomerPricePlan,
@@ -144,16 +145,23 @@ export default function CustomerDashboard() {
                 <div className='flex w-full flex-col'>
                   <LargeText className='text-black-tertiary-950'>
                     Welcome back,{' '}
-                    <LargeText className='text-primary-500'>{User?.first_name}</LargeText>!
+                    <LargeText className='font-semibold'>{User?.first_name}</LargeText>!
                   </LargeText>
                   <div>
-                    <NormalText className='text-neutral-600'>
+                    <NormalText className='text-primary-graige-950'>
                       {hasPricePlan
                         ? hasWorkflow
                           ? "Here's an overview of your current plan and usage."
                           : "Let's get started with your business verification process."
                         : "Let's get you started with a price plan that suits your needs."}
                     </NormalText>
+
+                    {/* Verification Certificate Card */}
+                    {hasPricePlan && currentPricePlan?.kadodo_i_d && (
+                      <div className='pt-2'>
+                        <VerificationCertificateCard customerPricePlan={currentPricePlan} />
+                      </div>
+                    )}
                   </div>
                 </div>
                 {hasPricePlan && currentPricePlan && (

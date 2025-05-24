@@ -103,8 +103,24 @@ const PageBuilder = ({ page, dependencies }: Properties) => {
 
   const save = () => {
     router.post('/update-block/' + page.id, {
-      blocks: pageBlock as any,
+      blocks: JSON.stringify(pageBlock),
     })
+  }
+
+  const preview = () => {
+    // First save the changes
+    router.post(
+      '/update-block/' + page.id,
+      {
+        blocks: JSON.stringify(pageBlock),
+      },
+      {
+        onSuccess: () => {
+          // Open the page in a new tab
+          window.open('/' + page.url, '_blank')
+        },
+      }
+    )
   }
   return (
     <div className='min-h-screen bg-primary-50'>
@@ -116,11 +132,6 @@ const PageBuilder = ({ page, dependencies }: Properties) => {
               <span className='text-lg font-medium text-white/90'>/{page.url}</span>
             </div>
             <div className='flex items-center space-x-3'>
-              <ActionButton
-                onClick={save}
-                label='Save'
-                className='bg-emerald-500 text-white transition-colors duration-200 hover:bg-emerald-600'
-              />
               <EditButton
                 link={`/pages/${page.id}/edit`}
                 className='bg-blue-500 text-white transition-colors duration-200 hover:bg-blue-600'
@@ -128,6 +139,16 @@ const PageBuilder = ({ page, dependencies }: Properties) => {
               <DeleteButton
                 onClick={() => setShowDeleteModal((old) => !old)}
                 className='bg-red-500 text-white transition-colors duration-200 hover:bg-red-600'
+              />
+              <ActionButton
+                onClick={preview}
+                label='Preview'
+                className='bg-blue-500 text-white transition-colors duration-200 hover:bg-blue-600'
+              />
+              <ActionButton
+                onClick={save}
+                label='Save'
+                className='bg-emerald-500 text-white transition-colors duration-200 hover:bg-emerald-600'
               />
             </div>
           </div>
