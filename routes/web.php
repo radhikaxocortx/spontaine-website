@@ -69,11 +69,19 @@ Route::middleware('guest')->group(function () {
         ->parameters(['sign-up' => 'customer']);
     Route::post('personal-information', [CustomerCreateController::class, 'personalInformation'])
         ->name('personal-information');
+    Route::get('personal-information', [CustomerCreateController::class, 'getPersonalInformation'])
+        ->name('personal-information');
     Route::post('address-details', [CustomerCreateController::class, 'addressDetails'])
+        ->name('address-details');
+    Route::get('address-details', [CustomerCreateController::class, 'getAddressDetails'])
         ->name('address-details');
     Route::post('company-information', [CustomerCreateController::class, 'companyInformation'])
         ->name('company-information');
+    Route::get('company-information', [CustomerCreateController::class, 'getCompanyInformation'])
+        ->name('company-information');
     Route::post('account-security', [CustomerCreateController::class, 'accountSecurity'])
+        ->name('account-security');
+    Route::get('account-security', [CustomerCreateController::class, 'getAccountSecurity'])
         ->name('account-security');
     Route::get('previous-address-details', [CustomerCreateController::class, 'previousAddressDetails'])
         ->name('previous-address-details');
@@ -83,8 +91,7 @@ Route::middleware('guest')->group(function () {
         ->name('previous-account-security');
     Route::post('verify-customer-otp', [CustomerCreateController::class, 'verifyCustomerOtp'])
         ->name('verify-customer-otp');
-    Route::get('account-security', [CustomerCreateController::class, 'getAccountSecurity'])
-        ->name('account-security');
+
 });
 
 // Kadodo ID
