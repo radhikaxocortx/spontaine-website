@@ -93,10 +93,44 @@ class CustomerCreateController extends Controller
         ]);
     }
 
+    public function getPersonalInformation(): Response
+    {
+        $addressDetails = session('customer_address_details');
+
+        return Inertia::render('CustomerCreate/CustomerCreatePage', [
+            'step' => 2,
+            'addressDetails' => $addressDetails,
+        ]);
+    }
+
+    public function getAddressDetails(): Response
+    {
+        $addressDetails = session('customer_address_details', []);
+        $haveCompany = $addressDetails['haveCompany'] ?? false;
+
+        return Inertia::render('CustomerCreate/CustomerCreatePage', [
+            'step' => $haveCompany ? 3 : 2,
+            'addressDetails' => $addressDetails,
+        ]);
+    }
+
+    public function getCompanyInformation(): Response
+    {
+        $companyInformation = session('customer_company_information');
+
+        return Inertia::render('CustomerCreate/CustomerCreatePage', [
+            'step' => 4,
+            'companyInformation' => $companyInformation,
+        ]);
+    }
+
     public function getAccountSecurity(): Response
     {
+        $companyInformation = session('customer_company_information');
+
         return Inertia::render('CustomerCreate/CustomerCreatePage', [
             'step' => 5,
+            'companyInformation' => $companyInformation,
         ]);
     }
 
