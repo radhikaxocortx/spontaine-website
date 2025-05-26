@@ -57,7 +57,7 @@ class ContactController extends Controller
                 //
             }
 
-            return redirect()->back()->with(['message' => 'Message sent successfully']);
+            return redirect()->back()->with(['message' => 'Thank you for contacting us. Our team will review your message and get back to you shortly.']);
         }
 
         // if rate limit check is failed return error
