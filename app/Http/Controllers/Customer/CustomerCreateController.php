@@ -109,7 +109,7 @@ class CustomerCreateController extends Controller
         $haveCompany = $addressDetails['haveCompany'] ?? false;
 
         return Inertia::render('CustomerCreate/CustomerCreatePage', [
-            'step' => $haveCompany ? 3 : 2,
+            'step' => $haveCompany ? 4 : 3,
             'addressDetails' => $addressDetails,
         ]);
     }
