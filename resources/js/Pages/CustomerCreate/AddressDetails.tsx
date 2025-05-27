@@ -7,7 +7,7 @@ import { router } from '@inertiajs/react'
 import { FormEvent, useCallback, useMemo } from 'react'
 
 interface Props {
-  addressDetails?: AddressDetail
+  addressDetails?: AddressDetail | null
 }
 
 const AddressDetails = ({ addressDetails }: Props) => {
