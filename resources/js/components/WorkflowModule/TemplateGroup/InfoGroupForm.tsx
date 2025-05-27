@@ -96,15 +96,13 @@ export default function InfoGroupForm({ updateTextValue, updateFileValue, item }
         />
       )}
       {(item.type === 'pdf' || item.type === 'word_document' || item.type === 'image') && (
-        <>
-          {item.value != null && item.value != '' && (
+        <div className='space-y-2'>
+          {item.value && (
             <p className='text-sm'>
-              old file:
+              Old file:{' '}
               <a
-                href={route('file-download', {
-                  path: item.value,
-                })}
-                className='link'
+                href={route('file-download', { path: item.value })}
+                className='text-blue-600 underline'
                 target='_blank'
                 rel='noreferrer'
               >
@@ -118,8 +116,23 @@ export default function InfoGroupForm({ updateTextValue, updateFileValue, item }
             accept={findFileType(item.type)}
             placeholder={item.placeholder ?? ''}
           />
-        </>
+          {item.file && (
+            <div className='flex items-center gap-2 text-sm text-gray-700'>
+              <span>
+                <strong>{item.file.name}</strong>
+              </span>
+              <button
+                type='button'
+                className='text-red-500'
+                onClick={() => updateFileValue(item.id, null)}
+              >
+                x
+              </button>
+            </div>
+          )}
+        </div>
       )}
+
       {item.type === 'single_list_pills' && (
         <DynamicSelectPills
           type='single'

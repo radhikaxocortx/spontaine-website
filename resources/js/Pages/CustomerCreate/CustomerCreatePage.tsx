@@ -1,8 +1,13 @@
 import { AddressDetail, CompanyInfo, PersonalInfo } from '@/components/Interface/data_interface'
+import { showError, showSuccess } from '@/components/ui/alerts'
 import { Progress } from '@/components/ui/progress'
+import { LaravelFlash } from '@/components/ui/ui_interfaces'
 import AppLayout from '@/Layouts/AppLayout'
 import HeroHeadline from '@/typography/HeroHeadline'
 import HeroTextBlock from '@/typography/HeroTextBlock'
+import { usePage } from '@inertiajs/react'
+import { useEffect } from 'react'
+import { ToastContainer } from 'react-toastify'
 import AccountSecurity from './AccountSecurity'
 import AddressDetails from './AddressDetails'
 import CompanyInformation from './CompanyInformation'
@@ -23,18 +28,28 @@ const CustomerCreatePage = ({
   addressDetails,
   companyInformation,
 }: Props) => {
+  const { flash } = usePage().props as unknown as { flash?: LaravelFlash }
+  useEffect(() => {
+    if (flash?.error != null) {
+      showError(flash.error)
+    }
+    if (flash?.message != null) {
+      showSuccess(flash.message)
+    }
+  }, [flash])
   const heading =
-    step === 1
+    step == 1
       ? 'Personal Information'
-      : step === 2
+      : step == 2
         ? 'Address Details'
-        : step === 3
+        : step == 3
           ? 'Company Information'
-          : step === 4
+          : step == 4
             ? 'Account Security'
-            : 'Thank You'
+            : ''
 
   const progress = step * 25
+  console.log(step)
 
   return (
     <AppLayout>
@@ -62,15 +77,15 @@ const CustomerCreatePage = ({
               </div>
               {/* Form */}
               <div className='px-5'>
-                {step === 1 && (
+                {step == 1 && (
                   <PersonalInformation
                     priceplan_id={priceplan_id ?? null}
                     personalInformation={personalInformation}
                   />
                 )}
-                {step === 2 && <AddressDetails addressDetails={addressDetails} />}
-                {step === 3 && <CompanyInformation companyInformation={companyInformation} />}
-                {step === 4 && <AccountSecurity />}
+                {step == 2 && <AddressDetails addressDetails={addressDetails} />}
+                {step == 3 && <CompanyInformation companyInformation={companyInformation} />}
+                {step == 4 && <AccountSecurity />}
               </div>
             </div>
           </div>
@@ -86,6 +101,19 @@ const CustomerCreatePage = ({
           <div className='absolute inset-0 bg-black/10' />
         </div>
       </div>
+      <ToastContainer
+        position='bottom-center'
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme='dark'
+        toastClassName='toast-container'
+      />
     </AppLayout>
   )
 }
