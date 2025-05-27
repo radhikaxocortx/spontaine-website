@@ -6,6 +6,7 @@ use App\Http\Controllers\Country\CountryController;
 use App\Http\Controllers\Customer\CustomerAdminController;
 use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\Customer\CustomerCreateController;
+use App\Http\Controllers\Customer\SignUpController;
 use App\Http\Controllers\CustomerLogin\CustomerLoginController;
 use App\Http\Controllers\Email\EmailController;
 use App\Http\Controllers\EntityTemplate\EntityTemplateController;
@@ -65,23 +66,17 @@ Route::middleware('auth')->group(function () {
 });
 // Sign Up Form
 Route::middleware('guest')->group(function () {
+    Route::get('customer-create-page/{step}', [SignUpController::class, 'customerCreate'])
+        ->name('customer-create-page');
     Route::resource('sign-up', CustomerController::class)
         ->parameters(['sign-up' => 'customer']);
     Route::post('personal-information', [CustomerCreateController::class, 'personalInformation'])
         ->name('personal-information');
-    Route::get('personal-information', [CustomerCreateController::class, 'getPersonalInformation'])
-        ->name('personal-information');
     Route::post('address-details', [CustomerCreateController::class, 'addressDetails'])
-        ->name('address-details');
-    Route::get('address-details', [CustomerCreateController::class, 'getAddressDetails'])
         ->name('address-details');
     Route::post('company-information', [CustomerCreateController::class, 'companyInformation'])
         ->name('company-information');
-    Route::get('company-information', [CustomerCreateController::class, 'getCompanyInformation'])
-        ->name('company-information');
     Route::post('account-security', [CustomerCreateController::class, 'accountSecurity'])
-        ->name('account-security');
-    Route::get('account-security', [CustomerCreateController::class, 'getAccountSecurity'])
         ->name('account-security');
     Route::get('previous-address-details', [CustomerCreateController::class, 'previousAddressDetails'])
         ->name('previous-address-details');

@@ -56,7 +56,7 @@ class CustomerController extends Controller
 
         return Inertia::render('CustomerCreate/CustomerCreatePage', [
             'priceplan_id' => $request->price_plan ?? null,
-            'step' => $request->step ?? 1,
+            'step' => 1,
         ]);
 
     }

@@ -13,7 +13,7 @@ class AccountSecurityFormRequest extends Data
     public function __construct(
         #[Rule('required|string|min:8')]
         public string $password,
-        #[Rule('required|string|min:8|same:password')]
+        #[Rule('same:password')]
         public string $retypePassword,
     ) {}
 }

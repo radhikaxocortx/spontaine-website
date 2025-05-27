@@ -56,16 +56,25 @@ const CustomerPayment = ({ customerPriceplan, countryDetail }: Props) => {
                   <div className='text-gray-600'>Price Plan Name</div>
                   <div className='font-medium'>{customerPriceplan.price_plan.name}</div>
                   <div className='text-gray-600'>Price Plan Rate</div>
-                  <div className='font-medium'>₹{customerPriceplan.price_plan.rate}</div>
+                  <div className='font-medium'>
+                    {countryDetail.currency_symbol}
+                    {customerPriceplan.price_plan.rate}
+                  </div>
                   <div className='text-gray-600'>Tax Rate</div>
                   <div className='font-medium'>{countryDetail.tax_rate}%</div>
                   <div className='text-gray-600'>Tax Amount</div>
-                  <div className='font-medium'>₹{taxAmount}</div>
+                  <div className='font-medium'>
+                    {countryDetail.currency_symbol}
+                    {taxAmount}
+                  </div>
                 </div>
               </CardContent>
               <CardFooter className='mt-auto grid grid-cols-2 gap-4 border-t pt-4'>
                 <div className='font-semibold text-gray-600'>Total Amount</div>
-                <div className='text-lg font-bold'>₹{totalAmount}</div>
+                <div className='text-lg font-bold'>
+                  {countryDetail.currency_symbol}
+                  {totalAmount}
+                </div>
               </CardFooter>
             </Card>
 

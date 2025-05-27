@@ -26,45 +26,39 @@ use Modules\OTP\SendOtp;
 
 class CustomerCreateController extends Controller
 {
-    public function personalInformation(PersonalInformationFormRequest $request): Response
+    public function personalInformation(PersonalInformationFormRequest $request): RedirectResponse
     {
         session()->forget('customer_personal_information');
         session(['customer_personal_information' => $request->all()]);
 
-        $addressDetails = session('customer_address_details');
-
-        return Inertia::render('CustomerCreate/CustomerCreatePage', [
+        return redirect()->route('customer-create-page', [
             'step' => 2,
-            'addressDetails' => $addressDetails,
+
         ]);
     }
 
-    public function addressDetails(AddressDetailFormRequest $request): Response
+    public function addressDetails(AddressDetailFormRequest $request): RedirectResponse
     {
         session()->forget('customer_address_details');
         session(['customer_address_details' => $request->all()]);
 
-        $companyInformation = session('customer_company_information');
-
         if ($request->haveCompany === false) {
-            return Inertia::render('CustomerCreate/CustomerCreatePage', [
+            return redirect()->route('customer-create-page', [
                 'step' => 4,
-                'companyInformation' => $companyInformation,
             ]);
         }
 
-        return Inertia::render('CustomerCreate/CustomerCreatePage', [
+        return redirect()->route('customer-create-page', [
             'step' => 3,
-            'companyInformation' => $companyInformation,
         ]);
     }
 
-    public function companyInformation(CompanyInformationFormRequest $request): Response
+    public function companyInformation(CompanyInformationFormRequest $request): RedirectResponse
     {
         session()->forget('customer_company_information');
         session(['customer_company_information' => $request->all()]);
 
-        return Inertia::render('CustomerCreate/CustomerCreatePage', [
+        return redirect()->route('customer-create-page', [
             'step' => 4,
         ]);
     }
@@ -93,46 +87,15 @@ class CustomerCreateController extends Controller
         ]);
     }
 
-    public function getPersonalInformation(): Response
-    {
-        $addressDetails = session('customer_address_details');
+    // public function getAccountSecurity(): Response
+    // {
+    //     $companyInformation = session('customer_company_information');
 
-        return Inertia::render('CustomerCreate/CustomerCreatePage', [
-            'step' => 2,
-            'addressDetails' => $addressDetails,
-        ]);
-    }
-
-    public function getAddressDetails(): Response
-    {
-        $addressDetails = session('customer_address_details', []);
-        $haveCompany = $addressDetails['haveCompany'] ?? false;
-
-        return Inertia::render('CustomerCreate/CustomerCreatePage', [
-            'step' => $haveCompany ? 3 : 2,
-            'addressDetails' => $addressDetails,
-        ]);
-    }
-
-    public function getCompanyInformation(): Response
-    {
-        $companyInformation = session('customer_company_information');
-
-        return Inertia::render('CustomerCreate/CustomerCreatePage', [
-            'step' => 4,
-            'companyInformation' => $companyInformation,
-        ]);
-    }
-
-    public function getAccountSecurity(): Response
-    {
-        $companyInformation = session('customer_company_information');
-
-        return Inertia::render('CustomerCreate/CustomerCreatePage', [
-            'step' => 5,
-            'companyInformation' => $companyInformation,
-        ]);
-    }
+    //     return Inertia::render('CustomerCreate/CustomerCreatePage', [
+    //         'step' => 5,
+    //         'companyInformation' => $companyInformation,
+    //     ]);
+    // }
 
     public function verifyCustomerOtp(Request $request): RedirectResponse
     {
