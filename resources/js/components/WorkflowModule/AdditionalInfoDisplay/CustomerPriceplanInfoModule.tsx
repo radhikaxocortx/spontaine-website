@@ -13,7 +13,7 @@ import {
 import { Button } from '@/components/ui/button'
 import StrongText from '@/typography/StrongText'
 import { router } from '@inertiajs/react'
-import { AlertCircle, Bell, Info, User } from 'lucide-react'
+import { Bell, Info, User } from 'lucide-react'
 import { useState } from 'react'
 import ModuleEdit from './ModuleEdit'
 
@@ -56,7 +56,6 @@ export default function CustomerPriceplanInfoModule({
 
   const isUpdateAllowed = moduleUpdateStatus?.allow_update && !moduleUpdateStatus?.customer_updated
   const hasCustomerNotes = Boolean(moduleUpdateStatus?.customer_notes)
-  const hasInternalNotes = Boolean(moduleUpdateStatus?.internal_notes)
 
   return (
     <div
@@ -139,7 +138,7 @@ export default function CustomerPriceplanInfoModule({
                       </div>
                     </div>
                   )}
-                  {hasInternalNotes && (
+                  {/* {hasInternalNotes && (
                     <div className='flex items-start gap-3'>
                       <div className='flex h-8 w-8 items-center justify-center rounded-full bg-primary-100 ring-2 ring-primary-50'>
                         <AlertCircle className='h-4 w-4 text-primary-600' />
@@ -160,7 +159,7 @@ export default function CustomerPriceplanInfoModule({
                         </div>
                       </div>
                     </div>
-                  )}
+                  )} */}
                 </div>
               </div>
 
@@ -174,15 +173,27 @@ export default function CustomerPriceplanInfoModule({
                         const matchingInfo = additionalInfo.filter(
                           (info) => info.workflow_item_id === item.id
                         )
-                        const values = matchingInfo.map((info) => info.value).filter(Boolean)
+
+                        const values = matchingInfo
+                          .map((info) => {
+                            const isFileType = ['image', 'pdf', 'word_document'].includes(item.type)
+                            if (isFileType && typeof info.value === 'string') {
+                              const parts = info.value.split('/')
+                              return parts[parts.length - 1]
+                            }
+                            return info.value
+                          })
+                          .filter(Boolean)
+
                         if (values.length === 0) return null
+
                         return (
                           <div
                             key={item.id}
                             className='flex flex-col gap-1 rounded-lg bg-white p-3 shadow-sm ring-1 ring-gray-100'
                           >
                             <span className='text-muted-foreground text-xs font-medium'>
-                              {item.field_name}
+                              {item.external_field_name ?? item.field_name}
                             </span>
                             <span className='text-sm'>{values.join(', ')}</span>
                           </div>
@@ -194,20 +205,20 @@ export default function CustomerPriceplanInfoModule({
 
               <div className='flex items-center justify-end gap-4'>
                 {/* Update Controls */}
-                {hasFieldsWithValues && (
-                  <div className='flex items-center'>
-                    {isUpdateAllowed && (
-                      <Button
-                        variant='default'
-                        size='sm'
-                        onClick={() => setEditModule(true)}
-                        className='flex items-center gap-2'
-                      >
-                        Edit Details
-                      </Button>
-                    )}
-                  </div>
-                )}
+
+                <div className='flex items-center'>
+                  {isUpdateAllowed && (
+                    <Button
+                      variant='default'
+                      size='sm'
+                      onClick={() => setEditModule(true)}
+                      className='flex items-center gap-2'
+                    >
+                      Edit Details
+                    </Button>
+                  )}
+                </div>
+
                 {isUpdateAllowed && (
                   <div className='flex items-center justify-end rounded-xl shadow-sm'>
                     <Button

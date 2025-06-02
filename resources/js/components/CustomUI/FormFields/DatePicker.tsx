@@ -52,8 +52,9 @@ export default function DatePicker({
                 setOpen(false)
               }
             }}
-            fromDate={min}
-            toDate={max}
+            fromDate={min ?? new Date('1800-01-01')}
+            toDate={max ?? new Date('2200-01-01')}
+            captionLayout='dropdown'
           />
         </PopoverContent>
       </Popover>
