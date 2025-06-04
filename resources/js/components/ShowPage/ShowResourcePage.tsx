@@ -26,7 +26,7 @@ interface Props {
   onAddClick?: (e?: React.MouseEvent<HTMLButtonElement>) => unknown
   editUrl?: string
   onEditClick?: (e?: React.MouseEvent<HTMLButtonElement>) => unknown
-  deleteUrl?: string | null
+  deleteUrl?: string
   onDeleteClick?: (e?: React.MouseEvent<HTMLButtonElement>) => unknown
   type?: string
   cardStyle?: string
