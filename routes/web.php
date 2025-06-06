@@ -14,6 +14,7 @@ use App\Http\Controllers\EntityTemplate\EntityTemplateItemController;
 use App\Http\Controllers\EntityTemplate\workflowAPIController;
 use App\Http\Controllers\PricePlan\PricePlanController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReferenceData\ParameterManagementController;
 use App\Http\Controllers\ReferenceData\ReferenceDataAPIController;
 use App\Http\Controllers\ReferenceData\ReferenceDataController;
 use App\Http\Controllers\VerifiedIdentity\VerifiedIdentityController;
@@ -59,6 +60,9 @@ Route::middleware('auth')->group(function () {
         ->name('workflow-module-authenticate-update');
     Route::get('verification-completed/{customerPriceplanId}', [CustomerAdminController::class, 'verificationCompleted'])
         ->name('verification-completed');
+
+    Route::resource('parameter-management', ParameterManagementController::class)
+        ->parameters(['parameter-management' => 'parameterManagement']);
 
     // Add Payment
     Route::post('add-payment', [CustomerAdminController::class, 'addPayment'])
