@@ -11,7 +11,7 @@ interface Props {
   backUrl?: string
   addUrl?: string
   editUrl?: string
-  deleteUrl?: string | null
+  deleteUrl?: string
   existingUserUrl?: string
   onFolderIconClick?: () => unknown
   onAddClick?: () => unknown

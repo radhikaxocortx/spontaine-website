@@ -39,7 +39,7 @@ export default function InfoGroupForm({ updateTextValue, updateFileValue, item }
       className='flex flex-col'
       key={item.id}
     >
-      {item.type === 'date' && (
+      {item.type === 'date' && typeof item.value === 'string' && (
         <DatePicker
           setValue={(value) => updateTextValue(item.id, value)}
           label={item.field_name}
@@ -56,7 +56,7 @@ export default function InfoGroupForm({ updateTextValue, updateFileValue, item }
           <NormalText className='pl-2'>{item.field_name}</NormalText>
         </div>
       )}
-      {(item.type === 'text' || item.type === 'number') && (
+      {(item.type === 'text' || item.type === 'number') && typeof item.value === 'string' && (
         <InputText
           setValue={(value) => updateTextValue(item.id, value)}
           value={item.value}
@@ -64,7 +64,7 @@ export default function InfoGroupForm({ updateTextValue, updateFileValue, item }
           placeholder={item.placeholder ?? ''}
         />
       )}
-      {item.type === 'long_text' && (
+      {item.type === 'long_text' && typeof item.value === 'string' && (
         <InputDescription
           setValue={(value) => updateTextValue(item.id, value)}
           label={item.field_name}
@@ -72,14 +72,14 @@ export default function InfoGroupForm({ updateTextValue, updateFileValue, item }
           placeholder={item.placeholder ?? ''}
         />
       )}
-      {item.type === 'phone_number' && (
+      {item.type === 'phone_number' && typeof item.value === 'string' && (
         <PhoneInput
           value={item.value || ''}
           onChange={(val) => updateTextValue(item.id, val || '')}
           label={item.field_name}
         />
       )}
-      {item.type === 'dropdown' && (
+      {item.type === 'dropdown' && typeof item.value === 'string' && (
         <DynamicSelectList
           url={route('unique-ref-data-values', {
             domain: item.domain,

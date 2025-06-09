@@ -7,15 +7,17 @@ use App\Http\Requests\Workflow\WorkflowFormRequest;
 use App\Models\ReferenceData\ReferenceData;
 use App\Models\Workflow\Workflow;
 use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class WorkflowController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): Response
     {
         Gate::authorize('viewAny', Workflow::class);
         $workflows = Workflow::with('country', 'priceplan')->get();
@@ -28,7 +30,7 @@ class WorkflowController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): Response
     {
         Gate::authorize('create', Workflow::class);
         $status = ReferenceData::fullData()
@@ -43,7 +45,7 @@ class WorkflowController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(WorkflowFormRequest $request)
+    public function store(WorkflowFormRequest $request): RedirectResponse
     {
         try {
             $record = Workflow::create($request->all());
@@ -60,10 +62,10 @@ class WorkflowController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id): Response
     {
         $workflow = Workflow::with('country', 'priceplan', 'workflowModules.workflowItems')->findOrFail($id);
-        Gate::authorize('view', Workflow::class);
+        Gate::authorize('view', $workflow);
 
         return Inertia::render('Workflow/WorkflowShow', [
             'workflow' => $workflow,
@@ -73,10 +75,10 @@ class WorkflowController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id): Response
     {
-        Gate::authorize('update', Workflow::class);
         $workflow = Workflow::with('country', 'priceplan')->find($id);
+        Gate::authorize('update', $workflow);
         $status = ReferenceData::fullData()
             ->where('domain', 'Workflow')
             ->where('parameter', 'Status')
@@ -91,10 +93,12 @@ class WorkflowController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(WorkflowFormRequest $request, string $id)
+    public function update(WorkflowFormRequest $request, string $id): RedirectResponse
     {
         try {
-            $record = Workflow::find($id)->update($request->all());
+            $workflow = Workflow::findOrFail($id);
+            Gate::authorize('update', $workflow);
+            $workflow->update($request->all());
         } catch (Exception $e) {
             return redirect()->back()->with(['error' => $e->getMessage()]);
         }
@@ -107,11 +111,12 @@ class WorkflowController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): RedirectResponse
     {
-        Gate::authorize('delete', Workflow::class);
+        $workflow = Workflow::findOrFail($id);
+        Gate::authorize('delete', $workflow);
         try {
-            Workflow::find($id)->delete();
+            $workflow->delete();
         } catch (Exception $e) {
             return redirect()->back()->with(['error' => $e->getMessage()]);
         }

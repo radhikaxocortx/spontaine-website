@@ -43,15 +43,16 @@ const CustomerWorkflowShow = ({
           <Button className='justify-end'>INVOICE</Button>
         </div>
         <div>
-          Business Verification for{''}
+          Business Verification for
           <StrongText>
+            {'  '}
             {customerPriceplan.customer?.first_name}
-            {''}
+            {'  '}
             {customerPriceplan.customer?.last_name}
           </StrongText>
           <br />
           <StrongText>
-            KADODO ID : {customerPriceplan.kadodo_i_d?.kadodo_id || 'not generated'}
+            KADODO ID : {customerPriceplan.kadodo_i_d?.kadodo_id || 'Not Generated'}
             <br />
             {customerPriceplan.kadodo_i_d?.valid_from && (
               <>
