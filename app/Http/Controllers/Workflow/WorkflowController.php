@@ -65,7 +65,7 @@ class WorkflowController extends Controller
     public function show(string $id): Response
     {
         $workflow = Workflow::with('country', 'priceplan', 'workflowModules.workflowItems')->findOrFail($id);
-        Gate::authorize('view', Workflow::class);
+        Gate::authorize('view', $workflow);
 
         return Inertia::render('Workflow/WorkflowShow', [
             'workflow' => $workflow,

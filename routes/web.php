@@ -18,6 +18,7 @@ use App\Http\Controllers\ReferenceData\ParameterManagementController;
 use App\Http\Controllers\ReferenceData\ReferenceDataAPIController;
 use App\Http\Controllers\ReferenceData\ReferenceDataController;
 use App\Http\Controllers\VerifiedIdentity\VerifiedIdentityController;
+use App\Http\Controllers\Workflow\FileDownloadController;
 use App\Http\Controllers\Workflow\WorkflowController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -193,5 +194,9 @@ Route::resource('nav-editor', NavEditorNavEditorController::class);
 Route::resource('footer-editor', UIBuilderFooterController::class);
 
 Route::post('send-contact-mail', [ContactController::class, 'sendMail']);
+
+// file-download
+Route::get('file-download', FileDownloadController::class)
+    ->name('file-download');
 
 require __DIR__.'/auth.php';

@@ -135,6 +135,11 @@ export default function AdminAdditionalInfoModule({
                   )
                   const values = matchingInfo.map((info) => info.value).filter(Boolean)
 
+                  const isFileType =
+                    item.type === 'pdf' || item.type === 'word_document' || item.type === 'image'
+
+                  const filePath = values[0]
+
                   return (
                     <div
                       key={item.id}
@@ -143,9 +148,30 @@ export default function AdminAdditionalInfoModule({
                       <span className='text-muted-foreground text-xs font-medium'>
                         {item.external_field_name ?? item.field_name}
                       </span>
-                      <span className='text-sm'>
-                        {values.length > 0 ? values.join(', ') : 'No data available'}
-                      </span>
+
+                      {/* Render file download or image preview */}
+                      {isFileType && filePath ? (
+                        item.type === 'image' ? (
+                          <img
+                            className='h-auto w-full rounded'
+                            alt={item.field_name}
+                            src={route('file-download', { path: filePath })}
+                          />
+                        ) : (
+                          <a
+                            href={route('file-download', { path: filePath })}
+                            className='link text-blue-600 hover:underline'
+                            target='_blank'
+                            rel='noreferrer'
+                          >
+                            Download
+                          </a>
+                        )
+                      ) : (
+                        <span className='text-sm'>
+                          {values.length > 0 ? values.join(', ') : 'No data available'}
+                        </span>
+                      )}
                     </div>
                   )
                 })}
