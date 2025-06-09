@@ -1,8 +1,8 @@
-A new {{ $type }} verification request has been recieved. 
+A new {{ $type }} verification request has been received. 
 <br/>
 Requested:{{ $date}} at {{ $time }}
 <br/>
-Requestor: {{ $name }} 
+Requestor: {{ ucfirst($name) }}
 <br/>   {{ $address }}
 <br/>    {{ $phone }}
 <br/> {{ $email }}

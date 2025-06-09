@@ -15,6 +15,8 @@ export interface ReferenceDataDomain extends Model {
 export interface ReferenceDataParameter extends Model {
   domain_id: number
   parameter: string
+  has_second_value: boolean
+  domain: ReferenceDataDomain
 }
 export interface Workflow extends Model {
   name: string

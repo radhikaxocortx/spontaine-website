@@ -13,6 +13,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion'
 import { Button } from '@/components/ui/button'
+import { AlertCircle, User } from 'lucide-react'
 import { useState } from 'react'
 
 interface Props {
@@ -34,10 +35,9 @@ export default function AdminAdditionalInfoModule({
   const [expandedValue, setExpandedValue] = useState<string | undefined>()
   const [statusOpen, setStatusOpen] = useState<boolean>(false)
 
-  const hasFieldsWithValues = workflowModule.workflow_items.some(
-    (item) => additionalInfo.find((info) => info.workflow_item_id === item.id)?.value
-  )
-  console.log(statusUpdate)
+  const hasCustomerNotes = Boolean(moduleStatus?.customer_notes)
+  const hasInternalNotes = Boolean(moduleStatus?.internal_notes)
+
   return (
     <div
       className={`bg-1stop-accent2 rounded-lg border shadow-sm transition-all duration-200 ${expandedValue ? 'h-full' : 'h-[60px]'}`}
@@ -73,36 +73,109 @@ export default function AdminAdditionalInfoModule({
                 </Button>
               </div>
             )}
-            {hasFieldsWithValues ? (
-              <>
-                <div className='grid gap-4'>
-                  {workflowModule.workflow_items
-                    .sort((a, b) => a.field_number - b.field_number)
-                    .map((item) => {
-                      const matchingInfo = additionalInfo.filter(
-                        (info) => info.workflow_item_id === item.id
-                      )
-                      const values = matchingInfo.map((info) => info.value).filter(Boolean)
-                      if (values.length === 0) return null
-                      return (
-                        <div
-                          key={item.id}
-                          className='flex flex-col gap-1'
-                        >
-                          <span className='text-muted-foreground text-xs font-medium'>
-                            {item.external_field_name ?? item.field_name}
-                          </span>
-                          <span className='text-sm'>{values.join(', ')}</span>
-                        </div>
-                      )
-                    })}
+            {/* Status Section */}
+            <div className='overflow-hidden rounded-xl bg-gray-100 p-4 shadow-sm'>
+              <div className='mb-4 flex items-center justify-end'>
+                <div className='flex items-center gap-2'>
+                  <span className='text-sm font-medium text-gray-600'>Current Status:</span>
+                  <span className='rounded-full bg-secondary-100 px-3 py-1 text-sm font-medium text-secondary-700'>
+                    {moduleStatus?.status ?? 'Not Started'}
+                  </span>
                 </div>
-              </>
-            ) : (
-              <div className='flex h-full items-center justify-center py-4'>
-                <span className='text-muted-foreground text-sm'>No information available</span>
               </div>
-            )}
+              <div className='mb-4 space-y-4'>
+                {hasCustomerNotes && (
+                  <div className='flex items-start gap-3'>
+                    <div className='flex h-8 w-8 items-center justify-center rounded-full bg-secondary-100 ring-2 ring-secondary-50'>
+                      <User className='h-4 w-4 text-secondary-600' />
+                    </div>
+                    <div className='flex-1'>
+                      <div className='mb-1 flex items-center gap-2'>
+                        <span className='text-sm font-medium text-gray-700'>Customer Note</span>
+                        <span className='text-xs text-gray-500'>
+                          {moduleStatus?.updated_at
+                            ? new Date(moduleStatus.updated_at).toLocaleDateString()
+                            : ''}
+                        </span>
+                      </div>
+                      <div className='relative rounded-xl rounded-tl-none bg-white p-3 shadow-sm ring-1 ring-gray-100 before:absolute before:left-[-8px] before:top-0 before:border-8 before:border-transparent before:border-r-white before:border-t-white'>
+                        <p className='text-sm text-gray-600'>{moduleStatus?.customer_notes}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {hasInternalNotes && (
+                  <div className='flex items-start gap-3'>
+                    <div className='flex h-8 w-8 items-center justify-center rounded-full bg-primary-100 ring-2 ring-primary-50'>
+                      <AlertCircle className='h-4 w-4 text-primary-600' />
+                    </div>
+                    <div className='flex-1'>
+                      <div className='mb-1 flex items-center gap-2'>
+                        <span className='text-sm font-medium text-gray-700'>Internal Note</span>
+                        <span className='text-xs text-gray-500'>
+                          {moduleStatus?.updated_at
+                            ? new Date(moduleStatus.updated_at).toLocaleDateString()
+                            : ''}
+                        </span>
+                      </div>
+                      <div className='relative rounded-xl rounded-tl-none bg-white p-3 shadow-sm ring-1 ring-gray-100 before:absolute before:left-[-8px] before:top-0 before:border-8 before:border-transparent before:border-r-white before:border-t-white'>
+                        <p className='text-sm text-gray-600'>{moduleStatus?.internal_notes}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className='grid gap-4 p-2'>
+              {workflowModule.workflow_items
+                .sort((a, b) => a.field_number - b.field_number)
+                .map((item) => {
+                  const matchingInfo = additionalInfo.filter(
+                    (info) => info.workflow_item_id === item.id
+                  )
+                  const values = matchingInfo.map((info) => info.value).filter(Boolean)
+
+                  const isFileType =
+                    item.type === 'pdf' || item.type === 'word_document' || item.type === 'image'
+
+                  const filePath = values[0]
+
+                  return (
+                    <div
+                      key={item.id}
+                      className='flex flex-col gap-1'
+                    >
+                      <span className='text-muted-foreground text-xs font-medium'>
+                        {item.external_field_name ?? item.field_name}
+                      </span>
+
+                      {/* Render file download or image preview */}
+                      {isFileType && filePath ? (
+                        item.type === 'image' ? (
+                          <img
+                            className='h-auto w-full rounded'
+                            alt={item.field_name}
+                            src={route('file-download', { path: filePath })}
+                          />
+                        ) : (
+                          <a
+                            href={route('file-download', { path: filePath })}
+                            className='link text-blue-600 hover:underline'
+                            target='_blank'
+                            rel='noreferrer'
+                          >
+                            Download
+                          </a>
+                        )
+                      ) : (
+                        <span className='text-sm'>
+                          {values.length > 0 ? values.join(', ') : 'No data available'}
+                        </span>
+                      )}
+                    </div>
+                  )
+                })}
+            </div>
           </AccordionContent>
         </AccordionItem>
       </Accordion>
