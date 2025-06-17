@@ -54,16 +54,6 @@ class CustomerLoginController extends Controller
         }
     }
 
-    public function choosePriceplan(): Response
-    {
-
-        $priceplan = PricePlan::all();
-
-        return Inertia::render('CustomerLogin/ChoosePriceplan', [
-            'pricePlan' => $priceplan,
-        ]);
-    }
-
     public function customerDashboard(): Response
     {
         $priceplan = PricePlan::all();
@@ -110,21 +100,31 @@ class CustomerLoginController extends Controller
 
     public function customerPayment(Request $request): Response
     {
-        $customerPriceplan = CustomerPricePlan::where('id', $request->id)->with('pricePlan')->first();
+        $priceplan = PricePlan::where('id', $request->pricePlanId)->first();
         $countryDetail = Country::where('name', 'Ghana')->first();
 
         return Inertia::render('CustomerLogin/CustomerPayment', [
-            'customerPriceplan' => $customerPriceplan,
+            'priceplan' => $priceplan,
             'countryDetail' => $countryDetail,
         ]);
     }
 
     public function updateCustomerPayment(PaymentRequest $request): RedirectResponse
     {
+        $customer_id = Auth::guard('customer')->user()?->id;
         try {
-            $paymentDetail = PaymentDetail::create(
-                $request->all()
-            );
+            $customerPriceplan = CustomerPricePlan::create([
+                'customer_id' => $customer_id,
+                'price_plan_id' => $request->priceplanId,
+            ]);
+            $paymentDetail = PaymentDetail::create([
+                'customer_priceplan_id' => $customerPriceplan->id,
+                'price_plan_amount' => $request->pricePlanAmount,
+                'tax_amount' => $request->taxAmount,
+                'total_amount' => $request->totalAmount,
+                'payment_amount' => $request->paymentAmount,
+                'payment_status' => $request->paymentStatus,
+            ]);
         } catch (Exception $e) {
             return back()->with(['error' => $e->getMessage()]);
         }

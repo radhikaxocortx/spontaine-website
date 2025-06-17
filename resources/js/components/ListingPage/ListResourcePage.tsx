@@ -56,8 +56,6 @@ interface Props<
   existingUserUrl?: string
   onFolderIconClick?: (e?: React.MouseEvent<HTMLButtonElement>) => unknown
   pageDescription?: string
-  type?: string
-  subtype?: string
   buttonText?: string
   oldValues?: Record<string, string>
   cardStyles?: string
@@ -65,7 +63,6 @@ interface Props<
   layoutStyle?: string
   onCardClick?: (id: number | string) => void
   isAddButton?: boolean
-  selectedHeading?: string
   breadCrumbs?: BreadcrumbItemLink[]
   isDualHeading?: string
   children?: React.ReactNode
@@ -103,8 +100,6 @@ export default function ListResourcePage<
   onDeleteClick,
   existingUserUrl,
   onFolderIconClick,
-  type,
-  subtype,
   oldValues,
   subheading,
   cardStyles,
@@ -112,7 +107,6 @@ export default function ListResourcePage<
   layoutStyle,
   onCardClick,
   isAddButton = true,
-  selectedHeading,
   breadCrumbs,
   buttonText,
   isDualHeading,

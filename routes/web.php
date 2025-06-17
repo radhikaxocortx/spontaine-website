@@ -163,16 +163,12 @@ Route::post('validate-customer', [CustomerLoginController::class, 'ValidatePassw
 Route::middleware(['auth:customer'])->group(function () {
     Route::get('customer-login-check', [CustomerLoginController::class, 'customerLoginConditionalcheck'])
         ->name('customer-login-check');
-    Route::get('customer-payment/{id}', [CustomerLoginController::class, 'customerPayment'])
+    Route::get('customer-payment/{pricePlanId}', [CustomerLoginController::class, 'customerPayment'])
         ->name('customer-payment');
     Route::post('update-customer-payment', [CustomerLoginController::class, 'updateCustomerPayment'])
         ->name('update-customer-payment');
-    Route::get('choose-priceplan', [CustomerLoginController::class, 'choosePriceplan'])
-        ->name('choose-priceplan');
     Route::get('customer-dashboard', [CustomerLoginController::class, 'customerDashboard'])
         ->name('customer-dashboard');
-    Route::post('update-priceplan', [CustomerController::class, 'updatePriceplan'])
-        ->name('update-priceplan');
     Route::get('customer-workflow-create/{pricePlanId}/{customerPriceplanId}', [CustomerController::class, 'createCustomerWorkflow'])
         ->name('customer-workflow-create');
     Route::get('find-customer-priceplan/{customerId}', [CustomerController::class, 'findCustomerPriceplan'])

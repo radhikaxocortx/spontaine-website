@@ -17,7 +17,6 @@ import Paragraph from '@/typography/Paragraph'
 import { router, usePage } from '@inertiajs/react'
 import { motion } from 'framer-motion'
 import { useMemo } from 'react'
-import ChoosePriceplan from './ChoosePriceplan'
 import VerifiedIdentityCard from './VerifiedIdentityCard'
 
 interface DashboardPageProps {
@@ -90,11 +89,6 @@ export default function CustomerDashboard() {
   }
 
   const renderContent = () => {
-    // If we don't have a price plan yet
-    if (!hasPricePlan) {
-      return <ChoosePriceplan pricePlan={pricePlan} />
-    }
-
     // If we have a price plan and workflow data is ready
     if (hasWorkflow) {
       return (
