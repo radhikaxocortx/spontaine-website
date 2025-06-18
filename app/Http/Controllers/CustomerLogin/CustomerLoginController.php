@@ -98,9 +98,9 @@ class CustomerLoginController extends Controller
 
     }
 
-    public function customerPayment(Request $request): Response
+    public function customerPayment(int $pricePlanId): Response
     {
-        $priceplan = PricePlan::where('id', $request->pricePlanId)->first();
+        $priceplan = PricePlan::where('id', $pricePlanId)->first();
         $countryDetail = Country::where('name', 'Ghana')->first();
 
         return Inertia::render('CustomerLogin/CustomerPayment', [

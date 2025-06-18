@@ -46,12 +46,6 @@ const PricePlanShow = ({ pricePlan }: Props) => {
         type: 'text',
       },
       {
-        label: 'Min Quantity Required',
-        content: pricePlan.min_quantity_required,
-        id: 6,
-        type: 'text',
-      },
-      {
         label: 'Rate',
         content: pricePlan.rate,
         id: 7,

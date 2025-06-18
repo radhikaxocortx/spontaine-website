@@ -107,7 +107,7 @@ class CustomerController extends Controller
         //
     }
 
-    public function createCustomerWorkflow($pricePlanId, $customerPriceplanId): Response
+    public function createCustomerWorkflow(int $pricePlanId, int $customerPriceplanId): Response
     {
         return Inertia::render('Customer/CustomerWorkflowCreate', [
             'pricePlanId' => $pricePlanId,
@@ -152,6 +152,10 @@ class CustomerController extends Controller
                     'address' => $customer?->address_line_1,
                 ]));
             Mail::to($customer?->email)->send(new WorkflowCustomerMail($customer?->first_name));
+            DB::commit();
+
+            return redirect()->route('customer-dashboard')
+                ->with(['message' => 'Customer Workflow Saved Successfully']);
         } catch (Exception $e) {
             DB::rollBack();
             Storage::delete($filesToCleanUp);
@@ -159,10 +163,6 @@ class CustomerController extends Controller
             return back()->with(['error' => ExceptionMessage::getMessage($e)]);
         }
 
-        DB::commit();
-
-        return redirect()->route('customer-dashboard')
-            ->with(['message' => 'Customer Workflow Saved Successfully']);
     }
 
     public function customerWorkflowUpdate(Request $request): RedirectResponse

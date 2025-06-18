@@ -17,7 +17,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -118,9 +117,8 @@ class CustomerCreateController extends Controller
             ->route('customer-create');
     }
 
-    public function createCustomer(): RedirectResponse
+    public function createCustomer(Request $request): RedirectResponse
     {
-        Log::info('Customer Create');
 
         $personalInformation = session('customer_personal_information');
         $addressDetails = session('customer_address_details');
@@ -136,6 +134,7 @@ class CustomerCreateController extends Controller
         DB::beginTransaction();
         try {
             $company = null;
+            $pricePlanId = $personalInformation['priceplan_id'];
             if ($addressDetails['have_company']) {
                 $company = CustomerOrganization::create([
                     'company_legal_entity_name' => $companyInformation['company_legal_entity_name'],
@@ -148,7 +147,6 @@ class CustomerCreateController extends Controller
                     'company_registration_id' => $companyInformation['company_registration_id'],
                 ]);
             }
-            Log::info('Company Created');
 
             $customer = Customer::create([
                 'first_name' => $personalInformation['first_name'],
@@ -164,27 +162,20 @@ class CustomerCreateController extends Controller
                 'email_verified' => true,
                 'company_id' => $company?->id,
             ]);
-            Log::info('Customer Created');
+
             Mail::to(User::pluck('email')->toArray())
                 ->send(new AdminMailForCustomerRegister([
                     'email' => $personalInformation['email'],
                     'name' => $personalInformation['first_name'],
                     'phone' => $personalInformation['telephone']]));
-            Log::info('Admin Mail Sent');
+
             Mail::to($personalInformation['email'])
                 ->send(new RegisteredCustomerMail(
                     $personalInformation['email'],
                     $personalInformation['first_name']));
-            Log::info('Customer Mail Sent');
 
             Auth::guard('customer')->login($customer);
-            Log::info('Customer Logged In');
-
-            if (! empty($personalInformation['priceplan_id'])) {
-                return redirect()->route('customer-payment', [
-                    'pricePlanId' => $personalInformation['priceplan_id'],
-                ]);
-            }
+            $request->session()->regenerate();
 
             session()->forget('customer_address_details');
             session()->forget('customer_company_information');
@@ -194,9 +185,15 @@ class CustomerCreateController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
 
-            return redirect()->route('sign-up.create')->with(['error' => 'Registration failed. Try again.']);
+            return redirect()->route('sign-up.create', ['price_plan' => $pricePlanId])
+                ->with(['error' => 'Registration failed.'.$e->getMessage()]);
         }
         DB::commit();
+        if (! empty($pricePlanId)) {
+
+            return redirect()->route('customer-payment', $pricePlanId);
+
+        }
 
         return redirect()->route('customer-login-check')->with(['message' => 'Registration complete and logged in.']);
 
