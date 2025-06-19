@@ -8,16 +8,13 @@ import {
   PricePlan,
   Workflow,
 } from '@/components/Interface/data_interface'
-import { Button } from '@/components/ui/button'
 import useFetchRecord from '@/hooks/useFetchPagination'
 import Heading from '@/typography/Heading'
 import LargeText from '@/typography/LargeText'
 import NormalText from '@/typography/NormalText'
-import Paragraph from '@/typography/Paragraph'
-import { router, usePage } from '@inertiajs/react'
+import { usePage } from '@inertiajs/react'
 import { motion } from 'framer-motion'
 import { useMemo } from 'react'
-import ChoosePriceplan from './ChoosePriceplan'
 import VerifiedIdentityCard from './VerifiedIdentityCard'
 
 interface DashboardPageProps {
@@ -64,13 +61,13 @@ export default function CustomerDashboard() {
       customerWorkflowItems.workflow.workflow_modules.length > 0
   )
 
-  const handleStartWorkflow = () => {
-    if (currentPricePlan) {
-      router.visit(
-        `/customer-workflow-create/${currentPricePlan.price_plan_id}/${currentPricePlan.id}`
-      )
-    }
-  }
+  // const handleStartWorkflow = () => {
+  //   if (currentPricePlan) {
+  //     router.visit(
+  //       `/customer-workflow-create/${currentPricePlan.price_plan_id}/${currentPricePlan.id}`
+  //     )
+  //   }
+  // }
 
   // Show loading state if either priceplan or workflow is loading
   if (isLoadingPriceplan || isLoadingWorkflow) {
@@ -90,11 +87,6 @@ export default function CustomerDashboard() {
   }
 
   const renderContent = () => {
-    // If we don't have a price plan yet
-    if (!hasPricePlan) {
-      return <ChoosePriceplan pricePlan={pricePlan} />
-    }
-
     // If we have a price plan and workflow data is ready
     if (hasWorkflow) {
       return (
@@ -107,26 +99,26 @@ export default function CustomerDashboard() {
       )
     }
 
-    // If we have a price plan but no workflow yet
-    return (
-      <div className='border-secondary rounded-lg border-l-4 bg-white p-6 shadow-lg transition-shadow duration-300 hover:shadow-xl'>
-        <div className='flex flex-col items-center justify-center py-8 text-center'>
-          <Heading className='mb-4 text-black-tertiary-950'>
-            Start Your Business Verification
-          </Heading>
-          <Paragraph className='mb-6 max-w-md text-neutral-600'>
-            Complete your business verification process to start using our services. This is a
-            required step to activate your account.
-          </Paragraph>
-          <Button
-            onClick={handleStartWorkflow}
-            className='rounded-lg bg-primary-950 px-6 py-2 text-white transition-colors duration-200 hover:bg-primary-900'
-          >
-            Start Verification
-          </Button>
-        </div>
-      </div>
-    )
+    // // If we have a price plan but no workflow yet
+    // return (
+    //   <div className='border-secondary rounded-lg border-l-4 bg-white p-6 shadow-lg transition-shadow duration-300 hover:shadow-xl'>
+    //     <div className='flex flex-col items-center justify-center py-8 text-center'>
+    //       <Heading className='mb-4 text-black-tertiary-950'>
+    //         Start Your Business Verification
+    //       </Heading>
+    //       <Paragraph className='mb-6 max-w-md text-neutral-600'>
+    //         Complete your business verification process to start using our services. This is a
+    //         required step to activate your account.
+    //       </Paragraph>
+    //       <Button
+    //         onClick={handleStartWorkflow}
+    //         className='rounded-lg bg-primary-950 px-6 py-2 text-white transition-colors duration-200 hover:bg-primary-900'
+    //       >
+    //         Start Verification
+    //       </Button>
+    //     </div>
+    //   </div>
+    // )
   }
 
   return (

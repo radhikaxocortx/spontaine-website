@@ -153,7 +153,7 @@ export default function AdminAdditionalInfoModule({
                       {isFileType && filePath ? (
                         item.type === 'image' ? (
                           <img
-                            className='h-auto w-full rounded'
+                            className='max-h-60 max-w-xs rounded'
                             alt={item.field_name}
                             src={route('file-download', { path: filePath })}
                           />

@@ -4,5 +4,5 @@ A new user has signed up .
 <br/> phone:{{ $phone }}
 <br/>
 <br/>
-please vist <link>kadodo.xocortx.com/customer-admin-view</link> for more details
+please vist <link>{{ route('customer-admin-view') }}</link> for more details
 <br/>

@@ -12,7 +12,7 @@ You have the following note from Kadodo:
 For details, please sign-in here.
 <br/>
 <br/>
-<link>kadodo.xocortx.com/customer-login</link>
+<link>{{ route('customer-login') }}</link>
 <br/>
 <br/>
 Thanks,<br/>

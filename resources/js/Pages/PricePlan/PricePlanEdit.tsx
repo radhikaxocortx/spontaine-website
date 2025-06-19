@@ -15,7 +15,6 @@ const PricePlanEdit = ({ pricePlan, type }: Props) => {
     code: pricePlan.code,
     type: pricePlan.type,
     description: pricePlan.description,
-    min_quantity_required: pricePlan.min_quantity_required,
     rate: pricePlan.rate,
     validity: pricePlan.validity,
   })
@@ -54,11 +53,6 @@ const PricePlanEdit = ({ pricePlan, type }: Props) => {
         label: 'Validity (months)',
         type: 'number',
         setValue: setFormValue('validity'),
-      },
-      min_quantity_required: {
-        label: 'Min Quantity Required',
-        type: 'number',
-        setValue: setFormValue('min_quantity_required'),
       },
       rate: {
         label: 'Rate',

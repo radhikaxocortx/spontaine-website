@@ -30,7 +30,7 @@ class CustomerAdminController extends Controller
     {
         Gate::authorize('viewAny', CustomerPricePlan::class);
 
-        $customerPriceplans = CustomerPricePlan::with('customer', 'pricePlan')
+        $customerPriceplans = CustomerPricePlan::with('customer', 'pricePlan', 'verificationStatus')
             ->when($request->search, function ($query, $search) {
                 $query->where(function ($query) use ($search) {
                     $query->whereHas('customer', function ($q) use ($search) {
@@ -232,11 +232,21 @@ class CustomerAdminController extends Controller
 
         try {
             $workflowModuleVerification = WorkflowModuleVerification::create($request->all());
-            Mail::to($customer?->email)->send(new ModuleUpdateEmailToCustomer([
+            $VerificationStatus = VerificationStatus::where('customer_workflow_id', $request->customer_workflow_id)
+                ->exists();
+            if (! $VerificationStatus) {
+                VerificationStatus::create([
+                    'customer_workflow_id' => $request->customer_workflow_id,
+                    'status' => 'In Process',
+                ]);
+            }
+            if ($workflowModuleVerification->customer_notes) {
+                Mail::to($customer?->email)->send(new ModuleUpdateEmailToCustomer([
 
-                'name' => $customer?->first_name,
-                'note' => $workflowModuleVerification->customer_notes ?? '',
-            ]));
+                    'name' => $customer?->first_name,
+                    'note' => $workflowModuleVerification->customer_notes,
+                ]));
+            }
         } catch (\Exception $e) {
             return back()->with(['error' => $e->getMessage()]);
         }
@@ -258,17 +268,19 @@ class CustomerAdminController extends Controller
             ->first();
 
         /** @var \App\Models\Customer\Customer|null $customer */
-        $customer = $customerDetail->customer;
+        $customer = $customerDetail?->customer;
         try {
             $workflowModuleVerification->update([
                 ...$request->all(),
                 'customer_updated' => false,
             ]);
-            Mail::to($customer?->email)->send(new ModuleUpdateEmailToCustomer([
+            if ($request->customer_notes) {
+                Mail::to($customer?->email)->send(new ModuleUpdateEmailToCustomer([
 
-                'name' => $customer?->first_name,
-                'note' => $workflowModuleVerification->customer_notes ?? '',
-            ]));
+                    'name' => $customer?->first_name,
+                    'note' => $request->customer_notes,
+                ]));
+            }
         } catch (\Exception $e) {
             return back()->with(['error' => $e->getMessage()]);
         }

@@ -1,4 +1,4 @@
-import { Country, CustomerPricePlan } from '@/components/Interface/data_interface'
+import { Country, PricePlan } from '@/components/Interface/data_interface'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -10,14 +10,14 @@ import AppLayoutPadding from '@/Layouts/AppLayoutPadding'
 import { useCallback, useMemo, useState } from 'react'
 
 interface Props {
-  customerPriceplan: CustomerPricePlan
+  priceplan: PricePlan
   countryDetail: Country
 }
 
-const CustomerPayment = ({ customerPriceplan, countryDetail }: Props) => {
+const CustomerPayment = ({ priceplan, countryDetail }: Props) => {
   const [paymentMethod, setPaymentMethod] = useState('credit-card')
 
-  const rate = Number(customerPriceplan?.price_plan?.rate ?? 0)
+  const rate = Number(priceplan?.rate ?? 0)
   const taxRate = Number(countryDetail?.tax_rate ?? 0)
 
   const taxAmount = ((rate * taxRate) / 100).toFixed(2)
@@ -25,7 +25,7 @@ const CustomerPayment = ({ customerPriceplan, countryDetail }: Props) => {
 
   const data = useMemo(() => {
     return {
-      customer_priceplan_id: customerPriceplan.id,
+      priceplan_id: priceplan.id,
       price_plan_amount: rate,
       tax_amount: taxAmount,
       total_amount: totalAmount,
@@ -33,7 +33,7 @@ const CustomerPayment = ({ customerPriceplan, countryDetail }: Props) => {
       payment_status: 'completed',
       payment_method: paymentMethod,
     }
-  }, [customerPriceplan.id, rate, taxAmount, totalAmount, paymentMethod])
+  }, [priceplan.id, rate, taxAmount, totalAmount, paymentMethod])
 
   const { post } = useInertiaPost(route('update-customer-payment'))
   const handleSubmit = useCallback(() => {
@@ -54,11 +54,11 @@ const CustomerPayment = ({ customerPriceplan, countryDetail }: Props) => {
               <CardContent className='flex-1'>
                 <div className='grid grid-cols-2 gap-4'>
                   <div className='text-gray-600'>Price Plan Name</div>
-                  <div className='font-medium'>{customerPriceplan.price_plan.name}</div>
+                  <div className='font-medium'>{priceplan.name}</div>
                   <div className='text-gray-600'>Price Plan Rate</div>
                   <div className='font-medium'>
                     {countryDetail.currency_symbol}
-                    {customerPriceplan.price_plan.rate}
+                    {priceplan.rate}
                   </div>
                   <div className='text-gray-600'>Tax Rate</div>
                   <div className='font-medium'>{countryDetail.tax_rate}%</div>

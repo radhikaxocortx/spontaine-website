@@ -6,4 +6,4 @@ Please save this email for future reference. Your Kadodo username is {{ $email }
 You will receive status updates on your verification process. For details, please sign-in here.
 <br/>
 <br/>
-<link>kadodo.xocortx.com/customer-login</link>
+<link>{{ route('customer-login') }}</link>

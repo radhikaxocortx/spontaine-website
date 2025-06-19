@@ -11,7 +11,6 @@ use App\Mail\AdminMailForCustomerRegister;
 use App\Mail\RegisteredCustomerMail;
 use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerOrganization;
-use App\Models\Customer\CustomerPricePlan;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -118,7 +117,7 @@ class CustomerCreateController extends Controller
             ->route('customer-create');
     }
 
-    public function createCustomer(): RedirectResponse
+    public function createCustomer(Request $request): RedirectResponse
     {
 
         $personalInformation = session('customer_personal_information');
@@ -135,6 +134,7 @@ class CustomerCreateController extends Controller
         DB::beginTransaction();
         try {
             $company = null;
+            $pricePlanId = $personalInformation['priceplan_id'];
             if ($addressDetails['have_company']) {
                 $company = CustomerOrganization::create([
                     'company_legal_entity_name' => $companyInformation['company_legal_entity_name'],
@@ -162,23 +162,20 @@ class CustomerCreateController extends Controller
                 'email_verified' => true,
                 'company_id' => $company?->id,
             ]);
-            if (! empty($personalInformation['priceplan_id'])) {
-                CustomerPricePlan::create([
-                    'customer_id' => $customer->id,
-                    'price_plan_id' => $personalInformation['priceplan_id'],
-                ]);
-            }
+
             Mail::to(User::pluck('email')->toArray())
                 ->send(new AdminMailForCustomerRegister([
                     'email' => $personalInformation['email'],
                     'name' => $personalInformation['first_name'],
                     'phone' => $personalInformation['telephone']]));
+
             Mail::to($personalInformation['email'])
                 ->send(new RegisteredCustomerMail(
                     $personalInformation['email'],
                     $personalInformation['first_name']));
 
             Auth::guard('customer')->login($customer);
+            $request->session()->regenerate();
 
             session()->forget('customer_address_details');
             session()->forget('customer_company_information');
@@ -188,9 +185,15 @@ class CustomerCreateController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
 
-            return redirect()->route('sign-up.create')->with(['error' => 'Registration failed. Try again.']);
+            return redirect()->route('sign-up.create', ['price_plan' => $pricePlanId])
+                ->with(['error' => 'Registration failed.'.$e->getMessage()]);
         }
         DB::commit();
+        if (! empty($pricePlanId)) {
+
+            return redirect()->route('customer-payment', $pricePlanId);
+
+        }
 
         return redirect()->route('customer-login-check')->with(['message' => 'Registration complete and logged in.']);
 

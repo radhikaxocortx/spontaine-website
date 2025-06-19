@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('code')->unique();
             $table->integer('validity');
             $table->string('description');
-            $table->string('min_quantity_required');
             $table->string('rate');
             $table->softDeletes();
             $table->timestamps();

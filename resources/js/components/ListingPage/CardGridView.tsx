@@ -131,9 +131,9 @@ export default function CardGridView<
                     key={rowKey.key as string}
                   >
                     {(rowKey.hideLabel == null || !rowKey.hideLabel) && (
-                      <StrongText className=''>{rowKey.label as string} : </StrongText>
+                      <NormalText className=''>{rowKey.label as string} : </NormalText>
                     )}
-                    <NormalText
+                    <StrongText
                       className={cn(
                         '',
                         rowKey.textStyles != null
@@ -142,7 +142,7 @@ export default function CardGridView<
                       )}
                     >
                       {row[rowKey.key] as string}
-                    </NormalText>
+                    </StrongText>
                   </div>
                 ))}
               {/*Actions*/}

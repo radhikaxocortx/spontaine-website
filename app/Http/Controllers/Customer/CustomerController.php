@@ -42,12 +42,9 @@ class CustomerController extends Controller
         $customer = Auth::guard('customer')->user();
 
         if ($customer && $request->price_plan) {
-            CustomerPricePlan::create([
-                'customer_id' => $customer->id,
-                'price_plan_id' => $request->price_plan,
+            return redirect()->route('customer-payment', [
+                'pricePlanId' => $request->price_plan,
             ]);
-
-            return redirect()->route('customer-login-check');
         }
         session()->forget('customer_personal_information');
         session()->forget('customer_company_information');
@@ -110,25 +107,7 @@ class CustomerController extends Controller
         //
     }
 
-    public function updatePriceplan(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'price_plan_id' => 'required|exists:price_plans,id',
-            'customer_id' => 'required|exists:customers,id',
-        ]);
-        try {
-            $customerPriceplan = CustomerPricePlan::create($request->all());
-            $kadodoId = 'KD-'.time().$customerPriceplan->id;
-            $customerPriceplan->update(['kadodo_id' => $kadodoId]);
-        } catch (Exception $e) {
-            return back()->with(['error' => $e->getMessage()]);
-        }
-
-        return redirect()
-            ->route('customer-payment', ['id' => $customerPriceplan->id]);
-    }
-
-    public function createCustomerWorkflow($pricePlanId, $customerPriceplanId): Response
+    public function createCustomerWorkflow(int $pricePlanId, int $customerPriceplanId): Response
     {
         return Inertia::render('Customer/CustomerWorkflowCreate', [
             'pricePlanId' => $pricePlanId,
@@ -173,6 +152,10 @@ class CustomerController extends Controller
                     'address' => $customer?->address_line_1,
                 ]));
             Mail::to($customer?->email)->send(new WorkflowCustomerMail($customer?->first_name));
+            DB::commit();
+
+            return redirect()->route('customer-dashboard')
+                ->with(['message' => 'Customer Workflow Saved Successfully']);
         } catch (Exception $e) {
             DB::rollBack();
             Storage::delete($filesToCleanUp);
@@ -180,10 +163,6 @@ class CustomerController extends Controller
             return back()->with(['error' => ExceptionMessage::getMessage($e)]);
         }
 
-        DB::commit();
-
-        return redirect()->route('customer-dashboard')
-            ->with(['message' => 'Customer Workflow Saved Successfully']);
     }
 
     public function customerWorkflowUpdate(Request $request): RedirectResponse
