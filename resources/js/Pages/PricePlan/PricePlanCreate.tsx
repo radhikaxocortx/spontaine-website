@@ -14,7 +14,6 @@ const PricePlanCreate = ({ type }: Props) => {
     type: '',
     description: '',
     validity: '',
-    min_quantity_required: '',
     rate: '',
   })
   const formItems = useMemo(<
@@ -52,11 +51,6 @@ const PricePlanCreate = ({ type }: Props) => {
         label: 'Validity (months)',
         type: 'number',
         setValue: setFormValue('validity'),
-      },
-      min_quantity_required: {
-        label: 'Min Quantity Required',
-        type: 'number',
-        setValue: setFormValue('min_quantity_required'),
       },
       rate: {
         label: 'Rate',

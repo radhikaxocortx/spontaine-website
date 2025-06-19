@@ -7,15 +7,17 @@ use App\Http\Requests\PricePlanRequest\PricePlanFormRequest;
 use App\Models\PricePlan\PricePlan;
 use App\Models\ReferenceData\ReferenceData;
 use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class PricePlanController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): Response
     {
         Gate::authorize('viewAny', PricePlan::class);
         $pricePlans = PricePlan::all();
@@ -28,7 +30,7 @@ class PricePlanController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): Response
     {
         Gate::authorize('create', PricePlan::class);
         $type = ReferenceData::fullData()
@@ -44,7 +46,7 @@ class PricePlanController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PricePlanFormRequest $request)
+    public function store(PricePlanFormRequest $request): RedirectResponse
     {
 
         try {
@@ -61,7 +63,7 @@ class PricePlanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id): Response
     {
         Gate::authorize('view', PricePlan::class);
         $pricePlan = PricePlan::find($id);
@@ -75,7 +77,7 @@ class PricePlanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id): Response
     {
         Gate::authorize('update', PricePlan::class);
         $pricePlan = PricePlan::find($id);
@@ -93,7 +95,7 @@ class PricePlanController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(PricePlanFormRequest $request, string $id)
+    public function update(PricePlanFormRequest $request, string $id): RedirectResponse
     {
         try {
             PricePlan::where('id', $id)
@@ -110,7 +112,7 @@ class PricePlanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): RedirectResponse
     {
         Gate::authorize('delete', PricePlan::class);
         try {

@@ -63,7 +63,7 @@ const ParameterIndex = ({ parameters }: Props) => {
     return [
       {
         key: 'name',
-        label: 'Name',
+        label: 'Parameter',
       },
       {
         key: 'domain',

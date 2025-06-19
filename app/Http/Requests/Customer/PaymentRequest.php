@@ -12,15 +12,17 @@ use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 class PaymentRequest extends Data
 {
     public function __construct(
-        #[Exists('customer_price_plans', 'id')]
-        public int $customerPriceplanId,
+        #[Exists('price_plans', 'id')]
+        public int $priceplanId,
         #[Rule('required')]
         public float $pricePlanAmount,
         #[Rule('required')]
         public float $taxAmount,
         #[Rule('required')]
         public float $totalAmount,
+        #[Rule('required')]
         public float $paymentAmount,
+        #[Rule('required')]
         public string $paymentStatus,
     ) {}
 }

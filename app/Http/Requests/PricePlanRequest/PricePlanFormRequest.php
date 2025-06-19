@@ -15,7 +15,6 @@ class PricePlanFormRequest extends Data
         public int $validity,
         public string $description,
         public string $type,
-        public string $min_quantity_required,
         public int $rate,
     ) {}
 }

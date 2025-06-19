@@ -18,8 +18,6 @@ interface TabItem {
 }
 
 const CustomerPriceplanDashboardView = ({ customerPriceplan }: Props) => {
-  const [selectedTab, setSelectedTab] = useState('Business Verification')
-
   const handleCardClick = (id: number) => {
     router.get(route('customer-workflow-show', id))
   }
@@ -30,6 +28,10 @@ const CustomerPriceplanDashboardView = ({ customerPriceplan }: Props) => {
   const individualPlans =
     customerPriceplan?.customerPriceplan?.filter((plan) => plan.price_plan.type === 'Individual') ??
     []
+
+  const [selectedTab, setSelectedTab] = useState(
+    businessPlans.length !== 0 ? 'Business Verification' : 'Individual Verification'
+  )
 
   const getStatusIcon = (status: string | undefined) => {
     if (status === 'Completed' || status === 'Verified') {
