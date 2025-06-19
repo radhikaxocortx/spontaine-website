@@ -89,9 +89,8 @@ class CustomerLoginController extends Controller
                     return redirect()->route('customer-workflow-create', ['pricePlanId' => $customerPriceplan?->price_plan_id, 'customerPriceplanId' => $customerPriceplan]);
                 }
             } else {
-                return redirect()->route('customer-payment', ['id' => $customerPriceplan?->id]);
+                return redirect('/pricing');
             }
-
         } else {
             return redirect('/pricing');
         }

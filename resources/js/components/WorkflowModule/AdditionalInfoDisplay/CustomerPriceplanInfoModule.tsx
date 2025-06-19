@@ -86,7 +86,7 @@ export default function CustomerPriceplanInfoModule({
                 </div>
                 <span className='font-semibold'>{workflowModule.name}</span>
               </div>
-              {hasCustomerNotes && (
+              {hasCustomerNotes && isUpdateAllowed && (
                 <Button
                   className='ml-auto'
                   variant='ghost'
