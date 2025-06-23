@@ -15,6 +15,7 @@ use App\Http\Controllers\EntityTemplate\workflowAPIController;
 use App\Http\Controllers\PricePlan\PricePlanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Promotion\CouponManagementController;
+use App\Http\Controllers\Promotion\ValidateCouponController;
 use App\Http\Controllers\ReferenceData\ParameterManagementController;
 use App\Http\Controllers\ReferenceData\ReferenceDataAPIController;
 use App\Http\Controllers\ReferenceData\ReferenceDataController;
@@ -186,6 +187,10 @@ Route::middleware(['auth:customer'])->group(function () {
         ->name('customer-workflow-show');
     Route::post('customer-workflow-status-update', [CustomerController::class, 'customerWorkflowStatusUpdate'])
         ->name('customer-workflow-status-update');
+
+    // validate-coupon
+    Route::get('validate-coupon', [ValidateCouponController::class, 'validateCoupon'])
+        ->name('validate-coupon');
 });
 
 Route::get('verified-identity/{customer}', VerifiedIdentityController::class)

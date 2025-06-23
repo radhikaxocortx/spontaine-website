@@ -20,6 +20,9 @@ class PaymentDetail extends Model
         'total_amount',
         'payment_amount',
         'payment_status',
+        'payment_method',
+        'coupon_id',
+        'discount_amount',
     ];
 
     public function customerPriceplan(): BelongsTo

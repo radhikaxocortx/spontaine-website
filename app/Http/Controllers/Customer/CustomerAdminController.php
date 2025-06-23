@@ -150,6 +150,7 @@ class CustomerAdminController extends Controller
             Mail::to($customer?->email)->send(new StatusUpdateMailToCustomer([
                 'name' => $customer?->first_name,
                 'note' => $VerificationStatus->customer_notes ?? '',
+                'status' => $VerificationStatus->status,
             ]));
 
         } catch (\Exception $e) {

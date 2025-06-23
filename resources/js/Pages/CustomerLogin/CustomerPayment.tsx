@@ -1,4 +1,4 @@
-import { Country, PricePlan } from '@/components/Interface/data_interface'
+import { Country, Coupon, PricePlan } from '@/components/Interface/data_interface'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -16,24 +16,66 @@ interface Props {
 
 const CustomerPayment = ({ priceplan, countryDetail }: Props) => {
   const [paymentMethod, setPaymentMethod] = useState('credit-card')
+  const [promotionCode, setPromotionCode] = useState('')
+  const [coupon, setCoupon] = useState<Coupon | null>(null)
+  const [couponError, setCouponError] = useState<string | null>(null)
 
-  const rate = Number(priceplan?.rate ?? 0)
+  const priceplanRate = Number(priceplan?.rate ?? 0)
+  const discountAmount = coupon
+    ? Math.min(
+        priceplanRate * (Number(coupon.discount_percent) / 100),
+        Number(coupon.discount_limit)
+      )
+    : 0
+
+  const amountPayable = priceplanRate - discountAmount
+
   const taxRate = Number(countryDetail?.tax_rate ?? 0)
+  const taxAmount = ((amountPayable * taxRate) / 100).toFixed(2)
+  const totalAmount = (amountPayable + (amountPayable * taxRate) / 100).toFixed(2)
 
-  const taxAmount = ((rate * taxRate) / 100).toFixed(2)
-  const totalAmount = (rate + (rate * taxRate) / 100).toFixed(2)
+  const applyCoupon = async () => {
+    try {
+      const query = new URLSearchParams({
+        priceplan_id: priceplan.id.toString(),
+        promotion_code: promotionCode,
+      })
+
+      const response = await fetch(`/validate-coupon?${query}`, {
+        headers: {
+          Accept: 'application/json',
+        },
+      })
+
+      const result = await response.json()
+
+      if (!response.ok) {
+        setCoupon(null)
+        setCouponError(result.message ?? 'Invalid coupon.')
+        return
+      }
+
+      setCoupon(result.coupon)
+      setCouponError(null)
+    } catch (err) {
+      setCoupon(null)
+      setCouponError('Something went wrong while validating coupon.')
+    }
+  }
 
   const data = useMemo(() => {
     return {
       priceplan_id: priceplan.id,
-      price_plan_amount: rate,
+      price_plan_amount: priceplanRate,
       tax_amount: taxAmount,
       total_amount: totalAmount,
       payment_amount: totalAmount,
       payment_status: 'completed',
       payment_method: paymentMethod,
+      coupon_id: coupon?.id,
+      discount_amount: discountAmount,
     }
-  }, [priceplan.id, rate, taxAmount, totalAmount, paymentMethod])
+  }, [priceplan.id, priceplanRate, taxAmount, totalAmount, paymentMethod, coupon, discountAmount])
 
   const { post } = useInertiaPost(route('update-customer-payment'))
   const handleSubmit = useCallback(() => {
@@ -58,7 +100,12 @@ const CustomerPayment = ({ priceplan, countryDetail }: Props) => {
                   <div className='text-gray-600'>Price Plan Rate</div>
                   <div className='font-medium'>
                     {countryDetail.currency_symbol}
-                    {priceplan.rate}
+                    {priceplanRate}
+                  </div>
+                  <div className='text-gray-600'>Discount Amount</div>
+                  <div className='font-medium'>
+                    {countryDetail.currency_symbol}
+                    {discountAmount}
                   </div>
                   <div className='text-gray-600'>Tax Rate</div>
                   <div className='font-medium'>{countryDetail.tax_rate}%</div>
@@ -83,10 +130,40 @@ const CustomerPayment = ({ priceplan, countryDetail }: Props) => {
                 <CardTitle>Select Payment Method</CardTitle>
               </CardHeader>
               <CardContent>
+                <div className='flex-col-2 mt-6 flex items-center gap-4'>
+                  <Input
+                    type='text'
+                    placeholder='Enter Promotion Code (Optional)'
+                    className='w-1/3'
+                    value={promotionCode}
+                    onChange={(e) => setPromotionCode(e.target.value)}
+                  />
+
+                  <Button
+                    onClick={applyCoupon}
+                    className='w-1/3'
+                  >
+                    Apply Coupon
+                  </Button>
+                </div>
+                {coupon && (
+                  <div className='mt-2 text-green-600'>
+                    {coupon && (
+                      <div className='mt-2 text-green-600'>
+                        Coupon <strong>{coupon.coupon_code}</strong> applied: Get{' '}
+                        {coupon.discount_percent}% off, up to a maximum of{' '}
+                        {countryDetail.currency_symbol}
+                        {coupon.discount_limit}.
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {couponError && <div className='mt-2 text-red-600'>{couponError}</div>}
                 <RadioGroup
                   value={paymentMethod}
                   onValueChange={setPaymentMethod}
-                  className='flex gap-4'
+                  className='mt-6 flex gap-4'
                 >
                   <div className='flex items-center space-x-2'>
                     <RadioGroupItem

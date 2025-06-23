@@ -24,5 +24,12 @@ class PaymentRequest extends Data
         public float $paymentAmount,
         #[Rule('required')]
         public string $paymentStatus,
+        #[Rule('required')]
+        public string $paymentMethod,
+        #[Rule('nullable')]
+        #[Exists('coupons', 'id')]
+        public ?int $couponId,
+        #[Rule('nullable')]
+        public ?float $discountAmount,
     ) {}
 }
