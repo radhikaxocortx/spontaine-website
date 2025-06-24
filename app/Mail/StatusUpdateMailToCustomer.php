@@ -20,11 +20,14 @@ class StatusUpdateMailToCustomer extends Mailable
 
     public string $name;
 
+    public string $status;
+
     public function __construct(array $data)
     {
 
         $this->name = $data['name'];
         $this->note = $data['note'];
+        $this->status = $data['status'];
     }
 
     /**
@@ -33,7 +36,7 @@ class StatusUpdateMailToCustomer extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Your Kadodo application has been updated..',
+            subject: 'Your Kadodo application has been updated.',
         );
     }
 
@@ -44,7 +47,7 @@ class StatusUpdateMailToCustomer extends Mailable
     {
         return new Content(
             view: 'statusupdatemailtocustomer',
-            with: ['name' => $this->name, 'note' => $this->note],
+            with: ['name' => $this->name, 'note' => $this->note, 'status' => $this->status],
         );
     }
 

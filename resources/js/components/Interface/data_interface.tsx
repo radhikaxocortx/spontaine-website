@@ -75,6 +75,16 @@ export interface PricePlan extends Model {
   rate: number
 }
 
+export interface Coupon extends Model {
+  coupon_code: string
+  start_date: string
+  end_date: string
+  discount_percent: string
+  discount_limit: string
+  price_plan_id: number
+  price_plan: PricePlan
+}
+
 export interface Country extends Model {
   name: string
   code: string

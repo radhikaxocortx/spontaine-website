@@ -14,6 +14,8 @@ use App\Http\Controllers\EntityTemplate\EntityTemplateItemController;
 use App\Http\Controllers\EntityTemplate\workflowAPIController;
 use App\Http\Controllers\PricePlan\PricePlanController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Promotion\CouponManagementController;
+use App\Http\Controllers\Promotion\ValidateCouponController;
 use App\Http\Controllers\ReferenceData\ParameterManagementController;
 use App\Http\Controllers\ReferenceData\ReferenceDataAPIController;
 use App\Http\Controllers\ReferenceData\ReferenceDataController;
@@ -68,6 +70,10 @@ Route::middleware('auth')->group(function () {
     // Add Payment
     Route::post('add-payment', [CustomerAdminController::class, 'addPayment'])
         ->name('add-payment');
+
+    // coupons
+    Route::resource('coupon', CouponManagementController::class)
+        ->parameters(['coupon' => 'coupon']);
 });
 // Sign Up Form
 Route::middleware('guest')->group(function () {
@@ -181,6 +187,10 @@ Route::middleware(['auth:customer'])->group(function () {
         ->name('customer-workflow-show');
     Route::post('customer-workflow-status-update', [CustomerController::class, 'customerWorkflowStatusUpdate'])
         ->name('customer-workflow-status-update');
+
+    // validate-coupon
+    Route::get('validate-coupon', [ValidateCouponController::class, 'validateCoupon'])
+        ->name('validate-coupon');
 });
 
 Route::get('verified-identity/{customer}', VerifiedIdentityController::class)
