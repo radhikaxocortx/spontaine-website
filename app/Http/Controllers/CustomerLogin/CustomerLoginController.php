@@ -123,6 +123,9 @@ class CustomerLoginController extends Controller
                 'total_amount' => $request->totalAmount,
                 'payment_amount' => $request->paymentAmount,
                 'payment_status' => $request->paymentStatus,
+                'payment_method' => $request->paymentMethod,
+                'coupon_id' => $request->couponId,
+                'discount_amount' => $request->discountAmount,
             ]);
         } catch (Exception $e) {
             return back()->with(['error' => $e->getMessage()]);

@@ -28,8 +28,10 @@ const OrganizationDetails = ({ customerPriceplan }: OrganizationDetailsProps) =>
         <div className='space-y-1 text-gray-600'>
           <div>{customerPriceplan.customer.company?.company_address_line_1}</div>
           <div>
-            {customerPriceplan.customer.company?.company_postal_code}{' '}
-            {customerPriceplan.customer.company?.company_country}
+            {customerPriceplan.customer.company?.company_city}
+            <br />
+            {customerPriceplan.customer.company?.company_country} <br />
+            {customerPriceplan.customer.company?.company_postal_code}
           </div>
         </div>
         <div className='flex gap-4 text-sm text-gray-500'>
