@@ -146,16 +146,13 @@ const CustomerPayment = ({ priceplan, countryDetail }: Props) => {
                     Apply Coupon
                   </Button>
                 </div>
+
                 {coupon && (
                   <div className='mt-2 text-green-600'>
-                    {coupon && (
-                      <div className='mt-2 text-green-600'>
-                        Coupon <strong>{coupon.coupon_code}</strong> applied: Get{' '}
-                        {coupon.discount_percent}% off, up to a maximum of{' '}
-                        {countryDetail.currency_symbol}
-                        {coupon.discount_limit}.
-                      </div>
-                    )}
+                    Coupon <strong>{coupon.coupon_code}</strong> applied: Get{' '}
+                    {coupon.discount_percent}% off, up to a maximum of{' '}
+                    {countryDetail.currency_symbol}
+                    {coupon.discount_limit}.
                   </div>
                 )}
 
