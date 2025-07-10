@@ -3,7 +3,7 @@
 namespace App\Http\Requests\CustomerAuthentication;
 
 use Spatie\LaravelData\Attributes\MapName;
-use Spatie\LaravelData\Attributes\Validation\Rule;
+use Spatie\LaravelData\Attributes\Validation\Exists;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 
@@ -11,15 +11,18 @@ use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 class AdminPaymentRequest extends Data
 {
     public function __construct(
-        #[Rule('unique:admin_payments,customer_workflow_id')]
-        public int $customer_workflow_id,
-        #[Rule('exists:users,id')]
+        #[Exists('customer_price_plans', 'id')]
+        public string $customerPriceplanId,
+        public float $pricePlanAmount,
+        public float $taxAmount,
+        public float $totalAmount,
+        public float $paymentAmount,
+        public string $paymentStatus,
+        public string $paymentMethod,
+        public ?int $couponId,
+        public ?float $discountAmount,
+        public ?string $notes,
+        public string $accountingReference,
         public int $updated_by,
-        public int $amount,
-        public string $payment_method,
-        public string $notes,
-        public string $payment_date,
-        #[Rule('string|max:50')]
-        public string $accounting_reference,
     ) {}
 }

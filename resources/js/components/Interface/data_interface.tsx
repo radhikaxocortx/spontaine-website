@@ -132,7 +132,7 @@ export interface CustomerPricePlan extends Model {
   kadodo_id: string
   customer: Customer
   verification_status?: CustomerWorkflowStatus
-  payment_details?: AdminPayment
+  payment_details?: PaymentDetail
   kadodo_i_d?: KadodoID
 }
 
@@ -183,6 +183,19 @@ export interface AdminPayment extends Omit<Model, 'updated_by'> {
   payment_date: string
   accounting_reference: string
   updated_by: User
+}
+
+export interface PaymentDetail extends Model {
+  customer_priceplan_id: number
+  price_plan_amount: number
+  tax_amount: number
+  total_amount: number
+  payment_amount: number
+  payment_status: string
+  payment_method: string
+  coupon_id: number
+  discount_amount: number
+  coupon: Partial<Coupon>
 }
 
 export interface PersonalInfo {

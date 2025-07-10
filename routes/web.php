@@ -103,7 +103,7 @@ Route::middleware('guest')->group(function () {
 // Kadodo ID
 Route::get('verification-details/{kadodoId}', [CustomerLoginController::class, 'verificationDetails'])
     ->name('verification-details');
-Route::post('kadodo-id-generate', [CustomerAdminController::class, 'kadodoIdGenerate'])
+Route::get('kadodo-id-generate/{customerPriceplanId}', [CustomerAdminController::class, 'kadodoIdGenerate'])
     ->name('kadodo-id-generate');
 
 // Reference Data

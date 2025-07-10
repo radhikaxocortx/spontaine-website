@@ -2,6 +2,7 @@
 
 namespace App\Models\Customer;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -31,11 +32,10 @@ class Customer extends Authenticatable
         'remember_token',
     ];
 
-    // protected $casts = [
-    //     'email_verified_at' => 'datetime',
-    // ];
-
-    public function company()
+    /**
+     * @return BelongsTo<CustomerOrganization, $this>
+     */
+    public function company(): BelongsTo
     {
         return $this->belongsTo(CustomerOrganization::class, 'company_id');
     }

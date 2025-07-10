@@ -1,10 +1,10 @@
-import AddPayment from '@/components/AdminCustomerVerification/AddPayment'
-import PaymentDetails from '@/components/AdminCustomerVerification/PaymentDetails'
+import PaymentInfo from '@/components/AdminCustomerVerification/PaymentInfo'
 import UpdateCustomerWorkflowStatus from '@/components/AdminCustomerVerification/UpdateCustomerWorkflowStatus'
 import VerificationStatus from '@/components/AdminCustomerVerification/VerificationStatus'
 import CardHeader from '@/components/CustomUI/Card/CardHeader'
 import Modal from '@/components/CustomUI/Modal/Modal'
 import {
+  Country,
   CustomerPricePlan,
   CustomerPriceplanWorkflowItem,
   CustomerWorkflowStatus,
@@ -34,6 +34,7 @@ interface Props {
   customerWorkflowStatus: CustomerWorkflowStatus
   statuses: ReferenceData[]
   paymentMethods: ReferenceData[]
+  countryDetail: Country
 }
 
 const CustomerAdminShow = ({
@@ -44,15 +45,19 @@ const CustomerAdminShow = ({
   customerWorkflowStatus,
   statuses,
   paymentMethods,
+  countryDetail,
 }: Props) => {
   const [updateStatus, setUpdateStatus] = useState<boolean>(false)
-  const [paymentModal, setPaymentModal] = useState<boolean>(false)
-  const [showPayment, setShowPayment] = useState<boolean>(false)
   const [updated, setUpdated] = useState<boolean>(false)
   const [viewStatus, setViewStatus] = useState<boolean>(false)
+  const [generateKadodoID, setGenerateKadodoID] = useState<boolean>(false)
   const isBusinessVerification = useMemo(() => {
     return customerPriceplan.price_plan.type.toLowerCase().includes('business')
   }, [customerPriceplan.price_plan.type])
+
+  const kadodoIdGenerate = () => {
+    router.get(route('kadodo-id-generate', { customerPriceplanId: customerPriceplan.id }))
+  }
 
   const getStatusBadge = (status: string | undefined) => {
     const statusColors = {
@@ -76,7 +81,6 @@ const CustomerAdminShow = ({
     router.get(route('verification-completed', { customerPriceplanId: customerPriceplan.id }))
   }
 
-  console.log(customerPriceplan?.verification_status?.mark_as_updated)
   return (
     <Dashboard>
       <DashboardPadding>
@@ -99,6 +103,18 @@ const CustomerAdminShow = ({
               <NormalText className='pl-2'>Mark verification Completed</NormalText>
             </div>
           )}
+          <div>
+            {customerPriceplan?.verification_status?.mark_as_updated &&
+            !customerPriceplan?.kadodo_i_d ? (
+              <Button
+                variant='link'
+                onClick={() => setGenerateKadodoID(true)}
+              >
+                Generate Kadodo ID
+              </Button>
+            ) : null}
+          </div>
+
           {!customerPriceplan?.verification_status?.mark_as_updated ? (
             <Button
               variant='link'
@@ -114,21 +130,6 @@ const CustomerAdminShow = ({
               View Status
             </Button>
           )}
-          {customerPriceplan.payment_details ? (
-            <Button
-              variant='link'
-              onClick={() => setShowPayment(true)}
-            >
-              View Payment Details
-            </Button>
-          ) : (
-            <Button
-              variant='link'
-              onClick={() => setPaymentModal(true)}
-            >
-              Add Payment
-            </Button>
-          )}
         </div>
         <div className='space-y-6'>
           {customerPriceplan?.kadodo_i_d && (
@@ -139,6 +140,12 @@ const CustomerAdminShow = ({
 
           {/* Contact Details - Collapsible section */}
           <ContactDetails customerPriceplan={customerPriceplan} />
+
+          <PaymentInfo
+            customerPriceplan={customerPriceplan}
+            country={countryDetail}
+            paymentMethods={paymentMethods}
+          />
 
           {/* Workflow Modules */}
           {customerPriceplanInfo && (
@@ -182,28 +189,6 @@ const CustomerAdminShow = ({
           </Modal>
         )}
 
-        {paymentModal && (
-          <Modal
-            setShowModal={setPaymentModal}
-            title='Add Payment'
-          >
-            <AddPayment
-              customerWorkflowID={customerPriceplan.id}
-              setShowForm={setPaymentModal}
-              amount={customerPriceplan.price_plan.rate}
-              paymentMethods={paymentMethods}
-            />
-          </Modal>
-        )}
-
-        {showPayment && customerPriceplan.payment_details && (
-          <Modal
-            setShowModal={setShowPayment}
-            title='Payment Details'
-          >
-            <PaymentDetails paymentDetails={customerPriceplan.payment_details} />
-          </Modal>
-        )}
         {updated && (
           <Modal
             setShowModal={setUpdated}
@@ -225,6 +210,35 @@ const CustomerAdminShow = ({
             title='Verification Status'
           >
             <VerificationStatus verificationStatus={customerWorkflowStatus} />
+          </Modal>
+        )}
+        {generateKadodoID && !customerPriceplan?.payment_details && (
+          <Modal
+            setShowModal={setGenerateKadodoID}
+            title='Complete Payment'
+          >
+            Make Sure Payment Completed Before Generating Kadodo ID
+            <Button
+              onClick={() => setGenerateKadodoID(false)}
+              className='ml-auto mt-2'
+            >
+              OK
+            </Button>
+          </Modal>
+        )}
+        {generateKadodoID && customerPriceplan?.payment_details && (
+          <Modal
+            setShowModal={setGenerateKadodoID}
+            title='Generate Kadodo ID'
+          >
+            Are you sure to generate Kadodo ID?
+            <br />
+            <Button
+              onClick={() => kadodoIdGenerate()}
+              className='ml-auto mt-2'
+            >
+              OK
+            </Button>
           </Modal>
         )}
       </DashboardPadding>
