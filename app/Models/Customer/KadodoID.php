@@ -3,6 +3,7 @@
 namespace App\Models\Customer;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class KadodoID extends Model
@@ -16,7 +17,10 @@ class KadodoID extends Model
         'valid_to',
     ];
 
-    public function customerPriceplan()
+    /**
+     * @return BelongsTo<CustomerPricePlan, $this>
+     */
+    public function customerPriceplan(): BelongsTo
     {
         return $this->belongsTo(CustomerPricePlan::class, 'customer_priceplan_id', 'id');
     }

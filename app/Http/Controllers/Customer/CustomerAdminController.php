@@ -3,23 +3,24 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CustomerAuthentication\AdminPaymentRequest;
 use App\Http\Requests\CustomerAuthentication\ModuleStatusUpdateRequest;
 use App\Http\Requests\CustomerAuthentication\WorkflowAuthenticateRequest;
 use App\Mail\ModuleUpdateEmailToCustomer;
 use App\Mail\StatusUpdateMailToCustomer;
+use App\Models\Country\Country;
 use App\Models\Customer\CustomerPricePlan;
 use App\Models\Customer\CustomerWorkflow;
 use App\Models\Customer\KadodoID;
 use App\Models\CustomerVerification\VerificationStatus;
 use App\Models\CustomerVerification\WorkflowModuleVerification;
-use App\Models\Payment\AdminPayment;
+use App\Models\Payment\PaymentDetail;
 use App\Models\PricePlan\PricePlan;
 use App\Models\ReferenceData\ReferenceData;
 use App\Models\Workflow\Workflow;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -53,7 +54,7 @@ class CustomerAdminController extends Controller
 
         $id = $request->id;
         $customerPriceplan = CustomerPricePlan::where('id', $id)
-            ->with('customer.company', 'pricePlan', 'verificationStatus', 'paymentDetails.updatedBy', 'kadodoID')
+            ->with('customer.company', 'pricePlan', 'verificationStatus', 'paymentDetails.coupon', 'kadodoID')
             ->firstOrFail();
         $customerPriceplanInfo = CustomerWorkflow::where('customer_priceplan_id', $id)->get();
         $CustomerPriceplanTemplate = Workflow::where('priceplan_id', $customerPriceplan->price_plan_id)
@@ -62,6 +63,7 @@ class CustomerAdminController extends Controller
             ->first();
         $customerModuleStatus = WorkflowModuleVerification::where('customer_workflow_id', $id)->get();
         $customerWorkflowStatus = VerificationStatus::where('customer_workflow_id', $id)->first();
+        $countryDetail = Country::where('name', 'Ghana')->first();
 
         $status = ReferenceData::fullData()
             ->where('domain', 'Customer Verification')
@@ -80,49 +82,48 @@ class CustomerAdminController extends Controller
             'customerWorkflowStatus' => $customerWorkflowStatus,
             'statuses' => $status,
             'paymentMethods' => $paymentMethods,
+            'countryDetail' => $countryDetail,
         ]);
     }
 
-    public function addPayment(AdminPaymentRequest $request)
+    public function addPayment(Request $request): RedirectResponse
     {
+        Log::info($request->all());
         try {
-            $adminPayment = AdminPayment::create($request->all());
-            $customerPriceplan = CustomerPricePlan::where('id', $adminPayment->customer_workflow_id)->first();
-            $pricePlan = PricePlan::where('id', $customerPriceplan?->price_plan_id)->first();
-            $validFrom = $adminPayment?->created_at?->format('Y-m-d');
-            $validTo = $adminPayment?->created_at?->copy()->addMonths($pricePlan?->validity)->format('Y-m-d');
+            $adminPayment = PaymentDetail::create($request->all());
 
-            $kadodoIdData = [
-                'customer_priceplan_id' => $customerPriceplan?->id,
-                'kadodo_id' => $customerPriceplan?->kadodo_id,
-                'valid_from' => $validFrom,
-                'valid_to' => $validTo,
-            ];
-            KadodoID::create($kadodoIdData);
         } catch (\Exception $e) {
             return back()->with(['error' => $e->getMessage()]);
         }
 
-        return back()->with(['message' => 'Payment Added And Kadodo ID Generated Successfully']);
+        return back()->with(['message' => 'Payment Added Successfully']);
     }
 
-    public function kadodoIdGenerate(Request $request)
+    public function kadodoIdGenerate(int $customerPriceplanId): RedirectResponse
     {
-        $validatedData = $request->validate([
-            'customer_priceplan_id' => 'required|exists:customer_price_plans,id',
-            'kadodo_id' => 'required|unique:kadodo_i_d_s,kadodo_id',
-            'valid_from' => 'required|date|date_format:Y-m-d',
-            'valid_to' => 'required|date|date_format:Y-m-d|after:valid_from',
-        ]);
-
         try {
+            /** @var \App\Models\Customer\CustomerPricePlan $customerPriceplan */
+            $customerPriceplan = CustomerPricePlan::where('id', $customerPriceplanId)->first();
 
-            $kadodoId = KadodoID::create($validatedData);
+            /** @var \App\Models\PricePlan\PricePlan $pricePlan */
+            $pricePlan = PricePlan::where('id', $customerPriceplan->price_plan_id)->first();
+
+            $validFrom = now()->format('Y-m-d');
+            $validTo = now()->copy()->addMonths($pricePlan->validity)->format('Y-m-d');
+
+            $kadodoIdData = [
+                'customer_priceplan_id' => $customerPriceplan->id,
+                'kadodo_id' => $customerPriceplan->kadodo_id,
+                'valid_from' => $validFrom,
+                'valid_to' => $validTo,
+            ];
+            KadodoID::create($kadodoIdData);
+
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }
 
-        return back()->with('message', 'Payment Added and Kadodo ID Generated Successfully');
+        return back()->with('message', 'Kadodo ID Generated Successfully');
 
     }
 
@@ -200,7 +201,7 @@ class CustomerAdminController extends Controller
         return redirect()->back()->with(['message' => 'Workflow Status Updates Successfully']);
     }
 
-    public function verificationCompleted($customerPriceplanId): RedirectResponse
+    public function verificationCompleted(int $customerPriceplanId): RedirectResponse
     {
         $VerificationStatus = VerificationStatus::where('customer_workflow_id', $customerPriceplanId)->first();
 

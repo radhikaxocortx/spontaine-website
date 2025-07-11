@@ -116,6 +116,12 @@ class CustomerLoginController extends Controller
                 'customer_id' => $customer_id,
                 'price_plan_id' => $request->priceplanId,
             ]);
+            $kadodoId = 'KD-'.time().$customerPriceplan->id;
+
+            $customerPriceplan->update([
+                'kadodo_id' => $kadodoId,
+            ]);
+
             $paymentDetail = PaymentDetail::create([
                 'customer_priceplan_id' => $customerPriceplan->id,
                 'price_plan_amount' => $request->pricePlanAmount,
