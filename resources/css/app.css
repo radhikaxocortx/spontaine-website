@@ -1,3 +1,10 @@
+@import '@fontsource/urbanist/400.css';
+@import '@fontsource/urbanist/500.css';
+@import '@fontsource/urbanist/600.css';
+@import '@fontsource/roboto-mono/400.css';
+@import '@fontsource/space-grotesk/300.css';
+@import '@fortawesome/fontawesome-free/css/all.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -39,6 +46,33 @@ body {
   100% {
     transform: rotateZ(360deg);
   }
+}
+
+@keyframes ripple {
+  0% {
+    width: 0px;
+    height: 0px;
+    opacity: 0.5;
+  }
+  100% {
+    width: 500px;
+    height: 500px;
+    opacity: 0;
+  }
+}
+
+/* Button ripple utility classes */
+.button-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple-element {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  animation: ripple 1s linear;
 }
 
 .tree-node:has(.tree-node-content:hover) {
@@ -435,5 +469,48 @@ body {
     font-size: 14px;
     font-weight: 500;
     line-height: 20px;
+  }
+
+  /* Hero Section Styles */
+  .hero-title {
+    @apply font-urbanist text-[32px] font-medium leading-tight sm:text-[48px] lg:text-[64px];
+    line-height: 1.2;
+    background: linear-gradient(135deg, #c7ec93 2%, #7c83e7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-description {
+    @apply font-space-grotesk text-[16px] font-light leading-relaxed text-white sm:text-[18px];
+  }
+
+  .hero-cta-text {
+    @apply font-urbanist text-[14px] font-semibold leading-[30px] sm:text-[15px];
+  }
+
+  .hero-cta-icon {
+    @apply text-[12px] font-black sm:text-[14px];
+  }
+
+  .hero-typewriter-container {
+    @apply flex w-full max-w-[600px] items-center justify-center gap-[16px] rounded-[10px] bg-opacity-10 px-[16px] py-[10px] sm:gap-[20px] sm:px-[20px];
+    transform: rotate(-1deg);
+    transform-origin: top left;
+    background: rgba(182.65, 200.47, 157.65, 0.1);
+    outline: 2px rgba(255, 255, 255, 0.16) solid;
+    outline-offset: -2px;
+  }
+
+  .hero-typewriter-text {
+    @apply flex min-h-[28px] items-center font-roboto-mono text-[14px] font-normal leading-[16px] text-white sm:min-h-[32px] sm:text-[16px];
+  }
+
+  .hero-typewriter-cursor {
+    @apply ml-1 text-[14px] leading-[16px] text-white sm:text-[16px];
+  }
+
+  .nav-cta-text {
+    @apply font-urbanist text-base font-extrabold;
   }
 }

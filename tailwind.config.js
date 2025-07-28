@@ -29,6 +29,10 @@ export default {
         'data-sm-1stop': ['var(--font-data-sm-1stop)', ...defaultTheme.fontFamily.sans],
         'data-md-1stop': ['var(--font-data-md-1stop)', ...defaultTheme.fontFamily.sans],
         'data-lg-1stop': ['var(--font-data-lg-1stop)', ...defaultTheme.fontFamily.sans],
+        'urbanist': ['Urbanist', ...defaultTheme.fontFamily.sans],
+        'roboto-mono': ['Roboto Mono', ...defaultTheme.fontFamily.mono],
+        'space-grotesk': ['Space Grotesk', ...defaultTheme.fontFamily.sans],
+        'font-awesome': ['Font Awesome 6 Free', ...defaultTheme.fontFamily.sans],
       },
       colors: {
         primary: {

@@ -10,17 +10,16 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          'bg-primary-900 text-white shadow transition-all duration-300 relative overflow-hidden hover:bg-gradient-to-r hover:from-primary-950 hover:to-secondary-500 hover:text-white hover:border-none dark:bg-neutral-50 dark:text-neutral-900 dark:hover:bg-neutral-50/90 before:absolute before:inset-0 before:-translate-x-full before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent hover:before:animate-[shimmer_2s_infinite]',
+          'bg-primary-900 text-white shadow relative overflow-hidden dark:bg-neutral-50 dark:text-neutral-900',
         destructive:
-          'bg-red-500 text-neutral-50 shadow-sm hover:bg-red-500/90 dark:bg-red-900 dark:text-neutral-50 dark:hover:bg-red-900/90',
+          'bg-red-500 text-neutral-50 shadow-sm relative overflow-hidden dark:bg-red-900 dark:text-neutral-50',
         outline:
-          'border border-black-tertiary-700 bg-white shadow-sm transition-all duration-300 relative overflow-hidden hover:bg-gradient-to-r hover:from-primary-950 hover:to-secondary-500 hover:text-white hover:border-none dark:border-neutral-800 dark:bg-neutral-950 dark:hover:bg-neutral-800 dark:hover:text-neutral-50 before:absolute before:inset-0 before:-translate-x-full before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent hover:before:animate-[shimmer_2s_infinite]',
+          'border border-black-tertiary-700 bg-white shadow-sm relative overflow-hidden dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-50',
         secondary:
-          'bg-neutral-100 text-neutral-900 shadow-sm hover:bg-neutral-100/80 dark:bg-neutral-800 dark:text-neutral-50 dark:hover:bg-neutral-800/80',
+          'bg-neutral-100 text-neutral-900 shadow-sm relative overflow-hidden dark:bg-neutral-800 dark:text-neutral-50',
         outlineSecondary:
-          'border border-black-tertiary-950 bg-white text-primary-500 shadow-sm hover:bg-primary-400 hover:text-white hover:border-none dark:border-neutral-800 dark:bg-neutral-950 dark:hover:bg-neutral-800 dark:hover:text-neutral-50',
-        ghost:
-          'hover:bg-neutral-100 hover:text-neutral-900 dark:hover:bg-neutral-800 dark:hover:text-neutral-50',
+          'border border-black-tertiary-950 bg-white text-primary-500 shadow-sm relative overflow-hidden dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-50',
+        ghost: 'relative overflow-hidden',
         link: 'text-primary-500 underline-offset-4 hover:text-primary-800 underline dark:text-neutral-50',
       },
       size: {
@@ -49,11 +48,111 @@ export interface ButtonProps
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : 'button'
+
+    const getRippleColor = (variant?: string) => {
+      switch (variant) {
+        case 'outline':
+        case 'secondary':
+          return 'rgba(0, 0, 0, 0.2)' // Dark ripple on light backgrounds
+        case 'default':
+        case 'destructive':
+        case 'outlineSecondary':
+          return 'rgba(255, 255, 255, 0.4)' // Light ripple on dark backgrounds
+        case 'ghost':
+          return 'rgba(128, 128, 128, 0.3)' // Neutral ripple
+        default:
+          return 'rgba(255, 255, 255, 0.4)'
+      }
+    }
+
+    const shouldShowRipple = (variant?: string) => {
+      return variant !== 'link' // All variants except link
+    }
+
+    const createRipple = (event: React.MouseEvent<HTMLButtonElement>) => {
+      const button = event.currentTarget
+      const rect = button.getBoundingClientRect()
+      
+      // Calculate cursor position relative to button (CodePen method)
+      const x = event.clientX - rect.left
+      const y = event.clientY - rect.top
+
+      const ripple = document.createElement('span')
+      ripple.style.cssText = `
+        position: absolute;
+        left: ${x}px;
+        top: ${y}px;
+        background: ${getRippleColor(variant)};
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        animation: ripple 1s linear;
+        width: 0px;
+        height: 0px;
+      `
+
+      button.appendChild(ripple)
+
+      // Store ripple reference for cleanup
+      if (!button.dataset.ripples) {
+        button.dataset.ripples = '0'
+      }
+      const rippleCount = parseInt(button.dataset.ripples) + 1
+      button.dataset.ripples = rippleCount.toString()
+      ripple.dataset.rippleId = rippleCount.toString()
+
+      setTimeout(() => {
+        if (ripple.parentNode) {
+          ripple.remove()
+        }
+      }, 1000)
+    }
+
+    const createHoverRipple = (event: React.MouseEvent<HTMLButtonElement>) => {
+      if (shouldShowRipple(variant)) {
+        createRipple(event)
+      }
+    }
+
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+      if (shouldShowRipple(variant)) {
+        createRipple(event)
+      }
+      if (props.onClick) {
+        props.onClick(event)
+      }
+    }
+    
+    const handleMouseLeave = (event: React.MouseEvent<HTMLButtonElement>) => {
+      // Clean up any remaining ripple elements (CodePen pattern)
+      const button = event.currentTarget
+      const ripples = button.querySelectorAll('span[data-ripple-id]')
+      ripples.forEach(ripple => {
+        if (ripple.parentNode) {
+          ripple.remove()
+        }
+      })
+      
+      if (props.onMouseLeave) {
+        props.onMouseLeave(event)
+      }
+    }
+
+    const handleMouseEnter = (event: React.MouseEvent<HTMLButtonElement>) => {
+      createHoverRipple(event)
+      if (props.onMouseEnter) {
+        props.onMouseEnter(event)
+      }
+    }
+
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
         {...props}
+        onClick={handleClick}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       />
     )
   }

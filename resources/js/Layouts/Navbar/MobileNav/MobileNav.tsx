@@ -1,6 +1,4 @@
 import ApplicationLogo from '@/components/CustomUI/ApplicationLogo'
-import CountrySelector from '@/components/CustomUI/CountrySelector'
-import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTrigger } from '@/components/ui/sheet'
 import { Language } from '@/components/ui/ui_interfaces'
 import InertiaLink from '@/Modules/PageBuilder/Components/InertiaLink'
@@ -137,7 +135,7 @@ export function MobileNav() {
           </div>
         </div>
         <SheetFooter>
-          <div className='flex w-full flex-col space-y-4'>
+          {/* <div className='flex w-full flex-col space-y-4'>
             <div className='mt-4 flex justify-center'>
               <CountrySelector />
             </div>
@@ -149,7 +147,7 @@ export function MobileNav() {
             ) : (
               <Button variant='default'>My Account</Button>
             )}
-          </div>
+          </div> */}
         </SheetFooter>
       </SheetContent>
     </Sheet>

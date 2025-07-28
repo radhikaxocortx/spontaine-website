@@ -1,4 +1,5 @@
 import Navbar from '@/Layouts/Navbar/Navbar'
+import HeroSection from '@/Modules/PageBuilder/Blocks/HomeBlocks/HeroSection'
 import { FooterDataInterface } from '@/Modules/PageBuilder/FooterEditor/FooterEditor'
 import { PageProps } from '@/types'
 import { usePage } from '@inertiajs/react'
@@ -16,7 +17,9 @@ const AppLayout = ({ children }: Properties) => {
   return (
     <>
       <Navbar />
-      <div className='relative min-h-screen w-full bg-white'>{children}</div>
+      <div className='relative min-h-screen w-full bg-white'>
+        <HeroSection />
+      </div>
       <Footer blockData={footer.items} />
     </>
   )
