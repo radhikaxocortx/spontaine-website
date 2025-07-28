@@ -1,4 +1,5 @@
 import Navbar from '@/Layouts/Navbar/Navbar'
+import CompanyLogosSection from '@/Modules/PageBuilder/Blocks/HomeBlocks/CompanyLogosSection'
 import HeroSection from '@/Modules/PageBuilder/Blocks/HomeBlocks/HeroSection'
 import { FooterDataInterface } from '@/Modules/PageBuilder/FooterEditor/FooterEditor'
 import { PageProps } from '@/types'
@@ -17,8 +18,11 @@ const AppLayout = ({ children }: Properties) => {
   return (
     <>
       <Navbar />
-      <div className='relative min-h-screen w-full bg-white'>
+      <div className='relative min-h-screen w-full'>
         <HeroSection />
+        <div className='-mt-10'>
+          <CompanyLogosSection />
+        </div>
       </div>
       <Footer blockData={footer.items} />
     </>
