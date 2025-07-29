@@ -60,7 +60,7 @@ const CompanyLogosSection = ({ className }: CompanyLogosSectionProps) => {
   return (
     <section
       ref={sectionRef}
-      className={cn('bg-black py-6', className)}
+      className={cn('bg-black py-8', className)}
     >
       <AppLayoutPadding>
         {/* Logos Grid */}
