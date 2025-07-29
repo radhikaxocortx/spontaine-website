@@ -2,6 +2,7 @@ import Navbar from '@/Layouts/Navbar/Navbar'
 import CompanyLogosSection from '@/Modules/PageBuilder/Blocks/HomeBlocks/CompanyLogosSection'
 import HeroSection from '@/Modules/PageBuilder/Blocks/HomeBlocks/HeroSection'
 import SectionAIIntegration from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionAIIntegration'
+import SectionTrustedPartners from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionTrustedPartners'
 import { FooterDataInterface } from '@/Modules/PageBuilder/FooterEditor/FooterEditor'
 import { PageProps } from '@/types'
 import { usePage } from '@inertiajs/react'
@@ -21,12 +22,13 @@ const AppLayout = ({ children }: Properties) => {
       <Navbar />
       <div className='relative min-h-screen w-full'>
         <HeroSection />
-        <div className='-mt-10'>
+        <div className='-mt-12'>
           <CompanyLogosSection />
         </div>
-        <div className='relative z-10'>
+        <div className=''>
           <SectionAIIntegration />
         </div>
+        <SectionTrustedPartners />
       </div>
       <Footer blockData={footer.items} />
     </>

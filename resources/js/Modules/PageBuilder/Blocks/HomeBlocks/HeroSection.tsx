@@ -42,7 +42,28 @@ const HeroSection = () => {
         })
       }
 
-      // Create main timeline
+      // ScrollTrigger to track hero section visibility for navbar
+      ScrollTrigger.create({
+        trigger: heroRef.current,
+        start: 'top bottom',
+        end: 'bottom top',
+        onToggle: (self) => {
+          // Dispatch custom event to control navbar visibility
+          const event = new CustomEvent('hero-section-visible', {
+            detail: self.isActive
+          })
+          window.dispatchEvent(event)
+        },
+        onRefresh: (self) => {
+          // Also dispatch on refresh to ensure correct initial state
+          const event = new CustomEvent('hero-section-visible', {
+            detail: self.isActive
+          })
+          window.dispatchEvent(event)
+        }
+      })
+
+      // Create main timeline for content animations
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: heroRef.current,

@@ -51,7 +51,6 @@ const SectionAIIntegration = ({ className }: SectionAIIntegrationProps) => {
   const featureRefs = useRef<(HTMLDivElement | null)[]>([])
   const progressLineRefs = useRef<(HTMLDivElement | null)[]>([])
   const lastFeatureRef = useRef(0)
-  const isTransitioningRef = useRef(false)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -62,14 +61,15 @@ const SectionAIIntegration = ({ className }: SectionAIIntegrationProps) => {
         end: `+=${FEATURES.length * window.innerHeight}`,
         scrub: true,
         pin: true,
+        pinSpacing: true,
         onUpdate: (self) => {
           const progress = self.progress
 
-          // Calculate which feature should be active based on visual paragraph positions
+          // Calculate which feature should be active with evenly distributed thresholds
           let featureIndex = 0
-          if (progress >= 0.6) {
+          if (progress >= 0.67) {
             featureIndex = 2
-          } else if (progress >= 0.2) {
+          } else if (progress >= 0.33) {
             featureIndex = 1
           }
 
@@ -95,7 +95,7 @@ const SectionAIIntegration = ({ className }: SectionAIIntegrationProps) => {
             if (ref) {
               gsap.to(ref, {
                 opacity: index === featureIndex ? 1 : 0.3,
-                backgroundColor: index === featureIndex ? 'rgba(163, 230, 53, 0.1)' : 'transparent',
+                backgroundColor: index === featureIndex ? '#a3e635' : 'transparent',
                 duration: 0.5,
                 ease: 'power3.out',
               })
@@ -109,7 +109,7 @@ const SectionAIIntegration = ({ className }: SectionAIIntegrationProps) => {
         if (ref) {
           gsap.set(ref, {
             opacity: index === 0 ? 1 : 0.3,
-            backgroundColor: index === 0 ? 'e5e7eb' : 'transparent',
+            backgroundColor: index === 0 ? '#a3e635' : 'transparent',
           })
         }
       })
@@ -125,50 +125,46 @@ const SectionAIIntegration = ({ className }: SectionAIIntegrationProps) => {
     }, sectionRef)
 
     return () => ctx.revert()
-  }, [activeFeature])
+  }, [])
 
   // Handle video transitions
   useEffect(() => {
-    if (!videoRef.current || isTransitioningRef.current) return
-    isTransitioningRef.current = true
+    if (!videoRef.current) return
 
     const video = videoRef.current
+    const newSrc = FEATURES[activeFeature].videoSrc
 
-    // Fade out
+    // Only change video if source is different
+    if (video.src.includes(newSrc.split('/').pop() || '')) {
+      return
+    }
+
+    console.log('Changing video to:', newSrc)
+
+    // Quick transition without blocking
     gsap.to(video, {
       opacity: 0,
-      duration: 0.3,
-      ease: 'power3.out',
+      duration: 0.2,
+      ease: 'power2.out',
       onComplete: () => {
-        video.src = FEATURES[activeFeature].videoSrc
+        video.src = newSrc
         video.load()
 
-        const handleLoaded = () => {
+        const handleCanPlay = () => {
           video.play().catch(console.log)
           gsap.to(video, {
             opacity: 1,
-            duration: 0.5,
-            ease: 'power3.out',
-            onComplete: () => {
-              isTransitioningRef.current = false // Allow next update
-            },
+            duration: 0.3,
+            ease: 'power2.out',
           })
         }
 
-        const handleError = () => {
-          console.log('Video failed:', FEATURES[activeFeature].videoSrc)
-          gsap.to(video, {
-            opacity: 1,
-            duration: 0.5,
-            ease: 'power3.out',
-            onComplete: () => {
-              isTransitioningRef.current = false
-            },
-          })
-        }
+        video.addEventListener('canplay', handleCanPlay, { once: true })
 
-        video.addEventListener('loadeddata', handleLoaded, { once: true })
-        video.addEventListener('error', handleError, { once: true })
+        // Fallback in case video fails
+        setTimeout(() => {
+          gsap.to(video, { opacity: 1, duration: 0.3 })
+        }, 500)
       },
     })
   }, [activeFeature])
@@ -223,7 +219,7 @@ const SectionAIIntegration = ({ className }: SectionAIIntegrationProps) => {
         {/* Sticky Content Section */}
         <div
           ref={stickyRef}
-          className='min-h-[300vh]'
+          className='min-h-screen'
         >
           <div className='grid min-h-[100vh] grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-8'>
             {/* Left Column - Feature List with Individual Progress Lines */}
@@ -246,10 +242,10 @@ const SectionAIIntegration = ({ className }: SectionAIIntegrationProps) => {
                     ref={(el) => (featureRefs.current[index] = el)}
                     className='max-w-lg rounded-lg px-4 py-3'
                   >
-                    <h3 className="mb-4 font-['Urbanist'] text-lg font-bold leading-normal text-zinc-900">
+                    <h3 className="mb-4 font-['Urbanist'] text-lg font-bold leading-normal text-black">
                       {feature.title}
                     </h3>
-                    <p className="font-['Space_Grotesk'] text-base font-normal leading-relaxed text-zinc-900">
+                    <p className="font-['Space_Grotesk'] text-base font-normal leading-relaxed text-black">
                       {feature.description}
                     </p>
                   </div>
@@ -280,8 +276,8 @@ const SectionAIIntegration = ({ className }: SectionAIIntegrationProps) => {
           </div>
         </div>
 
-        {/* Bottom Spacer - Reduced since pinSpacing handles this */}
-        <div className='h-32' />
+        {/* Bottom Spacer - Reduced gap to Trusted Partners section */}
+        <div className='h-16' />
       </AppLayoutPadding>
     </section>
   )

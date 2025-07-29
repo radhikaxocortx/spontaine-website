@@ -14,6 +14,12 @@ const Navbar = () => {
       setIsHeroVisible(!!e.detail)
     }
     window.addEventListener('hero-section-visible', handler as EventListener)
+
+    // Trigger ScrollTrigger refresh to set initial state
+    if (window.ScrollTrigger) {
+      window.ScrollTrigger.refresh()
+    }
+
     return () => window.removeEventListener('hero-section-visible', handler as EventListener)
   }, [])
 
