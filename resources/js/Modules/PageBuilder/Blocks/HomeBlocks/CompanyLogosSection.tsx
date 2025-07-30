@@ -44,7 +44,7 @@ const CompanyLogosSection = ({ className }: CompanyLogosSectionProps) => {
         opacity: 1,
         x: 0,
         duration: 0.8,
-        stagger: 0.1, // Left-to-right stagger with 0.1s delay between each
+        stagger: 0.3, // Left-to-right stagger with 0.1s delay between each
         ease: 'power3.out',
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -60,7 +60,7 @@ const CompanyLogosSection = ({ className }: CompanyLogosSectionProps) => {
   return (
     <section
       ref={sectionRef}
-      className={cn('bg-black py-8', className)}
+      className={cn('bg-black py-12', className)}
     >
       <AppLayoutPadding>
         {/* Logos Grid */}
@@ -80,7 +80,7 @@ const CompanyLogosSection = ({ className }: CompanyLogosSectionProps) => {
                   <img
                     src={logo.src}
                     alt={logo.alt}
-                    className='h-12 w-auto max-w-[120px] object-contain sm:h-8'
+                    className='h-16 w-24 object-contain opacity-70 transition-opacity duration-300 group-hover:opacity-100 sm:h-12 sm:w-20'
                     loading='lazy'
                   />
                 </a>
@@ -88,7 +88,7 @@ const CompanyLogosSection = ({ className }: CompanyLogosSectionProps) => {
                 <img
                   src={logo.src}
                   alt={logo.alt}
-                  className='h-12 w-auto max-w-[120px] object-contain sm:h-8'
+                  className='h-16 w-24 object-contain opacity-70 transition-opacity duration-300 hover:opacity-100 sm:h-12 sm:w-20'
                   loading='lazy'
                 />
               )}
