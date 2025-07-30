@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button'
 import { Link } from '@inertiajs/react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import AppLayoutPadding from '../AppLayoutPadding'
 import { MobileNav } from './MobileNav/MobileNav'
 import NavbarLinks from './NavbarLinks'
@@ -16,9 +17,7 @@ const Navbar = () => {
     window.addEventListener('hero-section-visible', handler as EventListener)
 
     // Trigger ScrollTrigger refresh to set initial state
-    if (window.ScrollTrigger) {
-      window.ScrollTrigger.refresh()
-    }
+    ScrollTrigger.refresh()
 
     return () => window.removeEventListener('hero-section-visible', handler as EventListener)
   }, [])

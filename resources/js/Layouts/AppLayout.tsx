@@ -2,7 +2,10 @@ import Navbar from '@/Layouts/Navbar/Navbar'
 import CompanyLogosSection from '@/Modules/PageBuilder/Blocks/HomeBlocks/CompanyLogosSection'
 import HeroSection from '@/Modules/PageBuilder/Blocks/HomeBlocks/HeroSection'
 import SectionAIIntegration from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionAIIntegration'
+import SectionBlogsList from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionBlogsList'
+import SectionLargeText from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionLargeText'
 import SectionTrustedPartners from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionTrustedPartners'
+import SectionVideos from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionVideos'
 import { FooterDataInterface } from '@/Modules/PageBuilder/FooterEditor/FooterEditor'
 import { PageProps } from '@/types'
 import { usePage } from '@inertiajs/react'
@@ -29,6 +32,9 @@ const AppLayout = ({ children }: Properties) => {
           <SectionAIIntegration />
         </div>
         <SectionTrustedPartners />
+        <SectionBlogsList />
+        <SectionVideos />
+        <SectionLargeText />
       </div>
       <Footer blockData={footer.items} />
     </>

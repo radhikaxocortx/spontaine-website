@@ -72,7 +72,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const createRipple = (event: React.MouseEvent<HTMLButtonElement>) => {
       const button = event.currentTarget
       const rect = button.getBoundingClientRect()
-      
+
       // Calculate cursor position relative to button (CodePen method)
       const x = event.clientX - rect.left
       const y = event.clientY - rect.top
@@ -122,17 +122,17 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         props.onClick(event)
       }
     }
-    
+
     const handleMouseLeave = (event: React.MouseEvent<HTMLButtonElement>) => {
       // Clean up any remaining ripple elements (CodePen pattern)
       const button = event.currentTarget
       const ripples = button.querySelectorAll('span[data-ripple-id]')
-      ripples.forEach(ripple => {
+      ripples.forEach((ripple) => {
         if (ripple.parentNode) {
           ripple.remove()
         }
       })
-      
+
       if (props.onMouseLeave) {
         props.onMouseLeave(event)
       }

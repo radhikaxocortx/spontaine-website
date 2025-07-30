@@ -75,6 +75,17 @@ body {
   animation: ripple 1s linear;
 }
 
+/* Universal hover ripple effect utility */
+.hover-ripple {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.hover-ripple:hover {
+  transform: scale(1.02);
+}
+
 .tree-node:has(.tree-node-content:hover) {
   @apply border-primary-dark-600 text-primary-dark-600;
 }

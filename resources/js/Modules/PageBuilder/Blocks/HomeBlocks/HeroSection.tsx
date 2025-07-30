@@ -50,17 +50,17 @@ const HeroSection = () => {
         onToggle: (self) => {
           // Dispatch custom event to control navbar visibility
           const event = new CustomEvent('hero-section-visible', {
-            detail: self.isActive
+            detail: self.isActive,
           })
           window.dispatchEvent(event)
         },
         onRefresh: (self) => {
           // Also dispatch on refresh to ensure correct initial state
           const event = new CustomEvent('hero-section-visible', {
-            detail: self.isActive
+            detail: self.isActive,
           })
           window.dispatchEvent(event)
-        }
+        },
       })
 
       // Create main timeline for content animations

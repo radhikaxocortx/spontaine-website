@@ -102,7 +102,7 @@ export function MobileNav() {
     lang?: Language
     auth: { user?: AuthUser; customer?: AuthCustomer }
   }
-  const isCustomerLoggedIn = !!auth.customer
+  //   const isCustomerLoggedIn = !!auth.customer
 
   return (
     <Sheet>

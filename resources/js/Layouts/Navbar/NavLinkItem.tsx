@@ -6,6 +6,7 @@ import {
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu'
 import { Language } from '@/components/ui/ui_interfaces'
+import { createRippleEffect, cleanupRipples } from '@/lib/ripple-utils'
 import Localization from '@/Modules/PageBuilder/Components/Localization'
 import { NavMenu } from '@/Modules/PageBuilder/page_interfaces'
 import { Link } from '@inertiajs/react'
@@ -65,6 +66,8 @@ const NavLinkItem = ({ item, lang = 'en' }: Properties) => {
             target={linkInfo?.external ? '_blank' : undefined}
             rel={linkInfo?.external ? 'noopener noreferrer' : undefined}
             className={`2xl:text-lg ${navigationMenuTriggerStyle()}`}
+            onMouseEnter={(e) => createRippleEffect(e, 'rgba(255, 255, 255, 0.3)')}
+            onMouseLeave={(e) => cleanupRipples(e.currentTarget)}
           >
             <div className='inline-flex items-center'>{renderContent()}</div>
           </Link>

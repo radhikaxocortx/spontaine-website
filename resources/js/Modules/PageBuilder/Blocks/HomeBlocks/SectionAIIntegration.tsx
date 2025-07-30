@@ -50,13 +50,19 @@ const SectionAIIntegration = ({ className }: SectionAIIntegrationProps) => {
   const [activeFeature, setActiveFeature] = useState(0)
   const featureRefs = useRef<(HTMLDivElement | null)[]>([])
   const progressLineRefs = useRef<(HTMLDivElement | null)[]>([])
+  const fillAnimationRefs = useRef<(HTMLDivElement | null)[]>([])
   const lastFeatureRef = useRef(0)
+  const [videoProgress, setVideoProgress] = useState<{ [key: number]: number }>({})
+  const currentListenersRef = useRef<{
+    timeupdate?: () => void
+    ended?: () => void
+  }>({})
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Pin the sticky section when it comes into view
+      // Pin the entire section when it comes into view
       ScrollTrigger.create({
-        trigger: stickyRef.current,
+        trigger: sectionRef.current,
         start: 'top top',
         end: `+=${FEATURES.length * window.innerHeight}`,
         scrub: true,
@@ -90,14 +96,22 @@ const SectionAIIntegration = ({ className }: SectionAIIntegrationProps) => {
             }
           })
 
-          // Update feature paragraphs
+          // Update feature paragraphs opacity only
           featureRefs.current.forEach((ref, index) => {
             if (ref) {
               gsap.to(ref, {
                 opacity: index === featureIndex ? 1 : 0.3,
-                backgroundColor: index === featureIndex ? '#a3e635' : 'transparent',
                 duration: 0.5,
                 ease: 'power3.out',
+              })
+            }
+          })
+
+          // Reset fill animations for non-active features
+          fillAnimationRefs.current.forEach((fillRef, index) => {
+            if (fillRef && index !== featureIndex) {
+              gsap.set(fillRef, {
+                background: 'linear-gradient(to right, #a3e63530 0%, transparent 0%)',
               })
             }
           })
@@ -109,7 +123,15 @@ const SectionAIIntegration = ({ className }: SectionAIIntegrationProps) => {
         if (ref) {
           gsap.set(ref, {
             opacity: index === 0 ? 1 : 0.3,
-            backgroundColor: index === 0 ? '#a3e635' : 'transparent',
+          })
+        }
+      })
+
+      // Initial fill animation setup
+      fillAnimationRefs.current.forEach((fillRef, index) => {
+        if (fillRef) {
+          gsap.set(fillRef, {
+            background: 'linear-gradient(to right, #a3e63530 0%, transparent 0%)',
           })
         }
       })
@@ -127,7 +149,7 @@ const SectionAIIntegration = ({ className }: SectionAIIntegrationProps) => {
     return () => ctx.revert()
   }, [])
 
-  // Handle video transitions
+  // Handle video transitions and sync fill animation
   useEffect(() => {
     if (!videoRef.current) return
 
@@ -140,6 +162,14 @@ const SectionAIIntegration = ({ className }: SectionAIIntegrationProps) => {
     }
 
     console.log('Changing video to:', newSrc)
+
+    // Reset fill animation for current feature
+    const currentFillRef = fillAnimationRefs.current[activeFeature]
+    if (currentFillRef) {
+      gsap.set(currentFillRef, {
+        background: 'linear-gradient(to right, #a3e63530 0%, transparent 0%)',
+      })
+    }
 
     // Quick transition without blocking
     gsap.to(video, {
@@ -159,7 +189,48 @@ const SectionAIIntegration = ({ className }: SectionAIIntegrationProps) => {
           })
         }
 
+        const handleTimeUpdate = () => {
+          if (!video.duration) return
+
+          const progress = video.currentTime / video.duration
+          const fillPercentage = Math.min(progress * 100, 100)
+
+          if (currentFillRef) {
+            gsap.set(currentFillRef, {
+              background: `linear-gradient(to right, #a3e63530 ${fillPercentage}%, transparent ${fillPercentage}%)`,
+            })
+          }
+
+          setVideoProgress((prev) => ({
+            ...prev,
+            [activeFeature]: progress,
+          }))
+        }
+
+        const handleVideoEnded = () => {
+          if (currentFillRef) {
+            gsap.set(currentFillRef, {
+              background: '#a3e63530',
+            })
+          }
+        }
+
+        // Remove existing event listeners
+        if (currentListenersRef.current.timeupdate) {
+          video.removeEventListener('timeupdate', currentListenersRef.current.timeupdate)
+        }
+        if (currentListenersRef.current.ended) {
+          video.removeEventListener('ended', currentListenersRef.current.ended)
+        }
+
+        // Store references to current listeners
+        currentListenersRef.current.timeupdate = handleTimeUpdate
+        currentListenersRef.current.ended = handleVideoEnded
+
+        // Add new event listeners
         video.addEventListener('canplay', handleCanPlay, { once: true })
+        video.addEventListener('timeupdate', handleTimeUpdate)
+        video.addEventListener('ended', handleVideoEnded, { once: true })
 
         // Fallback in case video fails
         setTimeout(() => {
@@ -169,29 +240,67 @@ const SectionAIIntegration = ({ className }: SectionAIIntegrationProps) => {
     })
   }, [activeFeature])
 
-  // Initialize first video
+  // Initialize first video with fill animation
   useEffect(() => {
     if (videoRef.current) {
       const video = videoRef.current
+      const firstFillRef = fillAnimationRefs.current[0]
+
       video.src = FEATURES[0].videoSrc
       video.load()
-      video.addEventListener(
-        'loadeddata',
-        () => {
-          video.play().catch(() => {
-            console.log('Video autoplay prevented')
-          })
-        },
-        { once: true }
-      )
 
-      video.addEventListener(
-        'error',
-        () => {
-          console.log('Initial video failed to load:', FEATURES[0].videoSrc)
-        },
-        { once: true }
-      )
+      const handleLoadedData = () => {
+        video.play().catch(() => {
+          console.log('Video autoplay prevented')
+        })
+      }
+
+      const handleTimeUpdate = () => {
+        if (!video.duration) return
+
+        const progress = video.currentTime / video.duration
+        const fillPercentage = Math.min(progress * 100, 100)
+
+        if (firstFillRef) {
+          gsap.set(firstFillRef, {
+            background: `linear-gradient(to right, #a3e63530 ${fillPercentage}%, transparent ${fillPercentage}%)`,
+          })
+        }
+
+        setVideoProgress((prev) => ({
+          ...prev,
+          [0]: progress,
+        }))
+      }
+
+      const handleVideoEnded = () => {
+        if (firstFillRef) {
+          gsap.set(firstFillRef, {
+            background: '#a3e63530',
+          })
+        }
+      }
+
+      const handleError = () => {
+        console.log('Initial video failed to load:', FEATURES[0].videoSrc)
+      }
+
+      // Store initial listeners
+      currentListenersRef.current.timeupdate = handleTimeUpdate
+      currentListenersRef.current.ended = handleVideoEnded
+
+      video.addEventListener('loadeddata', handleLoadedData, { once: true })
+      video.addEventListener('timeupdate', handleTimeUpdate)
+      video.addEventListener('ended', handleVideoEnded, { once: true })
+      video.addEventListener('error', handleError, { once: true })
+
+      // Cleanup function
+      return () => {
+        video.removeEventListener('loadeddata', handleLoadedData)
+        video.removeEventListener('timeupdate', handleTimeUpdate)
+        video.removeEventListener('ended', handleVideoEnded)
+        video.removeEventListener('error', handleError)
+      }
     }
   }, [])
 
@@ -202,12 +311,12 @@ const SectionAIIntegration = ({ className }: SectionAIIntegrationProps) => {
     >
       <AppLayoutPadding>
         {/* Section Header */}
-        <div className='py-8 text-center'>
+        <div className='py-2 text-center'>
           <h2 className="mb-6 font-['Urbanist'] text-5xl font-normal leading-tight text-black">
             Effortless AI integration
             <br />- On your terms.
           </h2>
-          <p className="mx-auto max-w-4xl font-['Space_Grotesk'] text-lg font-light leading-relaxed text-black">
+          <p className="mx-auto max-w-4xl font-['Space_Grotesk'] text-base font-light leading-relaxed text-black">
             Spontaine transforms all your systems - and databases into a powerful AI-driven command
             center.
             <br />
@@ -219,11 +328,11 @@ const SectionAIIntegration = ({ className }: SectionAIIntegrationProps) => {
         {/* Sticky Content Section */}
         <div
           ref={stickyRef}
-          className='min-h-screen'
+          className='py-8'
         >
-          <div className='grid min-h-[100vh] grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-8'>
+          <div className='grid grid-cols-1 items-center gap-6 lg:grid-cols-2 lg:gap-4'>
             {/* Left Column - Feature List with Individual Progress Lines */}
-            <div className='flex h-full flex-col justify-center space-y-4'>
+            <div className='flex h-full flex-col justify-center space-y-2'>
               {FEATURES.map((feature, index) => (
                 <div
                   key={feature.id}
@@ -240,12 +349,21 @@ const SectionAIIntegration = ({ className }: SectionAIIntegrationProps) => {
                   {/* Feature Content */}
                   <div
                     ref={(el) => (featureRefs.current[index] = el)}
-                    className='max-w-lg rounded-lg px-4 py-3'
+                    className='relative max-w-lg rounded-lg px-4 py-2'
                   >
-                    <h3 className="mb-4 font-['Urbanist'] text-lg font-bold leading-normal text-black">
+                    {/* Fill Animation Background */}
+                    <div
+                      ref={(el) => (fillAnimationRefs.current[index] = el)}
+                      className='absolute inset-0 rounded-lg'
+                      style={{
+                        background: 'transparent',
+                        zIndex: -1,
+                      }}
+                    />
+                    <h3 className="mb-1 font-['Urbanist'] font-bold leading-normal text-black">
                       {feature.title}
                     </h3>
-                    <p className="font-['Space_Grotesk'] text-base font-normal leading-relaxed text-black">
+                    <p className="font-['Space_Grotesk'] text-sm font-normal leading-relaxed text-black">
                       {feature.description}
                     </p>
                   </div>
@@ -254,14 +372,13 @@ const SectionAIIntegration = ({ className }: SectionAIIntegrationProps) => {
             </div>
 
             {/* Right Column - Video Player */}
-            <div className='flex h-full items-center justify-center'>
-              <div className='w-full max-w-2xl'>
+            <div className='flex h-full items-center justify-center rounded-lg'>
+              <div className='w-full max-w-2xl rounded-lg'>
                 <video
                   ref={videoRef}
-                  className='h-auto w-full rounded-lg drop-shadow-xl'
+                  className='h-auto w-full rounded-lg'
                   autoPlay
                   muted
-                  loop
                   playsInline
                   style={{ aspectRatio: '16/9' }}
                 >

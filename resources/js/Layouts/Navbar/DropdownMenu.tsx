@@ -6,6 +6,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { navigationMenuTriggerStyle } from '@/components/ui/navigation-menu'
 import { Language } from '@/components/ui/ui_interfaces'
+import { cleanupRipples, createRippleEffect } from '@/lib/ripple-utils'
 import InertiaLink from '@/Modules/PageBuilder/Components/InertiaLink'
 import Localization from '@/Modules/PageBuilder/Components/Localization'
 import { NavMenu } from '@/Modules/PageBuilder/page_interfaces'
@@ -39,8 +40,14 @@ const DropdownMenuComponent = ({ menu, lang = 'en' }: Properties) => {
       <DropdownMenuTrigger asChild>
         <button
           className={`2xl:text-lg ${navigationMenuTriggerStyle()}`}
-          onMouseEnter={() => setIsOpen(true)}
-          onMouseLeave={() => setIsOpen(false)}
+          onMouseEnter={(e) => {
+            setIsOpen(true)
+            createRippleEffect(e, 'rgba(255, 255, 255, 0.3)')
+          }}
+          onMouseLeave={(e) => {
+            setIsOpen(false)
+            cleanupRipples(e.currentTarget)
+          }}
         >
           <div className='inline-flex items-center'>
             <Localization
