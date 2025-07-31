@@ -1,5 +1,9 @@
 import AppLayoutPadding from '@/Layouts/AppLayoutPadding'
+import AppSectionPadding from '@/Layouts/AppSectionPadding'
 import { cn } from '@/lib/utils'
+import SectionDescription from '@/typography/SectionDescription'
+import SectionSubtitle from '@/typography/SectionSubtitle'
+import SectionTitle from '@/typography/SectionTitle'
 import { Link } from '@inertiajs/react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -90,121 +94,128 @@ const SectionBlogsList = ({ className }: SectionBlogsListProps) => {
   return (
     <section
       ref={sectionRef}
-      className={cn('bg-white py-16', className)}
+      className={cn('bg-white', className)}
     >
-      <AppLayoutPadding>
-        {/* Header Section */}
-        <div className='mb-16 text-center'>
-          <h2 className="mb-6 font-['Urbanist'] text-5xl font-normal leading-tight text-black">
-            Navigating a Tech-Driven Future Does Not
-            <br />
-            Need You To Be A Developer
-          </h2>
-          <div className='mx-auto max-w-2xl space-y-2'>
-            <p className="font-['Space_Grotesk'] text-lg font-semibold text-black">
-              We are at an inflection point.
-            </p>
-            <p className="font-['Space_Grotesk'] text-base font-light leading-relaxed text-black">
-              With generative AI reshaping industries at unprecedented speed,
-              <br />
-              there is false pressure on executives to become technical experts.
-            </p>
-          </div>
-        </div>
-
-        {/* Blog Posts */}
-        <div className='space-y-8'>
-          {/* Blog 1 - Full Width */}
-          <Link href={BLOG_POSTS[0].link}>
-            <div
-              ref={blog1Ref}
-              className='group cursor-pointer rounded-lg bg-white p-8 transition-shadow duration-300 hover:shadow-lg'
-            >
-              <article>
-                <div className='grid grid-cols-1 items-center gap-8 lg:grid-cols-5'>
-                  {/* Left Side - Content (1/3) */}
-                  <div className='lg:col-span-2'>
-                    <h3 className="mb-4 font-['Urbanist'] text-3xl font-bold leading-tight text-black">
-                      {BLOG_POSTS[0].title}
-                    </h3>
-                    <p className="font-['Space_Grotesk'] text-base font-light leading-relaxed text-gray-700">
-                      {BLOG_POSTS[0].description}
-                    </p>
-                  </div>
-                  {/* Right Side - Image (2/3) */}
-                  <div className='lg:col-span-3'>
-                    <div className='overflow-hidden rounded-lg'>
-                      <img
-                        src={BLOG_POSTS[0].image}
-                        alt={BLOG_POSTS[0].title}
-                        className='h-64 w-full object-cover transition-transform duration-300 group-hover:scale-105 lg:h-80'
-                      />
-                    </div>
-                  </div>
-                </div>
-              </article>
+      <AppSectionPadding>
+        <AppLayoutPadding>
+          {/* Header Section */}
+          <div className='mb-12 space-y-4 text-center sm:mb-16'>
+            <SectionTitle theme='light'>
+              Navigating a Tech-Driven Future Does Not
+              <br className='hidden sm:block' />
+              Need You To Be A Developer
+            </SectionTitle>
+            <div className='mx-auto max-w-2xl space-y-2'>
+              <SectionSubtitle theme="light" size="medium" centered={false}>
+                We are at an inflection point.
+              </SectionSubtitle>
+              <SectionDescription
+                theme='light'
+                size='medium'
+                maxWidth='2xl'
+                centered={false}
+              >
+                With generative AI reshaping industries at unprecedented speed,
+                <br />
+                there is false pressure on executives to become technical experts.
+              </SectionDescription>
             </div>
-          </Link>
+          </div>
 
-          {/* Blog 2 & 3 - Side by Side */}
-          <div className='grid grid-cols-1 gap-8 lg:grid-cols-3'>
-            {/* Blog 2 - Takes 2/3 width */}
-            <Link
-              href={BLOG_POSTS[1].link}
-              className='group cursor-pointer rounded-lg bg-gray-200 transition-shadow duration-300 hover:shadow-lg lg:col-span-2'
-            >
+          {/* Blog Posts */}
+          <div className='space-y-8'>
+            {/* Blog 1 - Full Width */}
+            <Link href={BLOG_POSTS[0].link}>
               <div
-                ref={blog2Ref}
-                className='h-full'
+                ref={blog1Ref}
+                className='group cursor-pointer rounded-lg bg-white p-8 transition-shadow duration-300 hover:shadow-lg'
               >
                 <article>
-                  <div className='grid h-full grid-cols-1 lg:grid-cols-2'>
-                    {/* Left Side - Content */}
-                    <div className='flex flex-col justify-center p-8'>
-                      <h3 className="mb-4 font-['Urbanist'] text-2xl font-bold leading-tight text-black">
-                        {BLOG_POSTS[1].title}
+                  <div className='grid grid-cols-1 items-center gap-6 sm:gap-8 lg:grid-cols-5'>
+                    {/* Left Side - Content (1/3) */}
+                    <div className='lg:col-span-2'>
+                      <h3 className="mb-3 font-['Urbanist'] text-xl font-bold leading-tight text-black sm:mb-4 sm:text-2xl md:text-3xl">
+                        {BLOG_POSTS[0].title}
                       </h3>
                       <p className="font-['Space_Grotesk'] text-base font-light leading-relaxed text-gray-700">
-                        {BLOG_POSTS[1].description}
+                        {BLOG_POSTS[0].description}
                       </p>
                     </div>
-                    {/* Right Side - Image */}
-                    <div className='relative h-full min-h-[300px] overflow-hidden rounded-r-lg'>
-                      <img
-                        src={BLOG_POSTS[1].image}
-                        alt={BLOG_POSTS[1].title}
-                        className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-105'
-                      />
+                    {/* Right Side - Image (2/3) */}
+                    <div className='lg:col-span-3'>
+                      <div className='overflow-hidden rounded-lg'>
+                        <img
+                          src={BLOG_POSTS[0].image}
+                          alt={BLOG_POSTS[0].title}
+                          className='h-64 w-full object-cover transition-transform duration-300 group-hover:scale-105 lg:h-80'
+                        />
+                      </div>
                     </div>
                   </div>
                 </article>
               </div>
             </Link>
 
-            {/* Blog 3 - Takes 1/3 width */}
-            <Link
-              href={BLOG_POSTS[2].link}
-              className='group col-span-1 cursor-pointer rounded-lg bg-orange-50 p-8 transition-shadow duration-300 hover:shadow-lg lg:col-span-1'
-            >
-              <div
-                ref={blog3Ref}
-                className='h-full'
+            {/* Blog 2 & 3 - Side by Side */}
+            <div className='grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-3'>
+              {/* Blog 2 - Takes 2/3 width */}
+              <Link
+                href={BLOG_POSTS[1].link}
+                className='group cursor-pointer rounded-lg bg-gray-200 transition-shadow duration-300 hover:shadow-lg lg:col-span-2'
               >
-                <article>
-                  <div>
-                    <h3 className="mb-4 font-['Urbanist'] text-xl font-bold leading-tight text-black">
-                      {BLOG_POSTS[2].title}
-                    </h3>
-                    <p className="font-['Space_Grotesk'] text-sm font-light leading-relaxed text-gray-700">
-                      {BLOG_POSTS[2].description}
-                    </p>
-                  </div>
-                </article>
-              </div>
-            </Link>
+                <div
+                  ref={blog2Ref}
+                  className='h-full'
+                >
+                  <article>
+                    <div className='grid h-full grid-cols-1 md:grid-cols-2 lg:grid-cols-2'>
+                      {/* Left Side - Content */}
+                      <div className='flex flex-col justify-center p-8'>
+                        <h3 className="mb-3 font-['Urbanist'] text-lg font-bold leading-tight text-black sm:mb-4 sm:text-xl md:text-2xl">
+                          {BLOG_POSTS[1].title}
+                        </h3>
+                        <p className="font-['Space_Grotesk'] text-base font-light leading-relaxed text-gray-700">
+                          {BLOG_POSTS[1].description}
+                        </p>
+                      </div>
+                      {/* Right Side - Image */}
+                      <div className='relative h-full min-h-[300px] overflow-hidden rounded-r-lg'>
+                        <img
+                          src={BLOG_POSTS[1].image}
+                          alt={BLOG_POSTS[1].title}
+                          className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-105'
+                        />
+                      </div>
+                    </div>
+                  </article>
+                </div>
+              </Link>
+
+              {/* Blog 3 - Takes 1/3 width */}
+              <Link
+                href={BLOG_POSTS[2].link}
+                className='group col-span-1 cursor-pointer rounded-lg bg-orange-50 p-8 transition-shadow duration-300 hover:shadow-lg lg:col-span-1'
+              >
+                <div
+                  ref={blog3Ref}
+                  className='h-full'
+                >
+                  <article>
+                    <div>
+                      <h3 className="mb-3 font-['Urbanist'] text-lg font-bold leading-tight text-black sm:mb-4 sm:text-xl">
+                        {BLOG_POSTS[2].title}
+                      </h3>
+                      <p className="font-['Space_Grotesk'] text-sm font-light leading-relaxed text-gray-700">
+                        {BLOG_POSTS[2].description}
+                      </p>
+                    </div>
+                  </article>
+                </div>
+              </Link>
+            </div>
           </div>
-        </div>
-      </AppLayoutPadding>
+        </AppLayoutPadding>
+      </AppSectionPadding>
     </section>
   )
 }

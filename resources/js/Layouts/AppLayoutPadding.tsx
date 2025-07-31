@@ -6,7 +6,7 @@ interface Properties {
 
 const AppLayoutPadding = ({ children }: Properties) => {
   return (
-    <div className='flex w-full max-w-[2000px] flex-col justify-center px-4 md:px-6 lg:px-20 xl:px-20 2xl:px-32'>
+    <div className='mx-auto flex w-full max-w-[2000px] flex-col justify-center px-4 sm:px-6 md:px-8 lg:px-20 xl:px-24 2xl:px-32'>
       {children}
     </div>
   )

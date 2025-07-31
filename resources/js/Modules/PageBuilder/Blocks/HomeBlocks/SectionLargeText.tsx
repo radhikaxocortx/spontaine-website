@@ -75,7 +75,7 @@ const SectionLargeText = () => {
   return (
     <div
       ref={sectionRef}
-      className='relative z-10 overflow-hidden pb-32 pt-48 sm:pb-40 sm:pt-56 lg:pb-48 lg:pt-64'
+      className='relative z-10 overflow-hidden pb-16 pt-24 sm:pb-32 sm:pt-48 md:pb-40 md:pt-56 lg:pb-48 lg:pt-64'
     >
       <AppLayoutPadding>
         <div className='mx-auto max-w-4xl text-center'>
@@ -84,7 +84,7 @@ const SectionLargeText = () => {
             ref={line1Ref}
             className='mb-4 sm:mb-6'
           >
-            <h2 className='font-urbanist text-5xl font-light leading-tight text-black sm:text-[64px] lg:text-[80px] xl:text-[96px]'>
+            <h2 className='font-urbanist text-3xl font-light leading-tight text-black sm:text-4xl md:text-5xl lg:text-[64px] xl:text-[80px] 2xl:text-[96px]'>
               Clarity Can Be
             </h2>
           </div>
@@ -94,7 +94,7 @@ const SectionLargeText = () => {
             ref={line2Ref}
             className='relative inline-block'
           >
-            <h2 className='font-urbanist text-5xl font-semibold leading-tight text-black sm:text-[64px] lg:text-[80px] xl:text-[96px]'>
+            <h2 className='font-urbanist text-3xl font-semibold leading-tight text-black sm:text-4xl md:text-5xl lg:text-[64px] xl:text-[80px] 2xl:text-[96px]'>
               Clairvoyance.
             </h2>
             {/* Green underline */}

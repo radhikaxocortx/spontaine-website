@@ -1,5 +1,10 @@
 import AppLayoutPadding from '@/Layouts/AppLayoutPadding'
+import AppSectionPadding from '@/Layouts/AppSectionPadding'
 import { cn } from '@/lib/utils'
+import SectionBody from '@/typography/SectionBody'
+import SectionDescription from '@/typography/SectionDescription'
+import SectionSubtitle from '@/typography/SectionSubtitle'
+import SectionTitle from '@/typography/SectionTitle'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useEffect, useRef, useState } from 'react'
@@ -309,93 +314,106 @@ const SectionAIIntegration = ({ className }: SectionAIIntegrationProps) => {
       ref={sectionRef}
       className={cn('bg-white', className)}
     >
-      <AppLayoutPadding>
-        {/* Section Header */}
-        <div className='py-2 text-center'>
-          <h2 className="mb-6 font-['Urbanist'] text-5xl font-normal leading-tight text-black">
-            Effortless AI integration
-            <br />- On your terms.
-          </h2>
-          <p className="mx-auto max-w-4xl font-['Space_Grotesk'] text-base font-light leading-relaxed text-black">
-            Spontaine transforms all your systems - and databases into a powerful AI-driven command
-            center.
-            <br />
-            Free to mix, match, and scale. You can gain deep, real-time, strategic insights without
-            replacing the systems you already trust.
-          </p>
-        </div>
+      <AppSectionPadding>
+        <AppLayoutPadding>
+          {/* Section Header */}
+          <div className='mb-8 space-y-4 text-center'>
+            <SectionTitle theme='light'>
+              Effortless AI integration
+              <br />- On your terms.
+            </SectionTitle>
+            <SectionDescription
+              theme='light'
+              size='medium'
+            >
+              Spontaine transforms all your systems - and databases into a powerful AI-driven
+              command center.
+              <br className='hidden sm:block' />
+              Free to mix, match, and scale. You can gain deep, real-time, strategic insights
+              without replacing the systems you already trust.
+            </SectionDescription>
+          </div>
 
-        {/* Sticky Content Section */}
-        <div
-          ref={stickyRef}
-          className='py-8'
-        >
-          <div className='grid grid-cols-1 items-center gap-6 lg:grid-cols-2 lg:gap-4'>
-            {/* Left Column - Feature List with Individual Progress Lines */}
-            <div className='flex h-full flex-col justify-center space-y-2'>
-              {FEATURES.map((feature, index) => (
-                <div
-                  key={feature.id}
-                  className='flex items-center gap-6'
-                >
-                  {/* Individual Progress Line Segment */}
-                  <div className='flex flex-shrink-0 items-center'>
-                    <div
-                      ref={(el) => (progressLineRefs.current[index] = el)}
-                      className='h-20 w-1 rounded-full bg-gray-200 transition-all duration-300'
-                    />
-                  </div>
-
-                  {/* Feature Content */}
+          {/* Sticky Content Section */}
+          <div
+            ref={stickyRef}
+            className=''
+          >
+            <div className='grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-12'>
+              {/* Left Column - Feature List with Individual Progress Lines */}
+              <div className='flex h-full flex-col justify-center space-y-2'>
+                {FEATURES.map((feature, index) => (
                   <div
-                    ref={(el) => (featureRefs.current[index] = el)}
-                    className='relative max-w-lg rounded-lg px-4 py-2'
+                    key={feature.id}
+                    className='flex items-center gap-0'
                   >
-                    {/* Fill Animation Background */}
-                    <div
-                      ref={(el) => (fillAnimationRefs.current[index] = el)}
-                      className='absolute inset-0 rounded-lg'
-                      style={{
-                        background: 'transparent',
-                        zIndex: -1,
-                      }}
-                    />
-                    <h3 className="mb-1 font-['Urbanist'] font-bold leading-normal text-black">
-                      {feature.title}
-                    </h3>
-                    <p className="font-['Space_Grotesk'] text-sm font-normal leading-relaxed text-black">
-                      {feature.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
+                    {/* Individual Progress Line Segment */}
+                    <div className='flex flex-shrink-0 items-center'>
+                      <div
+                        ref={(el) => (progressLineRefs.current[index] = el)}
+                        className='h-20 w-1 rounded-full bg-gray-200 transition-all duration-300'
+                      />
+                    </div>
 
-            {/* Right Column - Video Player */}
-            <div className='flex h-full items-center justify-center rounded-lg'>
-              <div className='w-full max-w-2xl rounded-lg'>
-                <video
-                  ref={videoRef}
-                  className='h-auto w-full rounded-lg'
-                  autoPlay
-                  muted
-                  playsInline
-                  style={{ aspectRatio: '16/9' }}
-                >
-                  <source
-                    src={FEATURES[activeFeature].videoSrc}
-                    type='video/mp4'
-                  />
-                  Your browser does not support the video tag.
-                </video>
+                    {/* Feature Content */}
+                    <div
+                      ref={(el) => (featureRefs.current[index] = el)}
+                      className='relative max-w-lg rounded-lg px-2 py-2'
+                    >
+                      {/* Fill Animation Background */}
+                      <div
+                        ref={(el) => (fillAnimationRefs.current[index] = el)}
+                        className='absolute inset-0 rounded-lg'
+                        style={{
+                          background: 'transparent',
+                          zIndex: -1,
+                        }}
+                      />
+                      <SectionSubtitle
+                        theme='light'
+                        weight='bold'
+                        size='small'
+                        centered={false}
+                        className='mb-1 max-w-none'
+                      >
+                        {feature.title}
+                      </SectionSubtitle>
+                      <SectionBody
+                        theme='light'
+                        size='sm'
+                        weight='normal'
+                        lineHeight='relaxed'
+                      >
+                        {feature.description}
+                      </SectionBody>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Right Column - Video Player */}
+              <div className='flex h-full items-center justify-center rounded-lg'>
+                <div className='w-full max-w-2xl rounded-lg'>
+                  <video
+                    ref={videoRef}
+                    className='h-auto w-full rounded-lg'
+                    autoPlay
+                    muted
+                    playsInline
+                    style={{ aspectRatio: '16/9' }}
+                  >
+                    <source
+                      src={FEATURES[activeFeature].videoSrc}
+                      type='video/mp4'
+                    />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Bottom Spacer - Reduced gap to Trusted Partners section */}
-        <div className='h-16' />
-      </AppLayoutPadding>
+        </AppLayoutPadding>
+      </AppSectionPadding>
     </section>
   )
 }

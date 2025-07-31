@@ -1,5 +1,8 @@
 import AppLayoutPadding from '@/Layouts/AppLayoutPadding'
+import AppSectionPadding from '@/Layouts/AppSectionPadding'
 import { cn } from '@/lib/utils'
+import SectionDescription from '@/typography/SectionDescription'
+import SectionTitle from '@/typography/SectionTitle'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Pause, Play } from 'lucide-react'
@@ -132,79 +135,82 @@ const SectionVideos = ({ className }: SectionVideosProps) => {
   return (
     <section
       ref={sectionRef}
-      className={cn('relative z-20 bg-black pb-16 pt-16 text-white', className)}
+      className={cn('relative z-20 bg-black text-white', className)}
     >
-      <AppLayoutPadding>
-        {/* Header Section */}
-        <div className='mb-16 text-center'>
-          <h2 className="mb-6 font-['Urbanist'] text-5xl font-normal leading-tight text-white">
-            Spontaine Is For Every Industry
-          </h2>
-          <p className="mx-auto max-w-4xl font-['Space_Grotesk'] text-lg font-light leading-relaxed text-gray-300">
-            Every industry has unique challenges. Our customizable IT solutions are designed to
-            <br />
-            meet the specific needs of various sectors, ensuring you have the right tools and
-            <br />
-            support to drive success
-          </p>
-        </div>
+      <AppSectionPadding>
+        <AppLayoutPadding>
+          {/* Header Section */}
+          <div className='mb-12 space-y-4 text-center sm:mb-16'>
+            <SectionTitle theme='dark'>Spontaine Is For Every Industry</SectionTitle>
+            <SectionDescription
+              theme='muted'
+              size='large'
+            >
+              Every industry has unique challenges. Our customizable IT solutions are designed to
+              <br className='hidden sm:block' />
+              meet the specific needs of various sectors, ensuring you have the right tools and
+              <br className='hidden sm:block' />
+              support to drive success
+            </SectionDescription>
+          </div>
 
-        {/* Video Cards Container */}
-        <div className='relative mb-[-120px]'>
-          {/* Video Cards Grid */}
-          <div
-            ref={cardsRef}
-            className='relative z-30 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4'
-          >
-            {VIDEOS.map((video, index) => (
-              <div
-                key={video.id}
-                className='video-card hover:shadow-3xl group relative cursor-pointer overflow-hidden rounded-xl bg-gray-900 shadow-2xl transition-all duration-300 hover:scale-105'
-              >
-                {/* Vertical Green Accent Bar */}
-                <div className='absolute left-0 top-0 z-20 h-full w-1 bg-lime-400' />
-                {/* Video Element */}
-                <div className='relative aspect-[9/12.8]'>
-                  <video
-                    ref={(el) => (videoRefs.current[video.id] = el)}
-                    className='h-full w-full object-cover'
-                    poster={video.thumbnail}
-                    preload='metadata'
-                    muted
-                    onEnded={() => setPlayingVideo(null)}
-                  >
-                    <source
-                      src={video.videoSrc}
-                      type='video/mp4'
-                    />
-                  </video>
+          {/* Video Cards Container */}
+          <div className='relative'>
+            {/* Video Cards Grid */}
+            <div
+              ref={cardsRef}
+              className='relative z-30 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4'
+            >
+              {VIDEOS.map((video, index) => (
+                <div
+                  key={video.id}
+                  className='video-card hover:shadow-3xl group relative cursor-pointer overflow-hidden rounded-xl bg-gray-900 shadow-2xl transition-all duration-300 hover:scale-105'
+                >
+                  {/* Vertical Green Accent Bar */}
+                  <div className='absolute left-0 top-0 z-20 h-full w-1 bg-lime-400' />
+                  {/* Video Element */}
+                  <div className='relative aspect-[9/12.8]'>
+                    <video
+                      ref={(el) => (videoRefs.current[video.id] = el)}
+                      className='h-full w-full object-cover'
+                      poster={video.thumbnail}
+                      preload='metadata'
+                      muted
+                      onEnded={() => setPlayingVideo(null)}
+                    >
+                      <source
+                        src={video.videoSrc}
+                        type='video/mp4'
+                      />
+                    </video>
 
-                  {/* Play/Pause Overlay */}
-                  <div
-                    className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 transition-opacity duration-300 group-hover:bg-opacity-60'
-                    onClick={() => handlePlayVideo(video.id)}
-                  >
-                    <div className='rounded-full bg-white bg-opacity-20 p-4 transition-all duration-300 group-hover:scale-110 group-hover:bg-opacity-30'>
-                      {playingVideo === video.id ? (
-                        <Pause className='h-8 w-8 text-white' />
-                      ) : (
-                        <Play className='h-8 w-8 text-white' />
-                      )}
+                    {/* Play/Pause Overlay */}
+                    <div
+                      className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 transition-opacity duration-300 group-hover:bg-opacity-60'
+                      onClick={() => handlePlayVideo(video.id)}
+                    >
+                      <div className='rounded-full bg-white bg-opacity-20 p-4 transition-all duration-300 group-hover:scale-110 group-hover:bg-opacity-30'>
+                        {playingVideo === video.id ? (
+                          <Pause className='h-8 w-8 text-white' />
+                        ) : (
+                          <Play className='h-8 w-8 text-white' />
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Content Overlay */}
-                <div className='absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/80 to-transparent p-6'>
-                  <h3 className="font-['Urbanist'] text-sm font-bold leading-tight text-white">
-                    {video.title}
-                  </h3>
+                  {/* Content Overlay */}
+                  <div className='absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/80 to-transparent p-6'>
+                    <h3 className="font-['Urbanist'] text-sm font-bold leading-tight text-white">
+                      {video.title}
+                    </h3>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </AppLayoutPadding>
+        </AppLayoutPadding>
+      </AppSectionPadding>
     </section>
   )
 }

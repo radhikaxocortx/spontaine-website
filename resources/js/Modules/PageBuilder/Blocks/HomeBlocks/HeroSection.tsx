@@ -264,7 +264,7 @@ const HeroSection = () => {
       </div>
 
       <AppLayoutPadding>
-        <div className='relative z-10 mx-auto flex max-w-6xl flex-col items-center px-4 text-center sm:px-6 lg:px-8'>
+        <div className='relative z-10 mx-auto flex max-w-6xl flex-col items-center text-center'>
           {/* Main Title */}
           <div
             ref={titleRef}
@@ -306,7 +306,7 @@ const HeroSection = () => {
           {/* CTA Button */}
           <div
             ref={ctaRef}
-            className='mb-16'
+            className='mb-8 sm:mb-16'
           >
             <a href='/how-it-works'>
               <Button

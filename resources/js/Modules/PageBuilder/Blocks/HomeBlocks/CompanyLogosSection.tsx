@@ -20,12 +20,12 @@ interface CompanyLogosSectionProps {
 
 // Static logo data - hardcoded within component
 const COMPANY_LOGOS: LogoItem[] = [
-  { id: 1, src: '/imge/logos/1.png', alt: 'Company 1' },
-  { id: 2, src: '/imge/logos/2.png', alt: 'Company 2' },
-  { id: 3, src: '/imge/logos/3.png', alt: 'Company 3' },
-  { id: 4, src: '/imge/logos/4.png', alt: 'Company 4' },
-  { id: 5, src: '/imge/logos/5.png', alt: 'Company 5' },
-  { id: 6, src: '/imge/logos/6.png', alt: 'Company 6' },
+  { id: 1, src: '/imge/logos/1.svg', alt: 'Company 1' },
+  { id: 2, src: '/imge/logos/2.svg', alt: 'Company 2' },
+  { id: 3, src: '/imge/logos/3.svg', alt: 'Company 3' },
+  { id: 4, src: '/imge/logos/4.svg', alt: 'Company 4' },
+  { id: 5, src: '/imge/logos/5.svg', alt: 'Company 5' },
+  { id: 6, src: '/imge/logos/6.svg', alt: 'Company 6' },
 ]
 
 const CompanyLogosSection = ({ className }: CompanyLogosSectionProps) => {
@@ -64,7 +64,7 @@ const CompanyLogosSection = ({ className }: CompanyLogosSectionProps) => {
     >
       <AppLayoutPadding>
         {/* Logos Grid */}
-        <div className='grid grid-cols-3 gap-8 md:grid-cols-3 lg:grid-cols-6 xl:grid-cols-6'>
+        <div className='grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6 md:gap-8 lg:grid-cols-6'>
           {COMPANY_LOGOS.map((logo) => (
             <div
               key={logo.id}
@@ -80,7 +80,7 @@ const CompanyLogosSection = ({ className }: CompanyLogosSectionProps) => {
                   <img
                     src={logo.src}
                     alt={logo.alt}
-                    className='h-16 w-24 object-contain opacity-70 transition-opacity duration-300 group-hover:opacity-100 sm:h-12 sm:w-20'
+                    className='h-16 w-24 object-contain opacity-90 transition-opacity duration-300 group-hover:opacity-100 sm:h-12 sm:w-20'
                     loading='lazy'
                   />
                 </a>
@@ -88,7 +88,7 @@ const CompanyLogosSection = ({ className }: CompanyLogosSectionProps) => {
                 <img
                   src={logo.src}
                   alt={logo.alt}
-                  className='h-16 w-24 object-contain opacity-70 transition-opacity duration-300 hover:opacity-100 sm:h-12 sm:w-20'
+                  className='h-16 w-24 object-contain opacity-90 transition-opacity duration-300 hover:opacity-100 sm:h-12 sm:w-20'
                   loading='lazy'
                 />
               )}

@@ -1,5 +1,8 @@
 import AppLayoutPadding from '@/Layouts/AppLayoutPadding'
+import AppSectionPadding from '@/Layouts/AppSectionPadding'
 import { cn } from '@/lib/utils'
+import SectionSubtitle from '@/typography/SectionSubtitle'
+import SectionTitle from '@/typography/SectionTitle'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useEffect, useRef } from 'react'
@@ -190,188 +193,202 @@ const SectionTrustedPartners = ({ className }: SectionTrustedPartnersProps) => {
   return (
     <section
       ref={sectionRef}
-      className={cn('bg-black pb-10 pt-6 text-white', className)}
+      className={cn('bg-black text-white', className)}
     >
-      <AppLayoutPadding>
-        <div className='grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16'>
-          {/* Left Column */}
-          <div
-            ref={leftContentRef}
-            className='space-y-8'
-          >
-            {/* Main Heading */}
-            <h2 className="font-['Urbanist'] text-5xl font-normal leading-[60px] text-white">
-              Spontaine Is Also For Trusted Partners.
-            </h2>
+      <AppSectionPadding>
+        <AppLayoutPadding>
+          <div className='grid grid-cols-1 items-center gap-8 md:gap-12 lg:grid-cols-2 lg:gap-16'>
+            {/* Left Column */}
+            <div
+              ref={leftContentRef}
+              className='space-y-8'
+            >
+              {/* Main Heading */}
+              <SectionTitle
+                theme='dark'
+                alignment='left'
+              >
+                Spontaine Is Also For Trusted Partners.
+              </SectionTitle>
 
-            {/* Subtitle with Left Border */}
-            <div className='relative pl-6'>
-              <div className='absolute left-0 top-0 h-full w-1 bg-lime-400' />
-              <p className="font-['Space_Grotesk'] text-base font-bold leading-normal text-white">
-                Spontaine delivers all the value. Fast, and without the complexity. Your clients
-                will thank you even more.
+              {/* Subtitle with Left Border */}
+              <div className='relative pl-6'>
+                <div className='absolute left-0 top-0 h-full w-1 bg-lime-400' />
+                <SectionSubtitle
+                  theme='dark'
+                  size='small'
+                  weight='bold'
+                  centered={false}
+                  className='max-w-none'
+                >
+                  Spontaine delivers all the value. Fast, and without the complexity. Your clients
+                  will thank you even more.
+                </SectionSubtitle>
+              </div>
+
+              {/* Paragraph */}
+              <p className="font-['Space_Grotesk'] text-base font-normal leading-normal text-white">
+                With fast deployments, no-code interfaces, and extensible APIs, you can deliver
+                brand-new transformative value to your customers while expanding your own service
+                offerings.
               </p>
-            </div>
 
-            {/* Paragraph */}
-            <p className="font-['Space_Grotesk'] text-base font-normal leading-normal text-white">
-              With fast deployments, no-code interfaces, and extensible APIs, you can deliver
-              brand-new transformative value to your customers while expanding your own service
-              offerings.
-            </p>
-
-            {/* Checklist Features */}
-            <div className='grid grid-cols-1 gap-6 sm:grid-cols-2'>
-              {/* Data Integration */}
-              <div className='flex items-start gap-4'>
-                <div className='mt-1 flex-shrink-0'>
-                  <div 
-                    ref={checkbox1Ref}
-                    className='flex h-5 w-5 items-center justify-center rounded border-2 border-lime-400 bg-lime-400'
-                  >
-                    <svg
-                      className='h-3 w-3 text-black'
-                      fill='currentColor'
-                      viewBox='0 0 20 20'
-                    >
-                      <path
-                        fillRule='evenodd'
-                        d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z'
-                        clipRule='evenodd'
-                      />
-                    </svg>
-                  </div>
-                </div>
-                <div>
-                  <h3 className="mb-2 font-['Urbanist'] text-lg font-semibold text-white">
-                    Data Integration
-                  </h3>
-                  <p className="font-['Space_Grotesk'] text-base font-normal leading-normal text-white">
-                    Seamlessly unify your data without the complexity, cost, or chaos.
-                  </p>
-                </div>
-              </div>
-
-              {/* AI Adoption */}
-              <div className='flex items-start gap-4'>
-                <div className='mt-1 flex-shrink-0'>
-                  <div 
-                    ref={checkbox2Ref}
-                    className='flex h-5 w-5 items-center justify-center rounded border-2 border-lime-400 bg-lime-400'
-                  >
-                    <svg
-                      className='h-3 w-3 text-black'
-                      fill='currentColor'
-                      viewBox='0 0 20 20'
-                    >
-                      <path
-                        fillRule='evenodd'
-                        d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z'
-                        clipRule='evenodd'
-                      />
-                    </svg>
-                  </div>
-                </div>
-                <div>
-                  <h3 className="mb-2 font-['Urbanist'] text-lg font-semibold text-white">
-                    AI Adoption
-                  </h3>
-                  <p className="font-['Space_Grotesk'] text-base font-normal leading-normal text-white">
-                    AI adoption across your organization with tools built for real business users.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* CTA Button */}
-            <div className='pt-4'>
-              <button className='transform rounded-full bg-lime-400 px-6 py-3 font-["Urbanist"] font-semibold text-black transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_5px_#a3e635]'>
-                Partner With Us →
-              </button>
-            </div>
-          </div>
-
-          {/* Right Column - Image Layout */}
-          <div
-            ref={collageRef}
-            className='relative'
-          >
-            <div className='relative'>
-              {/* Background Images Layout */}
-              <div className='grid grid-cols-2 gap-6'>
-                {/* Left Column */}
-                <div className='space-y-6'>
-                  {/* Top Left Image */}
-                  <div
-                    ref={image1Ref}
-                    className='aspect-square overflow-hidden rounded-2xl'
-                  >
-                    <img
-                      src='/imge/home/partner/1.png'
-                      alt='Business professionals collaborating'
-                      className='h-full w-full object-cover'
-                    />
-                  </div>
-
-                  {/* Bottom Left Image with Background Pattern */}
-                  <div
-                    ref={image4Ref}
-                    className='relative aspect-[4/3] overflow-hidden rounded-2xl'
-                  >
-                    {/* Background SVG Pattern */}
+              {/* Checklist Features */}
+              <div className='grid grid-cols-1 gap-6 sm:grid-cols-2'>
+                {/* Data Integration */}
+                <div className='flex items-start gap-4'>
+                  <div className='mt-1 flex-shrink-0'>
                     <div
-                      className='absolute inset-0 z-0'
-                      style={{
-                        backgroundImage: "url('/imge/home/partner/bg.svg')",
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                      }}
-                    />
-                    {/* Centered Image Container */}
-                    <div className='relative z-10 flex h-full items-center justify-center'>
-                      <img
-                        src='/imge/home/partner/4.png'
-                        alt='Team member working'
-                        className='h-3/4 w-auto object-cover'
-                      />
+                      ref={checkbox1Ref}
+                      className='flex h-5 w-5 items-center justify-center rounded border-2 border-lime-400 bg-lime-400'
+                    >
+                      <svg
+                        className='h-3 w-3 text-black'
+                        fill='currentColor'
+                        viewBox='0 0 20 20'
+                      >
+                        <path
+                          fillRule='evenodd'
+                          d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z'
+                          clipRule='evenodd'
+                        />
+                      </svg>
                     </div>
                   </div>
+                  <div>
+                    <h3 className="mb-2 font-['Urbanist'] text-lg font-semibold text-white">
+                      Data Integration
+                    </h3>
+                    <p className="font-['Space_Grotesk'] text-base font-normal leading-normal text-white">
+                      Seamlessly unify your data without the complexity, cost, or chaos.
+                    </p>
+                  </div>
                 </div>
 
-                {/* Right Column */}
-                <div className='space-y-6'>
-                  {/* Top Right Image */}
-                  <div
-                    ref={image2Ref}
-                    className='aspect-[4/3] overflow-hidden rounded-2xl'
-                  >
-                    <img
-                      src='/imge/home/partner/2.png'
-                      alt='Professional working on laptop'
-                      className='h-full w-full object-cover'
-                    />
+                {/* AI Adoption */}
+                <div className='flex items-start gap-4'>
+                  <div className='mt-1 flex-shrink-0'>
+                    <div
+                      ref={checkbox2Ref}
+                      className='flex h-5 w-5 items-center justify-center rounded border-2 border-lime-400 bg-lime-400'
+                    >
+                      <svg
+                        className='h-3 w-3 text-black'
+                        fill='currentColor'
+                        viewBox='0 0 20 20'
+                      >
+                        <path
+                          fillRule='evenodd'
+                          d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z'
+                          clipRule='evenodd'
+                        />
+                      </svg>
+                    </div>
                   </div>
-
-                  {/* Spacer for bottom right image (will be overlapped) */}
-                  <div className='aspect-square'></div>
+                  <div>
+                    <h3 className="mb-2 font-['Urbanist'] text-lg font-semibold text-white">
+                      AI Adoption
+                    </h3>
+                    <p className="font-['Space_Grotesk'] text-base font-normal leading-normal text-white">
+                      AI adoption across your organization with tools built for real business users.
+                    </p>
+                  </div>
                 </div>
               </div>
 
-              {/* Overlapping Bottom Right Image */}
-              <div
-                ref={image3Ref}
-                className='absolute bottom-0 right-0 z-20 aspect-square w-1/2 -translate-x-6 translate-y-6 overflow-hidden rounded-2xl'
-              >
-                <img
-                  src='/imge/home/partner/3.png'
-                  alt='Collaborative workspace'
-                  className='h-full w-full object-cover'
-                />
+              {/* CTA Button */}
+              <div className=''>
+                <button
+                  ref={ctaButtonRef}
+                  className='transform rounded-full bg-lime-400 px-4 py-2 font-["Urbanist"] text-sm font-semibold text-black transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_5px_#a3e635] sm:px-6 sm:py-3 sm:text-base'
+                >
+                  Partner With Us →
+                </button>
+              </div>
+            </div>
+
+            {/* Right Column - Image Layout */}
+            <div
+              ref={collageRef}
+              className='relative'
+            >
+              <div className='relative'>
+                {/* Background Images Layout */}
+                <div className='grid grid-cols-2 gap-6'>
+                  {/* Left Column */}
+                  <div className='space-y-6'>
+                    {/* Top Left Image */}
+                    <div
+                      ref={image1Ref}
+                      className='aspect-square overflow-hidden rounded-2xl'
+                    >
+                      <img
+                        src='/imge/home/partner/1.png'
+                        alt='Business professionals collaborating'
+                        className='h-full w-full object-cover'
+                      />
+                    </div>
+
+                    {/* Bottom Left Image with Background Pattern */}
+                    <div
+                      ref={image4Ref}
+                      className='relative aspect-[4/3] overflow-hidden rounded-2xl'
+                    >
+                      {/* Background SVG Pattern */}
+                      <div
+                        className='absolute inset-0 z-0'
+                        style={{
+                          backgroundImage: "url('/imge/home/partner/bg.svg')",
+                          backgroundSize: 'cover',
+                          backgroundPosition: 'center',
+                        }}
+                      />
+                      {/* Centered Image Container */}
+                      <div className='relative z-10 flex h-full items-center justify-center'>
+                        <img
+                          src='/imge/home/partner/4.png'
+                          alt='Team member working'
+                          className='h-3/4 w-auto object-cover'
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right Column */}
+                  <div className='space-y-6'>
+                    {/* Top Right Image */}
+                    <div
+                      ref={image2Ref}
+                      className='aspect-[4/3] overflow-hidden rounded-2xl'
+                    >
+                      <img
+                        src='/imge/home/partner/2.png'
+                        alt='Professional working on laptop'
+                        className='h-full w-full object-cover'
+                      />
+                    </div>
+
+                    {/* Spacer for bottom right image (will be overlapped) */}
+                    <div className='aspect-square'></div>
+                  </div>
+                </div>
+
+                {/* Overlapping Bottom Right Image */}
+                <div
+                  ref={image3Ref}
+                  className='absolute bottom-0 right-0 z-20 aspect-square w-1/2 -translate-x-6 translate-y-6 overflow-hidden rounded-2xl'
+                >
+                  <img
+                    src='/imge/home/partner/3.png'
+                    alt='Collaborative workspace'
+                    className='h-full w-full object-cover'
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </AppLayoutPadding>
+        </AppLayoutPadding>
+      </AppSectionPadding>
     </section>
   )
 }
