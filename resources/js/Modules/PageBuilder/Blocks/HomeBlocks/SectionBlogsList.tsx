@@ -2,6 +2,7 @@ import AppLayoutPadding from '@/Layouts/AppLayoutPadding'
 import AppSectionPadding from '@/Layouts/AppSectionPadding'
 import { cn } from '@/lib/utils'
 import SectionDescription from '@/typography/SectionDescription'
+import SectionSubheading from '@/typography/SectionSubheading'
 import SectionSubtitle from '@/typography/SectionSubtitle'
 import SectionTitle from '@/typography/SectionTitle'
 import { Link } from '@inertiajs/react'
@@ -99,14 +100,18 @@ const SectionBlogsList = ({ className }: SectionBlogsListProps) => {
       <AppSectionPadding>
         <AppLayoutPadding>
           {/* Header Section */}
-          <div className='mb-12 space-y-4 text-center sm:mb-16'>
+          <div className='mb-8 space-y-6 text-center sm:mb-10'>
             <SectionTitle theme='light'>
               Navigating a Tech-Driven Future Does Not
               <br className='hidden sm:block' />
               Need You To Be A Developer
             </SectionTitle>
             <div className='mx-auto max-w-2xl space-y-2'>
-              <SectionSubtitle theme="light" size="medium" centered={false}>
+              <SectionSubtitle
+                theme='light'
+                size='medium'
+                centered={false}
+              >
                 We are at an inflection point.
               </SectionSubtitle>
               <SectionDescription
@@ -128,18 +133,30 @@ const SectionBlogsList = ({ className }: SectionBlogsListProps) => {
             <Link href={BLOG_POSTS[0].link}>
               <div
                 ref={blog1Ref}
-                className='group cursor-pointer rounded-lg bg-white p-8 transition-shadow duration-300 hover:shadow-lg'
+                className='group w-full cursor-pointer rounded-lg bg-white p-8'
               >
                 <article>
-                  <div className='grid grid-cols-1 items-center gap-6 sm:gap-8 lg:grid-cols-5'>
+                  <div className='grid grid-cols-1 items-start gap-6 sm:gap-8 lg:grid-cols-5'>
                     {/* Left Side - Content (1/3) */}
                     <div className='lg:col-span-2'>
-                      <h3 className="mb-3 font-['Urbanist'] text-xl font-bold leading-tight text-black sm:mb-4 sm:text-2xl md:text-3xl">
+                      <SectionSubheading
+                        theme='light'
+                        size='2xl'
+                        weight='bold'
+                        maxWidth='2xl'
+                        className='mb-3 group-hover:text-lime-500'
+                      >
                         {BLOG_POSTS[0].title}
-                      </h3>
-                      <p className="font-['Space_Grotesk'] text-base font-light leading-relaxed text-gray-700">
+                      </SectionSubheading>
+
+                      <SectionDescription
+                        theme='light'
+                        size='medium'
+                        maxWidth='2xl'
+                        className='mb-4 group-hover:text-lime-500'
+                      >
                         {BLOG_POSTS[0].description}
-                      </p>
+                      </SectionDescription>
                     </div>
                     {/* Right Side - Image (2/3) */}
                     <div className='lg:col-span-3'>
@@ -161,7 +178,7 @@ const SectionBlogsList = ({ className }: SectionBlogsListProps) => {
               {/* Blog 2 - Takes 2/3 width */}
               <Link
                 href={BLOG_POSTS[1].link}
-                className='group cursor-pointer rounded-lg bg-gray-200 transition-shadow duration-300 hover:shadow-lg lg:col-span-2'
+                className='group cursor-pointer rounded-lg bg-gray-200 lg:col-span-2'
               >
                 <div
                   ref={blog2Ref}
@@ -171,15 +188,27 @@ const SectionBlogsList = ({ className }: SectionBlogsListProps) => {
                     <div className='grid h-full grid-cols-1 md:grid-cols-2 lg:grid-cols-2'>
                       {/* Left Side - Content */}
                       <div className='flex flex-col justify-center p-8'>
-                        <h3 className="mb-3 font-['Urbanist'] text-lg font-bold leading-tight text-black sm:mb-4 sm:text-xl md:text-2xl">
+                        <SectionSubheading
+                          theme='light'
+                          size='medium'
+                          weight='bold'
+                          maxWidth='2xl'
+                          className='mb-3 group-hover:text-lime-500'
+                        >
                           {BLOG_POSTS[1].title}
-                        </h3>
-                        <p className="font-['Space_Grotesk'] text-base font-light leading-relaxed text-gray-700">
+                        </SectionSubheading>
+                        <SectionDescription
+                          theme='light'
+                          size='small'
+                          maxWidth='2xl'
+                          className='group-hover:text-lime-500'
+                        >
                           {BLOG_POSTS[1].description}
-                        </p>
+                        </SectionDescription>
                       </div>
+
                       {/* Right Side - Image */}
-                      <div className='relative h-full min-h-[300px] overflow-hidden rounded-r-lg'>
+                      <div className='relative h-full overflow-hidden rounded-r-lg'>
                         <img
                           src={BLOG_POSTS[1].image}
                           alt={BLOG_POSTS[1].title}
@@ -194,7 +223,7 @@ const SectionBlogsList = ({ className }: SectionBlogsListProps) => {
               {/* Blog 3 - Takes 1/3 width */}
               <Link
                 href={BLOG_POSTS[2].link}
-                className='group col-span-1 cursor-pointer rounded-lg bg-orange-50 p-8 transition-shadow duration-300 hover:shadow-lg lg:col-span-1'
+                className='group col-span-1 cursor-pointer rounded-lg bg-orange-50 p-8 lg:col-span-1'
               >
                 <div
                   ref={blog3Ref}
@@ -202,12 +231,23 @@ const SectionBlogsList = ({ className }: SectionBlogsListProps) => {
                 >
                   <article>
                     <div>
-                      <h3 className="mb-3 font-['Urbanist'] text-lg font-bold leading-tight text-black sm:mb-4 sm:text-xl">
+                      <SectionSubheading
+                        theme='light'
+                        size='medium'
+                        weight='bold'
+                        maxWidth='2xl'
+                        className='mb-3 group-hover:text-lime-500'
+                      >
                         {BLOG_POSTS[2].title}
-                      </h3>
-                      <p className="font-['Space_Grotesk'] text-sm font-light leading-relaxed text-gray-700">
+                      </SectionSubheading>
+                      <SectionDescription
+                        theme='light'
+                        size='small'
+                        maxWidth='2xl'
+                        className='group-hover:text-lime-500'
+                      >
                         {BLOG_POSTS[2].description}
-                      </p>
+                      </SectionDescription>
                     </div>
                   </article>
                 </div>

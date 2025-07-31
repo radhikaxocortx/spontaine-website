@@ -5,7 +5,6 @@ import SectionDescription from '@/typography/SectionDescription'
 import SectionTitle from '@/typography/SectionTitle'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Pause, Play } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 
 // Register GSAP plugins
@@ -80,13 +79,13 @@ const SectionVideos = ({ className }: SectionVideosProps) => {
       gsap.to('.video-card', {
         opacity: 1,
         y: 0,
-        duration: 0.8,
-        stagger: 0.2,
-        ease: 'power3.out',
-        delay: 0.5,
+        duration: 1.6,
+        stagger: 0.3,
+        ease: 'power2.out',
+        delay: 0.8,
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: 'top 90%',
+          start: 'top 85%',
           toggleActions: 'play none none reverse',
         },
       })
@@ -114,6 +113,25 @@ const SectionVideos = ({ className }: SectionVideosProps) => {
     }
   }
 
+  const handleVideoHover = (videoId: number, isHovering: boolean) => {
+    const video = videoRefs.current[videoId]
+    if (video) {
+      if (isHovering) {
+        // Pause all other videos first
+        videoRefs.current.forEach((v, index) => {
+          if (v && index !== videoId) {
+            v.pause()
+          }
+        })
+        video.play()
+        setPlayingVideo(videoId)
+      } else {
+        video.pause()
+        setPlayingVideo(null)
+      }
+    }
+  }
+
   // Auto-play first video on mount
   useEffect(() => {
     if (!firstVideoPlayed && videoRefs.current[0]) {
@@ -135,7 +153,7 @@ const SectionVideos = ({ className }: SectionVideosProps) => {
   return (
     <section
       ref={sectionRef}
-      className={cn('relative z-20 bg-black text-white', className)}
+      className={cn('relative z-20 overflow-visible bg-black pb-0 text-white', className)}
     >
       <AppSectionPadding>
         <AppLayoutPadding>
@@ -159,12 +177,14 @@ const SectionVideos = ({ className }: SectionVideosProps) => {
             {/* Video Cards Grid */}
             <div
               ref={cardsRef}
-              className='relative z-30 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4'
+              className='relative z-30 -mb-[10vh] grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4'
             >
               {VIDEOS.map((video, index) => (
                 <div
                   key={video.id}
                   className='video-card hover:shadow-3xl group relative cursor-pointer overflow-hidden rounded-xl bg-gray-900 shadow-2xl transition-all duration-300 hover:scale-105'
+                  onMouseEnter={() => handleVideoHover(video.id, true)}
+                  onMouseLeave={() => handleVideoHover(video.id, false)}
                 >
                   {/* Vertical Green Accent Bar */}
                   <div className='absolute left-0 top-0 z-20 h-full w-1 bg-lime-400' />
@@ -176,32 +196,20 @@ const SectionVideos = ({ className }: SectionVideosProps) => {
                       poster={video.thumbnail}
                       preload='metadata'
                       muted
+                      loop
                       onEnded={() => setPlayingVideo(null)}
+                      onClick={() => handlePlayVideo(video.id)}
                     >
                       <source
                         src={video.videoSrc}
                         type='video/mp4'
                       />
                     </video>
-
-                    {/* Play/Pause Overlay */}
-                    <div
-                      className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 transition-opacity duration-300 group-hover:bg-opacity-60'
-                      onClick={() => handlePlayVideo(video.id)}
-                    >
-                      <div className='rounded-full bg-white bg-opacity-20 p-4 transition-all duration-300 group-hover:scale-110 group-hover:bg-opacity-30'>
-                        {playingVideo === video.id ? (
-                          <Pause className='h-8 w-8 text-white' />
-                        ) : (
-                          <Play className='h-8 w-8 text-white' />
-                        )}
-                      </div>
-                    </div>
                   </div>
 
                   {/* Content Overlay */}
                   <div className='absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/80 to-transparent p-6'>
-                    <h3 className="font-['Urbanist'] text-sm font-bold leading-tight text-white">
+                    <h3 className="font-['Urbanist'] text-sm font-bold leading-tight text-white hover:text-lime-400">
                       {video.title}
                     </h3>
                   </div>

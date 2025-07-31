@@ -1,6 +1,9 @@
+import { Button } from '@/components/ui/button'
 import AppLayoutPadding from '@/Layouts/AppLayoutPadding'
 import AppSectionPadding from '@/Layouts/AppSectionPadding'
 import { cn } from '@/lib/utils'
+import SectionDescription from '@/typography/SectionDescription'
+import SectionSubheading from '@/typography/SectionSubheading'
 import SectionSubtitle from '@/typography/SectionSubtitle'
 import SectionTitle from '@/typography/SectionTitle'
 import { gsap } from 'gsap'
@@ -83,6 +86,24 @@ const SectionTrustedPartners = ({ className }: SectionTrustedPartnersProps) => {
           start: 'top 80%',
           end: 'bottom 20%',
           toggleActions: 'play none none reverse',
+          refreshPriority: -1,
+          onToggle: (self) => {
+            if (self.isActive) {
+              // Reset and animate checkboxes every time section becomes active
+              gsap.set([checkbox1Ref.current, checkbox2Ref.current], {
+                opacity: 0,
+                scale: 0,
+              })
+              gsap.to([checkbox1Ref.current, checkbox2Ref.current], {
+                opacity: 1,
+                scale: 1,
+                duration: 0.4,
+                ease: 'back.out(1.7)',
+                stagger: 0.1,
+                delay: 2.5,
+              })
+            }
+          },
         },
       })
 
@@ -155,6 +176,18 @@ const SectionTrustedPartners = ({ className }: SectionTrustedPartnersProps) => {
           },
           '-=0.3'
         )
+        // Animate checkboxes appearing at the very end with stagger
+        .to(
+          [checkbox1Ref.current, checkbox2Ref.current],
+          {
+            opacity: 1,
+            scale: 1,
+            duration: 0.4,
+            ease: 'back.out(1.7)',
+            stagger: 0.1,
+          },
+          '-=0.1'
+        )
 
       // Add continuous subtle pulse animation to CTA
       gsap.to(ctaButtonRef.current, {
@@ -174,16 +207,6 @@ const SectionTrustedPartners = ({ className }: SectionTrustedPartnersProps) => {
         yoyo: true,
         repeat: -1,
         delay: 2.5,
-      })
-
-      // Animate checkboxes appearing at the very end with stagger
-      gsap.to([checkbox1Ref.current, checkbox2Ref.current], {
-        opacity: 1,
-        scale: 1,
-        duration: 0.4,
-        ease: 'back.out(1.7)',
-        stagger: 0.1,
-        delay: 2.5, // After all other animations complete
       })
     }, sectionRef)
 
@@ -227,11 +250,16 @@ const SectionTrustedPartners = ({ className }: SectionTrustedPartnersProps) => {
               </div>
 
               {/* Paragraph */}
-              <p className="font-['Space_Grotesk'] text-base font-normal leading-normal text-white">
+              <SectionDescription
+                theme='dark'
+                size='medium'
+                maxWidth='2xl'
+                centered={false}
+              >
                 With fast deployments, no-code interfaces, and extensible APIs, you can deliver
                 brand-new transformative value to your customers while expanding your own service
                 offerings.
-              </p>
+              </SectionDescription>
 
               {/* Checklist Features */}
               <div className='grid grid-cols-1 gap-6 sm:grid-cols-2'>
@@ -255,13 +283,22 @@ const SectionTrustedPartners = ({ className }: SectionTrustedPartnersProps) => {
                       </svg>
                     </div>
                   </div>
-                  <div>
-                    <h3 className="mb-2 font-['Urbanist'] text-lg font-semibold text-white">
+                  <div className='space-y-2'>
+                    <SectionSubheading
+                      theme='dark'
+                      size='small'
+                      weight='bold'
+                      centered={false}
+                    >
                       Data Integration
-                    </h3>
-                    <p className="font-['Space_Grotesk'] text-base font-normal leading-normal text-white">
+                    </SectionSubheading>
+                    <SectionDescription
+                      theme='dark'
+                      size='medium'
+                      centered={false}
+                    >
                       Seamlessly unify your data without the complexity, cost, or chaos.
-                    </p>
+                    </SectionDescription>
                   </div>
                 </div>
 
@@ -285,25 +322,35 @@ const SectionTrustedPartners = ({ className }: SectionTrustedPartnersProps) => {
                       </svg>
                     </div>
                   </div>
-                  <div>
-                    <h3 className="mb-2 font-['Urbanist'] text-lg font-semibold text-white">
+                  <div className='space-y-2'>
+                    <SectionSubheading
+                      theme='dark'
+                      size='small'
+                      weight='bold'
+                      centered={false}
+                    >
                       AI Adoption
-                    </h3>
-                    <p className="font-['Space_Grotesk'] text-base font-normal leading-normal text-white">
+                    </SectionSubheading>
+                    <SectionDescription
+                      theme='dark'
+                      size='medium'
+                      centered={false}
+                    >
                       AI adoption across your organization with tools built for real business users.
-                    </p>
+                    </SectionDescription>
                   </div>
                 </div>
               </div>
 
               {/* CTA Button */}
               <div className=''>
-                <button
+                <Button
                   ref={ctaButtonRef}
-                  className='transform rounded-full bg-lime-400 px-4 py-2 font-["Urbanist"] text-sm font-semibold text-black transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_5px_#a3e635] sm:px-6 sm:py-3 sm:text-base'
+                  size='xl'
+                  className='relative overflow-hidden rounded-full bg-lime-400 py-6 text-black shadow-2xl'
                 >
                   Partner With Us →
-                </button>
+                </Button>
               </div>
             </div>
 

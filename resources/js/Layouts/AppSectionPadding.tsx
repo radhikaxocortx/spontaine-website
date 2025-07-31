@@ -6,7 +6,7 @@ interface Properties {
 }
 
 const AppSectionPadding = ({ children, className = '' }: Properties) => {
-  return <div className={`py-10 ${className}`}>{children}</div>
+  return <div className={`py-12 ${className}`}>{children}</div>
 }
 
 export default AppSectionPadding

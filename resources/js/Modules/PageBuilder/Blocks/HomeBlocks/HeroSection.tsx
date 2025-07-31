@@ -181,7 +181,10 @@ const HeroSection = () => {
     let currentQuestion = 0
     let isDeleting = false
     let text = ''
-    let delta = 200 - Math.random() * 100
+    const typingSpeed = 80 // Consistent typing speed
+    const deletingSpeed = 40 // Consistent deleting speed
+    const pauseAfterComplete = 1500 // Pause after completing a sentence
+    const pauseAfterDelete = 500 // Pause after deleting
 
     const tick = () => {
       const fullText = questions[currentQuestion]
@@ -196,17 +199,17 @@ const HeroSection = () => {
         typewriterRef.current.textContent = text
       }
 
-      if (isDeleting) {
-        delta /= 2
-      }
+      let delta = typingSpeed
 
       if (!isDeleting && text === fullText) {
-        delta = 800
+        delta = pauseAfterComplete
         isDeleting = true
       } else if (isDeleting && text === '') {
         isDeleting = false
         currentQuestion = (currentQuestion + 1) % questions.length
-        delta = 1000
+        delta = pauseAfterDelete
+      } else if (isDeleting) {
+        delta = deletingSpeed
       }
 
       setTimeout(tick, delta)

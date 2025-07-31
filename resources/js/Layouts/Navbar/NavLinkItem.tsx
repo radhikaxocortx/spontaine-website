@@ -6,7 +6,7 @@ import {
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu'
 import { Language } from '@/components/ui/ui_interfaces'
-import { createRippleEffect, cleanupRipples } from '@/lib/ripple-utils'
+import { cleanupRipples, createRippleEffect } from '@/lib/ripple-utils'
 import Localization from '@/Modules/PageBuilder/Components/Localization'
 import { NavMenu } from '@/Modules/PageBuilder/page_interfaces'
 import { Link } from '@inertiajs/react'
@@ -43,7 +43,7 @@ const NavLinkItem = ({ item, lang = 'en' }: Properties) => {
   if (isButton) {
     return (
       <Button
-        className='2xl:text-lg'
+        className='relative overflow-hidden rounded-full bg-white/20 py-4 text-white shadow-2xl transition-all duration-300 2xl:text-lg'
         asChild
       >
         <Link
@@ -51,7 +51,8 @@ const NavLinkItem = ({ item, lang = 'en' }: Properties) => {
           target={linkInfo?.external ? '_blank' : undefined}
           rel={linkInfo?.external ? 'noopener noreferrer' : undefined}
         >
-          {renderContent()}
+          <span className='nav-cta-text'>{renderContent()}</span>
+          <i className='fas fa-arrow-right-long hero-cta-icon ml-2' />
         </Link>
       </Button>
     )
@@ -65,7 +66,7 @@ const NavLinkItem = ({ item, lang = 'en' }: Properties) => {
             href={linkInfo?.link ?? '#'}
             target={linkInfo?.external ? '_blank' : undefined}
             rel={linkInfo?.external ? 'noopener noreferrer' : undefined}
-            className={`2xl:text-lg ${navigationMenuTriggerStyle()}`}
+            className={`relative overflow-hidden rounded-full py-4 text-white shadow-2xl transition-all duration-300 2xl:text-lg ${navigationMenuTriggerStyle()}`}
             onMouseEnter={(e) => createRippleEffect(e, 'rgba(255, 255, 255, 0.3)')}
             onMouseLeave={(e) => cleanupRipples(e.currentTarget)}
           >

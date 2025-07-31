@@ -1,23 +1,25 @@
 import { cn } from '@/lib/utils'
 import React from 'react'
 
-interface SectionDescriptionProps {
+interface SectionSubheadingProps {
   children: React.ReactNode
   className?: string
   theme?: 'light' | 'dark' | 'muted'
-  size?: 'small' | 'medium' | 'large'
+  size?: 'small' | 'medium' | 'large' | '2xl'
+  weight?: 'semibold' | 'bold'
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl'
   centered?: boolean
 }
 
-const SectionDescription = ({
+const SectionSubheading = ({
   children,
   className,
   theme = 'light',
   size = 'medium',
-  maxWidth = '4xl',
+  weight = 'semibold',
+  maxWidth = '2xl',
   centered = true,
-}: SectionDescriptionProps) => {
+}: SectionSubheadingProps) => {
   const themeColors = {
     light: 'text-black',
     dark: 'text-white',
@@ -25,9 +27,15 @@ const SectionDescription = ({
   }
 
   const sizes = {
-    small: 'text-xs sm:text-sm',
-    medium: 'text-sm sm:text-base',
-    large: 'text-base sm:text-lg',
+    small: 'text-base',
+    medium: 'text-lg',
+    large: 'text-xl sm:text-2xl',
+    '2xl': 'text-2xl sm:text-3xl',
+  }
+
+  const weights = {
+    semibold: 'font-semibold',
+    bold: 'font-bold',
   }
 
   const maxWidths = {
@@ -43,9 +51,10 @@ const SectionDescription = ({
   return (
     <p
       className={cn(
-        "font-['Space_Grotesk'] font-light leading-relaxed",
+        "font-['Urbanist'] leading-normal",
         themeColors[theme],
         sizes[size],
+        weights[weight],
         centered && 'mx-auto',
         maxWidths[maxWidth],
         className
@@ -56,4 +65,4 @@ const SectionDescription = ({
   )
 }
 
-export default SectionDescription
+export default SectionSubheading
