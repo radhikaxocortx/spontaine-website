@@ -17,12 +17,20 @@ const SectionTalk = ({ className }: SectionTalkProps) => {
   const sectionRef = useRef<HTMLDivElement>(null)
   const titleRef = useRef<HTMLHeadingElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
+  const backgroundRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.set([titleRef.current, buttonRef.current], {
         opacity: 0,
         y: 40,
+      })
+
+      // Ken Burns effect on background
+      gsap.set(backgroundRef.current, {
+        scale: 1,
+        x: 0,
+        y: 0,
       })
 
       const tl = gsap.timeline({
@@ -49,6 +57,17 @@ const SectionTalk = ({ className }: SectionTalkProps) => {
         },
         '-=0.6'
       )
+
+      // Ken Burns effect - slow zoom and pan
+      gsap.to(backgroundRef.current, {
+        scale: 1.2,
+        x: -20,
+        y: -10,
+        duration: 20,
+        ease: 'none',
+        repeat: -1,
+        yoyo: true,
+      })
     }, sectionRef)
 
     return () => ctx.revert()
@@ -62,17 +81,22 @@ const SectionTalk = ({ className }: SectionTalkProps) => {
   return (
     <section
       ref={sectionRef}
-      className={cn('relative bg-black text-white', className)}
-      style={{
-        backgroundImage: "url('/imge/home/talk.png')",
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-      }}
+      className={cn('relative overflow-hidden bg-black text-white', className)}
     >
+      {/* Ken Burns Background */}
+      <div
+        ref={backgroundRef}
+        className='absolute inset-0 h-full w-full'
+        style={{
+          backgroundImage: "url('/imge/home/talk.png')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      />
       <AppSectionPadding>
         <AppLayoutPadding>
-          <div className='flex min-h-[260px] flex-col items-center justify-center text-center'>
+          <div className='relative z-10 flex min-h-[260px] flex-col items-center justify-center text-center'>
             {/* Title */}
             <div
               className='mb-8'

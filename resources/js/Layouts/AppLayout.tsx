@@ -1,7 +1,7 @@
 import Navbar from '@/Layouts/Navbar/Navbar'
 import CompanyLogosSection from '@/Modules/PageBuilder/Blocks/HomeBlocks/CompanyLogosSection'
 import HeroSection from '@/Modules/PageBuilder/Blocks/HomeBlocks/HeroSection'
-import SectionAIIntegration from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionAIIntegration'
+import SectionAI from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionAI'
 import SectionBlogsList from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionBlogsList'
 import SectionLargeText from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionLargeText'
 import SectionTalk from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionTalk'
@@ -31,7 +31,7 @@ const AppLayout = ({ children }: Properties) => {
           <CompanyLogosSection />
         </div>
         <div className=''>
-          <SectionAIIntegration />
+          <SectionAI />
         </div>
         <SectionTrustedPartners />
         <SectionBlogsList />

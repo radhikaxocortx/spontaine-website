@@ -35,7 +35,7 @@ const SectionTestimonial = ({ className }: SectionTestimonialProps) => {
   const testimonials: Testimonial[] = [
     {
       id: 1,
-      logo: '/imge/testimonials/des-logo.png',
+      logo: '/imge/home/testimonials/des.png',
       quote:
         "In two years, this platform has powered our primary web portal, helped us digitally serve 70 years of Kerala's statistical history and to 3.7 million users. We went from publishing annual reports to providing real-time, interactive insights that citizens, researchers, and policymakers use to make informed decisions.",
       author: 'Director',
@@ -147,11 +147,11 @@ const SectionTestimonial = ({ className }: SectionTestimonialProps) => {
               ref={logoRef}
               className='mb-8'
             >
-              <div className='mx-auto flex h-24 w-24 items-center justify-center rounded-lg bg-gray-700 p-4'>
+              <div className='mx-auto flex h-24 w-24 items-center justify-center rounded-lg'>
                 <img
                   src={currentTestimonial.logo}
                   alt={`${currentTestimonial.company} logo`}
-                  className='h-full w-full object-contain brightness-0 invert'
+                  className='h-full w-full object-contain'
                 />
               </div>
             </div>

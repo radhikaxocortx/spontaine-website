@@ -20,12 +20,12 @@ interface CompanyLogosSectionProps {
 
 // Static logo data - hardcoded within component
 const COMPANY_LOGOS: LogoItem[] = [
-  { id: 1, src: '/imge/logos/1.svg', alt: 'Company 1' },
-  { id: 2, src: '/imge/logos/2.svg', alt: 'Company 2' },
-  { id: 3, src: '/imge/logos/3.svg', alt: 'Company 3' },
-  { id: 4, src: '/imge/logos/4.svg', alt: 'Company 4' },
-  { id: 5, src: '/imge/logos/5.svg', alt: 'Company 5' },
-  { id: 6, src: '/imge/logos/6.svg', alt: 'Company 6' },
+  { id: 1, src: '/imge/logos/1.png', alt: 'Company 1' },
+  { id: 2, src: '/imge/logos/2.png', alt: 'Company 2' },
+  { id: 3, src: '/imge/logos/3.png', alt: 'Company 3' },
+  { id: 4, src: '/imge/logos/4.png', alt: 'Company 4' },
+  { id: 5, src: '/imge/logos/5.png', alt: 'Company 5' },
+  { id: 6, src: '/imge/logos/6.png', alt: 'Company 6' },
 ]
 
 const CompanyLogosSection = ({ className }: CompanyLogosSectionProps) => {
@@ -80,7 +80,12 @@ const CompanyLogosSection = ({ className }: CompanyLogosSectionProps) => {
                   <img
                     src={logo.src}
                     alt={logo.alt}
-                    className='h-16 w-24 object-contain opacity-90 transition-opacity duration-300 group-hover:opacity-100 sm:h-12 sm:w-20'
+                    className={cn(
+                      'object-contain opacity-90 transition-opacity duration-300 group-hover:opacity-100',
+                      logo.id === 2 || logo.id === 5
+                        ? 'h-20 w-32 sm:h-16 sm:w-28'
+                        : 'h-16 w-24 sm:h-12 sm:w-20'
+                    )}
                     loading='lazy'
                   />
                 </a>
@@ -88,7 +93,12 @@ const CompanyLogosSection = ({ className }: CompanyLogosSectionProps) => {
                 <img
                   src={logo.src}
                   alt={logo.alt}
-                  className='h-16 w-24 object-contain opacity-90 transition-opacity duration-300 hover:opacity-100 sm:h-12 sm:w-20'
+                  className={cn(
+                    'object-contain opacity-90 transition-opacity duration-300 hover:opacity-100',
+                    logo.id === 2 || logo.id === 5
+                      ? 'h-20 w-32 sm:h-16 sm:w-28'
+                      : 'h-16 w-24 sm:h-12 sm:w-20'
+                  )}
                   loading='lazy'
                 />
               )}
