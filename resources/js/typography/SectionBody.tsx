@@ -5,7 +5,7 @@ interface SectionBodyProps {
   children: React.ReactNode
   className?: string
   theme?: 'light' | 'dark' | 'gray'
-  size?: 'sm' | 'base'
+  size?: 'xs' | 'sm' | 'base'
   weight?: 'light' | 'normal'
   lineHeight?: 'normal' | 'relaxed'
   centered?: boolean
@@ -27,6 +27,7 @@ const SectionBody = ({
   }
 
   const sizes = {
+    xs: 'text-xs',
     sm: 'text-sm',
     base: 'text-base',
   }

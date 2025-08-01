@@ -4,6 +4,8 @@ import HeroSection from '@/Modules/PageBuilder/Blocks/HomeBlocks/HeroSection'
 import SectionAIIntegration from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionAIIntegration'
 import SectionBlogsList from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionBlogsList'
 import SectionLargeText from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionLargeText'
+import SectionTalk from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionTalk'
+import SectionTestimonial from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionTestimonial'
 import SectionTrustedPartners from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionTrustedPartners'
 import SectionVideos from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionVideos'
 import { FooterDataInterface } from '@/Modules/PageBuilder/FooterEditor/FooterEditor'
@@ -35,6 +37,8 @@ const AppLayout = ({ children }: Properties) => {
         <SectionBlogsList />
         <SectionVideos />
         <SectionLargeText />
+        <SectionTestimonial />
+        <SectionTalk />
       </div>
       <Footer blockData={footer.items} />
     </>

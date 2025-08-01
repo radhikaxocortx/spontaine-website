@@ -1,12 +1,9 @@
-
-import ApplicationLogo from '@/components/CustomUI/ApplicationLogo'
 import { Language } from '@/components/ui/ui_interfaces'
 import { BlocKFieldInfo } from '@/Modules/PageBuilder/Components/BlockEditor/BlockEditor'
 import EditLabel from '@/Modules/PageBuilder/Components/EditLabel'
 import InertiaLink from '@/Modules/PageBuilder/Components/InertiaLink'
 import Localization from '@/Modules/PageBuilder/Components/Localization'
 import { FooterDataInterface } from '@/Modules/PageBuilder/FooterEditor/FooterEditor'
-import { Link } from '@inertiajs/react'
 import AppLayoutPadding from '../AppLayoutPadding'
 
 interface Properties {
@@ -20,7 +17,7 @@ const Footer = ({ editMode, onFieldEdit, language, blockData }: Properties) => {
   return (
     <div className='bg-black text-white'>
       <AppLayoutPadding>
-        <div className='py-16'>
+        <div className='space-y-10 py-16'>
           <div className='relative w-full'>
             <div className='grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4'>
               {/*Section One*/}
