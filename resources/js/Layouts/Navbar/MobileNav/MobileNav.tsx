@@ -1,4 +1,5 @@
 import ApplicationLogo from '@/components/CustomUI/ApplicationLogo'
+import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTrigger } from '@/components/ui/sheet'
 import { Language } from '@/components/ui/ui_interfaces'
 import InertiaLink from '@/Modules/PageBuilder/Components/InertiaLink'
@@ -111,20 +112,24 @@ export function MobileNav() {
           aria-label='Open menu'
           className=''
         >
-          <Menu size={24} />
+          <Menu
+            size={24}
+            className='text-white'
+          />
         </button>
       </SheetTrigger>
 
       <SheetContent
         side='left'
-        className='flex flex-col justify-between space-y-6 p-6'
+        className='flex flex-col justify-between space-y-6 bg-cover bg-center bg-no-repeat p-6'
+        style={{ backgroundImage: 'url(/imge/home/grid-bg.png)' }}
       >
         <div className='flex flex-col space-y-6'>
           <SheetHeader>
             <ApplicationLogo className='w-24' />
           </SheetHeader>
 
-          <div className='flex flex-col space-y-4'>
+          <div className='flex flex-col space-y-4 px-7'>
             {nav?.map((menuItem) => (
               <MobileNavItem
                 key={menuItem.id.toString()}
@@ -132,6 +137,18 @@ export function MobileNav() {
                 lang={lang}
               />
             ))}
+          </div>
+
+          <div>
+            <Link href='/how-it-works'>
+              <Button
+                size='lg'
+                className='rounded-full border-0 bg-lime-400 px-6 py-3 text-black shadow-lg transition-all duration-300 hover:bg-lime-300 hover:shadow-xl sm:px-8 sm:py-4'
+              >
+                <span className='nav-cta-text'>How It Works</span>
+                <i className='fas fa-arrow-right-long hero-cta-icon' />
+              </Button>
+            </Link>
           </div>
         </div>
         <SheetFooter>

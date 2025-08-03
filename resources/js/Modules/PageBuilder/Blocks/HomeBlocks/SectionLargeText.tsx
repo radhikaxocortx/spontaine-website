@@ -76,7 +76,8 @@ const SectionLargeText = () => {
   return (
     <div
       ref={sectionRef}
-      className='relative z-10 flex min-h-screen items-center justify-center overflow-hidden py-16'
+      className='relative z-10 flex min-h-screen items-center justify-center overflow-hidden py-16 bg-cover bg-center bg-no-repeat'
+      style={{ backgroundImage: 'url(/imge/home/grid-bg.png)' }}
     >
       <AppLayoutPadding>
         <div className='mx-auto max-w-4xl text-center'>

@@ -233,7 +233,8 @@ const SectionAI = ({ className }: SectionAIProps) => {
   return (
     <section
       ref={sectionRef}
-      className={cn('bg-white', className)}
+      className={cn('bg-white bg-cover bg-center bg-no-repeat', className)}
+      style={{ backgroundImage: 'url(/imge/home/grid-bg.png)' }}
     >
       <AppSectionPadding>
         <AppLayoutPadding>

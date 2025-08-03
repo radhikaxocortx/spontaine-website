@@ -64,7 +64,7 @@ const CompanyLogosSection = ({ className }: CompanyLogosSectionProps) => {
     >
       <AppLayoutPadding>
         {/* Logos Grid */}
-        <div className='grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6 md:gap-8 lg:grid-cols-6'>
+        <div className='grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6 md:grid-cols-6 md:gap-8'>
           {COMPANY_LOGOS.map((logo) => (
             <div
               key={logo.id}
@@ -96,8 +96,8 @@ const CompanyLogosSection = ({ className }: CompanyLogosSectionProps) => {
                   className={cn(
                     'object-contain opacity-90 transition-opacity duration-300 hover:opacity-100',
                     logo.id === 2 || logo.id === 5
-                      ? 'h-20 w-32 sm:h-16 sm:w-28'
-                      : 'h-16 w-24 sm:h-12 sm:w-20'
+                      ? 'md:h-16 md:w-28 lg:h-20 lg:w-32'
+                      : 'md:h-12 md:w-20 lg:h-16 lg:w-24'
                   )}
                   loading='lazy'
                 />

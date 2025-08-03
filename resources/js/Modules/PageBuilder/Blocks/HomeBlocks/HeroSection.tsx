@@ -236,7 +236,7 @@ const HeroSection = () => {
   return (
     <div
       ref={heroRef}
-      className='relative flex items-center justify-center overflow-hidden pt-36'
+      className='relative flex min-h-screen items-center justify-center overflow-hidden'
     >
       {/* Background Video */}
       <div className='absolute inset-0 h-full w-full'>
@@ -267,7 +267,7 @@ const HeroSection = () => {
       </div>
 
       <AppLayoutPadding>
-        <div className='relative z-10 mx-auto flex max-w-6xl flex-col items-center text-center'>
+        <div className='relative z-10 mx-auto flex max-w-6xl flex-col items-center pt-24 text-center sm:pt-28 lg:pt-36'>
           {/* Main Title */}
           <div
             ref={titleRef}

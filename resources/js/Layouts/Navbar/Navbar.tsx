@@ -54,7 +54,7 @@ const Navbar = () => {
               </div>
 
               {/* CTA Button */}
-              <div>
+              <div className='hidden lg:block'>
                 <Link href='/how-it-works'>
                   <Button
                     size='xl'

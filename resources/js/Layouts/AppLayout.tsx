@@ -25,11 +25,13 @@ const AppLayout = ({ children }: Properties) => {
   return (
     <>
       <Navbar />
-      <div className='relative min-h-screen w-full'>
+      <div className='relative min-h-screen w-full bg-white'>
         <HeroSection />
-        <div className='-mt-12'>
+
+        <div className='hidden md:-mt-12 md:block'>
           <CompanyLogosSection />
         </div>
+
         <div className=''>
           <SectionAI />
         </div>
