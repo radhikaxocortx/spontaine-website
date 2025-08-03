@@ -39,17 +39,50 @@ const CompanyLogosSection = ({ className }: CompanyLogosSectionProps) => {
         x: -50,
       })
 
-      // Create scroll-triggered stagger animation
-      gsap.to('.company-logo-item', {
-        opacity: 1,
-        x: 0,
-        duration: 0.8,
-        stagger: 0.3, // Left-to-right stagger with 0.1s delay between each
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 80%',
-          toggleActions: 'play none none none', // Play once only
+      // Create viewport-triggered stagger animation
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: 'top 85%',
+        end: 'bottom 15%',
+        onEnter: () => {
+          // Animate logos when section enters viewport
+          gsap.to('.company-logo-item', {
+            opacity: 1,
+            x: 0,
+            duration: 0.6,
+            stagger: 0.1, // Faster stagger for smoother sequence
+            ease: 'power2.out',
+          })
+        },
+        onLeave: () => {
+          // Optional: Reset when leaving viewport (scrolling down)
+          gsap.to('.company-logo-item', {
+            opacity: 0,
+            x: -30,
+            duration: 0.4,
+            stagger: 0.05,
+            ease: 'power2.in',
+          })
+        },
+        onEnterBack: () => {
+          // Re-animate when coming back into viewport (scrolling up)
+          gsap.to('.company-logo-item', {
+            opacity: 1,
+            x: 0,
+            duration: 0.5,
+            stagger: 0.08,
+            ease: 'power2.out',
+          })
+        },
+        onLeaveBack: () => {
+          // Reset when leaving viewport upwards
+          gsap.to('.company-logo-item', {
+            opacity: 0,
+            x: -30,
+            duration: 0.3,
+            stagger: 0.03,
+            ease: 'power2.in',
+          })
         },
       })
     }, sectionRef)
@@ -94,7 +127,7 @@ const CompanyLogosSection = ({ className }: CompanyLogosSectionProps) => {
                   src={logo.src}
                   alt={logo.alt}
                   className={cn(
-                    'object-contain opacity-90 transition-opacity duration-300 hover:opacity-100',
+                    'object-contain opacity-50 transition-opacity duration-300',
                     logo.id === 2 || logo.id === 5
                       ? 'md:h-16 md:w-28 lg:h-20 lg:w-32'
                       : 'md:h-12 md:w-20 lg:h-16 lg:w-24'

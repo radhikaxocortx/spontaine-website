@@ -6,7 +6,11 @@ interface Properties {
 }
 
 const AppSectionPadding = ({ children, className = '' }: Properties) => {
-  return <div className={`py-12 ${className}`}>{children}</div>
+  return (
+    <div className={`flex min-h-screen items-center py-4 md:py-10 lg:py-16 xl:py-10 ${className}`}>
+      {children}
+    </div>
+  )
 }
 
 export default AppSectionPadding

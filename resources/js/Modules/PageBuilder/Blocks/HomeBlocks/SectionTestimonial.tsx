@@ -66,56 +66,114 @@ const SectionTestimonial = ({ className }: SectionTestimonialProps) => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // Set initial state - elements hidden
       gsap.set([logoRef.current, quoteRef.current, authorRef.current, dotsRef.current], {
         opacity: 0,
         y: 30,
       })
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 80%',
-          end: 'bottom 20%',
-          toggleActions: 'play none none reverse',
-        },
-      })
+      // Create viewport-triggered animation that repeats on every entry
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: 'top 85%',
+        end: 'bottom 15%',
+        onEnter: () => {
+          // Animate elements when section enters viewport
+          const tl = gsap.timeline()
 
-      tl.to(logoRef.current, {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: 'power3.out',
-      })
-        .to(
-          quoteRef.current,
-          {
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            ease: 'power3.out',
-          },
-          '-=0.4'
-        )
-        .to(
-          authorRef.current,
-          {
+          tl.to(logoRef.current, {
             opacity: 1,
             y: 0,
             duration: 0.8,
             ease: 'power3.out',
-          },
-          '-=0.4'
-        )
-        .to(
-          dotsRef.current,
-          {
+          })
+            .to(
+              quoteRef.current,
+              {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: 'power3.out',
+              },
+              '-=0.4'
+            )
+            .to(
+              authorRef.current,
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: 'power3.out',
+              },
+              '-=0.4'
+            )
+            .to(
+              dotsRef.current,
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                ease: 'power3.out',
+              },
+              '-=0.2'
+            )
+        },
+        onLeave: () => {
+          // Reset elements when leaving viewport (scrolling down)
+          gsap.set([logoRef.current, quoteRef.current, authorRef.current, dotsRef.current], {
+            opacity: 0,
+            y: 30,
+          })
+        },
+        onEnterBack: () => {
+          // Re-animate when coming back into viewport (scrolling up)
+          const tl = gsap.timeline()
+
+          tl.to(logoRef.current, {
             opacity: 1,
             y: 0,
             duration: 0.6,
             ease: 'power3.out',
-          },
-          '-=0.2'
-        )
+          })
+            .to(
+              quoteRef.current,
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: 'power3.out',
+              },
+              '-=0.3'
+            )
+            .to(
+              authorRef.current,
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                ease: 'power3.out',
+              },
+              '-=0.3'
+            )
+            .to(
+              dotsRef.current,
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.4,
+                ease: 'power3.out',
+              },
+              '-=0.2'
+            )
+        },
+        onLeaveBack: () => {
+          // Reset when leaving viewport upwards
+          gsap.set([logoRef.current, quoteRef.current, authorRef.current, dotsRef.current], {
+            opacity: 0,
+            y: 30,
+          })
+        },
+      })
     }, sectionRef)
 
     return () => ctx.revert()

@@ -55,7 +55,7 @@ const SectionLargeText = () => {
           duration: 2,
           ease: 'power3.out',
         },
-        '+=0.5'
+        '+=0.2'
       )
 
       // Animate underline with left-to-right draw effect
@@ -76,7 +76,7 @@ const SectionLargeText = () => {
   return (
     <div
       ref={sectionRef}
-      className='relative z-10 flex min-h-screen items-center justify-center overflow-hidden py-16 bg-cover bg-center bg-no-repeat'
+      className='relative z-10 flex min-h-screen items-center justify-center overflow-hidden bg-cover bg-center bg-no-repeat py-16'
       style={{ backgroundImage: 'url(/imge/home/grid-bg.png)' }}
     >
       <AppLayoutPadding>

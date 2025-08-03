@@ -145,7 +145,7 @@ const SectionBlogsList = ({ className }: SectionBlogsListProps) => {
                         size='2xl'
                         weight='bold'
                         maxWidth='2xl'
-                        className='mb-3 group-hover:text-lime-500'
+                        className='mb-3 group-hover:text-[#378727]'
                       >
                         {BLOG_POSTS[0].title}
                       </SectionSubheading>
@@ -154,7 +154,7 @@ const SectionBlogsList = ({ className }: SectionBlogsListProps) => {
                         theme='light'
                         size='medium'
                         maxWidth='2xl'
-                        className='mb-4 group-hover:text-lime-500'
+                        className='mb-4 group-hover:text-[#378727]'
                       >
                         {BLOG_POSTS[0].description}
                       </SectionDescription>
@@ -194,7 +194,7 @@ const SectionBlogsList = ({ className }: SectionBlogsListProps) => {
                           size='medium'
                           weight='bold'
                           maxWidth='2xl'
-                          className='mb-3 group-hover:text-lime-500'
+                          className='mb-3 group-hover:text-[#378727]'
                         >
                           {BLOG_POSTS[1].title}
                         </SectionSubheading>
@@ -202,7 +202,7 @@ const SectionBlogsList = ({ className }: SectionBlogsListProps) => {
                           theme='light'
                           size='small'
                           maxWidth='2xl'
-                          className='group-hover:text-lime-500'
+                          className='group-hover:text-[#378727]'
                         >
                           {BLOG_POSTS[1].description}
                         </SectionDescription>
@@ -237,7 +237,7 @@ const SectionBlogsList = ({ className }: SectionBlogsListProps) => {
                         size='medium'
                         weight='bold'
                         maxWidth='2xl'
-                        className='mb-3 group-hover:text-lime-500'
+                        className='mb-3 group-hover:text-[#378727]'
                       >
                         {BLOG_POSTS[2].title}
                       </SectionSubheading>
@@ -245,7 +245,7 @@ const SectionBlogsList = ({ className }: SectionBlogsListProps) => {
                         theme='light'
                         size='small'
                         maxWidth='2xl'
-                        className='group-hover:text-lime-500'
+                        className='group-hover:text-[#378727]'
                       >
                         {BLOG_POSTS[2].description}
                       </SectionDescription>

@@ -53,23 +53,56 @@ const SectionAI = ({ className }: SectionAIProps) => {
   const featureRefs = useRef<(HTMLDivElement | null)[]>([])
   const progressLineRefs = useRef<(HTMLDivElement | null)[]>([])
   const playedVideos = useRef<Set<number>>(new Set())
-  const currentVideoPlaying = useRef<boolean>(false)
   const hasEnteredViewport = useRef<boolean>(false)
+
+  // Handle hover interactions
+  const handleFeatureHover = (index: number) => {
+    if (index !== activeFeature) {
+      setActiveFeature(index)
+    }
+  }
+
+  // Handle hover effects with 3D transforms
+  const handleFeatureMouseEnter = (index: number) => {
+    const featureElement = featureRefs.current[index]
+    if (featureElement) {
+      gsap.to(featureElement, {
+        scale: 1.005,
+        rotateX: 1,
+        rotateY: 1,
+        z: 10,
+        duration: 0.3,
+        ease: 'power2.out',
+      })
+    }
+  }
+
+  const handleFeatureMouseLeave = (index: number) => {
+    const featureElement = featureRefs.current[index]
+    if (featureElement) {
+      gsap.to(featureElement, {
+        scale: 1,
+        rotateX: 0,
+        rotateY: 0,
+        z: 0,
+        duration: 0.3,
+        ease: 'power2.out',
+      })
+    }
+  }
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Viewport detection ScrollTrigger
+      // Simple viewport detection for initial video play
       ScrollTrigger.create({
         trigger: sectionRef.current,
         start: 'top 80%',
         end: 'bottom 20%',
         onEnter: () => {
-          console.log('🎬 Section entering viewport')
           if (!hasEnteredViewport.current) {
             hasEnteredViewport.current = true
             // Play initial video when first entering viewport
             if (videoRef.current && !playedVideos.current.has(0)) {
-              console.log('🎬 Playing initial video on viewport enter')
               videoRef.current.play().catch(() => {
                 console.log('Initial video autoplay prevented')
               })
@@ -77,84 +110,19 @@ const SectionAI = ({ className }: SectionAIProps) => {
             }
           }
         },
-        onLeave: () => {
-          console.log('🎬 Section leaving viewport (down)')
-        },
-        onEnterBack: () => {
-          console.log('🎬 Section re-entering viewport (up)')
-          console.log('🎬 Clearing played videos for replay')
-          playedVideos.current.clear()
-          // Force replay current video
-          if (videoRef.current) {
-            console.log('🎬 Force replaying current video')
-            videoRef.current.currentTime = 0
-            videoRef.current.play().catch(() => {
-              console.log('Video autoplay prevented on re-enter')
-            })
-            playedVideos.current.add(activeFeature)
-          }
-        },
-        onLeaveBack: () => {
-          console.log('🎬 Section leaving viewport (up)')
-        },
       })
 
-      // Pin the section during scroll
-      ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: 'top top',
-        end: () => `+=${FEATURES.length * window.innerHeight}`,
-        scrub: true,
-        pin: true,
-        pinSpacing: true,
-        onUpdate: (self) => {
-          const progress = self.progress
-
-          // Calculate which feature should be active
-          let featureIndex = 0
-          if (progress >= 0.67) {
-            featureIndex = 2
-          } else if (progress >= 0.33) {
-            featureIndex = 1
-          }
-
-          if (featureIndex !== activeFeature) {
-            setActiveFeature(featureIndex)
-          }
-
-          // Update progress lines
-          progressLineRefs.current.forEach((lineRef, index) => {
-            if (lineRef) {
-              gsap.to(lineRef, {
-                backgroundColor: index === featureIndex ? '#a3e635' : '#e5e7eb',
-                duration: 0.3,
-                ease: 'power3.out',
-              })
-            }
-          })
-
-          // Update feature opacity
-          featureRefs.current.forEach((ref, index) => {
-            if (ref) {
-              gsap.to(ref, {
-                opacity: index === featureIndex ? 1 : 0.4,
-                duration: 0.5,
-                ease: 'power3.out',
-              })
-            }
-          })
-        },
-      })
-
-      // Initial setup
-      featureRefs.current.forEach((ref, index) => {
+      // Set up 3D perspective for feature containers
+      featureRefs.current.forEach((ref) => {
         if (ref) {
           gsap.set(ref, {
-            opacity: index === 0 ? 1 : 0.4,
+            transformPerspective: 1000,
+            transformStyle: 'preserve-3d',
           })
         }
       })
 
+      // Initial setup for progress lines and feature states
       progressLineRefs.current.forEach((lineRef, index) => {
         if (lineRef) {
           gsap.set(lineRef, {
@@ -165,6 +133,20 @@ const SectionAI = ({ className }: SectionAIProps) => {
     }, sectionRef)
 
     return () => ctx.revert()
+  }, [])
+
+  // Handle active feature changes
+  useEffect(() => {
+    // Update progress lines with smooth transitions
+    progressLineRefs.current.forEach((lineRef, index) => {
+      if (lineRef) {
+        gsap.to(lineRef, {
+          backgroundColor: index === activeFeature ? '#a3e635' : '#e5e7eb',
+          duration: 0.4,
+          ease: 'power2.inOut',
+        })
+      }
+    })
   }, [activeFeature])
 
   // Handle video changes
@@ -176,37 +158,38 @@ const SectionAI = ({ className }: SectionAIProps) => {
 
     // Only change if different video
     if (video.src.includes(newSrc.split('/').pop() || '')) {
+      // Same video, but play if not played yet
+      if (!playedVideos.current.has(activeFeature)) {
+        video.currentTime = 0
+        video.play().catch(() => {
+          console.log('Video autoplay prevented')
+        })
+        playedVideos.current.add(activeFeature)
+      }
       return
     }
 
     // Smooth video transition
     gsap.to(video, {
       opacity: 0,
-      duration: 0.2,
-      ease: 'power2.out',
+      duration: 0.15,
+      ease: 'power2.inOut',
       onComplete: () => {
         video.src = newSrc
         video.load()
 
         const handleCanPlay = () => {
-          console.log(
-            `🎬 Video ${activeFeature} can play. Has been played:`,
-            playedVideos.current.has(activeFeature)
-          )
-          // Only play if this video hasn't been played before
-          if (!playedVideos.current.has(activeFeature)) {
-            console.log(`🎬 Playing video ${activeFeature}`)
-            currentVideoPlaying.current = true
-            video.play().catch(() => {
-              console.log('Video autoplay prevented')
-              currentVideoPlaying.current = false
-            })
-            playedVideos.current.add(activeFeature)
-          }
+          // Always play video on hover (once per hover)
+          video.currentTime = 0
+          video.play().catch(() => {
+            console.log('Video autoplay prevented')
+          })
+          playedVideos.current.add(activeFeature)
+
           gsap.to(video, {
             opacity: 1,
-            duration: 0.3,
-            ease: 'power2.out',
+            duration: 0.15,
+            ease: 'power2.inOut',
           })
         }
 
@@ -214,8 +197,8 @@ const SectionAI = ({ className }: SectionAIProps) => {
 
         // Fallback
         setTimeout(() => {
-          gsap.to(video, { opacity: 1, duration: 0.3 })
-        }, 500)
+          gsap.to(video, { opacity: 1, duration: 0.15 })
+        }, 300)
       },
     })
   }, [activeFeature])
@@ -258,62 +241,73 @@ const SectionAI = ({ className }: SectionAIProps) => {
           </div>
 
           {/* Content Grid */}
-          <div className='grid grid-cols-1 items-start gap-12 lg:grid-cols-2'>
+          <div className='grid grid-cols-1 items-start gap-8 md:gap-12 lg:grid-cols-2'>
             {/* Left Column - Features */}
-            <div className='space-y-4'>
+            <div className='space-y-2 lg:space-y-2'>
               {FEATURES.map((feature, index) => (
                 <div
                   key={feature.id}
-                  className='flex gap-2'
+                  className={`group cursor-pointer rounded-xl p-4 transition-all duration-300 md:p-6 ${
+                    index === activeFeature ? 'bg-gray-100' : 'hover:bg-white/5'
+                  }`}
+                  onMouseEnter={() => {
+                    handleFeatureHover(index)
+                    handleFeatureMouseEnter(index)
+                  }}
+                  onMouseLeave={() => handleFeatureMouseLeave(index)}
                 >
-                  {/* Progress Line */}
-                  <div className='flex flex-shrink-0 items-start pt-2'>
-                    <div
-                      ref={(el) => (progressLineRefs.current[index] = el)}
-                      className='h-16 w-1 rounded-full bg-gray-200'
-                    />
-                  </div>
+                  <div className='flex gap-3 md:gap-4'>
+                    {/* Progress Line */}
+                    <div className='flex flex-shrink-0 items-start pt-2'>
+                      <div
+                        ref={(el) => (progressLineRefs.current[index] = el)}
+                        className='h-12 w-1 rounded-full bg-gray-200 transition-all duration-300 md:h-16'
+                      />
+                    </div>
 
-                  {/* Feature Content */}
-                  <div
-                    ref={(el) => (featureRefs.current[index] = el)}
-                    className='flex-1 space-y-2'
-                  >
-                    <SectionSubtitle
-                      theme='light'
-                      size='small'
-                      weight='bold'
-                      centered={false}
-                      className='mb-1'
+                    {/* Feature Content */}
+                    <div
+                      ref={(el) => (featureRefs.current[index] = el)}
+                      className='flex-1 space-y-2'
                     >
-                      {feature.title}
-                    </SectionSubtitle>
-                    <SectionBody
-                      theme='gray'
-                      size='sm'
-                      lineHeight='relaxed'
-                      centered={false}
-                    >
-                      {feature.description}
-                    </SectionBody>
+                      <SectionSubtitle
+                        theme='light'
+                        size='small'
+                        weight='bold'
+                        centered={false}
+                        className={`mb-1 transition-colors duration-300 ${
+                          index === activeFeature ? 'text-lime-400' : 'group-hover:text-lime-300'
+                        }`}
+                      >
+                        {feature.title}
+                      </SectionSubtitle>
+                      <SectionBody
+                        theme='light'
+                        size='sm'
+                        lineHeight='relaxed'
+                        centered={false}
+                        className={`transition-all duration-300 ${
+                          index === activeFeature ? '' : 'opacity-70 group-hover:opacity-90'
+                        }`}
+                      >
+                        {feature.description}
+                      </SectionBody>
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
 
-            {/* Right Column - Video & Logos */}
-            <div className='hidden lg:block'>
+            {/* Right Column - Video Player */}
+            <div className='mt-6 hidden lg:mt-0 lg:block'>
               {/* Video Player */}
-              <div className=''>
+              <div className='relative overflow-hidden rounded-2xl border border-lime-400'>
                 <video
                   ref={videoRef}
-                  className='h-auto w-full rounded-lg'
+                  className='h-auto w-full transition-all duration-300'
                   autoPlay
                   muted
                   playsInline
-                  onEnded={() => {
-                    currentVideoPlaying.current = false
-                  }}
                   style={{ aspectRatio: '16/9' }}
                 >
                   <source
@@ -322,6 +316,24 @@ const SectionAI = ({ className }: SectionAIProps) => {
                   />
                   Your browser does not support the video tag.
                 </video>
+
+                {/* Video overlay for loading state */}
+                <div className='absolute inset-0 flex items-center justify-center bg-gray-900/20 opacity-0 transition-opacity duration-300'>
+                  <div className='h-8 w-8 animate-spin rounded-full border-2 border-lime-400 border-t-transparent'></div>
+                </div>
+              </div>
+
+              {/* Feature indicator dots */}
+              <div className='mt-4 flex justify-center gap-2 md:mt-6'>
+                {FEATURES.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setActiveFeature(index)}
+                    className={`h-2 w-2 rounded-full transition-all duration-300 ${
+                      index === activeFeature ? 'w-8 bg-lime-400' : 'bg-gray-400 hover:bg-gray-300'
+                    }`}
+                  />
+                ))}
               </div>
             </div>
           </div>

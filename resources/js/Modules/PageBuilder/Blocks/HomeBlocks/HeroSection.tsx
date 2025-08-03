@@ -4,6 +4,17 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useEffect, useRef } from 'react'
 
+// Calendly integration function
+const openCalendly = () => {
+  // Check if Calendly is available
+  if (typeof window !== 'undefined' && (window as any).Calendly) {
+    ;(window as any).Calendly.initPopupWidget({ url: 'https://calendly.com/clinicallynow' })
+  } else {
+    // Fallback to direct link if Calendly widget is not loaded
+    window.open('https://calendly.com/clinicallynow', '_blank')
+  }
+}
+
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger)
 
@@ -311,17 +322,16 @@ const HeroSection = () => {
             ref={ctaRef}
             className='mb-8 sm:mb-16'
           >
-            <a href='/how-it-works'>
-              <Button
-                size='lg'
-                className='rounded-full border-0 bg-lime-400 px-6 py-3 text-black shadow-lg transition-all duration-300 hover:bg-lime-300 hover:shadow-xl sm:px-8 sm:py-4'
-              >
-                <span className='flex items-center gap-2 sm:gap-3'>
-                  <span className='hero-cta-text'>Book a Demo</span>
-                  <i className='fas fa-arrow-right-long hero-cta-icon' />
-                </span>
-              </Button>
-            </a>
+            <Button
+              size='lg'
+              onClick={openCalendly}
+              className='cursor-pointer rounded-full border-0 bg-lime-400 px-6 py-3 text-black shadow-lg transition-all duration-300 hover:bg-lime-300 hover:shadow-xl sm:px-8 sm:py-4'
+            >
+              <span className='flex items-center gap-2 sm:gap-3'>
+                <span className='hero-cta-text'>Book a Demo</span>
+                <i className='fas fa-arrow-right-long hero-cta-icon' />
+              </span>
+            </Button>
           </div>
         </div>
       </AppLayoutPadding>

@@ -9,6 +9,17 @@ import { useEffect, useRef } from 'react'
 
 gsap.registerPlugin(ScrollTrigger)
 
+// Calendly integration function
+const openCalendly = () => {
+  // Check if Calendly is available
+  if (typeof window !== 'undefined' && (window as any).Calendly) {
+    (window as any).Calendly.initPopupWidget({ url: 'https://calendly.com/clinicallynow' })
+  } else {
+    // Fallback to direct link if Calendly widget is not loaded
+    window.open('https://calendly.com/clinicallynow', '_blank')
+  }
+}
+
 interface SectionTalkProps {
   className?: string
 }
@@ -74,8 +85,7 @@ const SectionTalk = ({ className }: SectionTalkProps) => {
   }, [])
 
   const handleScheduleCall = () => {
-    // Add your scheduling logic here
-    console.log('Schedule a call clicked')
+    openCalendly()
   }
 
   return (
