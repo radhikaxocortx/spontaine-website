@@ -25,6 +25,7 @@ import SectionHero, { HeroImageBlock } from '../Blocks/SectionHero'
 import SectionMarquee, { MarqueeData } from '../Blocks/SectionMarquee'
 import SectionTestimonial, { TestimonialBlock } from '../Blocks/SectionTestimonial'
 import SectionVideo, { VideoImageBlock } from '../Blocks/SectionVideo'
+import SectionBannerSP, { SectionBannerSPBlock } from '../Blocks/SpontaineBlocks/SectionBannerSP'
 
 interface Properties {
   block?: Block
@@ -169,6 +170,14 @@ const ResolveComponent = ({
           blockData={block as unknown as PricePlanBlock}
           language={language}
           dispatch={dispatch}
+        />
+      )}
+      {blockName === 'Spontaine - Banner Section' && (
+        <SectionBannerSP
+          blockData={block as unknown as SectionBannerSPBlock}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
         />
       )}
     </>

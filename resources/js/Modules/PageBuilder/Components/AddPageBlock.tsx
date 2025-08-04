@@ -77,6 +77,11 @@ const pageBlocks = [
     description: 'Rich text content with formatting options',
     icon: '📝',
   },
+  {
+    name: 'Spontaine - Banner Section',
+    description: 'Full-width banner with Ken Burns effect and left-aligned content',
+    icon: '🎭',
+  },
 ]
 
 interface Properties {

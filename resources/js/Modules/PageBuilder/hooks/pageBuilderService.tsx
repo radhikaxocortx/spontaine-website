@@ -13,6 +13,7 @@ import { textBlock } from '../Blocks/SectionCallToAction'
 import { heroImageBlock } from '../Blocks/SectionHero'
 import { defaultTestimonialBlock } from '../Blocks/SectionTestimonial'
 import { videoBlock } from '../Blocks/SectionVideo'
+import { sectionBannerSPBlock } from '../Blocks/SpontaineBlocks/SectionBannerSP'
 
 export interface PageBuilderAction {
   action:
@@ -102,6 +103,11 @@ const getBlockDefaultData = (blockName: string) => {
     case 'Home - Call To Action': {
       return {
         ...textBlock,
+      }
+    }
+    case 'Spontaine - Banner Section': {
+      return {
+        ...sectionBannerSPBlock,
       }
     }
     default: {

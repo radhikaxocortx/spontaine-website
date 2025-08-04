@@ -33,49 +33,49 @@ const AppLayout = ({ children }: Properties) => {
         scroll-padding-top: 80px; /* Account for fixed navbar */
         -webkit-overflow-scrolling: touch; /* iOS momentum scrolling */
       }
-      
+
       /* Enhanced smooth scrolling for all elements */
       * {
         scroll-behavior: smooth;
       }
-      
+
       /* Respect user's motion preferences for accessibility */
       @media (prefers-reduced-motion: reduce) {
         html, * {
           scroll-behavior: auto !important;
         }
       }
-      
+
       /* Premium scrollbar design - minimal and elegant */
       ::-webkit-scrollbar {
         width: 4px;
         height: 4px;
       }
-      
+
       ::-webkit-scrollbar-track {
         background: transparent;
       }
-      
+
       ::-webkit-scrollbar-thumb {
         background: rgba(163, 230, 53, 0.2);
         border-radius: 2px;
         transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
       }
-      
+
       ::-webkit-scrollbar-thumb:hover {
         background: rgba(163, 230, 53, 0.5);
       }
-      
+
       ::-webkit-scrollbar-thumb:active {
         background: rgba(163, 230, 53, 0.7);
       }
-      
+
       /* Firefox scrollbar */
       html {
         scrollbar-width: thin;
         scrollbar-color: rgba(163, 230, 53, 0.2) transparent;
       }
-      
+
       /* Smooth page transitions and optimized rendering */
       body {
         overflow-x: hidden;
@@ -83,7 +83,7 @@ const AppLayout = ({ children }: Properties) => {
         -webkit-overflow-scrolling: touch;
         overscroll-behavior: contain;
       }
-      
+
       /* Optimize scroll performance */
       * {
         -webkit-font-smoothing: antialiased;
@@ -96,13 +96,13 @@ const AppLayout = ({ children }: Properties) => {
     // Enhanced scroll event handling with throttling for performance
     let ticking = false
     let lastScrollY = window.scrollY
-    
+
     const handleScroll = () => {
       if (!ticking) {
         requestAnimationFrame(() => {
           const currentScrollY = window.scrollY
           const scrollDirection = currentScrollY > lastScrollY ? 'down' : 'up'
-          
+
           // Add smooth momentum feeling
           document.body.style.setProperty('--scroll-direction', scrollDirection)
           lastScrollY = currentScrollY
@@ -119,14 +119,14 @@ const AppLayout = ({ children }: Properties) => {
         const element = document.querySelector(target.hash)
         if (element) {
           e.preventDefault()
-          
+
           // Enhanced smooth scrolling with custom easing
           element.scrollIntoView({
             behavior: 'smooth',
             block: 'start',
-            inline: 'nearest'
+            inline: 'nearest',
           })
-          
+
           // Add subtle focus indication
           setTimeout(() => {
             element.setAttribute('tabindex', '-1')
@@ -143,10 +143,10 @@ const AppLayout = ({ children }: Properties) => {
         e.preventDefault()
         const direction = e.key === 'PageDown' ? 1 : -1
         const scrollAmount = window.innerHeight * 0.8 * direction
-        
+
         window.scrollBy({
           top: scrollAmount,
-          behavior: 'smooth'
+          behavior: 'smooth',
         })
       }
     }
@@ -163,7 +163,7 @@ const AppLayout = ({ children }: Properties) => {
         if (element) {
           element.scrollIntoView({
             behavior: 'smooth',
-            block: 'start'
+            block: 'start',
           })
         }
       }, 100)
