@@ -16,7 +16,9 @@ class PageBuilderFormRequest extends Data
         public ?string $description,
         public string $url,
         public bool $published,
+        public bool $featured,
         public string $type,
         public ?UploadedFile $previewImage,
+        public ?UploadedFile $previewVideo,
     ) {}
 }

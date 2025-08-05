@@ -43,6 +43,8 @@ export default function PageIndex({ pages }: Props) {
         page_title: page.page_title,
         type: page.type,
         description: page.description,
+        published: page.published ? 'Yes' : 'No',
+        featured: page.featured ? '⭐ Featured' : 'No',
 
         actions: [
           {
@@ -79,6 +81,16 @@ export default function PageIndex({ pages }: Props) {
       {
         key: 'type',
         label: 'Type',
+        isShownInCard: true,
+      },
+      {
+        key: 'published',
+        label: 'Published',
+        isShownInCard: true,
+      },
+      {
+        key: 'featured',
+        label: 'Featured',
         isShownInCard: true,
       },
       {

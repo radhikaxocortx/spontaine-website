@@ -15,6 +15,7 @@ class ContactController extends Controller
     public function sendMail(Request $request, RateLimitingService $rateLimitingService): RedirectResponse
     {
 
+
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
@@ -30,6 +31,8 @@ class ContactController extends Controller
             'support' => 'nullable|boolean',
             'other' => 'nullable|boolean',
         ]);
+
+
 
         // Build enquiry types list
         $enquiryTypes = [];
@@ -57,7 +60,7 @@ class ContactController extends Controller
             $rateLimitingService->incrementAttempts($rateLimitKey);
             try {
                 $subject = $request->subject ?? 'Contact Form Submission';
-                Mail::to($request->receiver_mail ?? config('app.receiver_mail'))
+                Mail::to($request->receiver_mail ?? 'desk@intuonfx.com')
                     ->send(new TemplateMail(
                         title: $request->subject ?? 'Contact',
                         mailContent: $mailContent,

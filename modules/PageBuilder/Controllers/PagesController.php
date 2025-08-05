@@ -34,6 +34,7 @@ class PagesController extends Controller
         try {
 
             $previewImagePath = null;
+            $previewVideoPath = null;
 
             if ($request->previewImage) {
                 $previewImagePath = $this->save(
@@ -43,9 +44,18 @@ class PagesController extends Controller
                 );
             }
 
+            if ($request->previewVideo) {
+                $previewVideoPath = $this->save(
+                    $request->previewVideo,
+                    time(),
+                    'page_preview_videos'
+                );
+            }
+
             $record = Page::create([
                 ...$request->all(),
                 'preview_image' => $previewImagePath,
+                'preview_video' => $previewVideoPath,
                 'blocks' => [
                     'lastUUID' => 1,
                     'blocks' => [],
@@ -82,9 +92,9 @@ class PagesController extends Controller
             $record = Page::findOrFail($id);
 
             $previewImagePath = $record->preview_image;
+            $previewVideoPath = $record->preview_video;
 
             if ($request->previewImage) {
-
                 $previewImagePath = $this->save(
                     $request->previewImage,
                     time(),
@@ -92,9 +102,18 @@ class PagesController extends Controller
                 );
             }
 
+            if ($request->previewVideo) {
+                $previewVideoPath = $this->save(
+                    $request->previewVideo,
+                    time(),
+                    'page_preview_videos'
+                );
+            }
+
             $record->update([
                 ...$request->all(),
                 'preview_image' => $previewImagePath,
+                'preview_video' => $previewVideoPath,
             ]);
         } catch (Exception $e) {
             return redirect()->back()->with(['error' => $e->getMessage()]);

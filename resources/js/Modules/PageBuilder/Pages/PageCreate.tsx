@@ -11,8 +11,10 @@ export default function PageCreate() {
     description: '',
     url: '',
     published: false,
-    type: '',
+    featured: false,
+    type: 'Page',
     preview_image: '',
+    preview_video: '',
   })
   const Url = useNameUrl(formData.title)
 
@@ -48,14 +50,28 @@ export default function PageCreate() {
       },
 
       type: {
-        type: 'text',
+        type: 'select',
         label: 'Type',
         setValue: setFormValue('type'),
+        list: [
+          { value: 'Page', label: 'Page' },
+          { value: 'Blog', label: 'Blog' },
+          { value: 'Article', label: 'Article' },
+          { value: 'Opinion', label: 'Opinion' },
+        ],
+        dataKey: 'value',
+        displayKey: 'label',
       },
       preview_image: {
         type: 'file',
         label: 'Preview Image',
         setValue: setFormValue('preview_image'),
+      },
+      preview_video: {
+        type: 'file',
+        label: 'Preview Video (Optional)',
+        setValue: setFormValue('preview_video'),
+        accept: 'video/*',
       },
       description: {
         type: 'textarea',
@@ -66,6 +82,11 @@ export default function PageCreate() {
         type: 'checkbox',
         label: 'Published',
         setValue: setFormValue('published'),
+      },
+      featured: {
+        type: 'checkbox',
+        label: 'Featured',
+        setValue: setFormValue('featured'),
       },
     } as Record<U, FormItem<T[U], K, G, L>>
   }, [setFormValue])

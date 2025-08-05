@@ -52,7 +52,7 @@ const SectionBody = ({
         sizes[size],
         weights[weight],
         lineHeights[lineHeight],
-        centered && 'mx-auto',
+        // centered && 'mx-auto',
         className
       )}
     >

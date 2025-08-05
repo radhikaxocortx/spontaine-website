@@ -20,8 +20,10 @@ export interface Page {
   description: string
   url: string
   published: boolean
-  type: string
+  featured: boolean
+  type: 'Page' | 'Blog' | 'Article' | 'Opinion'
   preview_image: string
+  preview_video?: string
   blocks: PageBlock
 }
 

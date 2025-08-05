@@ -13,6 +13,7 @@ use App\Http\Controllers\EntityTemplate\EntityTemplateController;
 use App\Http\Controllers\EntityTemplate\EntityTemplateItemController;
 use App\Http\Controllers\EntityTemplate\workflowAPIController;
 use App\Http\Controllers\HomePageController;
+use App\Http\Controllers\BlogsListController;
 use App\Http\Controllers\PricePlan\PricePlanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Promotion\CouponManagementController;
@@ -33,6 +34,7 @@ use Modules\PageBuilder\Controllers\UIBuilder\FooterController as UIBuilderFoote
 use Modules\PageBuilder\Models\Page;
 
 Route::get('/', HomePageController::class)->name('home');
+Route::get('/blogs-list', BlogsListController::class)->name('blogs-list');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

@@ -17,8 +17,10 @@ export default function PageEdit({ page }: Props) {
     description: page.description,
     url: page.url,
     published: page.published,
+    featured: page.featured || false,
     type: page.type,
     preview_image: null,
+    preview_video: null,
   })
   const Url = useNameUrl(formData.title)
 
@@ -54,14 +56,28 @@ export default function PageEdit({ page }: Props) {
       },
 
       type: {
-        type: 'text',
+        type: 'select',
         label: 'Type',
         setValue: setFormValue('type'),
+        list: [
+          { value: 'Page', label: 'Page' },
+          { value: 'Blog', label: 'Blog' },
+          { value: 'Article', label: 'Article' },
+          { value: 'Opinion', label: 'Opinion' },
+        ],
+        dataKey: 'value',
+        displayKey: 'label',
       },
       preview_image: {
         type: 'file',
         label: 'Preview Image',
         setValue: setFormValue('preview_image'),
+      },
+      preview_video: {
+        type: 'file',
+        label: 'Preview Video (Optional)',
+        setValue: setFormValue('preview_video'),
+        accept: 'video/*',
       },
       description: {
         type: 'textarea',
@@ -72,6 +88,11 @@ export default function PageEdit({ page }: Props) {
         type: 'checkbox',
         label: 'Published',
         setValue: setFormValue('published'),
+      },
+      featured: {
+        type: 'checkbox',
+        label: 'Featured',
+        setValue: setFormValue('featured'),
       },
     } as Record<U, FormItem<T[U], K, G, L>>
   }, [setFormValue])

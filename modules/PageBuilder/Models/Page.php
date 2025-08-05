@@ -15,14 +15,20 @@ class Page extends Model
         'description',
         'url',
         'published',
+        'featured',
         'blocks',
         'type',
         'preview_image',
+        'preview_video',
         'created_by',
         'updated_by',
     ];
 
     protected $casts = [
         'blocks' => 'array',
+        'published' => 'boolean',
+        'featured' => 'boolean',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 }

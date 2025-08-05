@@ -55,7 +55,7 @@ const SectionSubheading = ({
         themeColors[theme],
         sizes[size],
         weights[weight],
-        centered && 'mx-auto',
+        centered,
         maxWidths[maxWidth],
         className
       )}

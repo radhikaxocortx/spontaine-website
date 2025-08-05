@@ -24,6 +24,7 @@ const AppLayout = ({ children }: Properties) => {
     const triggerNavbarHiding = () => {
       // Find the first content block (banner section) - target the specific banner section
       const firstBlock = 
+        document.querySelector('[data-banner-section="true"]') || // BlogsList banner section
         document.querySelector('section[class*="h-[50vh]"]') || // Banner section with 50vh height
         document.querySelector('section[class*="min-h-[400px]"]') || // Banner section with min height
         document.querySelector('.min-h-screen > div > section:first-child') || // First section in page
