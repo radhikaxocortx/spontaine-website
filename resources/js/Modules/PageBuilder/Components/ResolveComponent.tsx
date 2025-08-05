@@ -26,6 +26,9 @@ import SectionMarquee, { MarqueeData } from '../Blocks/SectionMarquee'
 import SectionTestimonial, { TestimonialBlock } from '../Blocks/SectionTestimonial'
 import SectionVideo, { VideoImageBlock } from '../Blocks/SectionVideo'
 import SectionBannerSP, { SectionBannerSPBlock } from '../Blocks/SpontaineBlocks/SectionBannerSP'
+import SectionBreadcrumbs, {
+  SectionBreadcrumbsData,
+} from '../Blocks/SpontaineBlocks/SectionBreadcrumbs'
 
 interface Properties {
   block?: Block
@@ -175,6 +178,14 @@ const ResolveComponent = ({
       {blockName === 'Spontaine - Banner Section' && (
         <SectionBannerSP
           blockData={block as unknown as SectionBannerSPBlock}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+        />
+      )}
+      {blockName === 'Spontaine - Breadcrumbs' && (
+        <SectionBreadcrumbs
+          block={block as unknown as SectionBreadcrumbsData}
           editMode={editMode}
           onFieldEdit={onFieldEdit}
           language={language}

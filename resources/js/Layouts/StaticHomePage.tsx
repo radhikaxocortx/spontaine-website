@@ -1,91 +1,25 @@
 import Navbar from '@/Layouts/Navbar/Navbar'
+import CompanyLogosSection from '@/Modules/PageBuilder/Blocks/HomeBlocks/CompanyLogosSection'
+import HeroSection from '@/Modules/PageBuilder/Blocks/HomeBlocks/HeroSection'
+import SectionAI from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionAI'
+import SectionBlogsList from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionBlogsList'
+import SectionLargeText from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionLargeText'
+import SectionTalk from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionTalk'
+import SectionTestimonial from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionTestimonial'
+import SectionTrustedPartners from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionTrustedPartners'
+import SectionVideos from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionVideos'
 import { FooterDataInterface } from '@/Modules/PageBuilder/FooterEditor/FooterEditor'
 import { PageProps } from '@/types'
 import { usePage } from '@inertiajs/react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import Footer from './Footer/Footer'
 
-interface Properties {
-  children: React.ReactNode
-}
-
-const AppLayout = ({ children }: Properties) => {
+const StaticHomePage = () => {
   // Get footer data from Inertia shared props
   const { footer } = usePage<PageProps & { footer: { items: FooterDataInterface } }>().props
 
   // Premium smooth scroll implementation comparable to Devin.ai
   useEffect(() => {
-    // Register GSAP ScrollTrigger plugin
-    gsap.registerPlugin(ScrollTrigger)
-
-    // GSAP animation to hide navbar after first block
-    const triggerNavbarHiding = () => {
-      // Find the first content block (banner section) - target the specific banner section
-      const firstBlock = 
-        document.querySelector('section[class*="h-[50vh]"]') || // Banner section with 50vh height
-        document.querySelector('section[class*="min-h-[400px]"]') || // Banner section with min height
-        document.querySelector('.min-h-screen > div > section:first-child') || // First section in page
-        document.querySelector('[data-block-type]') || // Page builder blocks have this attribute
-        document.querySelector('.min-h-screen > *:first-child > *:first-child') // First child of first child
-      
-      console.log('First block found:', firstBlock) // Debug log
-
-      if (firstBlock) {
-        // Create custom event dispatcher for navbar visibility
-        const dispatchHeroVisibility = (isVisible: boolean) => {
-          const event = new CustomEvent('hero-section-visible', { detail: isVisible })
-          window.dispatchEvent(event)
-        }
-
-        // Initially navbar is visible
-        dispatchHeroVisibility(true)
-
-        // Create ScrollTrigger to hide navbar after first block
-        ScrollTrigger.create({
-          trigger: firstBlock,
-          start: 'bottom top+=80px', // Hide when first block is 80px past the top
-          end: 'bottom top+=80px',
-          onEnter: () => {
-            console.log('Hiding navbar') // Debug log
-            dispatchHeroVisibility(false)
-          },
-          onLeaveBack: () => {
-            console.log('Showing navbar') // Debug log
-            dispatchHeroVisibility(true)
-          },
-          markers: false, // Set to true for debugging
-        })
-      } else {
-        // Fallback: simple scroll-based navbar hiding
-        console.log('No first block found, using scroll-based fallback')
-        
-        const dispatchHeroVisibility = (isVisible: boolean) => {
-          const event = new CustomEvent('hero-section-visible', { detail: isVisible })
-          window.dispatchEvent(event)
-        }
-
-        // Initially navbar is visible
-        dispatchHeroVisibility(true)
-
-        // Simple scroll trigger at viewport height
-        ScrollTrigger.create({
-          start: 'top top',
-          end: '+=100vh', // After one viewport height
-          onUpdate: (self) => {
-            if (self.progress > 0.5) {
-              dispatchHeroVisibility(false)
-            } else {
-              dispatchHeroVisibility(true)
-            }
-          },
-        })
-      }
-    }
-
-    // Wait for DOM to be ready, then trigger navbar hiding
-    const timeoutId = setTimeout(triggerNavbarHiding, 100)
     // Enhanced smooth scroll with premium feel
     const style = document.createElement('style')
     style.textContent = `
@@ -233,8 +167,6 @@ const AppLayout = ({ children }: Properties) => {
 
     // Cleanup function
     return () => {
-      clearTimeout(timeoutId)
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
       window.removeEventListener('scroll', handleScroll)
       document.removeEventListener('click', handleAnchorClick)
       document.removeEventListener('keydown', handleKeyNavigation)
@@ -247,10 +179,26 @@ const AppLayout = ({ children }: Properties) => {
   return (
     <>
       <Navbar />
-      <div className='relative min-h-screen w-full bg-white'>{children}</div>
+      <div className='relative min-h-screen w-full bg-white'>
+        <HeroSection />
+
+        <div className='hidden md:-mt-12 md:block'>
+          <CompanyLogosSection />
+        </div>
+
+        <div className=''>
+          <SectionAI />
+        </div>
+        <SectionTrustedPartners />
+        <SectionBlogsList />
+        <SectionVideos />
+        <SectionLargeText />
+        <SectionTestimonial />
+        <SectionTalk />
+      </div>
       <Footer blockData={footer.items} />
     </>
   )
 }
 
-export default AppLayout
+export default StaticHomePage

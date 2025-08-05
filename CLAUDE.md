@@ -492,3 +492,80 @@ Navigation data is globally shared via `app/Http/Middleware/HandleInertiaRequest
 - Implement consistent spacing with px-based Tailwind classes
 - Create responsive padding/margin with breakpoint prefixes
 - Ensure proper alignment and distribution across screen sizes
+
+---
+
+## Static Home Page vs Dynamic Page Builder Architecture
+
+### Overview
+
+The application uses a dual approach: a static, hardcoded home page for performance and control, while enabling dynamic page creation through the page builder system for all other pages.
+
+### Static Home Page System
+
+**Purpose**: Maintain a fast, controlled home page experience with handcrafted sections.
+
+**Key Components**:
+- `StaticHomePage.tsx` - Contains all hardcoded home sections (Hero, CompanyLogos, SectionAI, etc.)
+- `HomePage.tsx` - Simple wrapper component for the static home
+- `HomePageController.php` - Dedicated controller returning static home page
+- Route: `Route::get('/', HomePageController::class)->name('home')`
+
+**Benefits**:
+- Zero database queries for home page loading
+- Complete design control over main landing experience
+- Premium smooth scroll implementation
+- Optimized performance
+
+### Dynamic Page Builder System
+
+**Purpose**: Enable creation and management of all other website pages through the admin interface.
+
+**Key Components**:
+- `ViewBuilderController.php` - Handles dynamic page rendering from database
+- `ViewBuilderPage.tsx` - Renders pages built with the page builder
+- `AppLayout.tsx` - Generic layout wrapper accepting children
+- Route: `Route::get('{slug}', ViewBuilderController::class)`
+
+**Features**:
+- Database-driven content management
+- Block-based page construction
+- Multilingual support (English/Malayalam)
+- Admin editing interface
+- Published/draft status control
+
+### Routing Architecture
+
+```php
+// Static home page - no database lookup
+Route::get('/', HomePageController::class)->name('home');
+
+// Dynamic pages - database-driven content
+Route::get('{slug}', ViewBuilderController::class)->name('view-builder');
+```
+
+**ViewBuilderController Logic**:
+- Redirects any home page requests to static route
+- Only serves published pages to public users
+- Returns 404 for non-existent pages
+
+### Layout Separation Strategy
+
+**AppLayout**: Generic layout for dynamic pages
+- Accepts `children` prop for page builder content
+- Provides consistent Navbar/Footer across all dynamic pages
+- Maintains smooth scroll functionality
+
+**StaticHomePage**: Self-contained home page layout  
+- Includes all hardcoded sections in specific order
+- Independent styling and behavior
+- No dependency on page builder system
+
+### Development Workflow
+
+**For Home Page Changes**: Edit `StaticHomePage.tsx` directly
+**For Other Pages**: Use page builder admin interface (`/pages`)
+**For New Blocks**: Add to `resources/js/Modules/PageBuilder/Blocks/`
+**For New Static Pages**: Create dedicated controller + component pattern
+
+This architecture ensures optimal performance for the main landing page while providing maximum flexibility for all other content management needs.

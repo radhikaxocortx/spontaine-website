@@ -11,7 +11,13 @@ class ViewBuilderController extends Controller
 {
     public function __invoke(string $url): Response
     {
+        // Redirect home requests to the static home page
+        if ($url === 'home' || $url === '') {
+            return redirect()->route('home');
+        }
+
         $page = Page::where('url', $url)
+            ->where('published', true)
             ->firstOrFail();
 
         return Inertia::render('PageBuilder/ViewBuilderPage', [

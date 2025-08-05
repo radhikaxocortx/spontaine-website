@@ -12,6 +12,7 @@ use App\Http\Controllers\Email\EmailController;
 use App\Http\Controllers\EntityTemplate\EntityTemplateController;
 use App\Http\Controllers\EntityTemplate\EntityTemplateItemController;
 use App\Http\Controllers\EntityTemplate\workflowAPIController;
+use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\PricePlan\PricePlanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Promotion\CouponManagementController;
@@ -31,14 +32,7 @@ use Modules\PageBuilder\Controllers\NavEditor\NavEditorController as NavEditorNa
 use Modules\PageBuilder\Controllers\UIBuilder\FooterController as UIBuilderFooterController;
 use Modules\PageBuilder\Models\Page;
 
-Route::get('/', function () {
-    $page = Page::where('url', 'home')
-        ->firstOrFail();
-
-    return Inertia::render('PageBuilder/ViewBuilderPage', [
-        'page' => $page,
-    ]);
-});
+Route::get('/', HomePageController::class)->name('home');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -97,7 +91,6 @@ Route::middleware('guest')->group(function () {
         ->name('previous-account-security');
     Route::post('verify-customer-otp', [CustomerCreateController::class, 'verifyCustomerOtp'])
         ->name('verify-customer-otp');
-
 });
 
 // Kadodo ID
@@ -205,4 +198,4 @@ Route::post('send-contact-mail', [ContactController::class, 'sendMail']);
 Route::get('file-download', FileDownloadController::class)
     ->name('file-download');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

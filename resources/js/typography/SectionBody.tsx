@@ -6,7 +6,7 @@ interface SectionBodyProps {
   className?: string
   theme?: 'light' | 'dark' | 'gray'
   size?: 'xs' | 'sm' | 'base'
-  weight?: 'light' | 'normal'
+  weight?: 'light' | 'normal' | 'semibold' | 'bold'
   lineHeight?: 'normal' | 'relaxed'
   centered?: boolean
 }
@@ -35,6 +35,8 @@ const SectionBody = ({
   const weights = {
     light: 'font-light',
     normal: 'font-normal',
+    semibold: 'font-semibold',
+    bold: 'font-bold',
   }
 
   const lineHeights = {

@@ -14,6 +14,7 @@ import { heroImageBlock } from '../Blocks/SectionHero'
 import { defaultTestimonialBlock } from '../Blocks/SectionTestimonial'
 import { videoBlock } from '../Blocks/SectionVideo'
 import { sectionBannerSPBlock } from '../Blocks/SpontaineBlocks/SectionBannerSP'
+import { breadcrumbsData } from '../Blocks/SpontaineBlocks/SectionBreadcrumbs'
 
 export interface PageBuilderAction {
   action:
@@ -108,6 +109,11 @@ const getBlockDefaultData = (blockName: string) => {
     case 'Spontaine - Banner Section': {
       return {
         ...sectionBannerSPBlock,
+      }
+    }
+    case 'Spontaine - Breadcrumbs': {
+      return {
+        ...breadcrumbsData,
       }
     }
     default: {

@@ -19,28 +19,44 @@ class ContactController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
             'phone' => 'required|string|max:255',
-            'about' => 'required|string|in:general,support,billing,partnership,other',
             'message' => 'required|string|max:1000',
             'privacy_policy' => 'required|boolean',
             'receiver_mail' => 'nullable|string|email|max:255',
             'subject' => 'nullable|string|max:255',
+            'general_enquiries' => 'nullable|boolean',
+            'partner_enquiries' => 'nullable|boolean',
+            'investor_enquiries' => 'nullable|boolean',
+            'career_enquiries' => 'nullable|boolean',
+            'support' => 'nullable|boolean',
+            'other' => 'nullable|boolean',
         ]);
+
+        // Build enquiry types list
+        $enquiryTypes = [];
+        if ($request->general_enquiries) $enquiryTypes[] = 'General Enquiries';
+        if ($request->partner_enquiries) $enquiryTypes[] = 'Partner Enquiries';
+        if ($request->investor_enquiries) $enquiryTypes[] = 'Investor Enquiries';
+        if ($request->career_enquiries) $enquiryTypes[] = 'Career Enquiries';
+        if ($request->support) $enquiryTypes[] = 'Support';
+        if ($request->other) $enquiryTypes[] = 'Other';
+
+        $enquiryTypesString = !empty($enquiryTypes) ? implode(', ', $enquiryTypes) : 'None specified';
 
         // mail content
         $mailContent = "Name: $request->name <br />"
-            ."Email: $request->email <br />"
-            ."Phone: $request->phone <br />"
-            ."About: $request->about <br />"
-            .'Privacy Policy Accepted: '.($request->privacy_policy ? 'Yes' : 'No').'<br /><br />'
-            ."Message:<br /> $request->message";
+            . "Email: $request->email <br />"
+            . "Phone: $request->phone <br />"
+            . "Selected Enquiries: $enquiryTypesString <br />"
+            . 'Privacy Policy Accepted: ' . ($request->privacy_policy ? 'Yes' : 'No') . '<br /><br />'
+            . "Message:<br /> $request->message";
 
-        $rateLimitKey = 'contact-us'.$request->ip();
+        $rateLimitKey = 'contact-us' . $request->ip();
 
         // if rate limit check is passed send mail and add to db
         if ($rateLimitingService->attemptsRemaining($rateLimitKey) > 0) {
             $rateLimitingService->incrementAttempts($rateLimitKey);
             try {
-                $subject = ($request->subject ?? 'Contact').' - '.($request->about ?? '');
+                $subject = $request->subject ?? 'Contact Form Submission';
                 Mail::to($request->receiver_mail ?? config('app.receiver_mail'))
                     ->send(new TemplateMail(
                         title: $request->subject ?? 'Contact',
@@ -66,7 +82,7 @@ class ContactController extends Controller
         return redirect()->back()
             ->with([
                 'error' => 'You Can Send Only 3 Messages In An Hour, Try Again In '
-                    .$duration.' Minutes',
+                    . $duration . ' Minutes',
             ]);
     }
 }

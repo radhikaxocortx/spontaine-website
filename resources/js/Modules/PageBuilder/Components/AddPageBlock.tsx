@@ -82,6 +82,11 @@ const pageBlocks = [
     description: 'Full-width banner with Ken Burns effect and left-aligned content',
     icon: '🎭',
   },
+  {
+    name: 'Spontaine - Breadcrumbs',
+    description: 'Navigation breadcrumbs with customizable links and styling',
+    icon: '🍞',
+  },
 ]
 
 interface Properties {

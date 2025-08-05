@@ -6,6 +6,7 @@ interface SectionTitleProps {
   className?: string
   theme?: 'light' | 'dark'
   alignment?: 'left' | 'center' | 'right'
+  style?: React.CSSProperties
 }
 
 const SectionTitle = ({
@@ -13,6 +14,7 @@ const SectionTitle = ({
   className,
   theme = 'light',
   alignment = 'center',
+  style,
 }: SectionTitleProps) => {
   const textColor = theme === 'light' ? 'text-black' : 'text-white'
   const alignmentClass = {
@@ -29,6 +31,7 @@ const SectionTitle = ({
         alignmentClass,
         className
       )}
+      style={style}
     >
       {children}
     </h2>

@@ -45,10 +45,15 @@ class ContactMessage extends Model
         'name',
         'email',
         'phone',
-        'about',
         'message',
         'privacy_policy',
         'receiver_mail',
         'subject',
+        'general_enquiries',
+        'partner_enquiries',
+        'investor_enquiries',
+        'career_enquiries',
+        'support',
+        'other',
     ];
 }

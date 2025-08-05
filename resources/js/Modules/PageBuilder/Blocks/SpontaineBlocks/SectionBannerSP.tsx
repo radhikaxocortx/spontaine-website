@@ -1,4 +1,5 @@
 import { Language } from '@/components/ui/ui_interfaces'
+import AppLayoutPadding from '@/Layouts/AppLayoutPadding'
 import { cn } from '@/lib/utils'
 import { BlocKFieldInfo } from '@/Modules/PageBuilder/Components/BlockEditor/BlockEditor'
 import EditLabel from '@/Modules/PageBuilder/Components/EditLabel'
@@ -9,6 +10,7 @@ import {
   ItemListField,
   TextData,
 } from '@/Modules/PageBuilder/page_interfaces'
+import SectionDescription from '@/typography/SectionDescription'
 import SectionTitle from '@/typography/SectionTitle'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -153,82 +155,97 @@ export default function SectionBannerSP({
       <div className='absolute inset-0 bg-black/40' />
 
       {/* Content */}
-      <div className='relative z-10 flex h-full flex-col justify-end px-8 pb-16 lg:px-16 lg:pb-24'>
-        <div className='max-w-4xl'>
-          {/* Title */}
-          <div
-            ref={titleRef}
-            className='mb-6'
-          >
-            <SectionTitle
-              theme='dark'
-              alignment='left'
-              className='hero-title text-left'
-            >
-              <Localization
-                text={title}
-                language={language}
-              />
-              {editMode && onFieldEdit && (
-                <EditLabel
-                  onClick={() => {
-                    onFieldEdit({
-                      field: 'title',
-                      fieldType: 'text',
-                      oldValue: blockData.title,
-                      action: 'UPDATE',
-                    })
-                  }}
-                />
-              )}
-            </SectionTitle>
-          </div>
-
-          {/* Description */}
-          {description && (
+      <div className='relative z-10 flex h-full flex-col justify-end pb-16 lg:pb-16'>
+        <AppLayoutPadding>
+          <div className='max-w-4xl'>
+            {/* Title */}
             <div
-              ref={descriptionRef}
-              className='max-w-2xl'
+              ref={titleRef}
+              className='mb-6'
             >
-              <p className='text-lg leading-relaxed text-white/90 lg:text-xl'>
+              <SectionTitle
+                theme='dark'
+                alignment='left'
+                style={{
+                  background:
+                    'linear-gradient(135deg, #c7ec93 0%, #a3d5ff 25%, #7c83e7 50%, #ff9a9e 75%, #fecfef 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  fontSize: 'clamp(32px, 5vw, 64px)',
+                  fontWeight: 'medium',
+                  lineHeight: '1.2',
+                }}
+              >
                 <Localization
-                  text={description}
+                  text={title}
                   language={language}
                 />
                 {editMode && onFieldEdit && (
                   <EditLabel
                     onClick={() => {
                       onFieldEdit({
-                        field: 'description',
-                        fieldType: 'textItems',
-                        oldValue: description,
+                        field: 'title',
+                        fieldType: 'text',
+                        oldValue: blockData.title,
                         action: 'UPDATE',
-                        itemIndex: blockData.description?.items?.[0]?.id,
                       })
                     }}
                   />
                 )}
-              </p>
+              </SectionTitle>
             </div>
-          )}
 
-          {/* Edit Image */}
-          {editMode && onFieldEdit && (
-            <div className='mt-4'>
-              <EditLabel
-                onClick={() => {
-                  onFieldEdit({
-                    action: 'INSERT',
-                    field: 'image',
-                    fieldType: 'image',
-                    oldValue: blockData.image ?? null,
-                  })
-                }}
-                label='Edit Background Image'
-              />
-            </div>
-          )}
-        </div>
+            {/* Description */}
+            {description && (
+              <div
+                ref={descriptionRef}
+                className='max-w-2xl'
+              >
+                <SectionDescription
+                  theme='dark'
+                  size='medium'
+                  maxWidth='3xl'
+                >
+                  <Localization
+                    text={description}
+                    language={language}
+                  />
+                  {editMode && onFieldEdit && (
+                    <EditLabel
+                      onClick={() => {
+                        onFieldEdit({
+                          field: 'description',
+                          fieldType: 'textItems',
+                          oldValue: description,
+                          action: 'UPDATE',
+                          itemIndex: blockData.description?.items?.[0]?.id,
+                        })
+                      }}
+                    />
+                  )}
+                </SectionDescription>
+              </div>
+            )}
+
+            {/* Edit Image */}
+            {editMode && onFieldEdit && (
+              <div className='mt-4'>
+                <EditLabel
+                  onClick={() => {
+                    onFieldEdit({
+                      action: 'INSERT',
+                      field: 'image',
+                      fieldType: 'image',
+                      oldValue: blockData.image ?? null,
+                    })
+                  }}
+                  label='Edit Background Image'
+                />
+              </div>
+            )}
+          </div>
+        </AppLayoutPadding>
       </div>
     </section>
   )
