@@ -14,7 +14,7 @@
 }
 
 .mce-content-body span {
-  font-family: 'Satoshi', 'NotoSansMalayalam', sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
   display: block !important;
   margin-block-start: 1em !important;
   margin-block-end: 1em !important;
@@ -50,6 +50,7 @@
   margin-inline-end: 0px  !important;
   padding-inline-start: 40px  !important; */
   white-space: normal !important;
+  font-family: 'Space Grotesk', sans-serif;
 }
 /* ol {
   display: block;
@@ -84,6 +85,7 @@ li {
   margin-inline-start: 0px;
   margin-inline-end: 0px;
   font-weight: bold;
+  font-family: 'Urbanist', sans-serif;
 }
 
 .mce-content-body h2 {
@@ -94,6 +96,7 @@ li {
   margin-inline-start: 0px;
   margin-inline-end: 0px;
   font-weight: bold;
+  font-family: 'Urbanist', sans-serif;
 }
 
 .mce-content-body h3 {
@@ -104,6 +107,7 @@ li {
   margin-inline-start: 0px;
   margin-inline-end: 0px;
   font-weight: bold;
+  font-family: 'Urbanist', sans-serif;
 }
 
 .mce-content-body h4 {
@@ -113,6 +117,7 @@ li {
   margin-inline-start: 0px;
   margin-inline-end: 0px;
   font-weight: bold;
+  font-family: 'Urbanist', sans-serif;
 }
 
 .mce-content-body h5 {
@@ -148,6 +153,7 @@ li {
   margin-block-end: 1em !important;
   margin-inline-start: 0px !important;
   margin-inline-end: 0px !important;
+  font-family: 'Space Grotesk', sans-serif;
 }
 
 .mce-content-body sub {
@@ -166,6 +172,12 @@ li {
 
 .mce-content-body em {
   font-style: italic;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.mce-content-body strong {
+  font-weight: bold;
+  font-family: 'Space Grotesk', sans-serif;
 }
 
 .mce-content-body blockquote {
@@ -174,10 +186,12 @@ li {
   margin-block-end: 1em;
   margin-inline-start: 40px;
   margin-inline-end: 40px;
+  font-family: 'Space Grotesk', sans-serif;
+  color: #374151; /* dark gray color */
 }
 
 .mce-content-body:not([dir='rtl']) blockquote {
-  border-left: 2px solid #ccc;
+  border-left: 4px solid #61b03e;
   margin-left: 1.5rem;
   padding-left: 1rem;
 }
