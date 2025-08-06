@@ -10,7 +10,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    
+
     <!-- Calendly widget styles -->
     <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 
@@ -22,7 +22,7 @@
     @viteReactRefresh
     @vite(['resources/js/app.tsx'])
     @inertiaHead
-    
+
     <!-- Calendly widget script -->
     <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script>
 </head>

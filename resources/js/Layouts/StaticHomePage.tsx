@@ -9,12 +9,17 @@ import SectionTestimonial from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionT
 import SectionTrustedPartners from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionTrustedPartners'
 import SectionVideos from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionVideos'
 import { FooterDataInterface } from '@/Modules/PageBuilder/FooterEditor/FooterEditor'
+import { Page } from '@/Modules/PageBuilder/page_interfaces'
 import { PageProps } from '@/types'
 import { usePage } from '@inertiajs/react'
 import { useEffect } from 'react'
 import Footer from './Footer/Footer'
 
-const StaticHomePage = () => {
+interface StaticHomePageProps {
+  featuredVideoPosts?: Page[]
+}
+
+const StaticHomePage = ({ featuredVideoPosts = [] }: StaticHomePageProps) => {
   // Get footer data from Inertia shared props
   const { footer } = usePage<PageProps & { footer: { items: FooterDataInterface } }>().props
 
@@ -191,7 +196,7 @@ const StaticHomePage = () => {
         </div>
         <SectionTrustedPartners />
         <SectionBlogsList />
-        <SectionVideos />
+        <SectionVideos featuredPosts={featuredVideoPosts} />
         <SectionLargeText />
         <SectionTestimonial />
         <SectionTalk />

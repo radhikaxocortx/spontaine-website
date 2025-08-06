@@ -614,8 +614,6 @@ const BlogsList = ({ featuredPosts, allPosts, selectedBlogSlug }: BlogsListProps
         isOpen={isDrawerOpen}
         post={selectedPost}
         onClose={handleCloseDrawer}
-        relatedPosts={[...featuredPosts, ...allPosts.data].filter(p => p.id !== selectedPost?.id)}
-        onPostClick={handlePostClick}
       />
     </AppLayout>
   )
