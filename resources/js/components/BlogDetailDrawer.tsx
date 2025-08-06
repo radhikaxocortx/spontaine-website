@@ -235,14 +235,24 @@ const BlogDetailDrawer = ({ isOpen, post, onClose }: BlogDetailDrawerProps) => {
             {/* Meta Information */}
             <div className='flex items-center gap-4 text-sm text-gray-500'>
               <span className='font-medium capitalize'>{post.type}</span>
-              <span>•</span>
-              <span>
-                {new Date(post.created_at).toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })}
-              </span>
+              {post.author && (
+                <>
+                  <span>•</span>
+                  <span>{post.author}</span>
+                </>
+              )}
+              {post.created_at && (
+                <>
+                  <span>•</span>
+                  <span>
+                    {new Date(post.created_at).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })}
+                  </span>
+                </>
+              )}
             </div>
 
             {/* Title */}

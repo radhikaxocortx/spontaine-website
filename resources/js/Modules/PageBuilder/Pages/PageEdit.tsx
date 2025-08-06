@@ -21,6 +21,7 @@ export default function PageEdit({ page }: Props) {
     type: page.type,
     preview_image: null,
     preview_video: null,
+    author: page.author || '',
   })
   const Url = useNameUrl(formData.title)
 
@@ -83,6 +84,11 @@ export default function PageEdit({ page }: Props) {
         type: 'textarea',
         label: 'Description',
         setValue: setFormValue('description'),
+      },
+      author: {
+        type: 'text',
+        label: 'Author (Optional)',
+        setValue: setFormValue('author'),
       },
       published: {
         type: 'checkbox',

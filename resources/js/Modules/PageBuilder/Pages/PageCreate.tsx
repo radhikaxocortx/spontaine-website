@@ -15,6 +15,7 @@ export default function PageCreate() {
     type: 'Page',
     preview_image: '',
     preview_video: '',
+    author: '',
   })
   const Url = useNameUrl(formData.title)
 
@@ -77,6 +78,11 @@ export default function PageCreate() {
         type: 'textarea',
         label: 'Description',
         setValue: setFormValue('description'),
+      },
+      author: {
+        type: 'text',
+        label: 'Author (Optional)',
+        setValue: setFormValue('author'),
       },
       published: {
         type: 'checkbox',

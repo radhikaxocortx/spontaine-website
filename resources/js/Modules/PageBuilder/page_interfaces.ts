@@ -13,8 +13,7 @@ export const placeholderImage = {
   caption: 'placeholder image',
 }
 
-export interface Page {
-  id: number
+export interface Page extends Model {
   title: string
   page_title: string
   description: string
@@ -24,6 +23,7 @@ export interface Page {
   type: 'Page' | 'Blog' | 'Article' | 'Opinion'
   preview_image: string
   preview_video?: string
+  author?: string
   blocks: PageBlock
 }
 

@@ -216,7 +216,8 @@ const BlogCard = ({ post, stacked = false, aspectRatio = '', onClick }: BlogCard
                 weight='normal'
                 className='text-gray-500'
               >
-                {new Date(post.created_at).toLocaleDateString()}
+                {post.author && `${post.author} • `}
+                {post.created_at && new Date(post.created_at).toLocaleDateString()}
               </SectionBody>
             </div>
 
@@ -277,7 +278,8 @@ const BlogCard = ({ post, stacked = false, aspectRatio = '', onClick }: BlogCard
             weight='normal'
             className='text-gray-500 group-hover:text-[#378727]'
           >
-            {new Date(post.created_at).toLocaleDateString()}
+            {post.author && `${post.author} • `}
+            {post.created_at && new Date(post.created_at).toLocaleDateString()}
           </SectionBody>
         </div>
 

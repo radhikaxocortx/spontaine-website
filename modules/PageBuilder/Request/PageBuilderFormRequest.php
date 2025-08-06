@@ -20,5 +20,6 @@ class PageBuilderFormRequest extends Data
         public string $type,
         public ?UploadedFile $previewImage,
         public ?UploadedFile $previewVideo,
+        public ?string $author,
     ) {}
 }

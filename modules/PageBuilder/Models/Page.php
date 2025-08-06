@@ -20,6 +20,7 @@ class Page extends Model
         'type',
         'preview_image',
         'preview_video',
+        'author',
         'created_by',
         'updated_by',
     ];
