@@ -169,6 +169,7 @@ interface BlogsListProps {
     per_page: number
     total: number
   }
+  selectedBlogSlug?: string
 }
 
 interface BlogCardProps {
@@ -306,7 +307,7 @@ const BlogCard = ({ post, stacked = false, aspectRatio = '', onClick }: BlogCard
   )
 }
 
-const BlogsList = ({ featuredPosts, allPosts }: BlogsListProps) => {
+const BlogsList = ({ featuredPosts, allPosts, selectedBlogSlug }: BlogsListProps) => {
   const featuredSectionRef = useRef<HTMLElement>(null)
   const allPostsSectionRef = useRef<HTMLElement>(null)
   const featuredCardRef = useRef<HTMLDivElement>(null)
@@ -318,15 +319,47 @@ const BlogsList = ({ featuredPosts, allPosts }: BlogsListProps) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const [selectedPost, setSelectedPost] = useState<Page | null>(null)
 
+  // Helper function to find post by slug from URL
+  const findPostBySlug = (slug: string): Page | null => {
+    const allBlogPosts = [...featuredPosts, ...allPosts.data]
+    return (
+      allBlogPosts.find(
+        (post) => post.url === slug || post.url === `/${slug}` || post.url === `/blog/${slug}`
+      ) || null
+    )
+  }
+
+  // Handle URL-based blog loading
+  useEffect(() => {
+    if (selectedBlogSlug) {
+      const post = findPostBySlug(selectedBlogSlug)
+      if (post) {
+        setSelectedPost(post)
+        setIsDrawerOpen(true)
+      }
+    }
+  }, [selectedBlogSlug, featuredPosts, allPosts.data])
+
   // Handle opening the drawer
   const handlePostClick = (post: Page) => {
     setSelectedPost(post)
     setIsDrawerOpen(true)
+
+    // Update URL to reflect the blog post
+    const blogSlug = post.url.startsWith('/') ? post.url.substring(1) : post.url
+    const newUrl = `/blog/${blogSlug}`
+
+    // Use replace to avoid adding to history stack when opening drawer
+    window.history.replaceState({}, '', newUrl)
   }
 
   // Handle closing the drawer
   const handleCloseDrawer = () => {
     setIsDrawerOpen(false)
+
+    // Navigate back to blogs list
+    window.history.replaceState({}, '', '/blogs-list')
+
     // Optional: Clear selected post after animation completes
     setTimeout(() => {
       if (!isDrawerOpen) {
@@ -334,6 +367,32 @@ const BlogsList = ({ featuredPosts, allPosts }: BlogsListProps) => {
       }
     }, 500)
   }
+
+  // Handle browser back/forward navigation
+  useEffect(() => {
+    const handlePopState = () => {
+      const currentPath = window.location.pathname
+      if (currentPath === '/blogs-list') {
+        setIsDrawerOpen(false)
+        setSelectedPost(null)
+      } else if (currentPath.startsWith('/blog/')) {
+        const slug = currentPath.replace('/blog/', '')
+        const post = findPostBySlug(slug)
+        if (post) {
+          setSelectedPost(post)
+          setIsDrawerOpen(true)
+        } else {
+          // Invalid slug, redirect to blogs list
+          window.history.replaceState({}, '', '/blogs-list')
+          setIsDrawerOpen(false)
+          setSelectedPost(null)
+        }
+      }
+    }
+
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
+  }, [featuredPosts, allPosts.data])
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -555,6 +614,8 @@ const BlogsList = ({ featuredPosts, allPosts }: BlogsListProps) => {
         isOpen={isDrawerOpen}
         post={selectedPost}
         onClose={handleCloseDrawer}
+        relatedPosts={[...featuredPosts, ...allPosts.data].filter(p => p.id !== selectedPost?.id)}
+        onPostClick={handlePostClick}
       />
     </AppLayout>
   )

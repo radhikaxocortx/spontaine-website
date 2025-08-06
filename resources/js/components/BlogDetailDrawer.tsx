@@ -1,6 +1,5 @@
 import { Page } from '@/Modules/PageBuilder/page_interfaces'
 import SectionSubheading from '@/typography/SectionSubheading'
-import SectionTitle from '@/typography/SectionTitle'
 import { gsap } from 'gsap'
 import { X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
@@ -10,9 +9,17 @@ interface BlogDetailDrawerProps {
   isOpen: boolean
   post: Page | null
   onClose: () => void
+  relatedPosts?: Page[]
+  onPostClick?: (post: Page) => void
 }
 
-const BlogDetailDrawer = ({ isOpen, post, onClose }: BlogDetailDrawerProps) => {
+const BlogDetailDrawer = ({
+  isOpen,
+  post,
+  onClose,
+  relatedPosts = [],
+  onPostClick,
+}: BlogDetailDrawerProps) => {
   const drawerRef = useRef<HTMLDivElement>(null)
   const overlayRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
@@ -199,138 +206,148 @@ const BlogDetailDrawer = ({ isOpen, post, onClose }: BlogDetailDrawerProps) => {
       {/* Drawer Content */}
       <div
         ref={contentRef}
-        className='relative flex h-[85vh] w-full flex-col overflow-hidden rounded-t-3xl bg-white shadow-2xl md:h-full md:w-3/4 md:rounded-l-3xl md:rounded-t-none'
+        className='relative flex h-[85vh] w-full flex-col overflow-visible rounded-t-3xl bg-white shadow-2xl md:h-full md:w-3/4 md:rounded-l-3xl md:rounded-t-none'
       >
-        {/* Header */}
-        <div className='flex items-center justify-between border-b border-gray-200 p-6'>
-          <div className='flex items-center space-x-2'>
-            <div className='h-1 w-8 rounded-full bg-gray-300 md:hidden' />
-            <span className='hidden text-sm font-medium text-gray-500 md:block'>Blog Detail</span>
-          </div>
-
-          <button
-            ref={closeButtonRef}
-            onClick={handleClose}
-            className='flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 text-gray-500 transition-colors hover:bg-gray-200 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:ring-offset-2'
-            aria-label='Close blog detail'
-          >
-            <X className='h-5 w-5' />
-          </button>
-        </div>
+        {/* Close Button - Half Outside Drawer */}
+        <button
+          ref={closeButtonRef}
+          onClick={handleClose}
+          className='absolute -left-5 top-6 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white text-gray-700 shadow-lg transition-all hover:bg-gray-50 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-lime-500 focus:ring-offset-2'
+          aria-label='Close blog detail'
+        >
+          <X className='h-3 w-3' />
+        </button>
 
         {/* Scrollable Content */}
-        <div className='flex-1 overflow-y-auto'>
-          <div className='space-y-6 p-6'>
-            {/* Featured Image */}
-            {post.preview_image && (
-              <div className='aspect-video overflow-hidden rounded-2xl'>
-                <img
-                  src={post.preview_image}
-                  alt={post.title}
-                  className='h-full w-full object-cover'
-                />
-              </div>
-            )}
-
-            {/* Meta Information */}
-            <div className='flex items-center gap-4 text-sm text-gray-500'>
-              <span className='font-medium capitalize'>{post.type}</span>
-              {post.author && (
-                <>
-                  <span>•</span>
-                  <span>{post.author}</span>
-                </>
-              )}
-              {post.created_at && (
-                <>
-                  <span>•</span>
-                  <span>
-                    {new Date(post.created_at).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                    })}
-                  </span>
-                </>
-              )}
-            </div>
-
-            {/* Title */}
-            <div id='drawer-title'>
-              <SectionTitle
-                theme='light'
-                className='mb-4'
-              >
-                {post.title}
-              </SectionTitle>
-            </div>
-
-            {/* Description/Excerpt */}
-            {post.description && (
-              <div>
-                <SectionSubheading
-                  theme='light'
-                  size='medium'
-                  weight='semibold'
-                  className='leading-relaxed text-gray-600'
+        <div className='flex-1 overflow-y-auto p-10'>
+          <div className='relative'>
+            {/* Header Section with Title and Author */}
+            <div className='px-12 pb-6 pt-16'>
+              <div className='flex flex-col md:flex-row md:items-start md:justify-between'>
+                {/* Title Section */}
+                <div
+                  className='flex-1'
+                  id='drawer-title'
                 >
-                  {post.description}
-                </SectionSubheading>
-              </div>
-            )}
-
-            {/* Real Content from Page Builder Blocks */}
-            <BlogContentRenderer post={post} />
-
-            {/* Preview Video - if available */}
-            {post.preview_video && (
-              <div className='space-y-4'>
-                <hr className='border-gray-200' />
-                <div>
                   <SectionSubheading
                     theme='light'
-                    size='large'
+                    size='2xl'
                     weight='bold'
-                    className='mb-4'
+                    maxWidth='2xl'
+                    className='mb-3'
                   >
-                    Video
+                    {post.title}
                   </SectionSubheading>
+                </div>
 
-                  <div className='aspect-video overflow-hidden rounded-2xl bg-gray-100'>
-                    <video
-                      src={post.preview_video}
-                      controls
-                      className='h-full w-full object-cover'
-                      preload='metadata'
-                    >
-                      Your browser does not support the video tag.
-                    </video>
+                {/* Author Section - Top Right */}
+                <div className='flex items-center gap-3 md:flex-shrink-0'>
+                  {/* Author Info */}
+                  <div className='flex flex-col pr-10'>
+                    {post.author && (
+                      <span className='font-urbanist text-sm font-semibold text-gray-900'>
+                        {post.author}
+                      </span>
+                    )}
+                    {post.created_at && (
+                      <span className='text-xs text-gray-500'>
+                        {new Date(post.created_at).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'short',
+                          day: 'numeric',
+                        })}
+                      </span>
+                    )}
                   </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Featured Image */}
+            {post.preview_image && (
+              <div className='px-12 pb-6'>
+                <div className='overflow-hidden rounded-2xl'>
+                  <img
+                    src={post.preview_image}
+                    alt={post.title}
+                    className='w-full object-cover'
+                  />
                 </div>
               </div>
             )}
 
-            {/* Tags - if available */}
-            <div className='border-t border-gray-200 pt-6'>
-              <div className='flex flex-wrap gap-2'>
-                <span className='inline-flex items-center rounded-full bg-lime-100 px-3 py-1 text-sm font-medium text-lime-800'>
-                  {post.type}
-                </span>
-                {post.featured && (
-                  <span className='inline-flex items-center rounded-full bg-orange-100 px-3 py-1 text-sm font-medium text-orange-800'>
-                    Featured
-                  </span>
-                )}
-                {post.published ? (
-                  <span className='inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800'>
-                    Published
-                  </span>
-                ) : (
-                  <span className='inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-800'>
-                    Draft
-                  </span>
-                )}
-              </div>
+            {/* Content Section */}
+            <div className='space-y-1 px-12'>
+              {/* Description/Excerpt */}
+              {/* {post.description && (
+                <div>
+                  <SectionSubheading
+                    theme='light'
+                    size='small'
+                    weight='semibold'
+                    className='leading-relaxed text-gray-600'
+                  >
+                    {post.description}
+                  </SectionSubheading>
+                </div>
+              )} */}
+
+              {/* Real Content from Page Builder Blocks */}
+              <BlogContentRenderer post={post} />
+
+              {/* Latest Posts Section */}
+              {relatedPosts.length > 0 && (
+                <div className='mt-12 border-t border-gray-200 pt-8'>
+                  <h3 className='mb-6 text-xl font-bold text-gray-900'>Latest Posts</h3>
+                  <div className='grid gap-6 md:grid-cols-3'>
+                    {relatedPosts.slice(0, 3).map((relatedPost) => (
+                      <div
+                        key={relatedPost.id}
+                        onClick={() => onPostClick?.(relatedPost)}
+                        className='group cursor-pointer'
+                      >
+                        {/* Post Image */}
+                        <div className='mb-3 aspect-video overflow-hidden rounded-lg bg-gray-200'>
+                          {relatedPost.preview_image ? (
+                            <img
+                              src={relatedPost.preview_image}
+                              alt={relatedPost.title}
+                              className='h-full w-full object-cover transition-transform group-hover:scale-105'
+                            />
+                          ) : (
+                            <div className='flex h-full w-full items-center justify-center text-gray-400'>
+                              <span className='text-sm'>No Image</span>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Post Date */}
+                        {relatedPost.created_at && (
+                          <p className='mb-2 text-xs text-gray-500'>
+                            {new Date(relatedPost.created_at).toLocaleDateString('en-US', {
+                              year: 'numeric',
+                              month: 'short',
+                              day: 'numeric',
+                            })}
+                          </p>
+                        )}
+
+                        {/* Post Title */}
+                        <h4 className='mb-2 line-clamp-2 text-base font-semibold text-gray-900 group-hover:text-[#378727]'>
+                          {relatedPost.title}
+                        </h4>
+
+                        {/* Post Description */}
+                        {relatedPost.description && (
+                          <p className='line-clamp-2 text-sm text-gray-600 group-hover:text-gray-800'>
+                            {relatedPost.description}
+                          </p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

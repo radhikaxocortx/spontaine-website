@@ -13,6 +13,31 @@ final class BlogsListController extends Controller
 {
     public function __invoke(Request $request): Response
     {
+        return $this->renderBlogsList();
+    }
+
+    public function showBlog(string $slug): Response
+    {
+        // Find the blog post by slug
+        $post = Page::where('published', true)
+            ->whereIn('type', ['Blog', 'Article', 'Opinion'])
+            ->where(function ($query) use ($slug) {
+                $query->where('url', $slug)
+                    ->orWhere('url', "/{$slug}")
+                    ->orWhere('url', "/blog/{$slug}");
+            })
+            ->first();
+
+        // If post not found, return blogs list without selection
+        if (!$post) {
+            return $this->renderBlogsList();
+        }
+
+        return $this->renderBlogsList($slug);
+    }
+
+    private function renderBlogsList(?string $selectedBlogSlug = null): Response
+    {
         // Get featured posts (Blog, Article, Opinion types that are marked as featured)
         $featuredPosts = Page::where('published', true)
             ->where('featured', true)
@@ -30,6 +55,7 @@ final class BlogsListController extends Controller
         return Inertia::render('BlogsList', [
             'featuredPosts' => $featuredPosts,
             'allPosts' => $allPosts,
+            'selectedBlogSlug' => $selectedBlogSlug,
         ]);
     }
 }

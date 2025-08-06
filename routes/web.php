@@ -35,6 +35,7 @@ use Modules\PageBuilder\Models\Page;
 
 Route::get('/', HomePageController::class)->name('home');
 Route::get('/blogs-list', BlogsListController::class)->name('blogs-list');
+Route::get('/blog/{slug}', [BlogsListController::class, 'showBlog'])->name('blog.show');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

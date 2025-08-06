@@ -1,6 +1,5 @@
 import ResolveComponent from '@/Modules/PageBuilder/Components/ResolveComponent'
 import { Page } from '@/Modules/PageBuilder/page_interfaces'
-import SectionSubheading from '@/typography/SectionSubheading'
 import React, { Fragment } from 'react'
 
 interface BlogContentRendererProps {
@@ -14,14 +13,6 @@ const BlogContentRenderer: React.FC<BlogContentRendererProps> = ({ post }) => {
       <div className='space-y-4'>
         <hr className='border-gray-200' />
         <div>
-          <SectionSubheading
-            theme='light'
-            size='large'
-            weight='bold'
-            className='mb-4'
-          >
-            Content
-          </SectionSubheading>
           <div className='rounded-lg bg-gray-50 p-6 text-center'>
             <div className='mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gray-200'>
               <svg
@@ -50,35 +41,23 @@ const BlogContentRenderer: React.FC<BlogContentRendererProps> = ({ post }) => {
   }
 
   return (
-    <div className='space-y-6'>
-      <hr className='border-gray-200' />
-      <div>
-        <SectionSubheading
-          theme='light'
-          size='large'
-          weight='bold'
-          className='mb-6'
-        >
-          Content
-        </SectionSubheading>
-
-        <div className='space-y-6'>
-          {post.blocks.blocks.map((block) => (
-            <Fragment key={block.id.toString()}>
-              <div className='blog-block-wrapper overflow-hidden'>
-                <ResolveComponent
-                  key={block.id}
-                  blockName={block.blockName}
-                  block={block}
-                  language={'en'}
-                  dependencies={{}}
-                  currentDate=''
-                  editMode={false}
-                />
-              </div>
-            </Fragment>
-          ))}
-        </div>
+    <div>
+      <div className='space-y-2'>
+        {post.blocks.blocks.map((block) => (
+          <Fragment key={block.id.toString()}>
+            <div className='blog-block-wrapper overflow-hidden'>
+              <ResolveComponent
+                key={block.id}
+                blockName={block.blockName}
+                block={block}
+                language={'en'}
+                dependencies={{}}
+                currentDate=''
+                editMode={false}
+              />
+            </div>
+          </Fragment>
+        ))}
       </div>
     </div>
   )
