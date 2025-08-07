@@ -1,3 +1,4 @@
+import AppLayoutPadding from '@/Layouts/AppLayoutPadding'
 import RichTextDisplay from '@/Modules/PageBuilder/Blocks/RichText/RichTextDisplay'
 import {
   BlocKFieldInfo,
@@ -6,6 +7,7 @@ import {
 } from '@/Modules/PageBuilder/Components/BlockEditor/BlockEditor'
 import EditLabel from '@/Modules/PageBuilder/Components/EditLabel'
 import { displayText } from '@/Modules/PageBuilder/Components/Localization'
+import { usePageBuilderContext } from '@/Modules/PageBuilder/contexts/PageBuilderContext'
 import { BlockConfiguration, TextData } from '@/Modules/PageBuilder/page_interfaces'
 import { Language } from '@/Modules/PageBuilder/Pages/PageBuilder'
 
@@ -33,6 +35,8 @@ const RichTextBlock = ({
   blockData = richTextData,
   language = 'en',
 }: Properties) => {
+  const { renderMode } = usePageBuilderContext()
+
   const onEdit = (field: string, fieldType: BlockFieldTypes, oldValue: BlockFieldValues) => {
     if (onFieldEdit) {
       onFieldEdit({
@@ -44,12 +48,23 @@ const RichTextBlock = ({
     }
   }
 
+  const renderContent = () => {
+    const content = <RichTextDisplay data={displayText(blockData.text, language)} />
+
+    if (renderMode === 'page') {
+      return <AppLayoutPadding>{content}</AppLayoutPadding>
+    }
+
+    // Drawer mode
+    return <div className='px-2 md:px-12'>{content}</div>
+  }
+
   return (
     <>
       <div
         className={`w-full ${blockData.marginTop} ${blockData.marginBottom} ${blockData.paddingTop} ${blockData.paddingBottom}`}
       >
-        <RichTextDisplay data={displayText(blockData.text, language)} />
+        {renderContent()}
       </div>
       <div className='flex'>
         {editMode && <EditLabel onClick={() => onEdit('text', 'html', blockData.text)} />}

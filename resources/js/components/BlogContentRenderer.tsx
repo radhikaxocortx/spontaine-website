@@ -1,4 +1,5 @@
 import ResolveComponent from '@/Modules/PageBuilder/Components/ResolveComponent'
+import { PageBuilderProvider } from '@/Modules/PageBuilder/contexts/PageBuilderContext'
 import { Page } from '@/Modules/PageBuilder/page_interfaces'
 import React, { Fragment } from 'react'
 
@@ -41,25 +42,27 @@ const BlogContentRenderer: React.FC<BlogContentRendererProps> = ({ post }) => {
   }
 
   return (
-    <div>
-      <div className='space-y-2'>
-        {post.blocks.blocks.map((block) => (
-          <Fragment key={block.id.toString()}>
-            <div className='blog-block-wrapper overflow-hidden'>
-              <ResolveComponent
-                key={block.id}
-                blockName={block.blockName}
-                block={block}
-                language={'en'}
-                dependencies={{}}
-                currentDate=''
-                editMode={false}
-              />
-            </div>
-          </Fragment>
-        ))}
+    <PageBuilderProvider renderMode='drawer'>
+      <div>
+        <div className='space-y-2'>
+          {post.blocks.blocks.map((block) => (
+            <Fragment key={block.id.toString()}>
+              <div className='blog-block-wrapper overflow-hidden'>
+                <ResolveComponent
+                  key={block.id}
+                  blockName={block.blockName}
+                  block={block}
+                  language={'en'}
+                  dependencies={{}}
+                  currentDate=''
+                  editMode={false}
+                />
+              </div>
+            </Fragment>
+          ))}
+        </div>
       </div>
-    </div>
+    </PageBuilderProvider>
   )
 }
 

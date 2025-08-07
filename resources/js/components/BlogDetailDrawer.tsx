@@ -277,7 +277,7 @@ const BlogDetailDrawer = ({
             )}
 
             {/* Content Section */}
-            <div className='space-y-1 px-12'>
+            <div className='space-y-1'>
               {/* Description/Excerpt */}
               {/* {post.description && (
                 <div>
