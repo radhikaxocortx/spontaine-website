@@ -336,6 +336,10 @@ const BlogsList = ({ featuredPosts, allPosts, selectedBlogSlug }: BlogsListProps
       if (post) {
         setSelectedPost(post)
         setIsDrawerOpen(true)
+        // Ensure page starts at top when loading with a blog slug
+        setTimeout(() => {
+          window.scrollTo(0, 0)
+        }, 100)
       }
     }
   }, [selectedBlogSlug, featuredPosts, allPosts.data])

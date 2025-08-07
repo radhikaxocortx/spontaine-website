@@ -1,10 +1,10 @@
-import BlogDetailDrawer from '@/components/BlogDetailDrawer'
 import AppLayoutPadding from '@/Layouts/AppLayoutPadding'
 import AppSectionPadding from '@/Layouts/AppSectionPadding'
 import { cn } from '@/lib/utils'
 import { Page } from '@/Modules/PageBuilder/page_interfaces'
 import SectionDescription from '@/typography/SectionDescription'
 import SectionTitle from '@/typography/SectionTitle'
+import { router } from '@inertiajs/react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
@@ -93,8 +93,6 @@ const SectionVideos = ({ className, featuredPosts = [] }: SectionVideosProps) =>
   const [playingVideo, setPlayingVideo] = useState<number | null>(null)
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([])
   const [firstVideoPlayed, setFirstVideoPlayed] = useState(false)
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
-  const [selectedPost, setSelectedPost] = useState<Page | null>(null)
   const [currentSlide, setCurrentSlide] = useState(0)
 
   // Filter for featured posts with videos, fallback to default videos (4 total)
@@ -136,20 +134,18 @@ const SectionVideos = ({ className, featuredPosts = [] }: SectionVideosProps) =>
     return () => window.removeEventListener('resize', handleResize)
   }, [currentSlide, videoPosts.length])
 
-  // Handle post click to open drawer
-  const handlePostClick = (post: Page) => {
-    setSelectedPost(post)
-    setIsDrawerOpen(true)
+  // Extract slug from URL and navigate to blogs page
+  const extractSlugFromUrl = (url: string): string => {
+    // Remove leading slash if present
+    const cleanUrl = url.startsWith('/') ? url.substring(1) : url
+    // Extract the last part as slug (e.g., from '/energy-decision-intelligence' get 'energy-decision-intelligence')
+    return cleanUrl.split('/').pop() || cleanUrl
   }
 
-  // Handle closing the drawer
-  const handleCloseDrawer = () => {
-    setIsDrawerOpen(false)
-    setTimeout(() => {
-      if (!isDrawerOpen) {
-        setSelectedPost(null)
-      }
-    }, 500)
+  // Handle post click to navigate to blogs page
+  const handlePostClick = (post: Page) => {
+    const slug = extractSlugFromUrl(post.url)
+    router.visit(`/blog/${slug}`)
   }
 
   // Carousel navigation
@@ -419,13 +415,6 @@ const SectionVideos = ({ className, featuredPosts = [] }: SectionVideosProps) =>
           </div>
         </AppLayoutPadding>
       </AppSectionPadding>
-
-      {/* Blog Detail Drawer */}
-      <BlogDetailDrawer
-        isOpen={isDrawerOpen}
-        post={selectedPost}
-        onClose={handleCloseDrawer}
-      />
     </section>
   )
 }

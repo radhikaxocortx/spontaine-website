@@ -212,17 +212,17 @@ const BlogDetailDrawer = ({
         <button
           ref={closeButtonRef}
           onClick={handleClose}
-          className='absolute -left-5 top-6 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white text-gray-700 shadow-lg transition-all hover:bg-gray-50 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-lime-500 focus:ring-offset-2'
+          className='absolute -top-2 right-2 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white text-gray-700 shadow-lg transition-all hover:bg-gray-50 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-lime-500 focus:ring-offset-2 md:-left-5 md:top-6'
           aria-label='Close blog detail'
         >
           <X className='h-3 w-3' />
         </button>
 
         {/* Scrollable Content */}
-        <div className='flex-1 overflow-y-auto p-10'>
+        <div className='flex-1 overflow-y-auto p-2 md:p-10'>
           <div className='relative'>
             {/* Header Section with Title and Author */}
-            <div className='px-12 pb-6 pt-16'>
+            <div className='px-4 pb-2 pt-6 md:px-12 md:pb-6 md:pt-16'>
               <div className='flex flex-col md:flex-row md:items-start md:justify-between'>
                 {/* Title Section */}
                 <div
@@ -265,7 +265,7 @@ const BlogDetailDrawer = ({
 
             {/* Featured Image */}
             {post.preview_image && (
-              <div className='px-12 pb-6'>
+              <div className='px-2 pb-2 md:px-12 md:pb-6'>
                 <div className='overflow-hidden rounded-2xl'>
                   <img
                     src={post.preview_image}

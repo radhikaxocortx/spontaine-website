@@ -5,7 +5,7 @@ import SectionDescription from '@/typography/SectionDescription'
 import SectionSubheading from '@/typography/SectionSubheading'
 import SectionSubtitle from '@/typography/SectionSubtitle'
 import SectionTitle from '@/typography/SectionTitle'
-import { Link } from '@inertiajs/react'
+import { router } from '@inertiajs/react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useEffect, useRef } from 'react'
@@ -18,14 +18,14 @@ interface BlogPost {
   title: string
   description: string
   image: string
-  link: string
+  slug: string
 }
 
 interface SectionBlogsListProps {
   className?: string
 }
 
-// Static blog data
+// Static blog data with slugs for navigation
 const BLOG_POSTS: BlogPost[] = [
   {
     id: 1,
@@ -34,7 +34,7 @@ const BLOG_POSTS: BlogPost[] = [
     description:
       "Every Monday morning, executives face the same embarrassing ritual: spending the first half of their strategy meetings figuring out which numbers are actually right. While they're reconciling conflicting reports, their highest-performing competitors have already moved on to making decisions with data they actually trust.",
     image: '/imge/home/blogs/people.png',
-    link: '/blog1',
+    slug: 'the-c-suites-dirty-secret-why-best-strategy-discussions-start-with-data-reconciliation',
   },
   {
     id: 2,
@@ -42,7 +42,7 @@ const BLOG_POSTS: BlogPost[] = [
     description:
       'Discover how artificial intelligence can streamline operations, enhance decision-making, and drive growth, helping you stay competitive in a rapidly evolving market',
     image: '/imge/home/blogs/calculator.png',
-    link: '/blog2',
+    slug: 'why-traditional-bi-tools-fail-for-smes-and-what-to-do-instead',
   },
   {
     id: 3,
@@ -50,7 +50,7 @@ const BLOG_POSTS: BlogPost[] = [
     description:
       'Discover how artificial intelligence can streamline operations, enhance decision-making, and drive growth, helping you stay competitive in a rapidly evolving market',
     image: '',
-    link: '/blog3',
+    slug: 'a-perfect-lever-80-of-transformative-value--10-effort',
   },
 ]
 
@@ -59,6 +59,11 @@ const SectionBlogsList = ({ className }: SectionBlogsListProps) => {
   const blog1Ref = useRef<HTMLDivElement>(null)
   const blog2Ref = useRef<HTMLDivElement>(null)
   const blog3Ref = useRef<HTMLDivElement>(null)
+
+  // Handle blog click navigation
+  const handleBlogClick = (blog: BlogPost) => {
+    router.visit(`/blog/${blog.slug}`)
+  }
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -131,107 +136,60 @@ const SectionBlogsList = ({ className }: SectionBlogsListProps) => {
           {/* Blog Posts */}
           <div className='space-y-8'>
             {/* Blog 1 - Full Width */}
-            <Link href={BLOG_POSTS[0].link}>
-              <div
-                ref={blog1Ref}
-                className='group w-full cursor-pointer rounded-lg bg-white p-8'
-              >
-                <article>
-                  <div className='grid grid-cols-1 items-start gap-6 sm:gap-8 lg:grid-cols-5'>
-                    {/* Left Side - Content (1/3) */}
-                    <div className='lg:col-span-2'>
-                      <SectionSubheading
-                        theme='light'
-                        size='2xl'
-                        weight='bold'
-                        maxWidth='2xl'
-                        className='mb-3 group-hover:text-[#378727]'
-                      >
-                        {BLOG_POSTS[0].title}
-                      </SectionSubheading>
+            <div
+              ref={blog1Ref}
+              className='group w-full cursor-pointer rounded-lg bg-white p-8'
+              onClick={() => handleBlogClick(BLOG_POSTS[0])}
+            >
+              <article>
+                <div className='grid grid-cols-1 items-start gap-6 sm:gap-8 lg:grid-cols-5'>
+                  {/* Left Side - Content (1/3) */}
+                  <div className='lg:col-span-2'>
+                    <SectionSubheading
+                      theme='light'
+                      size='2xl'
+                      weight='bold'
+                      maxWidth='2xl'
+                      className='mb-3 group-hover:text-[#378727]'
+                    >
+                      {BLOG_POSTS[0].title}
+                    </SectionSubheading>
 
-                      <SectionDescription
-                        theme='light'
-                        size='medium'
-                        maxWidth='2xl'
-                        className='mb-4 group-hover:text-[#378727]'
-                      >
-                        {BLOG_POSTS[0].description}
-                      </SectionDescription>
-                    </div>
-                    {/* Right Side - Image (2/3) */}
-                    <div className='lg:col-span-3'>
-                      <div className='overflow-hidden rounded-lg'>
-                        <img
-                          src={BLOG_POSTS[0].image}
-                          alt={BLOG_POSTS[0].title}
-                          className='h-64 w-full object-cover transition-transform duration-300 group-hover:scale-105 lg:h-80'
-                        />
-                      </div>
+                    <SectionDescription
+                      theme='light'
+                      size='medium'
+                      maxWidth='2xl'
+                      className='mb-4 group-hover:text-[#378727]'
+                    >
+                      {BLOG_POSTS[0].description}
+                    </SectionDescription>
+                  </div>
+                  {/* Right Side - Image (2/3) */}
+                  <div className='lg:col-span-3'>
+                    <div className='overflow-hidden rounded-lg'>
+                      <img
+                        src={BLOG_POSTS[0].image}
+                        alt={BLOG_POSTS[0].title}
+                        className='h-64 w-full object-cover transition-transform duration-300 group-hover:scale-105 lg:h-80'
+                      />
                     </div>
                   </div>
-                </article>
-              </div>
-            </Link>
+                </div>
+              </article>
+            </div>
 
             {/* Blog 2 & 3 - Side by Side */}
             <div className='grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-3'>
               {/* Blog 2 - Takes 2/3 width */}
-              <Link
-                href={BLOG_POSTS[1].link}
-                className='group cursor-pointer rounded-lg bg-gray-200 lg:col-span-2'
+              <div
+                ref={blog2Ref}
+                className='group h-full cursor-pointer rounded-lg bg-gray-200 lg:col-span-2'
+                onClick={() => handleBlogClick(BLOG_POSTS[1])}
               >
-                <div
-                  ref={blog2Ref}
-                  className='h-full'
-                >
-                  <article>
-                    <div className='grid h-full grid-cols-1 md:grid-cols-2 lg:grid-cols-2'>
-                      {/* Left Side - Content */}
-                      <div className='flex flex-col justify-center p-8'>
-                        <SectionSubheading
-                          theme='light'
-                          size='medium'
-                          weight='bold'
-                          maxWidth='2xl'
-                          className='mb-3 group-hover:text-[#378727]'
-                        >
-                          {BLOG_POSTS[1].title}
-                        </SectionSubheading>
-                        <SectionDescription
-                          theme='light'
-                          size='small'
-                          maxWidth='2xl'
-                          className='group-hover:text-[#378727]'
-                        >
-                          {BLOG_POSTS[1].description}
-                        </SectionDescription>
-                      </div>
-
-                      {/* Right Side - Image */}
-                      <div className='relative h-full overflow-hidden rounded-r-lg'>
-                        <img
-                          src={BLOG_POSTS[1].image}
-                          alt={BLOG_POSTS[1].title}
-                          className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-105'
-                        />
-                      </div>
-                    </div>
-                  </article>
-                </div>
-              </Link>
-
-              {/* Blog 3 - Takes 1/3 width */}
-              <Link
-                href={BLOG_POSTS[2].link}
-                className='group col-span-1 cursor-pointer rounded-lg bg-orange-50 p-8 lg:col-span-1'
-              >
-                <div
-                  ref={blog3Ref}
-                  className='h-full'
-                >
-                  <article>
-                    <div>
+                <article>
+                  <div className='grid h-full grid-cols-1 md:grid-cols-2 lg:grid-cols-2'>
+                    {/* Left Side - Content */}
+                    <div className='flex flex-col justify-center p-8'>
                       <SectionSubheading
                         theme='light'
                         size='medium'
@@ -239,7 +197,7 @@ const SectionBlogsList = ({ className }: SectionBlogsListProps) => {
                         maxWidth='2xl'
                         className='mb-3 group-hover:text-[#378727]'
                       >
-                        {BLOG_POSTS[2].title}
+                        {BLOG_POSTS[1].title}
                       </SectionSubheading>
                       <SectionDescription
                         theme='light'
@@ -247,12 +205,50 @@ const SectionBlogsList = ({ className }: SectionBlogsListProps) => {
                         maxWidth='2xl'
                         className='group-hover:text-[#378727]'
                       >
-                        {BLOG_POSTS[2].description}
+                        {BLOG_POSTS[1].description}
                       </SectionDescription>
                     </div>
-                  </article>
-                </div>
-              </Link>
+
+                    {/* Right Side - Image */}
+                    <div className='relative h-full overflow-hidden rounded-r-lg'>
+                      <img
+                        src={BLOG_POSTS[1].image}
+                        alt={BLOG_POSTS[1].title}
+                        className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-105'
+                      />
+                    </div>
+                  </div>
+                </article>
+              </div>
+
+              {/* Blog 3 - Takes 1/3 width */}
+              <div
+                ref={blog3Ref}
+                className='group col-span-1 h-full cursor-pointer rounded-lg bg-orange-50 p-8 lg:col-span-1'
+                onClick={() => handleBlogClick(BLOG_POSTS[2])}
+              >
+                <article>
+                  <div>
+                    <SectionSubheading
+                      theme='light'
+                      size='medium'
+                      weight='bold'
+                      maxWidth='2xl'
+                      className='mb-3 group-hover:text-[#378727]'
+                    >
+                      {BLOG_POSTS[2].title}
+                    </SectionSubheading>
+                    <SectionDescription
+                      theme='light'
+                      size='small'
+                      maxWidth='2xl'
+                      className='group-hover:text-[#378727]'
+                    >
+                      {BLOG_POSTS[2].description}
+                    </SectionDescription>
+                  </div>
+                </article>
+              </div>
             </div>
           </div>
         </AppLayoutPadding>
