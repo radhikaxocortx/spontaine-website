@@ -6,6 +6,7 @@ import SectionDescription from '@/typography/SectionDescription'
 import SectionSubheading from '@/typography/SectionSubheading'
 import SectionSubtitle from '@/typography/SectionSubtitle'
 import SectionTitle from '@/typography/SectionTitle'
+import { router } from '@inertiajs/react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useEffect, useRef } from 'react'
@@ -29,6 +30,18 @@ const SectionTrustedPartners = ({ className }: SectionTrustedPartnersProps) => {
   const image3Ref = useRef<HTMLDivElement>(null)
   const image4Ref = useRef<HTMLDivElement>(null)
 
+  // Handle partner navigation
+  const handlePartnerClick = () => {
+    router.visit('/partner-with-us', {
+      onSuccess: () => {
+        // Ensure page starts at top when navigating to partner page
+        setTimeout(() => {
+          window.scrollTo(0, 0)
+        }, 100)
+      }
+    })
+  }
+
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Initial states - hide left content
@@ -50,32 +63,32 @@ const SectionTrustedPartners = ({ className }: SectionTrustedPartnersProps) => {
         scale: 0,
       })
 
-      // Initial states for images - coming together from different directions
+      // Initial states for images - coming together from different directions (reduced for mobile)
       gsap.set(image1Ref.current, {
         opacity: 0,
-        x: -40,
-        y: -20,
+        x: window.innerWidth < 640 ? -20 : -40,
+        y: window.innerWidth < 640 ? -10 : -20,
         scale: 0.92,
       })
 
       gsap.set(image2Ref.current, {
         opacity: 0,
-        x: 50,
-        y: -15,
+        x: window.innerWidth < 640 ? 25 : 50,
+        y: window.innerWidth < 640 ? -8 : -15,
         scale: 0.92,
       })
 
       gsap.set(image3Ref.current, {
         opacity: 0,
-        x: 60,
-        y: 35,
+        x: window.innerWidth < 640 ? 30 : 60,
+        y: window.innerWidth < 640 ? 18 : 35,
         scale: 0.88,
       })
 
       gsap.set(image4Ref.current, {
         opacity: 0,
-        x: -30,
-        y: 30,
+        x: window.innerWidth < 640 ? -15 : -30,
+        y: window.innerWidth < 640 ? 15 : 30,
         scale: 0.92,
       })
 
@@ -213,10 +226,21 @@ const SectionTrustedPartners = ({ className }: SectionTrustedPartnersProps) => {
     return () => ctx.revert()
   }, [])
 
+  // Handle window resize to prevent overflow issues
+  useEffect(() => {
+    const handleResize = () => {
+      // Refresh ScrollTrigger on resize to recalculate positions
+      ScrollTrigger.refresh()
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
   return (
     <section
       ref={sectionRef}
-      className={cn('bg-black text-white', className)}
+      className={cn('bg-black text-white overflow-hidden', className)}
     >
       <AppSectionPadding>
         <AppLayoutPadding>
@@ -348,6 +372,7 @@ const SectionTrustedPartners = ({ className }: SectionTrustedPartnersProps) => {
                   ref={ctaButtonRef}
                   size='xl'
                   className='relative overflow-hidden rounded-full bg-lime-400 py-6 text-black shadow-2xl'
+                  onClick={handlePartnerClick}
                 >
                   Partner With Us →
                 </Button>
@@ -357,13 +382,13 @@ const SectionTrustedPartners = ({ className }: SectionTrustedPartnersProps) => {
             {/* Right Column - Image Layout */}
             <div
               ref={collageRef}
-              className='relative'
+              className='relative overflow-hidden'
             >
-              <div className='relative'>
+              <div className='relative overflow-hidden'>
                 {/* Background Images Layout */}
-                <div className='grid grid-cols-2 gap-6'>
+                <div className='grid grid-cols-2 gap-3 sm:gap-6'>
                   {/* Left Column */}
-                  <div className='space-y-6'>
+                  <div className='space-y-3 sm:space-y-6'>
                     {/* Top Left Image */}
                     <div
                       ref={image1Ref}
@@ -402,7 +427,7 @@ const SectionTrustedPartners = ({ className }: SectionTrustedPartnersProps) => {
                   </div>
 
                   {/* Right Column */}
-                  <div className='space-y-6'>
+                  <div className='space-y-3 sm:space-y-6'>
                     {/* Top Right Image */}
                     <div
                       ref={image2Ref}
@@ -423,7 +448,7 @@ const SectionTrustedPartners = ({ className }: SectionTrustedPartnersProps) => {
                 {/* Overlapping Bottom Right Image */}
                 <div
                   ref={image3Ref}
-                  className='absolute bottom-0 right-0 z-20 aspect-square w-1/2 -translate-x-6 translate-y-6 overflow-hidden rounded-2xl'
+                  className='absolute bottom-0 right-0 z-20 aspect-square w-1/2 -translate-x-3 translate-y-3 overflow-hidden rounded-2xl sm:-translate-x-6 sm:translate-y-6'
                 >
                   <img
                     src='/imge/home/partner/3.png'

@@ -79,10 +79,21 @@ const StaticHomePage = ({ featuredVideoPosts = [] }: StaticHomePageProps) => {
 
       /* Smooth page transitions and optimized rendering */
       body {
-        overflow-x: hidden;
+        overflow-x: hidden !important;
         will-change: scroll-position;
         -webkit-overflow-scrolling: touch;
         overscroll-behavior: contain;
+      }
+
+      /* Ensure no elements can cause horizontal scroll */
+      * {
+        box-sizing: border-box;
+      }
+
+      /* Additional safety for root containers */
+      html, body, #app {
+        max-width: 100vw;
+        overflow-x: hidden !important;
       }
 
       /* Optimize scroll performance */
@@ -182,9 +193,9 @@ const StaticHomePage = ({ featuredVideoPosts = [] }: StaticHomePageProps) => {
   }, [])
 
   return (
-    <>
+    <div className='overflow-x-hidden'>
       <Navbar />
-      <div className='relative min-h-screen w-full bg-white'>
+      <div className='relative min-h-screen w-full max-w-full overflow-x-hidden bg-white'>
         <HeroSection />
 
         <div className='hidden md:-mt-12 md:block'>
@@ -202,7 +213,7 @@ const StaticHomePage = ({ featuredVideoPosts = [] }: StaticHomePageProps) => {
         <SectionTalk />
       </div>
       <Footer blockData={footer.items} />
-    </>
+    </div>
   )
 }
 
