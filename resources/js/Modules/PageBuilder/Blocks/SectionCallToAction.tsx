@@ -1,8 +1,8 @@
 import { Button } from '@/components/ui/button'
 import { Language } from '@/components/ui/ui_interfaces'
 import AppLayoutPadding from '@/Layouts/AppLayoutPadding'
-import HeroHeadline from '@/typography/HeroHeadline'
-import HeroTextBlock from '@/typography/HeroTextBlock'
+import SectionDescription from '@/typography/SectionDescription'
+import SectionTitle from '@/typography/SectionTitle'
 import { Dispatch } from 'react'
 import AddLabel from '../Components/AddLabel'
 import { BlocKFieldInfo } from '../Components/BlockEditor/BlockEditor'
@@ -71,7 +71,7 @@ const SectionCallToAction = ({
       <AppLayoutPadding>
         <div className='flex flex-col items-center justify-center gap-6'>
           {/* Banner title */}
-          <HeroHeadline className='text-primary-950'>
+          <SectionTitle theme='light'>
             <Localization
               text={blockData.title}
               language={language}
@@ -88,14 +88,16 @@ const SectionCallToAction = ({
                 }}
               />
             )}
-          </HeroHeadline>
+          </SectionTitle>
 
           {/* Banner description */}
           <div className='flex flex-col gap-4'>
             {blockData?.description?.items.map((item) => (
-              <HeroTextBlock
-                className='text-neutral-graige-600'
-                key={item.id.toString()}
+              <SectionDescription
+                key={item.id}
+                theme='light'
+                size='medium'
+                maxWidth='3xl'
               >
                 <Localization
                   text={item.item}
@@ -114,7 +116,7 @@ const SectionCallToAction = ({
                     }}
                   />
                 )}
-              </HeroTextBlock>
+              </SectionDescription>
             ))}
             {editMode && onFieldEdit != null && (
               <AddLabel
@@ -136,8 +138,8 @@ const SectionCallToAction = ({
             {blockData.link && (
               <InertiaLink link={blockData.link}>
                 <Button
-                  size='lg'
-                  className='min-w-[160px] justify-center'
+                  size='xl'
+                  className='rounded-full border-0 bg-lime-400 px-6 py-3 text-black shadow-lg transition-all duration-300 hover:bg-lime-300 hover:shadow-xl sm:px-16 sm:py-4'
                 >
                   <Localization
                     text={blockData.link.name}
@@ -147,12 +149,12 @@ const SectionCallToAction = ({
               </InertiaLink>
             )}
 
-            {blockData.link2 && (
+            {/* {blockData.link2 && (
               <InertiaLink link={blockData.link2}>
                 <Button
                   variant='outline'
                   size='lg'
-                  className='min-w-[160px] justify-center'
+                  className='rounded-full border-0 px-6 py-3 text-black shadow-lg transition-all duration-300 hover:bg-lime-300 hover:shadow-xl sm:px-8 sm:py-4'
                 >
                   <Localization
                     text={blockData.link2.name}
@@ -187,7 +189,7 @@ const SectionCallToAction = ({
                   }
                 />
               </div>
-            )}
+            )} */}
           </div>
         </div>
       </AppLayoutPadding>
