@@ -8,6 +8,7 @@ use App\Services\RateLimiter\RateLimitingService;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
@@ -59,6 +60,11 @@ class ContactController extends Controller
         if ($rateLimitingService->attemptsRemaining($rateLimitKey) > 0) {
             $rateLimitingService->incrementAttempts($rateLimitKey);
             try {
+                ContactMessage::create($request->all());
+            } catch (Exception $exception) {
+                Log::info('Contact Message Creation Failed: ' . $exception->getMessage());
+            }
+            try {
                 $subject = $request->subject ?? 'Contact Form Submission';
                 Mail::to($request->receiver_mail ?? 'desk@intuonfx.com')
                     ->send(new TemplateMail(
@@ -68,15 +74,12 @@ class ContactController extends Controller
                         emailSubject: $subject
                     ));
             } catch (Exception $exception) {
+                Log::info('Contact Mail Sending Failed: ' . $exception->getMessage());
                 return redirect()->back()->with(['error' => $exception->getMessage()]);
             }
-            try {
-                ContactMessage::create($request->all());
-            } catch (Exception $exception) {
-                //
-            }
-
-            return redirect()->back()->with(['message' => 'Thank you for contacting us. Our team will review your message and get back to you shortly.']);
+            return redirect()
+                ->back()
+                ->with(['message' => 'Thank you for contacting us. Our team will review your message and get back to you shortly.']);
         }
 
         // if rate limit check is failed return error
