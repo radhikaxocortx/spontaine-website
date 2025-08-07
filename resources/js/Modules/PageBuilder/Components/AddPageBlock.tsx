@@ -87,6 +87,11 @@ const pageBlocks = [
     description: 'Navigation breadcrumbs with customizable links and styling',
     icon: '🍞',
   },
+  {
+    name: 'Spontaine - Carousel',
+    description: 'Full-width responsive image carousel with smooth GSAP animations',
+    icon: '🎠',
+  },
 ]
 
 interface Properties {

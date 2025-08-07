@@ -25,6 +25,18 @@
 
     <!-- Calendly widget script -->
     <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EL0GPXQZX4"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-EL0GPXQZX4');
+    </script>
 </head>
 
 <body class="font-sans antialiased" style="scroll-behavior: smooth;">

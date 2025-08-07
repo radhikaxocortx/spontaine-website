@@ -387,7 +387,7 @@ const SectionVideos = ({ className, featuredPosts = [] }: SectionVideosProps) =>
                       {/* Content Overlay */}
                       <div className='absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/80 to-transparent p-6'>
                         <h3 className="font-['Urbanist'] text-sm font-bold leading-tight text-white transition-colors duration-300 group-hover:text-lime-400">
-                          {post.title}
+                          {post.page_title}
                         </h3>
                       </div>
                     </div>

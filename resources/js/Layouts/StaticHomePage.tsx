@@ -1,3 +1,4 @@
+import MetaTags from '@/components/MetaTags'
 import Navbar from '@/Layouts/Navbar/Navbar'
 import CompanyLogosSection from '@/Modules/PageBuilder/Blocks/HomeBlocks/CompanyLogosSection'
 import HeroSection from '@/Modules/PageBuilder/Blocks/HomeBlocks/HeroSection'
@@ -17,9 +18,19 @@ import Footer from './Footer/Footer'
 
 interface StaticHomePageProps {
   featuredVideoPosts?: Page[]
+  title?: string
+  description?: string
+  image?: string
+  noIndex?: boolean
 }
 
-const StaticHomePage = ({ featuredVideoPosts = [] }: StaticHomePageProps) => {
+const StaticHomePage = ({
+  featuredVideoPosts = [],
+  title = 'No-Code Data Integration & AI Platform for Enterprise',
+  description = `Transform your disconnected systems into an AI-driven command center with Spontaine’s no-code data integration platform. Get real-time insights, eliminate data silos, and enable AI adoption across your organization - all in weeks, not quarters.`,
+  image = 'https://spontaine.com/storage/images/14.png',
+  noIndex = false,
+}: StaticHomePageProps) => {
   // Get footer data from Inertia shared props
   const { footer } = usePage<PageProps & { footer: { items: FooterDataInterface } }>().props
 
@@ -195,6 +206,12 @@ const StaticHomePage = ({ featuredVideoPosts = [] }: StaticHomePageProps) => {
   return (
     <div className='overflow-x-hidden'>
       <Navbar />
+      <MetaTags
+        title={title}
+        description={description}
+        image={image}
+        noIndex={noIndex}
+      />
       <div className='relative min-h-screen w-full max-w-full overflow-x-hidden bg-white'>
         <HeroSection />
 

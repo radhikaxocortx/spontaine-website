@@ -1,3 +1,4 @@
+import MetaTags from '@/components/MetaTags'
 import Navbar from '@/Layouts/Navbar/Navbar'
 import { FooterDataInterface } from '@/Modules/PageBuilder/FooterEditor/FooterEditor'
 import { PageProps } from '@/types'
@@ -9,9 +10,19 @@ import Footer from './Footer/Footer'
 
 interface Properties {
   children: React.ReactNode
+  title?: string
+  description?: string
+  image?: string
+  noIndex?: boolean
 }
 
-const AppLayout = ({ children }: Properties) => {
+const AppLayout = ({
+  children,
+  title = 'Spontaine',
+  description = `Transform your disconnected systems into an AI-driven command center with Spontaine’s no-code data integration platform. Get real-time insights, eliminate data silos, and enable AI adoption across your organization - all in weeks, not quarters.`,
+  image = 'https://spontaine.com/storage/images/14.png',
+  noIndex = false,
+}: Properties) => {
   // Get footer data from Inertia shared props
   const { footer } = usePage<PageProps & { footer: { items: FooterDataInterface } }>().props
 
@@ -23,14 +34,14 @@ const AppLayout = ({ children }: Properties) => {
     // GSAP animation to hide navbar after first block
     const triggerNavbarHiding = () => {
       // Find the first content block (banner section) - target the specific banner section
-      const firstBlock = 
+      const firstBlock =
         document.querySelector('[data-banner-section="true"]') || // BlogsList banner section
         document.querySelector('section[class*="h-[50vh]"]') || // Banner section with 50vh height
         document.querySelector('section[class*="min-h-[400px]"]') || // Banner section with min height
         document.querySelector('.min-h-screen > div > section:first-child') || // First section in page
         document.querySelector('[data-block-type]') || // Page builder blocks have this attribute
         document.querySelector('.min-h-screen > *:first-child > *:first-child') // First child of first child
-      
+
       console.log('First block found:', firstBlock) // Debug log
 
       if (firstBlock) {
@@ -61,7 +72,7 @@ const AppLayout = ({ children }: Properties) => {
       } else {
         // Fallback: simple scroll-based navbar hiding
         console.log('No first block found, using scroll-based fallback')
-        
+
         const dispatchHeroVisibility = (isVisible: boolean) => {
           const event = new CustomEvent('hero-section-visible', { detail: isVisible })
           window.dispatchEvent(event)
@@ -248,6 +259,12 @@ const AppLayout = ({ children }: Properties) => {
   return (
     <>
       <Navbar />
+      <MetaTags
+        title={title}
+        description={description}
+        image={image}
+        noIndex={noIndex}
+      />
       <div className='relative min-h-screen w-full bg-white'>{children}</div>
       <Footer blockData={footer.items} />
     </>
