@@ -29,6 +29,7 @@ import SectionBannerSP, { SectionBannerSPBlock } from '../Blocks/SpontaineBlocks
 import SectionBreadcrumbs, {
   SectionBreadcrumbsData,
 } from '../Blocks/SpontaineBlocks/SectionBreadcrumbs'
+import SectionCarousel, { SectionCarouselBlock } from '../Blocks/SpontaineBlocks/SectionCarousel'
 
 interface Properties {
   block?: Block
@@ -189,6 +190,15 @@ const ResolveComponent = ({
           editMode={editMode}
           onFieldEdit={onFieldEdit}
           language={language}
+        />
+      )}
+      {blockName === 'Spontaine - Carousel' && (
+        <SectionCarousel
+          blockData={block as unknown as SectionCarouselBlock}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+          dispatch={dispatch}
         />
       )}
     </>

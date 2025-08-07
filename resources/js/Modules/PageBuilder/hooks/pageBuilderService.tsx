@@ -15,6 +15,7 @@ import { defaultTestimonialBlock } from '../Blocks/SectionTestimonial'
 import { videoBlock } from '../Blocks/SectionVideo'
 import { sectionBannerSPBlock } from '../Blocks/SpontaineBlocks/SectionBannerSP'
 import { breadcrumbsData } from '../Blocks/SpontaineBlocks/SectionBreadcrumbs'
+import { sectionCarouselBlock } from '../Blocks/SpontaineBlocks/SectionCarousel'
 
 export interface PageBuilderAction {
   action:
@@ -114,6 +115,11 @@ const getBlockDefaultData = (blockName: string) => {
     case 'Spontaine - Breadcrumbs': {
       return {
         ...breadcrumbsData,
+      }
+    }
+    case 'Spontaine - Carousel': {
+      return {
+        ...sectionCarouselBlock,
       }
     }
     default: {

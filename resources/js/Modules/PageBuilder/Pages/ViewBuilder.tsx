@@ -1,3 +1,4 @@
+import MetaTags from '@/components/MetaTags'
 import { showError, showSuccess } from '@/components/ui/alerts'
 import { LaravelFlash } from '@/components/ui/ui_interfaces'
 import ResolveComponent from '@/Modules/PageBuilder/Components/ResolveComponent'
@@ -38,6 +39,12 @@ export default function ViewBuilder({ page }: Props) {
             </Fragment>
           )
         })}
+        <MetaTags
+          title={page.page_title}
+          description={page.description}
+          image={page.preview_image}
+          noIndex={false}
+        />
         <ToastContainer
           position='bottom-center'
           autoClose={5000}

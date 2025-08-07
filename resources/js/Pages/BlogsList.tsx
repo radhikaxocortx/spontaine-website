@@ -197,7 +197,7 @@ const BlogCard = ({ post, stacked = false, aspectRatio = '', onClick }: BlogCard
             {post.preview_image ? (
               <img
                 src={post.preview_image}
-                alt={post.title}
+                alt={post.page_title}
                 className='w-full rounded-lg object-cover transition-transform group-hover:scale-105'
               />
             ) : (
@@ -229,7 +229,7 @@ const BlogCard = ({ post, stacked = false, aspectRatio = '', onClick }: BlogCard
               weight='bold'
               className='group-hover:text-[#378727]'
             >
-              {post.title}
+              {post.page_title}
             </SectionSubheading>
 
             {/* Description */}
@@ -259,7 +259,7 @@ const BlogCard = ({ post, stacked = false, aspectRatio = '', onClick }: BlogCard
         {post.preview_image ? (
           <img
             src={post.preview_image}
-            alt={post.title}
+            alt={post.page_title}
             className='w-full rounded-lg object-cover object-center transition-transform group-hover:scale-105'
           />
         ) : (
@@ -291,7 +291,7 @@ const BlogCard = ({ post, stacked = false, aspectRatio = '', onClick }: BlogCard
           weight='bold'
           className='group-hover:text-[#378727]'
         >
-          {post.title}
+          {post.page_title}
         </SectionSubheading>
 
         {/* Description */}
