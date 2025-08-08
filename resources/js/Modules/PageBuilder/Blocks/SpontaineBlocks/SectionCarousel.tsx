@@ -129,6 +129,54 @@ export default function SectionCarousel({
   const cards = blockData.cards?.items || []
   const totalCards = cards.length
 
+  const nextSlide = useCallback(() => {
+    if (isAnimating || totalCards <= 1) return
+    setIsAnimating(true)
+
+    console.log('Next slide triggered, current:', currentIndex, 'total:', totalCards)
+
+    gsap.to(carouselRef.current, {
+      opacity: 0,
+      duration: 0.4,
+      ease: 'power2.inOut',
+      onComplete: () => {
+        const newIndex = (currentIndex + 1) % totalCards
+        console.log('Setting new index:', newIndex)
+        setCurrentIndex(newIndex)
+        gsap.to(carouselRef.current, {
+          opacity: 1,
+          duration: 0.4,
+          ease: 'power2.inOut',
+          onComplete: () => setIsAnimating(false),
+        })
+      },
+    })
+  }, [isAnimating, totalCards, currentIndex])
+
+  const prevSlide = useCallback(() => {
+    if (isAnimating || totalCards <= 1) return
+    setIsAnimating(true)
+
+    console.log('Prev slide triggered, current:', currentIndex, 'total:', totalCards)
+
+    gsap.to(carouselRef.current, {
+      opacity: 0,
+      duration: 0.4,
+      ease: 'power2.inOut',
+      onComplete: () => {
+        const newIndex = (currentIndex - 1 + totalCards) % totalCards
+        console.log('Setting new index:', newIndex)
+        setCurrentIndex(newIndex)
+        gsap.to(carouselRef.current, {
+          opacity: 1,
+          duration: 0.4,
+          ease: 'power2.inOut',
+          onComplete: () => setIsAnimating(false),
+        })
+      },
+    })
+  }, [isAnimating, totalCards, currentIndex])
+
   // Auto-play interval (disabled in edit mode)
   useEffect(() => {
     if (!editMode && totalCards > 1) {
@@ -137,49 +185,7 @@ export default function SectionCarousel({
       }, 5000)
       return () => clearInterval(interval)
     }
-  }, [currentIndex, editMode, totalCards])
-
-  const nextSlide = useCallback(() => {
-    if (isAnimating || totalCards <= 1) return
-    setIsAnimating(true)
-
-    gsap.to(carouselRef.current, {
-      x: '-100%',
-      duration: 0.5,
-      ease: 'power2.inOut',
-      onComplete: () => {
-        setCurrentIndex((prev) => (prev + 1) % totalCards)
-        gsap.set(carouselRef.current, { x: '100%' })
-        gsap.to(carouselRef.current, {
-          x: '0%',
-          duration: 0.5,
-          ease: 'power2.inOut',
-          onComplete: () => setIsAnimating(false),
-        })
-      },
-    })
-  }, [isAnimating, totalCards])
-
-  const prevSlide = useCallback(() => {
-    if (isAnimating || totalCards <= 1) return
-    setIsAnimating(true)
-
-    gsap.to(carouselRef.current, {
-      x: '100%',
-      duration: 0.5,
-      ease: 'power2.inOut',
-      onComplete: () => {
-        setCurrentIndex((prev) => (prev - 1 + totalCards) % totalCards)
-        gsap.set(carouselRef.current, { x: '-100%' })
-        gsap.to(carouselRef.current, {
-          x: '0%',
-          duration: 0.5,
-          ease: 'power2.inOut',
-          onComplete: () => setIsAnimating(false),
-        })
-      },
-    })
-  }, [isAnimating, totalCards])
+  }, [nextSlide, editMode, totalCards])
 
   const addNewCard = useCallback(() => {
     if (dispatch) {
@@ -215,7 +221,7 @@ export default function SectionCarousel({
   return (
     <section
       className={cn(
-        'relative w-full overflow-hidden',
+        'relative w-full overflow-hidden bg-black/40',
         blockData.paddingTop && `pt-[${blockData.paddingTop}]`,
         blockData.paddingBottom && `pb-[${blockData.paddingBottom}]`,
         blockData.marginTop && `mt-[${blockData.marginTop}]`,
@@ -399,7 +405,25 @@ export default function SectionCarousel({
               {cards.map((_, index) => (
                 <button
                   key={index}
-                  onClick={() => !isAnimating && setCurrentIndex(index)}
+                  onClick={() => {
+                    if (!isAnimating && index !== currentIndex) {
+                      setIsAnimating(true)
+                      gsap.to(carouselRef.current, {
+                        opacity: 0,
+                        duration: 0.3,
+                        ease: 'power2.inOut',
+                        onComplete: () => {
+                          setCurrentIndex(index)
+                          gsap.to(carouselRef.current, {
+                            opacity: 1,
+                            duration: 0.3,
+                            ease: 'power2.inOut',
+                            onComplete: () => setIsAnimating(false),
+                          })
+                        },
+                      })
+                    }
+                  }}
                   className={cn(
                     'h-2 rounded-full transition-all duration-300',
                     index === currentIndex ? 'w-8 bg-white' : 'w-2 bg-white/50 hover:bg-white/75'
