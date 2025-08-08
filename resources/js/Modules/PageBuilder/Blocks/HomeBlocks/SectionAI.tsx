@@ -276,7 +276,7 @@ const SectionAI = ({ className }: SectionAIProps) => {
                         weight='bold'
                         centered={false}
                         className={`mb-1 transition-colors duration-300 ${
-                          index === activeFeature ? 'text-lime-400' : 'group-hover:text-lime-300'
+                          index === activeFeature ? 'text-[#378727]' : 'group-hover:text-[#378727]'
                         }`}
                       >
                         {feature.title}
