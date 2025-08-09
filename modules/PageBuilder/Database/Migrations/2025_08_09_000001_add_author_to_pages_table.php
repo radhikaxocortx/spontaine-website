@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,14 +14,16 @@ return new class extends Migration
     public function up(): void
     {
         if (! Schema::hasTable('pages')) {
-            // On fresh installs this migration runs before create_pages_table; skip.
-            return;
+            // Table not yet created; skip to avoid failure when earlier migrations haven't run.
+            return; // On fresh install the create_pages_table migration will run later in sequence? (should already be earlier). Safeguard.
         }
 
         Schema::table('pages', function (Blueprint $table) {
             if (! Schema::hasColumn('pages', 'author')) {
-                // preview_video not guaranteed yet; place after preview_image if exists
-                if (Schema::hasColumn('pages', 'preview_image')) {
+                // Place after preview_video if that column exists, otherwise after preview_image.
+                if (Schema::hasColumn('pages', 'preview_video')) {
+                    $table->string('author')->nullable()->after('preview_video');
+                } elseif (Schema::hasColumn('pages', 'preview_image')) {
                     $table->string('author')->nullable()->after('preview_image');
                 } else {
                     $table->string('author')->nullable();
@@ -34,7 +38,7 @@ return new class extends Migration
     public function down(): void
     {
         if (! Schema::hasTable('pages')) {
-            return;
+            return; // Nothing to do.
         }
 
         Schema::table('pages', function (Blueprint $table) {
