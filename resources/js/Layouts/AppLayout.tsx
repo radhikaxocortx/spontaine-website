@@ -13,6 +13,7 @@ interface Properties {
   title?: string
   description?: string
   image?: string
+  url?: string
   noIndex?: boolean
 }
 
@@ -21,6 +22,7 @@ const AppLayout = ({
   title = 'Spontaine',
   description = `Transform your disconnected systems into an AI-driven command center with Spontaine’s no-code data integration platform. Get real-time insights, eliminate data silos, and enable AI adoption across your organization - all in weeks, not quarters.`,
   image = 'https://spontaine.com/storage/images/16.png',
+  url,
   noIndex = false,
 }: Properties) => {
   // Get footer data from Inertia shared props
@@ -263,6 +265,7 @@ const AppLayout = ({
         title={title}
         description={description}
         image={image}
+        url={url}
         noIndex={noIndex}
       />
       <div className='relative min-h-screen w-full bg-white'>{children}</div>
