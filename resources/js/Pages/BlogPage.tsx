@@ -212,6 +212,11 @@ const BlogPage = ({ post }: BlogPageProps) => {
       title={`${post.title} | Spontaine Blog`}
       description={post.description || ''}
       image={post.preview_image || 'https://spontaine.com/storage/images/16.png'}
+      url={
+        typeof window !== 'undefined'
+          ? `${window.location.origin}/blog/${post.url?.replace(/^\//, '')}`
+          : `https://spontaine.com/blog/${post.url?.replace(/^\//, '')}`
+      }
     >
       {/* Banner Section */}
       <BlogsBanner />
