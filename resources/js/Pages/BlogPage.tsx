@@ -173,7 +173,10 @@ interface BlogPageProps {
 const BlogPage = ({ post }: BlogPageProps) => {
   const [showShareMenu, setShowShareMenu] = useState(false)
 
-  const currentUrl = `${window.location.origin}/blog/${post.url?.replace(/^\//, '')}`
+  const currentUrl =
+    typeof window !== 'undefined'
+      ? `${window.location.origin}/blog/${post.url?.replace(/^\//, '')}`
+      : `/blog/${post.url?.replace(/^\//, '')}`
 
   const shareUrls = {
     whatsapp: `https://wa.me/?text=${encodeURIComponent(`${post.title} - ${currentUrl}`)}`,
@@ -181,7 +184,9 @@ const BlogPage = ({ post }: BlogPageProps) => {
   }
 
   const handleShare = (platform: keyof typeof shareUrls) => {
-    window.open(shareUrls[platform], '_blank', 'width=600,height=400')
+    if (typeof window !== 'undefined') {
+      window.open(shareUrls[platform], '_blank', 'width=600,height=400')
+    }
     setShowShareMenu(false)
   }
 
