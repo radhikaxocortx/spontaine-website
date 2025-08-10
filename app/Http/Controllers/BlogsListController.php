@@ -26,14 +26,12 @@ final class BlogsListController extends Controller
                     ->orWhere('url', "/{$slug}")
                     ->orWhere('url', "/blog/{$slug}");
             })
-            ->first();
+            ->firstOrFail();
 
-        // If post not found, return blogs list without selection
-        if (!$post) {
-            return $this->renderBlogsList();
-        }
-
-        return $this->renderBlogsList($slug);
+        // Render the dedicated blog page
+        return Inertia::render('BlogPage', [
+            'post' => $post,
+        ]);
     }
 
     private function renderBlogsList(?string $selectedBlogSlug = null): Response
