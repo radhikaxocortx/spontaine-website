@@ -28,7 +28,7 @@ const StaticHomePage = ({
   featuredVideoPosts = [],
   title = 'No-Code Data Integration & AI Platform for Enterprise',
   description = `Transform your disconnected systems into an AI-driven command center with Spontaine’s no-code data integration platform. Get real-time insights, eliminate data silos, and enable AI adoption across your organization - all in weeks, not quarters.`,
-  image = 'https://spontaine.com/storage/images/14.png',
+  image = 'https://spontaine.com/storage/images/16.png',
   noIndex = false,
 }: StaticHomePageProps) => {
   // Get footer data from Inertia shared props
