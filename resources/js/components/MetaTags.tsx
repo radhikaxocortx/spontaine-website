@@ -15,12 +15,49 @@ const MetaTags = ({
   url = 'https://spontaine.com/',
   noIndex = false,
 }: MetaTagsFields) => {
+  const domain = 'spontaine.com'
+
   return (
     <Head title={title}>
+      {/* Robots */}
       <meta
         name='robots'
-        content={`${noIndex ? 'noindex' : 'index'}`}
+        content={noIndex ? 'noindex' : 'index'}
       />
+
+      {/* Canonical */}
+      <link
+        rel='canonical'
+        href={url}
+      />
+
+      {/* Open Graph */}
+      <meta
+        property='og:site_name'
+        content='Spontaine'
+      />
+      <meta
+        property='og:title'
+        content={title}
+      />
+      <meta
+        property='og:description'
+        content={description}
+      />
+      <meta
+        property='og:image'
+        content={image}
+      />
+      <meta
+        name='og:url'
+        content={url}
+      />
+      <meta
+        property='og:type'
+        content='website'
+      />
+
+      {/* Twitter */}
 
       <meta
         name='twitter:card'
@@ -28,72 +65,36 @@ const MetaTags = ({
       />
       <meta
         name='twitter:title'
-        content='Spontaine - No-Code AI Data Integration Platform'
-      />
-      <meta
-        name='twitter:domain'
-        content={url}
-      />
-      <meta
-        name='twitter:image:src'
-        content={image}
+        content={title}
       />
       <meta
         name='twitter:description'
         content={description}
       />
       <meta
-        name='title'
-        property='og:title'
-        content={title}
-      />
-      <meta
-        property='og:type'
-        content='article'
-      />
-      <meta
-        name='og:url'
-        content={url}
-      />
-      <meta
-        name='image'
-        property='og:image'
+        name='twitter:image'
         content={image}
       />
+      <meta
+        name='twitter:domain'
+        content={domain}
+      />
+
+      {/* SEO */}
       <meta
         name='description'
-        property='og:description'
         content={description}
-      />
-      <meta
-        name='author'
-        content='Spontaine'
-      />
-      <meta
-        property='og:title'
-        content='Spontaine - No-Code AI Data Integration Platform'
-      />
-      <meta
-        property='og:type'
-        content='website'
-      />
-      <meta
-        property='og:url'
-        content={url}
-      />
-      <meta
-        property='og:image'
-        content={image}
-      />
-      <meta
-        property='og:description'
-        content='Transform disconnected systems into an AI-driven command center. Get deep insights & unified decision intelligence in weeks, not quarters.'
       />
 
       <meta
         name='keywords'
         content='no-code data integration, AI data platform, business intelligence, data unification, semantic layer, automated data sourcing, enterprise data integration, real-time insights, data silos elimination, AI adoption'
       ></meta>
+
+      <meta
+        name='author'
+        content='Spontaine'
+      />
     </Head>
   )
 }
