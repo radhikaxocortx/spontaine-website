@@ -49,6 +49,14 @@ const MetaTags = ({
         content={image}
       />
       <meta
+        property='og:image:width'
+        content='1200'
+      />
+      <meta
+        property='og:image:height'
+        content='630'
+      />
+      <meta
         name='og:url'
         content={url}
       />
@@ -70,6 +78,10 @@ const MetaTags = ({
       <meta
         name='twitter:description'
         content={description}
+      />
+      <meta
+        property='twitter:url'
+        content={url}
       />
       <meta
         name='twitter:image'
