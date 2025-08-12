@@ -211,7 +211,11 @@ const BlogPage = ({ post }: BlogPageProps) => {
     <AppLayout
       title={`${post.title} | Spontaine Blog`}
       description={post.description || ''}
-      image={post.preview_image || 'https://spontaine.com/storage/images/16.png'}
+      image={
+        post.preview_image
+          ? `https://spontaine.com${post.preview_image}`
+          : 'https://spontaine.com/storage/images/16.png'
+      }
       url={
         typeof window !== 'undefined'
           ? `${window.location.origin}/blog/${post.url?.replace(/^\//, '')}`
