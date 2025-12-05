@@ -66,7 +66,7 @@ const NavLinkItem = ({ item, lang = 'en' }: Properties) => {
             href={linkInfo?.link ?? '#'}
             target={linkInfo?.external ? '_blank' : undefined}
             rel={linkInfo?.external ? 'noopener noreferrer' : undefined}
-            className={`relative overflow-hidden rounded-full py-4 text-white shadow-2xl transition-all duration-300 2xl:text-lg ${navigationMenuTriggerStyle()}`}
+            className={`relative overflow-hidden rounded-full py-4 shadow-2xl transition-all duration-300 2xl:text-lg ${navigationMenuTriggerStyle()}`}
             onMouseEnter={(e) => createRippleEffect(e, 'rgba(255, 255, 255, 0.3)')}
             onMouseLeave={(e) => cleanupRipples(e.currentTarget)}
           >

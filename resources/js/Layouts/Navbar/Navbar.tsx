@@ -33,37 +33,42 @@ const Navbar = () => {
           className='fixed left-0 top-0 z-50 w-full bg-transparent'
         >
           <AppLayoutPadding>
-            <div className='flex items-center justify-between py-6'>
-              {/* Logo */}
-              <div className='flex items-center'>
-                <Link href='/'>
-                  <div className="justify-center self-stretch text-center font-['Urbanist'] text-2xl font-bold uppercase leading-[60px] tracking-[4.25px] text-white/75">
-                    Spontaine
-                  </div>
-                </Link>
-              </div>
+            <div className='flex items-center justify-center py-6'>
               {/* Navigation Links */}
 
               <div className='hidden items-center gap-4 font-["Urbanist"] lg:flex'>
-                <div className='font-accent flex items-center gap-2 rounded-full border border-transparent bg-white/10 px-6 py-1 text-sm tracking-wide text-white shadow-white backdrop-blur-md'>
+                <div className='font-accent flex items-center gap-8 rounded-full border border-transparent bg-green-400 px-6 py-2 text-sm tracking-wide shadow-white backdrop-blur-md'>
+                  {/* Logo */}
+                  <div className='flex items-center'>
+                    <Link href='/'>
+                      <div className='justify-center self-stretch text-center text-2xl font-bold uppercase leading-[60px] tracking-[4.25px] text-white/75'>
+                        <img
+                          src='/logo.png'
+                          alt=''
+                        />
+                      </div>
+                    </Link>
+                  </div>
+
+                  {/* Navigation Links */}
                   <NavbarLinks />
+
+                  {/* CTA Button */}
+                  <div className='hidden lg:block'>
+                    <Link href='/how-it-works'>
+                      <Button
+                        size='lg'
+                        className='relative overflow-hidden rounded-full bg-white py-6 text-black shadow-2xl'
+                      >
+                        <span className='nav-cta-text'>Book Demo</span>
+                        {/* <i className='fas fa-arrow-right-long hero-cta-icon' /> */}
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
               </div>
               <div className='lg:hidden'>
                 <MobileNav />
-              </div>
-
-              {/* CTA Button */}
-              <div className='hidden lg:block'>
-                <Link href='/how-it-works'>
-                  <Button
-                    size='xl'
-                    className='relative overflow-hidden rounded-full bg-white/20 py-4 text-white shadow-2xl'
-                  >
-                    <span className='nav-cta-text'>How It Works</span>
-                    <i className='fas fa-arrow-right-long hero-cta-icon' />
-                  </Button>
-                </Link>
               </div>
             </div>
           </AppLayoutPadding>

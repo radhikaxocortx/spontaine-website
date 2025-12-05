@@ -29,7 +29,7 @@ export default {
         'data-sm-1stop': ['var(--font-data-sm-1stop)', ...defaultTheme.fontFamily.sans],
         'data-md-1stop': ['var(--font-data-md-1stop)', ...defaultTheme.fontFamily.sans],
         'data-lg-1stop': ['var(--font-data-lg-1stop)', ...defaultTheme.fontFamily.sans],
-        'urbanist': ['Urbanist', ...defaultTheme.fontFamily.sans],
+        urbanist: ['Urbanist', ...defaultTheme.fontFamily.sans],
         'roboto-mono': ['Roboto Mono', ...defaultTheme.fontFamily.mono],
         'space-grotesk': ['Space Grotesk', ...defaultTheme.fontFamily.sans],
         'font-awesome': ['Font Awesome 6 Free', ...defaultTheme.fontFamily.sans],
@@ -234,12 +234,24 @@ export default {
             opacity: '1',
           },
         },
+        'ken-burns': {
+          '0%': {
+            transform: 'scale(1) translate(0px, 0px)',
+          },
+          '50%': {
+            transform: 'scale(1.08) translate(-2px, -1px)',
+          },
+          '100%': {
+            transform: 'scale(1.12) translate(-4px, -2px)',
+          },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         shimmer: 'shimmer 2s linear infinite',
         reveal: 'reveal 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        'ken-burns': 'ken-burns 20s ease-out infinite alternate',
       },
     },
   },
