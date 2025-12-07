@@ -175,6 +175,10 @@ body {
     --color-success: #d2ddca;
     --color-fail: #da999a;
     --radius: 0.5rem;
+
+    /* Spontaine custom tokens */
+    --spontaine-accent: #44eca0;
+    --spontaine-highlight: #7776bc;
   }
 
   @font-face {

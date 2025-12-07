@@ -56,3 +56,29 @@ Purpose: Enable immediate productive contributions while preserving established 
 - Never silently mutate JSON structures without bumping `lastUUID` where pattern requires.
 
 Provide PR descriptions summarizing domain impact (e.g., "Adds new gallery block: schema, builder UI, renderer"). Ask if uncertain about schema evolution before broad refactors.
+
+## Navbar Revamp Notes (Dec 2025)
+
+- **Collapsed Pill Behavior:** Navbar collapses into a compact pill on scroll; expands on hover. Shows `logo-icon` when collapsed, full `logo` when expanded. CTA remains visible in both states.
+- **Desktop Mega Menu:**
+  - Hover-delay on left link list to reduce flicker.
+  - Accessibility: Escape-to-close, focus trap with Tab cycling; `role="dialog"`, `aria-modal`.
+  - Visual tweaks: gap between navbar and dropdown (`mt-2`), muted dark baseline link color with hover to black, remove focus ring on submenu links.
+  - Layout: Grid with header/links/footer on left; media spans full height on right; panel constrained to viewport (`max-h-[80vh] overflow-hidden`); portrait media `object-cover`.
+  - Interaction: Arrow icon appears next to dropdown links on hover.
+- **Mobile Navigation Sheet:** (Reference: sanas.ai mobile menu)
+  - Full-screen overlay (`fixed inset-0`, `h-screen w-screen`, `max-w-none`, `rounded-none`) with fade + zoom transition (`fade-in-0 zoom-in-95`).
+  - Background: `bg-spontaine-accent` aligned to navbar.
+  - Header: Logo left; CTA + Close button right (seamless transition from hamburger position). Close button replaces hamburger icon when sheet opens; default Sheet close button hidden via `[&>button]:hidden`.
+  - Main menu: All items `text-[28px]` with right arrows; horizontal borders (`border-b border-white/30`); `py-4` spacing; `hover:opacity-70`.
+  - Submenu: Back button + logo left; CTA + close right. Links styled identically to main menu (`text-[28px]`, borders, arrows, spacing). View transitions via CSS `translate-x` (root ↔ submenu slide horizontally).
+- **Tailwind Token:** Added `spontaine-accent: #44ECA0` in `tailwind.config.js` and `--spontaine-accent` in `resources/css/app.css`.
+- **Rendering Fixes:** Ensured main menu links render (`NavbarLinks.tsx` wrapper uses `flex` and parent controls visibility). Fixed JSX structure and Tailwind class order issues across navbar components.
+
+Implementation references:
+
+- `resources/js/Layouts/Navbar/Navbar.tsx` — collapsed pill, hover expansion, desktop/mobile layout.
+- `resources/js/Layouts/Navbar/NavMegaMenu.tsx` — accessibility, grid, media, hover-delay, visual tweaks.
+- `resources/js/Layouts/Navbar/MobileNav/MobileNav.tsx` — full-screen sheet, views, transitions, typography.
+- `resources/js/Layouts/Navbar/NavbarLinks.tsx` — link rendering wrapper.
+- `resources/js/Layouts/Navbar/NavLinkItem.tsx` — muted dark link baseline + hover behavior.

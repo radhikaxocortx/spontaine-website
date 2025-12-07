@@ -35,6 +35,8 @@ export default {
         'font-awesome': ['Font Awesome 6 Free', ...defaultTheme.fontFamily.sans],
       },
       colors: {
+        'spontaine-accent': '#44ECA0',
+        'spontaine-highlight': '#7776BC',
         primary: {
           50: '#f1f4ff', //light gray
           100: '#e6ecff',

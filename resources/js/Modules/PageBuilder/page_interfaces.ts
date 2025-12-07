@@ -34,10 +34,19 @@ export interface RequiredTextData {
   malayalam: string | null
 }
 
+export interface NavLinkMedia {
+  type?: 'image' | 'video' | null
+  source?: 'upload' | 'url' | null
+  pathOrUrl?: string | null
+  thumbnail?: string | null
+}
+
 export interface LinkData {
   link: string | null
   name: TextData
   external: boolean
+  description?: TextData | null
+  media?: NavLinkMedia | null
 }
 
 export interface BlockLink extends LinkData {
