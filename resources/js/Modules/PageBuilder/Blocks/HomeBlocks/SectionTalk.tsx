@@ -13,7 +13,7 @@ gsap.registerPlugin(ScrollTrigger)
 const openCalendly = () => {
   // Check if Calendly is available
   if (typeof window !== 'undefined' && (window as any).Calendly) {
-    (window as any).Calendly.initPopupWidget({ url: 'https://calendly.com/clinicallynow' })
+    ;(window as any).Calendly.initPopupWidget({ url: 'https://calendly.com/clinicallynow' })
   } else {
     // Fallback to direct link if Calendly widget is not loaded
     window.open('https://calendly.com/clinicallynow', '_blank')

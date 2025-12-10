@@ -1,14 +1,6 @@
-import AppLayoutPadding from '@/Layouts/AppLayoutPadding'
-import AppSectionPadding from '@/Layouts/AppSectionPadding'
 import { cn } from '@/lib/utils'
-import SectionBody from '@/typography/SectionBody'
-import SectionDescription from '@/typography/SectionDescription'
-import SectionSubheading from '@/typography/SectionSubheading'
 import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useEffect, useRef, useState } from 'react'
-
-gsap.registerPlugin(ScrollTrigger)
 
 interface Testimonial {
   id: number
@@ -26,9 +18,8 @@ interface SectionTestimonialProps {
 const SectionTestimonial = ({ className }: SectionTestimonialProps) => {
   const sectionRef = useRef<HTMLDivElement>(null)
   const logoRef = useRef<HTMLDivElement>(null)
-  const quoteRef = useRef<HTMLParagraphElement>(null)
+  const quoteRef = useRef<HTMLDivElement>(null)
   const authorRef = useRef<HTMLDivElement>(null)
-  const dotsRef = useRef<HTMLDivElement>(null)
 
   const [currentIndex, setCurrentIndex] = useState(0)
 
@@ -42,235 +33,164 @@ const SectionTestimonial = ({ className }: SectionTestimonialProps) => {
       position: 'Director',
       company: 'Department of Economics & Statistics',
     },
-    // {
-    //   id: 2,
-    //   logo: '/imge/testimonials/des-logo.png',
-    //   quote:
-    //     "Spontaine transformed how we handle complex data workflows. The platform's AI Semantic Layer makes sense of our fragmented business systems, providing trustworthy insights that drive million-dollar decisions with confidence.",
-    //   author: 'Chief Executive Officer',
-    //   position: 'CEO',
-    //   company: 'Enterprise Solutions Inc.',
-    // },
-    // {
-    //   id: 3,
-    //   logo: '/imge/testimonials/des-logo.png',
-    //   quote:
-    //     'From chaos to clarity in weeks, not years. Spontaine delivered exactly what we needed - a unified view of our data that actually works. The 80/20 principle in action.',
-    //   author: 'Chief Operating Officer',
-    //   position: 'COO',
-    //   company: 'Global Manufacturing Corp',
-    // },
   ]
 
   const currentTestimonial = testimonials[currentIndex]
+  const canGoPrev = currentIndex > 0
+  const canGoNext = currentIndex < testimonials.length - 1
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Set initial state - elements hidden
-      gsap.set([logoRef.current, quoteRef.current, authorRef.current, dotsRef.current], {
-        opacity: 0,
-        y: 30,
-      })
+  const handlePrev = () => {
+    if (canGoPrev) {
+      setCurrentIndex((prev) => prev - 1)
+    }
+  }
 
-      // Create viewport-triggered animation that repeats on every entry
-      ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: 'top 85%',
-        end: 'bottom 15%',
-        onEnter: () => {
-          // Animate elements when section enters viewport
-          const tl = gsap.timeline()
-
-          tl.to(logoRef.current, {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: 'power3.out',
-          })
-            .to(
-              quoteRef.current,
-              {
-                opacity: 1,
-                y: 0,
-                duration: 1,
-                ease: 'power3.out',
-              },
-              '-=0.4'
-            )
-            .to(
-              authorRef.current,
-              {
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                ease: 'power3.out',
-              },
-              '-=0.4'
-            )
-            .to(
-              dotsRef.current,
-              {
-                opacity: 1,
-                y: 0,
-                duration: 0.6,
-                ease: 'power3.out',
-              },
-              '-=0.2'
-            )
-        },
-        onLeave: () => {
-          // Reset elements when leaving viewport (scrolling down)
-          gsap.set([logoRef.current, quoteRef.current, authorRef.current, dotsRef.current], {
-            opacity: 0,
-            y: 30,
-          })
-        },
-        onEnterBack: () => {
-          // Re-animate when coming back into viewport (scrolling up)
-          const tl = gsap.timeline()
-
-          tl.to(logoRef.current, {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            ease: 'power3.out',
-          })
-            .to(
-              quoteRef.current,
-              {
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                ease: 'power3.out',
-              },
-              '-=0.3'
-            )
-            .to(
-              authorRef.current,
-              {
-                opacity: 1,
-                y: 0,
-                duration: 0.6,
-                ease: 'power3.out',
-              },
-              '-=0.3'
-            )
-            .to(
-              dotsRef.current,
-              {
-                opacity: 1,
-                y: 0,
-                duration: 0.4,
-                ease: 'power3.out',
-              },
-              '-=0.2'
-            )
-        },
-        onLeaveBack: () => {
-          // Reset when leaving viewport upwards
-          gsap.set([logoRef.current, quoteRef.current, authorRef.current, dotsRef.current], {
-            opacity: 0,
-            y: 30,
-          })
-        },
-      })
-    }, sectionRef)
-
-    return () => ctx.revert()
-  }, [])
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % testimonials.length)
-    }, 6000)
-
-    return () => clearInterval(interval)
-  }, [testimonials.length])
+  const handleNext = () => {
+    if (canGoNext) {
+      setCurrentIndex((prev) => prev + 1)
+    }
+  }
 
   const handleDotClick = (index: number) => {
     setCurrentIndex(index)
   }
 
+  // Animate content fade when testimonial changes
+  useEffect(() => {
+    if (!quoteRef.current || !authorRef.current || !logoRef.current) return
+
+    const tl = gsap.timeline()
+
+    // Fade out
+    tl.to([logoRef.current, quoteRef.current, authorRef.current], {
+      opacity: 0,
+      y: 20,
+      duration: 0.3,
+      ease: 'power2.in',
+    })
+      // Update content happens here (React handles this)
+      .set({}, {}, '+=0.1')
+      // Fade in
+      .to([logoRef.current, quoteRef.current, authorRef.current], {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        ease: 'power2.out',
+      })
+  }, [currentIndex])
+
   return (
     <section
       ref={sectionRef}
-      className={cn('text-gray-900', className)}
-      style={{ backgroundColor: '#EEF1F0' }} // Light gray background
+      className={cn(
+        'relative w-full overflow-hidden border-t border-[#f1f1f1] bg-white',
+        className
+      )}
     >
-      <AppSectionPadding>
-        <AppLayoutPadding>
-          <div className='mx-auto max-w-4xl text-center'>
-            {/* Logo */}
-            <div
-              ref={logoRef}
-              className='mb-8'
+      <div className='py-16 sm:py-20 lg:py-24'>
+        <div className='mx-auto max-w-4xl px-6'>
+          {/* Logo */}
+          <div
+            ref={logoRef}
+            className='mb-2 flex justify-center rounded-full'
+          >
+            <div className='flex h-[90px] w-[90px] items-center justify-center overflow-hidden rounded-full bg-white shadow-sm'>
+              <img
+                src={currentTestimonial.logo}
+                alt={`${currentTestimonial.company} logo`}
+                className='h-full w-full rounded-full object-contain p-2'
+              />
+            </div>
+          </div>
+
+          {/* Author Info */}
+          <div
+            ref={authorRef}
+            className='mb-12 text-center'
+          >
+            <p className='font-body text-spontaine-gray-cool mb-1 text-xl font-bold leading-relaxed'>
+              {currentTestimonial.author}
+            </p>
+            <p className='font-body text-spontaine-gray-cool text-xl leading-relaxed'>
+              {currentTestimonial.company}
+            </p>
+          </div>
+
+          {/* Quote */}
+          <div
+            ref={quoteRef}
+            className='mb-16 flex justify-center'
+          >
+            <p className='font-body text-spontaine-dark text-center text-2xl font-normal leading-relaxed tracking-wide'>
+              {currentTestimonial.quote}
+            </p>
+          </div>
+
+          {/* Navigation Controls */}
+          <div className='flex items-center justify-center gap-4'>
+            {/* Previous Button */}
+            <button
+              onClick={handlePrev}
+              disabled={!canGoPrev}
+              className='bg-spontaine-light flex h-10 w-10 items-center justify-center rounded-xl text-spontaine-gray transition-all hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-30'
+              aria-label='Previous testimonial'
             >
-              <div className='mx-auto flex h-24 w-24 items-center justify-center rounded-lg'>
-                <img
-                  src={currentTestimonial.logo}
-                  alt={`${currentTestimonial.company} logo`}
-                  className='h-full w-full object-contain'
+              <svg
+                className='h-4 w-4'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='2.5'
+                viewBox='0 0 24 24'
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  d='M15 19l-7-7 7-7'
                 />
-              </div>
-            </div>
+              </svg>
+            </button>
 
-            {/* Quote */}
-            <div
-              className='mb-6 flex min-h-[120px] items-center justify-center'
-              ref={quoteRef}
-            >
-              <SectionDescription
-                theme='light'
-                size='medium'
-                maxWidth='2xl'
-              >
-                {currentTestimonial.quote}
-              </SectionDescription>
-            </div>
-
-            {/* Author */}
-            <div
-              ref={authorRef}
-              className='mb-6 flex min-h-[50px] flex-col items-center justify-center'
-            >
-              <SectionSubheading
-                theme='light'
-                size='small'
-                weight='semibold'
-                centered
-                className='mb-1'
-              >
-                {currentTestimonial.author}
-              </SectionSubheading>
-              <SectionBody
-                theme='gray'
-                size='xs'
-                centered
-              >
-                {currentTestimonial.company}
-              </SectionBody>
-            </div>
-
-            {/* Pagination Dots */}
-            {/* <div
-              ref={dotsRef}
-              className='flex justify-center gap-3'
-            >
+            {/* Dot Indicators */}
+            <div className='flex items-center gap-2'>
               {testimonials.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => handleDotClick(index)}
-                  className={cn(
-                    'h-3 w-3 rounded-full transition-all duration-300',
-                    index === currentIndex ? 'bg-blue-600' : 'bg-gray-300 hover:bg-gray-400'
-                  )}
+                  className={`h-2.5 rounded-md transition-all duration-300 ${
+                    index === currentIndex
+                      ? 'bg-spontaine-accent-soft w-2.5'
+                      : 'w-2.5 bg-spontaine-gray hover:bg-gray-500'
+                  }`}
                   aria-label={`Go to testimonial ${index + 1}`}
+                  aria-current={index === currentIndex ? 'true' : 'false'}
                 />
               ))}
-            </div> */}
+            </div>
+
+            {/* Next Button */}
+            <button
+              onClick={handleNext}
+              disabled={!canGoNext}
+              className='bg-spontaine-light flex h-10 w-10 items-center justify-center rounded-xl text-spontaine-gray transition-all hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-30'
+              aria-label='Next testimonial'
+            >
+              <svg
+                className='h-4 w-4'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='2.5'
+                viewBox='0 0 24 24'
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  d='M9 5l7 7-7 7'
+                />
+              </svg>
+            </button>
           </div>
-        </AppLayoutPadding>
-      </AppSectionPadding>
+        </div>
+      </div>
     </section>
   )
 }

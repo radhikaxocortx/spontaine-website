@@ -1,23 +1,23 @@
 import MetaTags from '@/components/MetaTags'
-import Navbar from '@/Layouts/Navbar/Navbar'
-import CompanyLogosSection from '@/Modules/PageBuilder/Blocks/HomeBlocks/CompanyLogosSection'
-import HeroSection2 from '@/Modules/PageBuilder/Blocks/HomeBlocks/HeroSection2'
-import SectionAI from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionAI'
-import SectionBlogsList from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionBlogsList'
-import SectionLargeText from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionLargeText'
-import SectionTalk from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionTalk'
+import CompanyLogosMarquee from '@/Modules/PageBuilder/Blocks/HomeBlocks/CompanyLogosMarquee'
+import HeroArcInteractive from '@/Modules/PageBuilder/Blocks/HomeBlocks/HeroArcInteractive'
+import SectionAlignedAction from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionAlignedAction'
+import SectionBlogsCarousel from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionBlogsCarousel'
+import SectionChat from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionChat'
+import SectionCTA from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionCTA'
 import SectionTestimonial from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionTestimonial'
-import SectionTrustedPartners from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionTrustedPartners'
-import SectionVideos from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionVideos'
+import VideoFeatureCarousel from '@/Modules/PageBuilder/Blocks/HomeBlocks/VideoFeatureCarousel'
 import { FooterDataInterface } from '@/Modules/PageBuilder/FooterEditor/FooterEditor'
 import { Page } from '@/Modules/PageBuilder/page_interfaces'
 import { PageProps } from '@/types'
 import { usePage } from '@inertiajs/react'
 import { useEffect } from 'react'
 import Footer from './Footer/Footer'
+import Navbar from './Navbar/Navbar'
 
 interface StaticHomePage2Props {
   featuredVideoPosts?: Page[]
+  featuredBlogs?: Page[]
   title?: string
   description?: string
   image?: string
@@ -26,8 +26,9 @@ interface StaticHomePage2Props {
 
 const StaticHomePage2 = ({
   featuredVideoPosts = [],
+  featuredBlogs = [],
   title = 'No-Code Data Integration & AI Platform for Enterprise',
-  description = `Transform your disconnected systems into an AI-driven command center with Spontaine’s no-code data integration platform. Get real-time insights, eliminate data silos, and enable AI adoption across your organization - all in weeks, not quarters.`,
+  description = `Transform your disconnected systems into an AI-driven command center with Spontaine's no-code data integration platform. Get real-time insights, eliminate data silos, and enable AI adoption across your organization - all in weeks, not quarters.`,
   image = 'https://spontaine.com/storage/images/16.png',
   noIndex = false,
 }: StaticHomePage2Props) => {
@@ -213,21 +214,23 @@ const StaticHomePage2 = ({
         noIndex={noIndex}
       />
       <div className='relative min-h-screen w-full max-w-full overflow-x-hidden bg-white'>
-        <HeroSection2 />
+        <HeroArcInteractive />
 
-        <div className='hidden md:-mt-12 md:block'>
+        <SectionChat />
+        <VideoFeatureCarousel />
+        {/* <div className='hidden md:-mt-12 md:block'>
           <CompanyLogosSection />
-        </div>
-
-        <div className=''>
-          <SectionAI />
-        </div>
-        <SectionTrustedPartners />
-        <SectionBlogsList />
-        <SectionVideos featuredPosts={featuredVideoPosts} />
-        <SectionLargeText />
+        </div> */}
+        <SectionAlignedAction />
+        <CompanyLogosMarquee />
         <SectionTestimonial />
-        <SectionTalk />
+
+        <SectionBlogsCarousel featuredBlogs={featuredBlogs} />
+        <SectionCTA />
+        {/* <SectionVideos featuredPosts={featuredVideoPosts} />
+        <SectionLargeText /> */}
+
+        {/* <SectionTalk /> */}
       </div>
       <Footer blockData={footer.items} />
     </div>

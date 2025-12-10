@@ -30,6 +30,7 @@ export interface FooterDataInterface {
   youtube?: LinkData
   copyright?: TextData | null
   copyrightLink?: LinkData | null
+  compliance?: TextData | null
 }
 
 const defaultFooterData: FooterDataInterface = {
@@ -54,6 +55,7 @@ const defaultFooterData: FooterDataInterface = {
     lastUUID: 0,
     items: [],
   },
+  compliance: { english: '', malayalam: '' },
 }
 
 interface Properties {

@@ -91,10 +91,8 @@ const ContactUS = ({ editMode = false, onFieldEdit, blockData, language = 'en' }
       style={
         {
           // Hide phone input flags
-          ['--PhoneInputCountryFlag-display' as React.CSSProperties[keyof React.CSSProperties]]:
-            'none',
-          ['--PhoneInputCountryIcon-display' as React.CSSProperties[keyof React.CSSProperties]]:
-            'none',
+          '--PhoneInputCountryFlag-display': 'none',
+          '--PhoneInputCountryIcon-display': 'none',
         } as React.CSSProperties
       }
     >
@@ -259,7 +257,7 @@ const ContactUS = ({ editMode = false, onFieldEdit, blockData, language = 'en' }
                       onChange={(e) => onChange(e.target.value)}
                       className='flex h-10 w-20 items-center justify-between rounded-l-md border border-gray-300 bg-white px-3 py-3 text-sm focus:border-gray-400 focus:outline-none focus:ring-0'
                     >
-                      {options.map(({ value, label }) => (
+                      {options.map(({ value }: { value: string; label: string }) => (
                         <option
                           key={value}
                           value={value}

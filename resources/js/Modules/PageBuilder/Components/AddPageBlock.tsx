@@ -83,6 +83,21 @@ const pageBlocks = [
     icon: '🎭',
   },
   {
+    name: 'Spontaine - Clean Banner',
+    description: 'Clean white banner with centered title and description - BlogsList style',
+    icon: '✨',
+  },
+  {
+    name: 'Spontaine - Dark Banner',
+    description: 'Dark banner with black background and white text',
+    icon: '🌙',
+  },
+  {
+    name: 'Spontaine - Gradient Banner',
+    description: 'Banner with gradient background (green to blue) and centered content',
+    icon: '🎨',
+  },
+  {
     name: 'Spontaine - Breadcrumbs',
     description: 'Navigation breadcrumbs with customizable links and styling',
     icon: '🍞',

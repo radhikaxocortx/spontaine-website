@@ -22,8 +22,17 @@ final class HomePageController extends Controller
             ->limit(4)
             ->get();
 
+        // Get featured blog posts for the blogs carousel
+        $featuredBlogs = Page::where('published', true)
+            ->where('featured', true)
+            ->where('type', 'Blog')
+            ->orderBy('created_at', 'desc')
+            ->limit(10) // Get more than 3 in case some don't have images
+            ->get();
+
         return Inertia::render('HomePage', [
             'featuredVideoPosts' => $featuredVideoPosts,
+            'featuredBlogs' => $featuredBlogs,
         ]);
     }
 }

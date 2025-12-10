@@ -13,6 +13,9 @@ import { textBlock } from '../Blocks/SectionCallToAction'
 import { heroImageBlock } from '../Blocks/SectionHero'
 import { defaultTestimonialBlock } from '../Blocks/SectionTestimonial'
 import { videoBlock } from '../Blocks/SectionVideo'
+import { sectionBannerCleanBlock } from '../Blocks/SpontaineBlocks/SectionBannerClean'
+import { sectionBannerDarkBlock } from '../Blocks/SpontaineBlocks/SectionBannerDark'
+import { sectionBannerGradientBlock } from '../Blocks/SpontaineBlocks/SectionBannerGradient'
 import { sectionBannerSPBlock } from '../Blocks/SpontaineBlocks/SectionBannerSP'
 import { breadcrumbsData } from '../Blocks/SpontaineBlocks/SectionBreadcrumbs'
 import { sectionCarouselBlock } from '../Blocks/SpontaineBlocks/SectionCarousel'
@@ -110,6 +113,21 @@ const getBlockDefaultData = (blockName: string) => {
     case 'Spontaine - Banner Section': {
       return {
         ...sectionBannerSPBlock,
+      }
+    }
+    case 'Spontaine - Clean Banner': {
+      return {
+        ...sectionBannerCleanBlock,
+      }
+    }
+    case 'Spontaine - Dark Banner': {
+      return {
+        ...sectionBannerDarkBlock,
+      }
+    }
+    case 'Spontaine - Gradient Banner': {
+      return {
+        ...sectionBannerGradientBlock,
       }
     }
     case 'Spontaine - Breadcrumbs': {

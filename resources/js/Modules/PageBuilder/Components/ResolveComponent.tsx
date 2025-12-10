@@ -25,6 +25,15 @@ import SectionHero, { HeroImageBlock } from '../Blocks/SectionHero'
 import SectionMarquee, { MarqueeData } from '../Blocks/SectionMarquee'
 import SectionTestimonial, { TestimonialBlock } from '../Blocks/SectionTestimonial'
 import SectionVideo, { VideoImageBlock } from '../Blocks/SectionVideo'
+import SectionBannerClean, {
+  SectionBannerCleanBlock,
+} from '../Blocks/SpontaineBlocks/SectionBannerClean'
+import SectionBannerDark, {
+  SectionBannerDarkBlock,
+} from '../Blocks/SpontaineBlocks/SectionBannerDark'
+import SectionBannerGradient, {
+  SectionBannerGradientBlock,
+} from '../Blocks/SpontaineBlocks/SectionBannerGradient'
 import SectionBannerSP, { SectionBannerSPBlock } from '../Blocks/SpontaineBlocks/SectionBannerSP'
 import SectionBreadcrumbs, {
   SectionBreadcrumbsData,
@@ -179,6 +188,30 @@ const ResolveComponent = ({
       {blockName === 'Spontaine - Banner Section' && (
         <SectionBannerSP
           blockData={block as unknown as SectionBannerSPBlock}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+        />
+      )}
+      {blockName === 'Spontaine - Clean Banner' && (
+        <SectionBannerClean
+          blockData={block as unknown as SectionBannerCleanBlock}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+        />
+      )}
+      {blockName === 'Spontaine - Dark Banner' && (
+        <SectionBannerDark
+          blockData={block as unknown as SectionBannerDarkBlock}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+        />
+      )}
+      {blockName === 'Spontaine - Gradient Banner' && (
+        <SectionBannerGradient
+          blockData={block as unknown as SectionBannerGradientBlock}
           editMode={editMode}
           onFieldEdit={onFieldEdit}
           language={language}

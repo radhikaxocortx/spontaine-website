@@ -12,6 +12,16 @@ const Navbar = () => {
   const [isHeroVisible, setIsHeroVisible] = useState(true)
   const [isCollapsed, setIsCollapsed] = useState(false)
   const [isHoveringPill, setIsHoveringPill] = useState(false)
+  const [showModal, setShowModal] = useState(false)
+  const [hideNavbar, setHideNavbar] = useState(false)
+
+  const handleBookDemo = () => {
+    setShowModal(true)
+  }
+
+  const closeModal = () => {
+    setShowModal(false)
+  }
 
   useEffect(() => {
     const handler = (e: CustomEvent) => {
@@ -25,8 +35,31 @@ const Navbar = () => {
     const onScroll = () => {
       const y = window.scrollY || document.documentElement.scrollTop
       setIsCollapsed(y > 24)
+
+      // Check if SectionCTA or Footer is in viewport
+      const footer = document.querySelector('footer')
+      const sectionCTA = document.querySelector('[data-section-cta]')
+
+      let shouldHide = false
+
+      if (footer) {
+        const footerRect = footer.getBoundingClientRect()
+        if (footerRect.top < window.innerHeight && footerRect.bottom > 0) {
+          shouldHide = true
+        }
+      }
+
+      if (!shouldHide && sectionCTA) {
+        const ctaRect = sectionCTA.getBoundingClientRect()
+        if (ctaRect.top < window.innerHeight && ctaRect.bottom > 0) {
+          shouldHide = true
+        }
+      }
+
+      setHideNavbar(shouldHide)
     }
     window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll() // Initial check
 
     return () => {
       window.removeEventListener('hero-section-visible', handler as EventListener)
@@ -36,7 +69,7 @@ const Navbar = () => {
 
   return (
     <AnimatePresence>
-      {isHeroVisible && (
+      {isHeroVisible && !hideNavbar && (
         <motion.nav
           initial={{ opacity: 1 }}
           animate={{ opacity: 1 }}
@@ -61,7 +94,7 @@ const Navbar = () => {
                         <img
                           src='/logo-icon.svg'
                           alt='Spontaine'
-                          className='h-8 w-8'
+                          className='h-8 w-8 brightness-0'
                         />
                       ) : (
                         //
@@ -75,14 +108,13 @@ const Navbar = () => {
 
                   {/* CTA Button (always visible) */}
                   <div className='hidden lg:block'>
-                    <Link href='/how-it-works'>
-                      <Button
-                        size='lg'
-                        className='relative overflow-hidden rounded-full bg-spontaine-highlight py-6 text-white shadow-2xl'
-                      >
-                        <span className='nav-cta-text'>Book Demo</span>
-                      </Button>
-                    </Link>
+                    <Button
+                      onClick={handleBookDemo}
+                      size='lg'
+                      className='relative overflow-hidden rounded-full bg-spontaine-highlight py-6 text-white shadow-2xl'
+                    >
+                      <span className='nav-cta-text'>Book Demo</span>
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -98,14 +130,13 @@ const Navbar = () => {
                   </Link>
                   {/* Right: CTA + Hamburger */}
                   <div className='flex items-center gap-3'>
-                    <Link href='/how-it-works'>
-                      <Button
-                        size='lg'
-                        className='relative overflow-hidden rounded-full bg-spontaine-highlight px-4 py-2 text-white shadow-2xl'
-                      >
-                        <span className='nav-cta-text'>Book Demo</span>
-                      </Button>
-                    </Link>
+                    <Button
+                      onClick={handleBookDemo}
+                      size='lg'
+                      className='relative overflow-hidden rounded-full bg-spontaine-highlight px-4 py-2 text-white shadow-2xl'
+                    >
+                      <span className='nav-cta-text'>Book Demo</span>
+                    </Button>
                     <MobileNav />
                   </div>
                 </div>
@@ -113,6 +144,34 @@ const Navbar = () => {
             </div>
           </AppLayoutPadding>
         </motion.nav>
+      )}
+
+      {/* MODAL WITH IFRAME */}
+      {showModal && (
+        <div
+          className='fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm'
+          onClick={closeModal}
+        >
+          <div
+            className='relative w-[90%] max-w-6xl overflow-hidden rounded-2xl bg-white p-14 shadow-2xl'
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              onClick={closeModal}
+              className='absolute right-4 top-1 z-10 rounded-full p-1 text-2xl text-gray-600 hover:bg-white hover:text-gray-800'
+            >
+              ×
+            </button>
+
+            {/* Calendar Iframe */}
+            <iframe
+              src='https://cal.com/intuonfx/30min?embed=true&layout=month_view'
+              className='h-[475px] w-full border-0'
+              allow='fullscreen'
+            ></iframe>
+          </div>
+        </div>
       )}
     </AnimatePresence>
   )

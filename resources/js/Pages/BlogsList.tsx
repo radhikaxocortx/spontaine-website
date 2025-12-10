@@ -3,9 +3,6 @@ import AppLayout from '@/Layouts/AppLayout'
 import AppLayoutPadding from '@/Layouts/AppLayoutPadding'
 import { Page } from '@/Modules/PageBuilder/page_interfaces'
 import SectionBody from '@/typography/SectionBody'
-import SectionDescription from '@/typography/SectionDescription'
-import SectionSubheading from '@/typography/SectionSubheading'
-import SectionTitle from '@/typography/SectionTitle'
 import { Link } from '@inertiajs/react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -19,20 +16,12 @@ const BlogsBanner = () => {
   const sectionRef = useRef<HTMLDivElement>(null)
   const titleRef = useRef<HTMLHeadingElement>(null)
   const descriptionRef = useRef<HTMLDivElement>(null)
-  const backgroundRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.set([titleRef.current, descriptionRef.current], {
         opacity: 0,
         y: 40,
-      })
-
-      // Ken Burns effect on background
-      gsap.set(backgroundRef.current, {
-        scale: 1,
-        x: 0,
-        y: 0,
       })
 
       const tl = gsap.timeline({
@@ -59,17 +48,6 @@ const BlogsBanner = () => {
         },
         '-=0.6'
       )
-
-      // Ken Burns effect - slow zoom and pan
-      gsap.to(backgroundRef.current, {
-        scale: 1.2,
-        x: -20,
-        y: -10,
-        duration: 20,
-        ease: 'none',
-        repeat: -1,
-        yoyo: true,
-      })
     }, sectionRef)
 
     return () => ctx.revert()
@@ -78,67 +56,34 @@ const BlogsBanner = () => {
   return (
     <section
       ref={sectionRef}
-      className='relative h-[50vh] min-h-[400px] w-full overflow-hidden text-white'
+      className='relative mt-10 flex w-full flex-col items-center justify-center bg-white py-24 text-black'
       data-banner-section='true'
     >
-      {/* Ken Burns Background */}
-      <div
-        ref={backgroundRef}
-        className='absolute inset-0 h-full w-full'
-        style={{
-          backgroundImage: `url('/imge/home/talk.png')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-        }}
-      />
-
-      {/* Overlay for better text readability */}
-      <div className='absolute inset-0' />
-
       {/* Content */}
-      <div className='relative z-10 flex h-full flex-col justify-end pb-16 lg:pb-16'>
-        <AppLayoutPadding>
-          <div className='max-w-4xl'>
-            {/* Title */}
-            <div
-              ref={titleRef}
-              className='mb-6'
-            >
-              <SectionTitle
-                theme='dark'
-                alignment='left'
-                style={{
-                  background:
-                    'linear-gradient(135deg, #c7ec93 0%, #a3d5ff 25%, #7c83e7 50%, #ff9a9e 75%, #fecfef 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                  fontSize: 'clamp(32px, 5vw, 64px)',
-                  fontWeight: 'medium',
-                  lineHeight: '1.2',
-                }}
-              >
-                Resources & Case Studies
-              </SectionTitle>
-            </div>
-
-            {/* Description */}
-            <div
-              ref={descriptionRef}
-              className='max-w-2xl'
-            >
-              <SectionDescription
-                theme='dark'
-                size='medium'
-                maxWidth='3xl'
-              >
-                Spontaine transforms all your systems - and databases into a powerful AI-driven
-                command center.
-              </SectionDescription>
-            </div>
+      <div className='relative z-10 flex w-full flex-col items-center justify-center px-6'>
+        <div className='mx-auto max-w-5xl text-center'>
+          {/* Title */}
+          <div
+            ref={titleRef}
+            className='mb-8'
+          >
+            <h1 className='text-spontaine-dark font-heading text-[48px] font-medium leading-[1] sm:text-[64px] lg:text-[80px] xl:text-[96px]'>
+              Strategies and Perspectives
+            </h1>
           </div>
-        </AppLayoutPadding>
+
+          {/* Description */}
+          <div
+            ref={descriptionRef}
+            className='mx-auto max-w-3xl'
+          >
+            <p className='font-body mx-auto max-w-[560px] text-[16px] font-normal leading-[1.8] text-gray-800 sm:text-[20px]'>
+              Expert perspectives on data, leadership, and the future of data, AI and business
+              intelligence. Read case studies on regaining trust, expert takes on industry shifts,
+              and the thinking behind our semantic revolution.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   )
@@ -210,36 +155,27 @@ const BlogCard = ({ post, stacked = false, aspectRatio = '', onClick }: BlogCard
           {/* Featured Content */}
           <div className='flex flex-col'>
             {/* Author and Date */}
-            <div className='mb-4 flex gap-2 text-sm text-gray-600'>
+            {/* <div className='mb-4 flex gap-2 text-sm text-gray-600'>
               <SectionBody
                 theme='light'
                 size='sm'
                 weight='normal'
-                className='text-gray-500'
+                className='group-hover:text-spontaine-accent-footer text-gray-500'
               >
                 {post.author && `${post.author} • `}
                 {post.created_at && new Date(post.created_at).toLocaleDateString()}
               </SectionBody>
-            </div>
+            </div> */}
 
             {/* Title */}
-            <SectionSubheading
-              theme='light'
-              size='medium'
-              weight='bold'
-              className='group-hover:text-[#378727]'
-            >
+            <h3 className='text-spontaine-dark font-heading group-hover:text-spontaine-accent-footer text-2xl font-bold'>
               {post.page_title}
-            </SectionSubheading>
+            </h3>
 
             {/* Description */}
-            <SectionBody
-              theme='light'
-              size='sm'
-              className='group-hover:text-[#378727]'
-            >
+            <p className='font-body group-hover:text-spontaine-accent-footer line-clamp-3 text-base text-spontaine-gray'>
               {post.description}
-            </SectionBody>
+            </p>
 
             {/* Read More */}
           </div>
@@ -277,7 +213,7 @@ const BlogCard = ({ post, stacked = false, aspectRatio = '', onClick }: BlogCard
             theme='light'
             size='sm'
             weight='normal'
-            className='text-gray-500 group-hover:text-[#378727]'
+            className='group-hover:text-spontaine-accent-footer text-gray-500'
           >
             {post.author && `${post.author} • `}
             {post.created_at && new Date(post.created_at).toLocaleDateString()}
@@ -285,23 +221,14 @@ const BlogCard = ({ post, stacked = false, aspectRatio = '', onClick }: BlogCard
         </div>
 
         {/* Title */}
-        <SectionSubheading
-          theme='light'
-          size='medium'
-          weight='bold'
-          className='group-hover:text-[#378727]'
-        >
+        <h3 className='text-spontaine-dark font-heading group-hover:text-spontaine-accent-footer text-2xl font-bold'>
           {post.page_title}
-        </SectionSubheading>
+        </h3>
 
         {/* Description */}
-        <SectionBody
-          theme='light'
-          size='sm'
-          className='group-hover:text-[#378727]'
-        >
+        <p className='font-body group-hover:text-spontaine-accent-footer line-clamp-3 text-base text-spontaine-gray'>
           {post.description}
-        </SectionBody>
+        </p>
       </div>
     </div>
   )
@@ -342,6 +269,7 @@ const BlogsList = ({ featuredPosts, allPosts, selectedBlogSlug }: BlogsListProps
         }, 100)
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedBlogSlug, featuredPosts, allPosts.data])
 
   // Handle opening the drawer
@@ -396,6 +324,7 @@ const BlogsList = ({ featuredPosts, allPosts, selectedBlogSlug }: BlogsListProps
 
     window.addEventListener('popstate', handlePopState)
     return () => window.removeEventListener('popstate', handlePopState)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [featuredPosts, allPosts.data])
 
   useEffect(() => {
@@ -486,7 +415,7 @@ const BlogsList = ({ featuredPosts, allPosts, selectedBlogSlug }: BlogsListProps
       {/* Breadcrumbs */}
       <Breadcrumbs />
 
-      <div className='min-h-screen bg-gray-50 py-12'>
+      <div className='min-h-screen bg-[#FEF9F4] py-12'>
         <AppLayoutPadding>
           {/* Featured Articles Section */}
           {featuredPosts.length > 0 && (
@@ -494,15 +423,9 @@ const BlogsList = ({ featuredPosts, allPosts, selectedBlogSlug }: BlogsListProps
               ref={featuredSectionRef}
               className='mb-16'
             >
-              <SectionSubheading
-                theme='light'
-                size='large'
-                weight='bold'
-                centered={false}
-                className='mb-8'
-              >
+              <h2 className='font-heading text-spontaine-dark mb-8 text-4xl font-bold'>
                 Featured Articles
-              </SectionSubheading>
+              </h2>
 
               <div className='grid grid-cols-1 gap-10 md:gap-8 lg:grid-cols-2 lg:gap-4'>
                 {/* Left Large Feature */}
@@ -542,15 +465,7 @@ const BlogsList = ({ featuredPosts, allPosts, selectedBlogSlug }: BlogsListProps
 
           {/* All Posts Section */}
           <section ref={allPostsSectionRef}>
-            <SectionSubheading
-              theme='light'
-              size='large'
-              weight='bold'
-              centered={false}
-              className='py-4'
-            >
-              All Posts
-            </SectionSubheading>
+            <h2 className='font-heading text-spontaine-dark py-4 text-4xl font-bold'>All Posts</h2>
 
             {/* Posts Grid */}
             <div className='grid gap-8 md:grid-cols-2 lg:grid-cols-3'>

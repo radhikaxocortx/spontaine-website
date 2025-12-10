@@ -29,14 +29,47 @@ export default {
         'data-sm-1stop': ['var(--font-data-sm-1stop)', ...defaultTheme.fontFamily.sans],
         'data-md-1stop': ['var(--font-data-md-1stop)', ...defaultTheme.fontFamily.sans],
         'data-lg-1stop': ['var(--font-data-lg-1stop)', ...defaultTheme.fontFamily.sans],
-        urbanist: ['Urbanist', ...defaultTheme.fontFamily.sans],
-        'roboto-mono': ['Roboto Mono', ...defaultTheme.fontFamily.mono],
-        'space-grotesk': ['Space Grotesk', ...defaultTheme.fontFamily.sans],
+        // Generic font utilities
+        heading: ['var(--font-heading)', ...defaultTheme.fontFamily.sans],
+        body: ['var(--font-body)', ...defaultTheme.fontFamily.sans],
+        mono: ['var(--font-mono)', ...defaultTheme.fontFamily.mono],
+
+        // Specific font names (kept for backward compatibility)
+        urbanist: ['var(--font-heading)', ...defaultTheme.fontFamily.sans],
+        'roboto-mono': ['var(--font-mono)', ...defaultTheme.fontFamily.mono],
+        'space-grotesk': ['var(--font-body)', ...defaultTheme.fontFamily.sans],
         'font-awesome': ['Font Awesome 6 Free', ...defaultTheme.fontFamily.sans],
       },
       colors: {
-        'spontaine-accent': '#44ECA0',
-        'spontaine-highlight': '#7776BC',
+        spontaine: {
+          accent: '#45EDA1',
+          'accent-dark': '#00B563',
+          highlight: '#7776BC',
+          'accent-soft': '#90F4C7',
+          'accent-bright': '#C3FF6E',
+          'accent-ring': '#44ECA0',
+          'accent-footer': '#2FD47D',
+
+          dark: '#343434',
+          'dark-bg': '#242424',
+          gray: '#A7A7A7',
+          'gray-warm': '#918D8D',
+          'gray-cool': '#767676',
+          'gray-soft': '#A9BBB8',
+          'gray-muted': '#565555',
+          'gray-deep': '#454545',
+
+          light: '#F7F7F7',
+          'light-ice': '#BFFCEC',
+          'light-blue': '#D0D9FB',
+
+          white: '#FFFFFF',
+          'white-soft': '#FFFFFFA6',
+          'white-faint': '#FFFFFF8F',
+
+          'icon-bg': '#676557',
+          'icon-text': '#F7F7F7',
+        },
         primary: {
           50: '#f1f4ff', //light gray
           100: '#e6ecff',

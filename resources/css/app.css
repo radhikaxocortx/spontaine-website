@@ -1,3 +1,115 @@
+/* Spontaine Custom Fonts */
+@font-face {
+  font-family: 'Urbanist';
+  src:
+    url('/fonts/spontaine/Urbanist-Regular.woff2') format('woff2'),
+    url('/fonts/spontaine/Urbanist-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Urbanist';
+  src:
+    url('/fonts/spontaine/Urbanist-Medium.woff2') format('woff2'),
+    url('/fonts/spontaine/Urbanist-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Urbanist';
+  src:
+    url('/fonts/spontaine/Urbanist-SemiBold.woff2') format('woff2'),
+    url('/fonts/spontaine/Urbanist-SemiBold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Urbanist';
+  src:
+    url('/fonts/spontaine/Urbanist-Bold.woff2') format('woff2'),
+    url('/fonts/spontaine/Urbanist-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Urbanist';
+  src:
+    url('/fonts/spontaine/Urbanist-ExtraLight.woff2') format('woff2'),
+    url('/fonts/spontaine/Urbanist-ExtraLight.woff') format('woff');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Urbanist';
+  src:
+    url('/fonts/spontaine/Urbanist-Light.woff2') format('woff2'),
+    url('/fonts/spontaine/Urbanist-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  src:
+    url('/fonts/spontaine/SpaceGrotesk-Light.woff2') format('woff2'),
+    url('/fonts/spontaine/SpaceGrotesk-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  src:
+    url('/fonts/spontaine/SpaceGrotesk-Regular.woff2') format('woff2'),
+    url('/fonts/spontaine/SpaceGrotesk-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  src:
+    url('/fonts/spontaine/SpaceGrotesk-Medium.woff2') format('woff2'),
+    url('/fonts/spontaine/SpaceGrotesk-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  src:
+    url('/fonts/spontaine/SpaceGrotesk-SemiBold.woff2') format('woff2'),
+    url('/fonts/spontaine/SpaceGrotesk-SemiBold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  src:
+    url('/fonts/spontaine/SpaceGrotesk-Bold.woff2') format('woff2'),
+    url('/fonts/spontaine/SpaceGrotesk-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Legacy font imports - keeping for backward compatibility */
 @import '@fontsource/urbanist/400.css';
 @import '@fontsource/urbanist/500.css';
 @import '@fontsource/urbanist/600.css';
@@ -176,9 +288,43 @@ body {
     --color-fail: #da999a;
     --radius: 0.5rem;
 
-    /* Spontaine custom tokens */
-    --spontaine-accent: #44eca0;
-    --spontaine-highlight: #7776bc;
+    /* === Accents & Highlights === */
+    --spontaine-accent: #45eda1; /* Primary green accent */
+    --spontaine-accent-dark: #00b563; /* Darker green tone */
+    --spontaine-highlight: #7776bc; /* Purple highlight (CTA) */
+    --spontaine-accent-soft: #90f4c7; /* Light turquoise (dot nav) */
+    --spontaine-accent-bright: #c3ff6e; /* Bright lime (cards, backgrounds) */
+    --spontaine-accent-ring: #44eca0; /* Lime-teal interaction/gradient ring */
+    --spontaine-accent-footer: #2fd47d; /* Footer background */
+    --spontaine-gradient-lavender-teal: linear-gradient(0deg, #44eca0 0%, #d0d9fb 100%);
+    --spontaine-gradient-lime: linear-gradient(0deg, #44eca0 0%, #c3ff6e 100%);
+
+    /* === Grays & Neutrals === */
+    --spontaine-dark: #343434; /* Primary dark text */
+    --spontaine-dark-bg: #242424; /* Dark background / card */
+    --spontaine-gray: #a7a7a7; /* Neutral mid-gray border */
+    --spontaine-gray-warm: #918d8d; /* Warm gray (chat text) */
+    --spontaine-gray-cool: #767676; /* Cool gray (designation/dept) */
+    --spontaine-gray-soft: #a9bbb8; /* Soft teal-gray */
+    --spontaine-gray-muted: #565555; /* Muted description text */
+    --spontaine-gray-deep: #454545; /* Saturated dark gray */
+
+    /* === Lights & Whites === */
+    --spontaine-light: #f7f7f7; /* Light background */
+    --spontaine-light-ice: #bffcec; /* Icy mint (pill background) */
+    --spontaine-light-blue: #d0d9fb; /* Pale blue (SVG tint) */
+    --spontaine-white: #ffffff; /* Base white */
+    --spontaine-white-soft: #ffffffa6; /* Semi-transparent white (footer) */
+    --spontaine-white-faint: #ffffff8f; /* Fainter white (footer compliance) */
+
+    /* === Support Elements === */
+    --spontaine-icon-bg: #676557; /* Icon background */
+    --spontaine-icon-text: #f7f7f7; /* Icon text/foreground */
+
+    /* Spontaine Font Variables - Change these to update fonts globally */
+    --font-heading: 'Urbanist', sans-serif;
+    --font-body: 'Urbanist', sans-serif;
+    --font-mono: 'Roboto Mono', monospace;
   }
 
   @font-face {
