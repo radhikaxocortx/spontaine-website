@@ -269,7 +269,7 @@ const AppLayout = ({
         noIndex={noIndex}
       />
       <div className='relative min-h-screen w-full bg-white'>{children}</div>
-      <div className='bg-[#FEF9F4] py-16'></div>
+
       <Footer blockData={footer.items} />
     </>
   )

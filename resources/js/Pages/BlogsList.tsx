@@ -56,7 +56,7 @@ const BlogsBanner = () => {
   return (
     <section
       ref={sectionRef}
-      className='relative mt-10 flex w-full flex-col items-center justify-center bg-white py-24 text-black'
+      className='relative flex w-full flex-col items-center justify-center bg-white pb-20 pt-40 text-black'
       data-banner-section='true'
     >
       {/* Content */}
@@ -415,7 +415,7 @@ const BlogsList = ({ featuredPosts, allPosts, selectedBlogSlug }: BlogsListProps
       {/* Breadcrumbs */}
       <Breadcrumbs />
 
-      <div className='min-h-screen bg-[#FEF9F4] py-12'>
+      <div className='min-h-screen bg-[#FEF9F4] pb-48 pt-10'>
         <AppLayoutPadding>
           {/* Featured Articles Section */}
           {featuredPosts.length > 0 && (

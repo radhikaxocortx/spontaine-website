@@ -51,9 +51,9 @@ const Footer = ({ editMode, onFieldEdit, language, blockData }: Properties) => {
   }, [])
 
   return (
-    <footer className='bg-spontaine-accent-footer relative pt-24 text-white'>
+    <footer className='bg-spontaine-accent-footer relative pt-20 text-white'>
       {/* TOP ARC - matches SectionAlignedAction bottom arc pattern */}
-      <div className='absolute left-0 top-0 w-full -translate-y-full'>
+      <div className='absolute left-0 top-0 w-full -translate-y-[calc(100%-1px)]'>
         <svg
           viewBox='0 0 1440 96'
           preserveAspectRatio='none'

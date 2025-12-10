@@ -100,10 +100,10 @@ export default function SectionBannerClean({
     <section
       ref={sectionRef}
       className={cn(
-        'relative flex w-full flex-col items-center justify-center bg-white text-black',
-        blockData.paddingTop || 'py-24',
+        'relative flex w-full flex-col items-center justify-center bg-white pb-20 pt-40 text-black',
+        blockData.paddingTop || '',
         blockData.paddingBottom,
-        blockData.marginTop || 'mt-10',
+        blockData.marginTop || '',
         blockData.marginBottom
       )}
       data-banner-section='true'

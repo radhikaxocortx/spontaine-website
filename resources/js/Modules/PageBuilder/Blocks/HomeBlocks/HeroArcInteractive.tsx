@@ -43,7 +43,7 @@ export default function HeroArcInteractive() {
       {/* HERO WITH VIDEO BACKGROUND */}
       <section
         id='hero'
-        className='relative h-[110vh] w-full overflow-hidden md:h-[120vh] lg:h-[150vh]'
+        className='relative h-[120vh] w-full overflow-hidden xl:h-[120vh]'
       >
         {/* VIDEO BACKGROUND */}
         <video
@@ -60,8 +60,8 @@ export default function HeroArcInteractive() {
           />
         </video>
 
-        {/* DARK OVERLAY (optional – sanas uses this) */}
-        {/* <div className='pointer-events-none absolute inset-0 bg-black/60'></div> */}
+        {/* WHITE OVERLAY */}
+        <div className='pointer-events-none absolute inset-0 bg-white/20'></div>
 
         {/* HERO CONTENT */}
 
@@ -89,7 +89,7 @@ export default function HeroArcInteractive() {
         </AppLayoutPadding>
 
         {/* ARC AT THE END OF HERO */}
-        <div
+        {/* <div
           id='arc-wrapper'
           className='absolute bottom-0 left-0 w-full'
         >
@@ -104,7 +104,7 @@ export default function HeroArcInteractive() {
               d='M0,80 C300,20 900,20 1200,80 L1200,200 L0,200 Z'
             />
           </svg>
-        </div>
+        </div> */}
       </section>
     </>
   )

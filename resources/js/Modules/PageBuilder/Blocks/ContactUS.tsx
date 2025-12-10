@@ -87,7 +87,7 @@ const ContactUS = ({ editMode = false, onFieldEdit, blockData, language = 'en' }
 
   return (
     <div
-      className={`py-8 ${blockData?.marginTop} ${blockData?.marginBottom} ${blockData?.paddingTop} ${blockData?.paddingBottom}`}
+      className={`pb-48 ${blockData?.marginTop} ${blockData?.marginBottom} ${blockData?.paddingTop} ${blockData?.paddingBottom}`}
       style={
         {
           // Hide phone input flags

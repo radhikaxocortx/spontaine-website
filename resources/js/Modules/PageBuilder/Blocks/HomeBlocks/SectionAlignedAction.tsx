@@ -228,7 +228,7 @@ export default function SectionAlignedAction() {
       </div>
 
       {/* BOTTOM INWARD ARC - matches HeroArcInteractive pattern */}
-      <div className='absolute bottom-0 left-0 w-full'>
+      {/* <div className='absolute bottom-0 left-0 w-full'>
         <svg
           viewBox='0 0 1440 96'
           preserveAspectRatio='none'
@@ -240,7 +240,7 @@ export default function SectionAlignedAction() {
             d='m1440 96c-213.6-61.2-459-96-720-96s-506.4 34.8-720 96v41.3h1440z'
           />
         </svg>
-      </div>
+      </div> */}
     </section>
   )
 }
