@@ -159,7 +159,7 @@ export default function SectionChat() {
         <div className='mx-auto max-w-7xl px-6 sm:px-8 lg:px-12'>
           {/* Headline */}
           <div className='mb-12 text-center sm:mb-16 lg:mb-20'>
-            <h2 className='font-heading text-spontaine-gray-soft text-6xl leading-[1]'>
+            <h2 className='font-heading text-6xl leading-[1] text-spontaine-gray-soft'>
               Connect every signal.
               <br />
               Give your people{' '}
@@ -263,11 +263,11 @@ export default function SectionChat() {
                 </div>
 
                 {/* Sources Dropdown Pill */}
-                <div className='pill-dropdown relative'>
+                <div className='pill-dropdown relative hidden md:block'>
                   <button
                     type='button'
                     onClick={() => toggleDropdown('source')}
-                    className='group/pill border-spontaine-accent-ring/30 bg-spontaine-accent-ring/10 hover:border-spontaine-accent-ring/50 hover:bg-spontaine-accent-ring/20 inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium text-gray-800 transition-all duration-200 sm:px-5 sm:py-2.5 sm:text-base'
+                    className='group/pill inline-flex items-center gap-2 rounded-full border border-spontaine-accent-ring/30 bg-spontaine-accent-ring/10 px-4 py-2 text-sm font-medium text-gray-800 transition-all duration-200 hover:border-spontaine-accent-ring/50 hover:bg-spontaine-accent-ring/20 sm:px-5 sm:py-2.5 sm:text-base'
                   >
                     <span className='text-spontaine-dark'>🔗</span>
                     <span>Sources: {selectedSource}</span>
@@ -305,7 +305,7 @@ export default function SectionChat() {
                 </div>
 
                 {/* Time Range Dropdown Pill */}
-                <div className='pill-dropdown relative'>
+                <div className='pill-dropdown relative hidden md:block'>
                   <button
                     type='button'
                     onClick={() => toggleDropdown('time')}

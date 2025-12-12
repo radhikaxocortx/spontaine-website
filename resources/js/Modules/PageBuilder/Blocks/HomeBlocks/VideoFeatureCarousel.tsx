@@ -60,6 +60,7 @@ export default function VideoFeatureCarousel() {
   const trackRef = useRef<HTMLDivElement>(null)
   const dragStartXRef = useRef(0)
   const dragCurrentXRef = useRef(0)
+  const dragStartTimeRef = useRef(0)
   const videoRefs = useRef<Map<number, HTMLVideoElement>>(new Map())
 
   const maxIndex = features.length - cardsPerView
@@ -114,40 +115,56 @@ export default function VideoFeatureCarousel() {
     slideTo(index)
   }
 
-  // Swipe gesture handlers
-  const handlePointerDown = (e: React.PointerEvent) => {
-    setIsDragging(true)
-    dragStartXRef.current = e.clientX
-    dragCurrentXRef.current = e.clientX
+  // Swipe gesture handlers for both touch and mouse
+  const handlePointerDown = (e: React.PointerEvent | React.TouchEvent) => {
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX
 
-    if (trackRef.current) {
+    setIsDragging(true)
+    dragStartXRef.current = clientX
+    dragCurrentXRef.current = clientX
+    dragStartTimeRef.current = Date.now()
+
+    if (trackRef.current && !('touches' in e)) {
       trackRef.current.style.cursor = 'grabbing'
     }
   }
 
-  const handlePointerMove = (e: React.PointerEvent) => {
+  const handlePointerMove = (e: React.PointerEvent | React.TouchEvent) => {
     if (!isDragging || !trackRef.current) return
 
-    dragCurrentXRef.current = e.clientX
-    const diff = dragCurrentXRef.current - dragStartXRef.current
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX
+    const diff = clientX - dragCurrentXRef.current
+    const absDiff = Math.abs(clientX - dragStartXRef.current)
+
+    // Only prevent default if moving horizontally (for swipe)
+    if (absDiff > 10) {
+      e.preventDefault()
+    }
+
+    dragCurrentXRef.current = clientX
     const currentX = gsap.getProperty(trackRef.current, 'x') as number
     gsap.set(trackRef.current, { x: currentX + diff })
-    dragStartXRef.current = dragCurrentXRef.current
   }
 
-  const handlePointerUp = () => {
+  const handlePointerUp = (e: React.PointerEvent | React.TouchEvent) => {
     if (!isDragging || !trackRef.current) return
 
     setIsDragging(false)
-    trackRef.current.style.cursor = 'grab'
+    if (!('touches' in e)) {
+      trackRef.current.style.cursor = 'grab'
+    }
 
-    const diff = dragCurrentXRef.current - dragStartXRef.current
-    const threshold = 50
+    const totalDiff = dragCurrentXRef.current - dragStartXRef.current
+    const duration = Date.now() - dragStartTimeRef.current
+    const velocity = Math.abs(totalDiff) / duration
 
-    if (Math.abs(diff) > threshold) {
-      if (diff > 0 && currentIndex > 0) {
+    // Lower threshold for faster swipes
+    const threshold = velocity > 0.5 ? 30 : 50
+
+    if (Math.abs(totalDiff) > threshold) {
+      if (totalDiff > 0 && currentIndex > 0) {
         slideTo(currentIndex - 1)
-      } else if (diff < 0 && currentIndex < maxIndex) {
+      } else if (totalDiff < 0 && currentIndex < maxIndex) {
         slideTo(currentIndex + 1)
       } else {
         slideTo(currentIndex) // Snap back
@@ -213,12 +230,15 @@ export default function VideoFeatureCarousel() {
           {/* Cards Track */}
           <div
             ref={trackRef}
-            className='flex touch-none gap-6 lg:gap-6'
-            style={{ cursor: 'grab' }}
+            className='flex gap-6 lg:gap-6'
+            style={{ cursor: 'grab', touchAction: 'pan-y pinch-zoom' }}
             onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}
             onPointerUp={handlePointerUp}
             onPointerLeave={handlePointerUp}
+            onTouchStart={handlePointerDown}
+            onTouchMove={handlePointerMove}
+            onTouchEnd={handlePointerUp}
           >
             {features.map((feature) => (
               <FeatureCard
@@ -262,7 +282,7 @@ export default function VideoFeatureCarousel() {
                   onClick={() => goToSlide(index)}
                   className={`h-2.5 rounded-md transition-all duration-300 ${
                     currentIndex === index
-                      ? 'bg-spontaine-accent-soft w-2.5'
+                      ? 'w-2.5 bg-spontaine-accent-soft'
                       : 'w-2.5 bg-spontaine-gray hover:bg-gray-500'
                   }`}
                   aria-label={`Go to slide ${index + 1}`}
@@ -322,21 +342,21 @@ function FeatureCard({ feature, cardsPerView, videoRefs }: FeatureCardProps) {
       data-video-id={feature.id}
       className={`flex-shrink-0 ${minWidthClass} ${cardWidthClass}`}
     >
-      <div className='bg-spontaine-dark-bg flex h-full min-h-[700px] flex-col overflow-hidden rounded-[40px] p-10 sm:p-12 lg:min-h-[800px] lg:p-14'>
+      <div className='flex h-full min-h-[700px] flex-col overflow-hidden rounded-[40px] bg-spontaine-dark-bg p-10 sm:p-12 lg:min-h-[800px] lg:p-14'>
         {/* Icon */}
         <div className='mb-10 flex justify-center'>
-          <div className='bg-spontaine-icon-bg flex h-16 w-16 items-center justify-center rounded-2xl'>
-            <IconComponent className='text-spontaine-icon-text h-8 w-8' />
+          <div className='flex h-16 w-16 items-center justify-center rounded-2xl bg-spontaine-icon-bg'>
+            <IconComponent className='h-8 w-8 text-spontaine-icon-text' />
           </div>
         </div>
 
         {/* Title */}
-        <h3 className='font-heading mb-8 text-center text-4xl font-medium leading-tight text-white lg:text-[40px]'>
+        <h3 className='mb-8 text-center font-heading text-4xl font-medium leading-tight text-white lg:text-[40px]'>
           {feature.title}
         </h3>
 
         {/* Description */}
-        <p className='font-body mb-10 text-center text-xl font-light leading-relaxed text-white lg:text-2xl lg:leading-[30px]'>
+        <p className='mb-10 text-center font-body text-xl font-light leading-relaxed text-white lg:text-2xl lg:leading-[30px]'>
           {feature.description}
         </p>
 

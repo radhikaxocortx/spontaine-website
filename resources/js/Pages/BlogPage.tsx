@@ -56,12 +56,12 @@ const BlogsBanner = ({ post, onShareClick }: { post: Page; onShareClick: () => v
       >
         <div className='mx-auto max-w-3xl text-center'>
           {/* Title */}
-          <h1 className='text-spontaine-dark font-heading mb-6 text-[32px] font-semibold leading-tight sm:text-[40px]'>
+          <h1 className='mb-6 font-heading text-[32px] font-semibold leading-tight text-spontaine-dark sm:text-[40px]'>
             {post.title}
           </h1>
 
           {/* Author and Date */}
-          <div className='text-spontaine-dark mb-4 flex items-center justify-center gap-6 text-base'>
+          <div className='mb-4 flex items-center justify-center gap-6 text-base text-spontaine-dark'>
             {post.author && <span className='font-body tracking-wide'>{post.author}</span>}
             {post.created_at && (
               <span className='font-body tracking-wide'>
@@ -97,7 +97,7 @@ const BlogsBanner = ({ post, onShareClick }: { post: Page; onShareClick: () => v
               </p>
               <button
                 onClick={() => setIsExpanded(!isExpanded)}
-                className='font-body mt-3 text-sm font-medium text-spontaine-accent transition-colors hover:text-spontaine-accent-dark'
+                className='mt-3 font-body text-sm font-medium text-spontaine-accent transition-colors hover:text-spontaine-accent-dark'
               >
                 {isExpanded ? '...less' : '...more'}
               </button>
@@ -138,6 +138,11 @@ interface BlogPageProps {
 
 const BlogPage = ({ post }: BlogPageProps) => {
   const [showShareMenu, setShowShareMenu] = useState(false)
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   const currentUrl =
     typeof window !== 'undefined'
@@ -253,6 +258,7 @@ const BlogPage = ({ post }: BlogPageProps) => {
           </div>
         </AppLayoutPadding>
       </div>
+      <div className='pt-32'></div>
     </AppLayout>
   )
 }

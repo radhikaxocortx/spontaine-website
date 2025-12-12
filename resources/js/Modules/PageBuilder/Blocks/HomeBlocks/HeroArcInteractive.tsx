@@ -43,7 +43,7 @@ export default function HeroArcInteractive() {
       {/* HERO WITH VIDEO BACKGROUND */}
       <section
         id='hero'
-        className='relative h-[120vh] w-full overflow-hidden xl:h-[120vh]'
+        className='relative h-[80vh] w-full overflow-hidden md:h-[60vh] xl:h-[120vh]'
       >
         {/* VIDEO BACKGROUND */}
         <video
@@ -69,7 +69,7 @@ export default function HeroArcInteractive() {
           <div className='relative z-10 mx-auto flex max-w-4xl flex-col items-center pt-32 text-center sm:pt-40'>
             {/* Main Title */}
             <div className='mb-8'>
-              <h1 className='font-heading mb-2 text-[48px] font-medium leading-[1] text-black sm:text-[64px] lg:text-[80px] xl:text-[96px]'>
+              <h1 className='mb-2 font-heading text-[48px] font-medium leading-[1] text-black sm:text-[64px] lg:text-[80px] xl:text-[96px]'>
                 One Source of Truth.
               </h1>
               <h2 className='font-heading text-[48px] font-medium leading-[1.1] text-black sm:text-[64px] lg:text-[80px] xl:text-[96px]'>
@@ -79,7 +79,7 @@ export default function HeroArcInteractive() {
 
             {/* Description */}
             <div className='mb-12'>
-              <p className='font-body mx-auto max-w-[560px] text-[16px] font-normal leading-[1.8] text-gray-800 sm:text-[20px]'>
+              <p className='mx-auto max-w-[560px] font-body text-[16px] font-normal leading-[1.8] text-gray-800 sm:text-[20px]'>
                 Spontaine unifies all your data into one insights machine, empowering your internal
                 experts to execute strategically, and launch AI-driven automation 100x faster and
                 with perfect accuracy.

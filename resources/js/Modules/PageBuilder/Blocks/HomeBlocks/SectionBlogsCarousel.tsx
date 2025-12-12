@@ -149,7 +149,7 @@ const SectionBlogsCarousel = ({ className, featuredBlogs = [] }: SectionBlogsCar
   return (
     <section
       className={cn(
-        'bg-spontaine-accent-bright relative w-full overflow-hidden border-t border-[#f1f1f1]',
+        'relative w-full overflow-hidden border-t border-[#f1f1f1] bg-spontaine-accent-bright',
         className
       )}
     >
@@ -157,7 +157,7 @@ const SectionBlogsCarousel = ({ className, featuredBlogs = [] }: SectionBlogsCar
         {/* Insights Badge */}
         <div className='mb-12 flex justify-center'>
           <div className='rounded-md bg-black/5 px-6 py-2.5'>
-            <p className='text-spontaine-dark-bg font-roboto-mono text-sm tracking-tight'>
+            <p className='font-roboto-mono text-sm tracking-tight text-spontaine-dark-bg'>
               Insights
             </p>
           </div>
@@ -182,15 +182,15 @@ const SectionBlogsCarousel = ({ className, featuredBlogs = [] }: SectionBlogsCar
                     <div className='grid h-[400px] grid-cols-1 items-start gap-6 md:h-[320px] md:grid-cols-2 lg:h-[280px]'>
                       {/* Left - Content */}
                       <div className='group flex h-full flex-col space-y-4'>
-                        <h3 className='text-spontaine-dark font-heading group-hover:text-spontaine-accent-footer line-clamp-3 text-2xl font-bold leading-tight transition-colors duration-200 sm:text-3xl'>
+                        <h3 className='line-clamp-3 font-heading text-2xl font-bold leading-tight text-spontaine-dark transition-colors duration-200 group-hover:text-spontaine-accent-footer sm:text-3xl'>
                           {blog.page_title || blog.title}
                         </h3>
                         <div className='flex-1'>
-                          <p className='font-body group-hover:text-spontaine-accent-footer line-clamp-4 text-base leading-relaxed text-spontaine-gray transition-colors duration-200 sm:text-lg'>
+                          <p className='line-clamp-4 font-body text-base leading-relaxed text-spontaine-gray transition-colors duration-200 group-hover:text-spontaine-accent-footer sm:text-lg'>
                             {blog.description}
                           </p>
                           {blog.description && blog.description.length > 200 && (
-                            <span className='text-spontaine-dark group-hover:text-spontaine-accent-footer mt-1 inline-block text-sm font-medium transition-colors duration-200 hover:underline'>
+                            <span className='mt-1 inline-block text-sm font-medium text-spontaine-dark transition-colors duration-200 hover:underline group-hover:text-spontaine-accent-footer'>
                               ...more
                             </span>
                           )}
@@ -292,29 +292,31 @@ const SectionBlogsCarousel = ({ className, featuredBlogs = [] }: SectionBlogsCar
             </button>
           </div>
 
-          {/* Right: View All Articles Link */}
-          <a
-            href='/blogs-list'
-            className='hover:text-spontaine-accent-footer group absolute right-6 top-1/2 inline-flex -translate-y-1/2 items-center gap-2 rounded-lg px-6 py-3 font-space-grotesk text-xs font-semibold text-spontaine-gray transition-all duration-200'
-          >
-            All Resources
-            <svg
-              width='16'
-              height='16'
-              viewBox='0 0 16 16'
-              fill='none'
-              xmlns='http://www.w3.org/2000/svg'
-              className='transition-transform duration-200 group-hover:translate-x-1'
+          {/* View All Articles Link - Right aligned on next line */}
+          <div className='flex justify-end'>
+            <a
+              href='/blogs-list'
+              className='group inline-flex items-center gap-2 rounded-lg px-6 py-3 font-space-grotesk text-xs font-semibold text-spontaine-gray transition-all duration-200 hover:text-spontaine-accent-footer'
             >
-              <path
-                d='M6 12L10 8L6 4'
-                stroke='currentColor'
-                strokeWidth='2'
-                strokeLinecap='round'
-                strokeLinejoin='round'
-              />
-            </svg>
-          </a>
+              All Resources
+              <svg
+                width='16'
+                height='16'
+                viewBox='0 0 16 16'
+                fill='none'
+                xmlns='http://www.w3.org/2000/svg'
+                className='transition-transform duration-200 group-hover:translate-x-1'
+              >
+                <path
+                  d='M6 12L10 8L6 4'
+                  stroke='currentColor'
+                  strokeWidth='2'
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                />
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
     </section>

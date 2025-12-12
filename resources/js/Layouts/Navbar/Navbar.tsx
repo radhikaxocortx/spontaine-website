@@ -153,7 +153,7 @@ const Navbar = () => {
           onClick={closeModal}
         >
           <div
-            className='relative w-[90%] max-w-6xl overflow-hidden rounded-2xl bg-white p-14 shadow-2xl'
+            className='relative w-[90%] max-w-6xl overflow-hidden rounded-2xl bg-white p-1 shadow-2xl md:p-4 lg:p-14'
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
