@@ -90,6 +90,11 @@ export interface BlockVideo {
   mime?: string
 }
 
+export interface VideoData {
+  url: string
+  type?: string
+}
+
 export interface ListItem<T> {
   id: number
   item: T

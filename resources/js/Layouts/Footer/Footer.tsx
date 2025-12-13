@@ -51,7 +51,7 @@ const Footer = ({ editMode, onFieldEdit, language, blockData }: Properties) => {
   }, [])
 
   return (
-    <footer className='bg-spontaine-accent-footer relative pt-20 text-white'>
+    <footer className='relative bg-spontaine-dark pt-20 text-white'>
       {/* TOP ARC - matches SectionAlignedAction bottom arc pattern */}
       <div className='absolute left-0 top-0 w-full -translate-y-[calc(100%-1px)]'>
         <svg
@@ -61,7 +61,7 @@ const Footer = ({ editMode, onFieldEdit, language, blockData }: Properties) => {
         >
           <path
             ref={arcRef}
-            fill='#2FD47D'
+            fill='#343434'
             d='m1440 96c-213.6-61.2-459-96-720-96s-506.4 34.8-720 96v41.3h1440z'
           />
         </svg>
@@ -84,11 +84,11 @@ const Footer = ({ editMode, onFieldEdit, language, blockData }: Properties) => {
                 </div>
 
                 {/* Company Address */}
-                <div className='font-body text-spontaine-white-soft text-xs leading-relaxed'>
-                  <p className='text-spontaine-white-soft font-bold'>
+                <div className='font-body text-xs leading-relaxed text-spontaine-white-soft'>
+                  <p className='font-bold text-spontaine-white-soft'>
                     INTUON ANALYTICS PRIVATE LIMITED
                   </p>
-                  <p className='text-spontaine-white-soft mb-4 font-bold'>CIN: 4HHKH454fg564676</p>
+                  <p className='mb-4 font-bold text-spontaine-white-soft'>CIN: 4HHKH454fg564676</p>
                   <p className='mb-0'>9th Floor</p>
                   <p className='mb-0'>Jomer Symphony</p>
                   <p className='mb-0'>Vytila, Kochi</p>
@@ -100,7 +100,7 @@ const Footer = ({ editMode, onFieldEdit, language, blockData }: Properties) => {
               <div className='grid grid-cols-1 gap-x-8 justify-self-end sm:grid-cols-4'>
                 {/*Section One - COMPANY*/}
                 <div>
-                  <h3 className='font-body text-spontaine-accent-bright mb-4 text-base font-bold uppercase tracking-wide'>
+                  <h3 className='mb-4 font-body text-base font-bold uppercase tracking-wide text-spontaine-accent-bright'>
                     <Localization
                       text={blockData?.sectionOne}
                       language={language}
@@ -123,7 +123,7 @@ const Footer = ({ editMode, onFieldEdit, language, blockData }: Properties) => {
                       return (
                         <li key={item.id.toString()}>
                           <InertiaLink
-                            className='font-body text-spontaine-white-soft text-xs leading-relaxed transition-colors hover:text-white'
+                            className='font-body text-xs leading-relaxed text-spontaine-white-soft transition-colors hover:text-white'
                             language={language}
                             link={item.item}
                           />
@@ -163,7 +163,7 @@ const Footer = ({ editMode, onFieldEdit, language, blockData }: Properties) => {
 
                 {/*Section Two - POLICIES*/}
                 <div>
-                  <h3 className='font-body text-spontaine-accent-bright mb-4 text-base font-bold uppercase tracking-wide'>
+                  <h3 className='mb-4 font-body text-base font-bold uppercase tracking-wide text-spontaine-accent-bright'>
                     <Localization
                       text={blockData?.sectionTwo}
                       language={language}
@@ -186,7 +186,7 @@ const Footer = ({ editMode, onFieldEdit, language, blockData }: Properties) => {
                       return (
                         <li key={item.id.toString()}>
                           <InertiaLink
-                            className='font-body text-spontaine-white-soft text-xs leading-relaxed transition-colors hover:text-white'
+                            className='font-body text-xs leading-relaxed text-spontaine-white-soft transition-colors hover:text-white'
                             language={language}
                             link={item.item}
                           />
@@ -226,7 +226,7 @@ const Footer = ({ editMode, onFieldEdit, language, blockData }: Properties) => {
 
                 {/*Section Three - RESOURCES*/}
                 <div>
-                  <h3 className='font-body text-spontaine-accent-bright mb-4 text-base font-bold uppercase tracking-wide'>
+                  <h3 className='mb-4 font-body text-base font-bold uppercase tracking-wide text-spontaine-accent-bright'>
                     <Localization
                       text={blockData?.sectionThree}
                       language={language}
@@ -249,7 +249,7 @@ const Footer = ({ editMode, onFieldEdit, language, blockData }: Properties) => {
                       return (
                         <li key={item.id.toString()}>
                           <InertiaLink
-                            className='font-body text-spontaine-white-soft text-xs leading-relaxed transition-colors hover:text-white'
+                            className='font-body text-xs leading-relaxed text-spontaine-white-soft transition-colors hover:text-white'
                             language={language}
                             link={item.item}
                           />
@@ -293,7 +293,7 @@ const Footer = ({ editMode, onFieldEdit, language, blockData }: Properties) => {
           {/* Bottom Section: Copyright & Compliance */}
           <div className='space-y-1 pt-8'>
             {/* Copyright */}
-            <div className='font-body text-spontaine-white-soft text-center text-xs'>
+            <div className='text-center font-body text-xs text-spontaine-white-soft'>
               <Localization
                 text={blockData?.copyright}
                 language={language}
@@ -334,7 +334,7 @@ const Footer = ({ editMode, onFieldEdit, language, blockData }: Properties) => {
             </div>
 
             {/* Compliance Text */}
-            <div className='font-body text-spontaine-white-faint mx-auto max-w-2xl pb-2 text-center text-xs leading-relaxed'>
+            <div className='mx-auto max-w-2xl pb-2 text-center font-body text-xs leading-relaxed text-spontaine-white-faint'>
               <Localization
                 text={blockData?.compliance}
                 language={language}

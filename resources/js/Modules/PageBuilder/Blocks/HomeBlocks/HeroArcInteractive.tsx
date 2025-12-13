@@ -43,7 +43,7 @@ export default function HeroArcInteractive() {
       {/* HERO WITH VIDEO BACKGROUND */}
       <section
         id='hero'
-        className='relative h-[80vh] w-full overflow-hidden md:h-[60vh] xl:h-[120vh]'
+        className='relative min-h-screen w-full overflow-hidden'
       >
         {/* VIDEO BACKGROUND */}
         <video
@@ -66,7 +66,7 @@ export default function HeroArcInteractive() {
         {/* HERO CONTENT */}
 
         <AppLayoutPadding>
-          <div className='relative z-10 mx-auto flex max-w-4xl flex-col items-center pt-32 text-center sm:pt-40'>
+          <div className='relative z-10 flex min-h-screen flex-col items-center justify-center pb-28 pt-32 text-center sm:pb-36 sm:pt-48'>
             {/* Main Title */}
             <div className='mb-8'>
               <h1 className='mb-2 font-heading text-[48px] font-medium leading-[1] text-black sm:text-[64px] lg:text-[80px] xl:text-[96px]'>

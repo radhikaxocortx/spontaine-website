@@ -75,7 +75,7 @@ const Navbar = () => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.6, ease: [0.4, 0.0, 0.2, 1] }}
-          className='fixed left-0 top-0 z-50 w-full bg-transparent'
+          className='fixed left-0 top-0 z-50 w-full'
         >
           <AppLayoutPadding>
             <div
@@ -85,7 +85,7 @@ const Navbar = () => {
             >
               <div className='hidden items-center gap-4 lg:flex'>
                 <div
-                  className={`font-accent flex items-center gap-8 rounded-full border border-transparent bg-spontaine-accent px-6 py-2 text-sm tracking-wide shadow-white transition-all duration-200 ${isCollapsed && !isHoveringPill ? 'px-4 py-2' : 'px-6 py-2'}`}
+                  className={`font-accent flex items-center gap-8 rounded-full border border-transparent bg-spontaine-dark px-6 py-2 text-sm tracking-wide shadow-white transition-all duration-200 ${isCollapsed && !isHoveringPill ? 'px-4 py-2' : 'px-6 py-2'}`}
                 >
                   {/* Logo (switches to icon when collapsed) */}
                   <div className='flex items-center'>
@@ -94,7 +94,7 @@ const Navbar = () => {
                         <img
                           src='/logo-icon.svg'
                           alt='Spontaine'
-                          className='h-8 w-8 brightness-0'
+                          className='h-8 w-8'
                         />
                       ) : (
                         //
@@ -111,7 +111,7 @@ const Navbar = () => {
                     <Button
                       onClick={handleBookDemo}
                       size='lg'
-                      className='relative overflow-hidden rounded-full bg-spontaine-highlight py-6 text-white shadow-2xl'
+                      className='relative overflow-hidden rounded-full bg-spontaine-accent-bright py-6 text-black shadow-2xl'
                     >
                       <span className='nav-cta-text'>Book Demo</span>
                     </Button>
@@ -120,7 +120,7 @@ const Navbar = () => {
               </div>
               {/* Mobile layout: curved pill with logo left, CTA + hamburger right */}
               <div className='w-full lg:hidden'>
-                <div className='font-accent flex items-center justify-between gap-4 rounded-full border border-transparent bg-spontaine-accent px-4 py-2 text-sm tracking-wide'>
+                <div className='font-accent flex items-center justify-between gap-4 rounded-full border border-transparent bg-spontaine-dark px-4 py-2 text-sm tracking-wide'>
                   {/* Logo */}
                   <Link
                     href='/'
@@ -133,7 +133,7 @@ const Navbar = () => {
                     <Button
                       onClick={handleBookDemo}
                       size='lg'
-                      className='relative overflow-hidden rounded-full bg-spontaine-highlight px-4 py-2 text-white shadow-2xl'
+                      className='relative overflow-hidden rounded-full bg-spontaine-accent-bright px-4 py-2 text-black shadow-2xl'
                     >
                       <span className='nav-cta-text'>Book Demo</span>
                     </Button>

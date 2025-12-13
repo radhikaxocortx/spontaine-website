@@ -107,6 +107,38 @@ const pageBlocks = [
     description: 'Full-width responsive image carousel with smooth GSAP animations',
     icon: '🎠',
   },
+  {
+    name: 'Spontaine - Hero Image With Overlay',
+    description:
+      'Full-screen hero section with image background, customizable overlay, and animated arc',
+    icon: '🌄',
+  },
+  {
+    name: 'Spontaine - Hero Video',
+    description:
+      'Full-screen hero section with video background, customizable overlay, and animated arc',
+    icon: '🎬',
+  },
+  {
+    name: 'Spontaine - Arc',
+    description: 'Animated arc transition with customizable color and gradient support',
+    icon: '🌊',
+  },
+  {
+    name: 'Spontaine - Rich Text',
+    description: 'Centered rich text content with Urbanist and Space Grotesk typography',
+    icon: '📝',
+  },
+  {
+    name: 'Spontaine - Company Marquee',
+    description: 'Animated company logos marquee with arc transition, editable label and title',
+    icon: '🏢',
+  },
+  {
+    name: 'Spontaine - Feature Carousel',
+    description: 'Swipeable feature carousel with icon, title, description and images',
+    icon: '🎠',
+  },
 ]
 
 interface Properties {

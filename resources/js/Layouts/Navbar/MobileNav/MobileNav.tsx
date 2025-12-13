@@ -45,7 +45,7 @@ const LeftArrowIcon = () => (
 
 // Shared menu item styles
 const MENU_ITEM_CLASS =
-  'flex items-center justify-between border-b border-white/30 py-4 text-xl leading-[1.2] text-black transition-opacity hover:opacity-70'
+  'flex items-center justify-between border-b border-white/30 py-4 text-xl leading-[1.2] text-spontaine-light transition-opacity hover:opacity-70'
 
 const MobileNavItem = ({
   item,
@@ -150,12 +150,12 @@ export function MobileNav() {
           >
             <Menu
               size={24}
-              className='text-black'
+              className='text-spontaine-light'
             />
           </button>
         </SheetTrigger>
 
-        <SheetContent className='!fixed !inset-0 z-[100] !flex !h-screen !w-screen !max-w-none !flex-col !justify-between !space-y-0 !overflow-hidden !rounded-none !border-0 bg-spontaine-accent-ring !p-0 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 [&>button]:hidden'>
+        <SheetContent className='!fixed !inset-0 z-[100] !flex !h-screen !w-screen !max-w-none !flex-col !justify-between !space-y-0 !overflow-hidden !rounded-none !border-0 bg-spontaine-dark !p-0 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 [&>button]:hidden'>
           {/* Root and Submenu views with slide transitions */}
           <div className='relative flex h-full w-full flex-1 flex-col overflow-hidden'>
             {/* Root view */}
@@ -166,7 +166,9 @@ export function MobileNav() {
 
               {/* Navigation label */}
               <div className='mb-6'>
-                <p className='text-base font-light tracking-wide text-black/50'>Navigation</p>
+                <p className='text-base font-light tracking-wide text-spontaine-light/60'>
+                  Navigation
+                </p>
               </div>
 
               <nav className='flex flex-col overflow-y-auto'>
@@ -192,12 +194,12 @@ export function MobileNav() {
                 <button
                   type='button'
                   onClick={handleBack}
-                  className='text-black transition-opacity hover:opacity-70'
+                  className='text-spontaine-light transition-opacity hover:opacity-70'
                   aria-label='Back to main menu'
                 >
                   <LeftArrowIcon />
                 </button>
-                <p className='text-base font-light tracking-wide text-black/50'>
+                <p className='text-base font-light tracking-wide text-spontaine-light/50'>
                   <Localization
                     text={{
                       english: activeMenu?.title ?? '',
@@ -236,7 +238,7 @@ export function MobileNav() {
             <Button
               onClick={handleBookDemo}
               size='lg'
-              className='w-full rounded-full bg-spontaine-highlight py-6 text-white shadow-2xl'
+              className='w-full rounded-full bg-spontaine-accent-bright py-6 text-white shadow-2xl'
             >
               <span className='nav-cta-text'>Book Demo</span>
             </Button>
@@ -259,7 +261,7 @@ export function MobileNav() {
               {/* Close Button */}
               <button
                 onClick={closeModal}
-                className='absolute right-4 top-1 z-10 rounded-full p-1 text-xl text-gray-600 hover:bg-white hover:text-gray-800'
+                className='absolute right-4 top-1 z-10 rounded-full p-1 text-xl text-spontaine-light hover:bg-white hover:text-gray-800'
               >
                 ×
               </button>

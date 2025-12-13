@@ -230,8 +230,8 @@ export default function VideoFeatureCarousel() {
           {/* Cards Track */}
           <div
             ref={trackRef}
-            className='flex gap-6 lg:gap-6'
-            style={{ cursor: 'grab', touchAction: 'pan-y pinch-zoom' }}
+            className='scrollbar-hide flex touch-pan-x gap-6 overflow-x-auto sm:overflow-x-auto lg:gap-6'
+            style={{ cursor: 'grab', touchAction: 'pan-x pinch-zoom' }}
             onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}
             onPointerUp={handlePointerUp}

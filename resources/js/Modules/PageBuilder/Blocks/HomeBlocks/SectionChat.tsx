@@ -163,13 +163,24 @@ export default function SectionChat() {
               Connect every signal.
               <br />
               Give your people{' '}
-              <span className='text-6xl font-bold text-spontaine-accent-dark'>superpowers.</span>
+              <span className='text-6xl font-bold italic text-spontaine-accent-dark'>
+                superpowers.
+              </span>
             </h2>
           </div>
 
           {/* Chat Input Container */}
           <div className='mx-auto max-w-4xl'>
-            <div className='group relative overflow-visible rounded-[32px] border border-gray-200 bg-white p-4 shadow-[0_8px_30px_rgba(0,0,0,0.08)] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.12)] sm:p-5 lg:p-6'>
+            <div
+              className='group relative overflow-visible rounded-[32px] bg-white p-4 shadow-[0_8px_30px_rgba(0,0,0,0.08)] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.12)] sm:p-5 lg:p-6'
+              style={{
+                border: '2px solid transparent',
+                backgroundImage:
+                  'linear-gradient(white, white), linear-gradient(0deg, #44ECA0 0%, #D0D9FB 100%)',
+                backgroundOrigin: 'border-box',
+                backgroundClip: 'padding-box, border-box',
+              }}
+            >
               {/* Main Input Row */}
               <div className='flex items-center gap-3 sm:gap-4'>
                 {/* Attachment Icon Button */}

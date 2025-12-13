@@ -122,12 +122,12 @@ const NavMegaMenu = ({ menu, lang = 'en' }: Properties) => {
               aria-label={`${menu.title} menu`}
               className={`absolute left-0 right-0 top-full z-40 mt-2 w-full px-4 sm:px-6 lg:px-8`}
             >
-              <div className='mx-auto max-h-[80vh] max-w-7xl overflow-hidden rounded-2xl bg-spontaine-accent text-sm shadow-xl ring-1 ring-black/5'>
+              <div className='mx-auto max-h-[80vh] max-w-7xl overflow-hidden rounded-2xl bg-spontaine-dark text-sm shadow-xl ring-1 ring-black/5'>
                 {/* Grid: header, content, footer with media spanning full height */}
                 <div className='grid max-h-[calc(80vh-3rem)] min-h-0 gap-6 p-6 lg:grid-cols-2 lg:grid-rows-[auto,1fr,auto]'>
                   {/* Header: Section name (left column, top row) */}
                   <div className='px-0 pt-0 lg:col-start-1 lg:col-end-2 lg:row-start-1 lg:row-end-2'>
-                    <p className='font-heading text-spontaine-dark/60 text-lg tracking-wider'>
+                    <p className='font-heading text-lg tracking-wider text-spontaine-light/60'>
                       <Localization
                         text={
                           menu.items?.items?.[0]?.section ?? {
@@ -168,7 +168,7 @@ const NavMegaMenu = ({ menu, lang = 'en' }: Properties) => {
                                     }
                                   }}
                                   onFocus={() => setActiveLinkId(link.id)}
-                                  className={`font-heading flex w-full items-start justify-between rounded-lg px-3 py-2 text-left ring-0 ${isActive ? 'text-spontaine-dark' : 'text-spontaine-dark/60'} hover:text-spontaine-dark focus:outline-none focus:ring-0`}
+                                  className={`flex w-full items-start justify-between rounded-lg px-3 py-2 text-left font-heading ring-0 ${isActive ? 'text-spontaine-light' : 'text-spontaine-light/60'} hover:text-spontaine-light focus:outline-none focus:ring-0`}
                                 >
                                   <div className='flex min-w-0 items-center gap-2'>
                                     <span className='block text-3xl'>
@@ -241,7 +241,7 @@ const NavMegaMenu = ({ menu, lang = 'en' }: Properties) => {
                         .flatMap((s) => s.links)
                         .find((l) => l.id === activeLinkId)
                       return (
-                        <p className='text-lg text-black/60'>
+                        <p className='text-lg text-spontaine-light/60'>
                           <Localization
                             text={active?.description ?? { english: '', malayalam: '' }}
                             language={lang}

@@ -11,7 +11,7 @@ export const MobileNavHeader = () => (
     <SheetClose asChild>
       <button
         aria-label='Close menu'
-        className='text-black'
+        className='text-white'
       >
         <X
           size={26}

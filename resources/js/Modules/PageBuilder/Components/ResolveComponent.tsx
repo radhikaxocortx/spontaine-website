@@ -25,6 +25,8 @@ import SectionHero, { HeroImageBlock } from '../Blocks/SectionHero'
 import SectionMarquee, { MarqueeData } from '../Blocks/SectionMarquee'
 import SectionTestimonial, { TestimonialBlock } from '../Blocks/SectionTestimonial'
 import SectionVideo, { VideoImageBlock } from '../Blocks/SectionVideo'
+import RichTextSP, { RichTextSPBlockData } from '../Blocks/SpontaineBlocks/RichTextSP'
+import SectionArc, { ArcBlock } from '../Blocks/SpontaineBlocks/SectionArc'
 import SectionBannerClean, {
   SectionBannerCleanBlock,
 } from '../Blocks/SpontaineBlocks/SectionBannerClean'
@@ -39,6 +41,14 @@ import SectionBreadcrumbs, {
   SectionBreadcrumbsData,
 } from '../Blocks/SpontaineBlocks/SectionBreadcrumbs'
 import SectionCarousel, { SectionCarouselBlock } from '../Blocks/SpontaineBlocks/SectionCarousel'
+import SectionFeatureCarouselSP, {
+  FeatureCarouselSPData,
+} from '../Blocks/SpontaineBlocks/SectionFeatureCarouselSP'
+import SectionHeroImageSP, {
+  HeroImageBlock as HeroImageSPBlock,
+} from '../Blocks/SpontaineBlocks/SectionHeroImageSP'
+import SectionHeroVideoSP, { HeroVideoBlock } from '../Blocks/SpontaineBlocks/SectionHeroVideoSP'
+import SectionMarqueeSP, { MarqueeSPData } from '../Blocks/SpontaineBlocks/SectionMarqueeSP'
 
 interface Properties {
   block?: Block
@@ -82,6 +92,22 @@ const ResolveComponent = ({
           editMode={editMode}
           onFieldEdit={onFieldEdit}
           blockData={block as unknown as HeroImageBlock}
+          language={language}
+        />
+      )}
+      {blockName === 'Home - Hero Video Section' && (
+        <SectionHeroImageSP
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          blockData={block as unknown as HeroImageSPBlock}
+          language={language}
+        />
+      )}
+      {blockName === 'Spontaine - Hero Image With Overlay' && (
+        <SectionHeroImageSP
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          blockData={block as unknown as HeroImageSPBlock}
           language={language}
         />
       )}
@@ -228,6 +254,48 @@ const ResolveComponent = ({
       {blockName === 'Spontaine - Carousel' && (
         <SectionCarousel
           blockData={block as unknown as SectionCarouselBlock}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+          dispatch={dispatch}
+        />
+      )}
+      {blockName === 'Spontaine - Hero Video' && (
+        <SectionHeroVideoSP
+          blockData={block as unknown as HeroVideoBlock}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+        />
+      )}
+      {blockName === 'Spontaine - Arc' && (
+        <SectionArc
+          blockData={block as unknown as ArcBlock}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+        />
+      )}
+      {blockName === 'Spontaine - Rich Text' && (
+        <RichTextSP
+          blockData={block as unknown as RichTextSPBlockData}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+        />
+      )}
+      {blockName === 'Spontaine - Company Marquee' && (
+        <SectionMarqueeSP
+          blockData={block as unknown as MarqueeSPData}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+          dispatch={dispatch}
+        />
+      )}
+      {blockName === 'Spontaine - Feature Carousel' && (
+        <SectionFeatureCarouselSP
+          blockData={block as unknown as FeatureCarouselSPData}
           editMode={editMode}
           onFieldEdit={onFieldEdit}
           language={language}

@@ -13,12 +13,18 @@ import { textBlock } from '../Blocks/SectionCallToAction'
 import { heroImageBlock } from '../Blocks/SectionHero'
 import { defaultTestimonialBlock } from '../Blocks/SectionTestimonial'
 import { videoBlock } from '../Blocks/SectionVideo'
+import { richTextSPData } from '../Blocks/SpontaineBlocks/RichTextSP'
+import { arcBlock } from '../Blocks/SpontaineBlocks/SectionArc'
 import { sectionBannerCleanBlock } from '../Blocks/SpontaineBlocks/SectionBannerClean'
 import { sectionBannerDarkBlock } from '../Blocks/SpontaineBlocks/SectionBannerDark'
 import { sectionBannerGradientBlock } from '../Blocks/SpontaineBlocks/SectionBannerGradient'
 import { sectionBannerSPBlock } from '../Blocks/SpontaineBlocks/SectionBannerSP'
 import { breadcrumbsData } from '../Blocks/SpontaineBlocks/SectionBreadcrumbs'
 import { sectionCarouselBlock } from '../Blocks/SpontaineBlocks/SectionCarousel'
+import { featureCarouselSPBlock } from '../Blocks/SpontaineBlocks/SectionFeatureCarouselSP'
+import { heroImageBlock as heroImageSPBlock } from '../Blocks/SpontaineBlocks/SectionHeroImageSP'
+import { heroVideoBlock } from '../Blocks/SpontaineBlocks/SectionHeroVideoSP'
+import { marqueeSPBlock } from '../Blocks/SpontaineBlocks/SectionMarqueeSP'
 
 export interface PageBuilderAction {
   action:
@@ -54,6 +60,18 @@ const getBlockDefaultData = (blockName: string) => {
     case 'Home - Hero Section': {
       return {
         ...heroImageBlock,
+      }
+    }
+
+    case 'Home - Hero Video Section': {
+      return {
+        ...heroImageBlock,
+      }
+    }
+
+    case 'Spontaine - Hero Image With Overlay': {
+      return {
+        ...heroImageSPBlock,
       }
     }
 
@@ -138,6 +156,31 @@ const getBlockDefaultData = (blockName: string) => {
     case 'Spontaine - Carousel': {
       return {
         ...sectionCarouselBlock,
+      }
+    }
+    case 'Spontaine - Hero Video': {
+      return {
+        ...heroVideoBlock,
+      }
+    }
+    case 'Spontaine - Arc': {
+      return {
+        ...arcBlock,
+      }
+    }
+    case 'Spontaine - Rich Text': {
+      return {
+        ...richTextSPData,
+      }
+    }
+    case 'Spontaine - Company Marquee': {
+      return {
+        ...marqueeSPBlock,
+      }
+    }
+    case 'Spontaine - Feature Carousel': {
+      return {
+        ...featureCarouselSPBlock,
       }
     }
     default: {
@@ -490,7 +533,7 @@ const updateBlockField = (
   fieldName?: string,
   fieldValue?: BlockFieldValues
 ): PageBlock => {
-  if (blockId == null || fieldName == null || fieldValue == null) {
+  if (blockId == null || fieldName == null || fieldValue === undefined) {
     return page
   }
   const updatedBlocks = page.blocks.map((block) => {
