@@ -25,11 +25,11 @@ export default function ViewBuilder({ page }: Props) {
   return (
     <PageBuilderProvider renderMode='page'>
       <div className=''>
-        {page.blocks.blocks.map((element) => {
+        {page.blocks.blocks.map((element, index) => {
           return (
-            <Fragment key={element.id.toString()}>
+            <Fragment key={element.id?.toString() ?? `block-${index}`}>
               <ResolveComponent
-                key={element.id}
+                key={element.id ?? index}
                 blockName={element.blockName}
                 block={element}
                 language={'en'}

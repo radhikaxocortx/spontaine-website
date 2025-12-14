@@ -59,8 +59,10 @@ export default function VideoFeatureCarousel() {
   const containerRef = useRef<HTMLDivElement>(null)
   const trackRef = useRef<HTMLDivElement>(null)
   const dragStartXRef = useRef(0)
+  const dragStartYRef = useRef(0)
   const dragCurrentXRef = useRef(0)
   const dragStartTimeRef = useRef(0)
+  const swipeDirectionRef = useRef<'horizontal' | 'vertical' | null>(null)
   const videoRefs = useRef<Map<number, HTMLVideoElement>>(new Map())
 
   const maxIndex = features.length - cardsPerView
@@ -84,8 +86,13 @@ export default function VideoFeatureCarousel() {
     const clampedIndex = Math.max(0, Math.min(index, maxIndex))
     setCurrentIndex(clampedIndex)
 
-    const cardWidth = trackRef.current.offsetWidth / features.length
-    const offset = -clampedIndex * cardWidth * cardsPerView
+    // Get actual card width from first card element
+    const firstCard = trackRef.current.querySelector('[data-video-id]') as HTMLElement
+    if (!firstCard) return
+
+    const cardWidth = firstCard.offsetWidth
+    const gap = 24 // 6 * 4px = 24px gap between cards
+    const offset = -clampedIndex * (cardWidth + gap)
 
     if (immediate) {
       gsap.set(trackRef.current, { x: offset })
@@ -118,11 +125,14 @@ export default function VideoFeatureCarousel() {
   // Swipe gesture handlers for both touch and mouse
   const handlePointerDown = (e: React.PointerEvent | React.TouchEvent) => {
     const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX
+    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY
 
     setIsDragging(true)
     dragStartXRef.current = clientX
+    dragStartYRef.current = clientY
     dragCurrentXRef.current = clientX
     dragStartTimeRef.current = Date.now()
+    swipeDirectionRef.current = null
 
     if (trackRef.current && !('touches' in e)) {
       trackRef.current.style.cursor = 'grabbing'
@@ -133,17 +143,30 @@ export default function VideoFeatureCarousel() {
     if (!isDragging || !trackRef.current) return
 
     const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX
-    const diff = clientX - dragCurrentXRef.current
-    const absDiff = Math.abs(clientX - dragStartXRef.current)
+    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY
 
-    // Only prevent default if moving horizontally (for swipe)
-    if (absDiff > 10) {
-      e.preventDefault()
+    const diffX = Math.abs(clientX - dragStartXRef.current)
+    const diffY = Math.abs(clientY - dragStartYRef.current)
+
+    // Determine swipe direction on first significant movement
+    if (swipeDirectionRef.current === null && (diffX > 10 || diffY > 10)) {
+      swipeDirectionRef.current = diffX > diffY ? 'horizontal' : 'vertical'
     }
 
-    dragCurrentXRef.current = clientX
-    const currentX = gsap.getProperty(trackRef.current, 'x') as number
-    gsap.set(trackRef.current, { x: currentX + diff })
+    // If vertical swipe, allow default scrolling behavior
+    if (swipeDirectionRef.current === 'vertical') {
+      setIsDragging(false)
+      return
+    }
+
+    // Only handle horizontal swipes for carousel
+    if (swipeDirectionRef.current === 'horizontal') {
+      e.preventDefault()
+      const diff = clientX - dragCurrentXRef.current
+      dragCurrentXRef.current = clientX
+      const currentX = gsap.getProperty(trackRef.current, 'x') as number
+      gsap.set(trackRef.current, { x: currentX + diff })
+    }
   }
 
   const handlePointerUp = (e: React.PointerEvent | React.TouchEvent) => {
@@ -152,6 +175,12 @@ export default function VideoFeatureCarousel() {
     setIsDragging(false)
     if (!('touches' in e)) {
       trackRef.current.style.cursor = 'grab'
+    }
+
+    // Only process if it was a horizontal swipe
+    if (swipeDirectionRef.current !== 'horizontal') {
+      swipeDirectionRef.current = null
+      return
     }
 
     const totalDiff = dragCurrentXRef.current - dragStartXRef.current
@@ -172,6 +201,8 @@ export default function VideoFeatureCarousel() {
     } else {
       slideTo(currentIndex) // Snap back
     }
+
+    swipeDirectionRef.current = null
   }
 
   // Lazy video loading with IntersectionObserver
@@ -225,13 +256,13 @@ export default function VideoFeatureCarousel() {
         {/* Carousel Container */}
         <div
           ref={containerRef}
-          className='relative overflow-visible px-4 sm:px-8 lg:px-20'
+          className='relative overflow-hidden px-4 sm:px-8 lg:px-20'
         >
           {/* Cards Track */}
           <div
             ref={trackRef}
-            className='scrollbar-hide flex touch-pan-x gap-6 overflow-x-auto sm:overflow-x-auto lg:gap-6'
-            style={{ cursor: 'grab', touchAction: 'pan-x pinch-zoom' }}
+            className='flex gap-6 lg:gap-6'
+            style={{ cursor: 'grab' }}
             onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}
             onPointerUp={handlePointerUp}

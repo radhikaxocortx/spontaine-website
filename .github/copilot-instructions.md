@@ -38,6 +38,46 @@ Purpose: Enable immediate productive contributions while preserving established 
 3. Add Shared Prop: Extend `HandleInertiaRequests::share`; update corresponding TS `PageProps` extension.
 4. Add Footers/Nav fields: Mirror field in PHP model fillable + cast; update repository + TS interface; keep multilingual pattern.
 
+## PageBuilder Field Edit Actions (Dec 2025)
+
+**Critical Pattern:** PageBuilder uses different actions for different field types and contexts.
+
+**Top-Level Block Fields:**
+
+- **Images** (`backgroundImage`, etc.): Use `action: 'INSERT'`, pass current value as `oldValue: blockData.fieldName`
+- **Text/Colors**: Use `action: 'UPDATE'`, pass current value as `oldValue: blockData.fieldName`
+- **Links**: Use `action: 'UPDATE'`, pass current value or null as `oldValue`
+
+**List Item Fields** (e.g., carousel slides):
+
+- **Any field inside list**: Use `action: 'UPDATE'` with `itemField`, `itemIndex`, and `oldValue: null`
+- **Add new item**: Use `action: 'INSERT_INTO_LIST'` via dispatch with `blockId`, `fieldName`, `fieldValue`
+- **Remove item**: Use `action: 'REMOVE_LIST_ITEM'` via dispatch with `blockId`, `fieldName`, `itemId`
+
+**Examples:**
+
+```tsx
+// Top-level image (SectionHeroImageSP)
+onFieldEdit({
+  action: 'INSERT',
+  field: 'backgroundImage',
+  fieldType: 'image',
+  oldValue: blockData.backgroundImage,
+})
+
+// List item image (SectionFeatureCarouselSP)
+onFieldEdit({
+  field: 'slides',
+  oldValue: null,
+  itemField: 'icon',
+  itemIndex: slide.id,
+  fieldType: 'image',
+  action: 'UPDATE',
+})
+```
+
+**Why:** PageBuilder's reducer treats top-level fields differently from nested list items. `INSERT` replaces/adds values directly; `UPDATE` with `itemField` modifies specific items within arrays. Always match the pattern used in similar blocks.
+
 ## Integration Points
 
 - Inertia shared props consumed in layout/components—avoid duplicate fetches.
@@ -82,3 +122,82 @@ Implementation references:
 - `resources/js/Layouts/Navbar/MobileNav/MobileNav.tsx` — full-screen sheet, views, transitions, typography.
 - `resources/js/Layouts/Navbar/NavbarLinks.tsx` — link rendering wrapper.
 - `resources/js/Layouts/Navbar/NavLinkItem.tsx` — muted dark link baseline + hover behavior.
+
+## Reusable Components
+
+### CalendarBooking Component (Dec 2025)
+
+**Purpose:** Centralized Cal.com booking integration with automatic iOS detection.
+
+**Location:** `resources/js/components/CalendarBooking/CalendarBooking.tsx`
+
+**Key Features:**
+
+- Auto-detects iOS devices (iPhone, iPad, including iPads masquerading as MacIntel)
+- iOS: Opens Cal.com native modal via JavaScript SDK
+- Desktop/Android: Shows iframe modal
+- Render prop pattern for flexible integration
+- Loads Cal.com embed script automatically
+- Configurable: `calLink`, `layout`, `brandColor`
+
+**Usage Pattern:**
+
+```tsx
+<CalendarBooking>
+  {({ openCalendar, isLoading }) => <Button onClick={openCalendar}>Book Demo</Button>}
+</CalendarBooking>
+```
+
+**Implementation Notes:**
+
+- Used in: `Navbar.tsx`, `MobileNav.tsx`, `SectionCTA.tsx`, `SectionHeroImageSP.tsx`
+- When inside closable containers (Sheet, Modal), render CalendarBooking outside to prevent unmounting issues
+- MobileNav pattern: CalendarBooking rendered outside Sheet; state flag triggers opening after sheet closes
+- Script loading: Checks for existing Cal.com script before adding to prevent custom element registration errors
+
+**Do NOT:** Duplicate modal/iframe logic; use this component for all calendar bookings.
+
+## PageBuilder Components (Dec 2025)
+
+### SectionHeroImageSP
+
+**Location:** `resources/js/Modules/PageBuilder/Blocks/SpontaineBlocks/SectionHeroImageSP.tsx`
+
+**Key Features:**
+
+- Editable hero section with background image, overlay, titles, description, and CTA
+- **Consolidated CTA Modal:** Single edit modal handles both regular links and Cal.com calendar links
+  - Checkbox to mark link as Cal.com calendar link
+  - When calendar checkbox enabled: disables button text fields, auto-fills "Book Demo", hides external link option
+  - When unchecked: enables custom button text (English + Malayalam), external link checkbox
+  - Saves to `calendarUrl` when calendar mode; saves to `cta` object when regular link mode
+- **Background image editing:** Use `action: 'INSERT'` with `oldValue: blockData.backgroundImage`
+- **Overlay editor:** Modal with color picker and opacity slider; saves via `Object.assign(blockData, {...})`
+- **GSAP arc animation:** Optional SVG arc at bottom with morphSVG animation on scroll
+- **CalendarBooking integration:** Renders CalendarBooking component when `calendarUrl` is set
+
+**CTA Modal Pattern:** Single unified interface for both link types; toggling calendar checkbox switches between modes without losing data.
+
+## Home Page Components (Dec 2025)
+
+### VideoFeatureCarousel
+
+**Location:** `resources/js/Modules/PageBuilder/Blocks/HomeBlocks/VideoFeatureCarousel.tsx`
+
+**Key Implementation Details:**
+
+- GSAP transforms for slides (no native `overflow-x-auto` to avoid transform conflicts)
+- Directional swipe detection: determines horizontal vs vertical intent before blocking scroll
+- Vertical swipes allow page scrolling; horizontal swipes navigate carousel
+- Mobile: Calculates actual card width from DOM (`firstCard.offsetWidth`) for precise sliding
+- Cards per view: 2 on desktop (`lg`), 1 on mobile
+- Gap: 24px between cards (Tailwind `gap-6`)
+
+**Critical Patterns:**
+
+- Never mix native scroll + GSAP transforms on same element
+- Track `swipeDirectionRef` to distinguish gestures; only `preventDefault()` for horizontal swipes
+- `slideTo` must use actual rendered dimensions, not calculated fractions
+- Parent container uses `overflow-hidden`; track has no overflow classes
+
+**Mobile Scroll Fix:** Swipe direction detection + conditional `preventDefault()` ensures vertical page scrolling works while preserving horizontal carousel navigation.

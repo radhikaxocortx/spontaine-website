@@ -75,13 +75,15 @@ const Footer = ({ editMode, onFieldEdit, language, blockData }: Properties) => {
               {/* Left: Logo + Company Info */}
               <div className='space-y-4'>
                 {/* Logo */}
-                <div className='h-16 w-40'>
-                  <img
-                    src='/imge/intuon-logo.png'
-                    alt='Intuon Analytics'
-                    className='h-full w-full object-contain'
-                  />
-                </div>
+                <a href='/'>
+                  <div className='h-16 w-40'>
+                    <img
+                      src='/imge/intuon-logo.png'
+                      alt='Intuon Analytics'
+                      className='h-full w-full object-contain'
+                    />
+                  </div>
+                </a>
 
                 {/* Company Address */}
                 <div className='font-body text-xs leading-relaxed text-spontaine-white-soft'>

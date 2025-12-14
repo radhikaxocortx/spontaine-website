@@ -1,9 +1,10 @@
+import { CalendarBooking } from '@/components/CalendarBooking'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { gsap } from 'gsap'
 import { MorphSVGPlugin } from 'gsap/MorphSVGPlugin'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
 gsap.registerPlugin(ScrollTrigger, MorphSVGPlugin)
 
@@ -12,21 +13,10 @@ interface SectionCTAProps {
 }
 
 const SectionCTA = ({ className }: SectionCTAProps) => {
-  const [showModal, setShowModal] = useState(false)
-
   const arcRef = useRef(null)
   const sectionRef = useRef<HTMLDivElement>(null)
   const headingRef = useRef<HTMLHeadingElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
-
-  // Toggle modal
-  const handleBookDemo = () => {
-    setShowModal(true)
-  }
-
-  const closeModal = () => {
-    setShowModal(false)
-  }
 
   useEffect(() => {
     const arc = arcRef.current
@@ -100,19 +90,23 @@ const SectionCTA = ({ className }: SectionCTAProps) => {
           <div className='relative z-10 mx-auto mb-16 flex max-w-4xl flex-col items-center justify-center px-6 text-center'>
             <h2
               ref={headingRef}
-              className='font-heading text-spontaine-dark-bg mb-8 text-5xl font-normal leading-tight sm:mb-12 sm:text-6xl lg:text-7xl xl:text-[88.9px] xl:leading-[120px]'
+              className='mb-8 font-heading text-5xl font-normal leading-tight text-spontaine-dark-bg sm:mb-12 sm:text-6xl lg:text-7xl xl:text-[88.9px] xl:leading-[120px]'
             >
               Ready for your PoC?
             </h2>
 
-            <Button
-              ref={buttonRef}
-              onClick={handleBookDemo}
-              size='lg'
-              className='relative overflow-hidden rounded-full bg-spontaine-highlight py-6 text-white shadow-2xl'
-            >
-              <span className='nav-cta-text'>Book Demo</span>
-            </Button>
+            <CalendarBooking>
+              {({ openCalendar }) => (
+                <Button
+                  ref={buttonRef}
+                  onClick={openCalendar}
+                  size='lg'
+                  className='relative overflow-hidden rounded-full bg-spontaine-highlight py-6 text-white shadow-2xl'
+                >
+                  <span className='nav-cta-text'>Book Demo</span>
+                </Button>
+              )}
+            </CalendarBooking>
           </div>
 
           {/* Bottom Arc */}
@@ -132,34 +126,6 @@ const SectionCTA = ({ className }: SectionCTAProps) => {
           </div> */}
         </div>
       </section>
-
-      {/* MODAL WITH IFRAME */}
-      {showModal && (
-        <div
-          className='fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm'
-          onClick={closeModal}
-        >
-          <div
-            className='relative w-[95%] max-w-6xl overflow-hidden rounded-2xl bg-white shadow-2xl'
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Close Button */}
-            <button
-              onClick={closeModal}
-              className='absolute right-4 top-4 z-10 rounded-full bg-white/90 p-1 text-2xl text-gray-600 shadow-md hover:bg-white hover:text-gray-800'
-            >
-              ×
-            </button>
-
-            {/* Calendar Iframe */}
-            <iframe
-              src='https://cal.com/intuonfx/30min?embed=true&layout=month_view'
-              className='h-[650px] w-full border-0'
-              allow='fullscreen'
-            ></iframe>
-          </div>
-        </div>
-      )}
     </>
   )
 }

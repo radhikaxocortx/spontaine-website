@@ -139,6 +139,11 @@ const pageBlocks = [
     description: 'Swipeable feature carousel with icon, title, description and images',
     icon: '🎠',
   },
+  {
+    name: 'Spontaine - Call To Action',
+    description: 'Customizable CTA section with gradient background and optional booking button',
+    icon: '📢',
+  },
 ]
 
 interface Properties {

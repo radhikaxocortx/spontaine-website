@@ -41,6 +41,7 @@ import SectionBreadcrumbs, {
   SectionBreadcrumbsData,
 } from '../Blocks/SpontaineBlocks/SectionBreadcrumbs'
 import SectionCarousel, { SectionCarouselBlock } from '../Blocks/SpontaineBlocks/SectionCarousel'
+import SectionCTASP, { SectionCTASPBlock } from '../Blocks/SpontaineBlocks/SectionCTASP'
 import SectionFeatureCarouselSP, {
   FeatureCarouselSPData,
 } from '../Blocks/SpontaineBlocks/SectionFeatureCarouselSP'
@@ -300,6 +301,14 @@ const ResolveComponent = ({
           onFieldEdit={onFieldEdit}
           language={language}
           dispatch={dispatch}
+        />
+      )}
+      {blockName === 'Spontaine - Call To Action' && (
+        <SectionCTASP
+          blockData={block as unknown as SectionCTASPBlock}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
         />
       )}
     </>

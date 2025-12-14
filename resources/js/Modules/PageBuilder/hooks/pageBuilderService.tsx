@@ -21,6 +21,7 @@ import { sectionBannerGradientBlock } from '../Blocks/SpontaineBlocks/SectionBan
 import { sectionBannerSPBlock } from '../Blocks/SpontaineBlocks/SectionBannerSP'
 import { breadcrumbsData } from '../Blocks/SpontaineBlocks/SectionBreadcrumbs'
 import { sectionCarouselBlock } from '../Blocks/SpontaineBlocks/SectionCarousel'
+import { sectionCTASPBlock } from '../Blocks/SpontaineBlocks/SectionCTASP'
 import { featureCarouselSPBlock } from '../Blocks/SpontaineBlocks/SectionFeatureCarouselSP'
 import { heroImageBlock as heroImageSPBlock } from '../Blocks/SpontaineBlocks/SectionHeroImageSP'
 import { heroVideoBlock } from '../Blocks/SpontaineBlocks/SectionHeroVideoSP'
@@ -181,6 +182,11 @@ const getBlockDefaultData = (blockName: string) => {
     case 'Spontaine - Feature Carousel': {
       return {
         ...featureCarouselSPBlock,
+      }
+    }
+    case 'Spontaine - Call To Action': {
+      return {
+        ...sectionCTASPBlock,
       }
     }
     default: {

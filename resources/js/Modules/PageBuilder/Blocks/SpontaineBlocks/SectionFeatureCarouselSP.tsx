@@ -77,8 +77,10 @@ const SectionFeatureCarouselSP = ({
   const containerRef = useRef<HTMLDivElement>(null)
   const trackRef = useRef<HTMLDivElement>(null)
   const dragStartXRef = useRef(0)
+  const dragStartYRef = useRef(0)
   const dragCurrentXRef = useRef(0)
   const dragStartTimeRef = useRef(0)
+  const swipeDirectionRef = useRef<'horizontal' | 'vertical' | null>(null)
 
   const slides = blockData?.slides?.items || []
   const maxIndex = Math.max(0, slides.length - cardsPerView)
@@ -127,8 +129,13 @@ const SectionFeatureCarouselSP = ({
     const clampedIndex = Math.max(0, Math.min(index, maxIndex))
     setCurrentIndex(clampedIndex)
 
-    const cardWidth = trackRef.current.offsetWidth / slides.length
-    const offset = -clampedIndex * cardWidth * cardsPerView
+    // Get actual card width from first card element
+    const firstCard = trackRef.current.querySelector('[data-slide-id]') as HTMLElement
+    if (!firstCard) return
+
+    const cardWidth = firstCard.offsetWidth
+    const gap = 24 // 6 * 4px = 24px gap between cards
+    const offset = -clampedIndex * (cardWidth + gap)
 
     if (immediate) {
       gsap.set(trackRef.current, { x: offset })
@@ -161,11 +168,14 @@ const SectionFeatureCarouselSP = ({
   // Swipe gesture handlers for both touch and mouse
   const handlePointerDown = (e: React.PointerEvent | React.TouchEvent) => {
     const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX
+    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY
 
     setIsDragging(true)
     dragStartXRef.current = clientX
+    dragStartYRef.current = clientY
     dragCurrentXRef.current = clientX
     dragStartTimeRef.current = Date.now()
+    swipeDirectionRef.current = null
 
     if (trackRef.current && !('touches' in e)) {
       trackRef.current.style.cursor = 'grabbing'
@@ -176,17 +186,30 @@ const SectionFeatureCarouselSP = ({
     if (!isDragging || !trackRef.current) return
 
     const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX
-    const diff = clientX - dragCurrentXRef.current
-    const absDiff = Math.abs(clientX - dragStartXRef.current)
+    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY
 
-    // Only prevent default if moving horizontally (for swipe)
-    if (absDiff > 10) {
-      e.preventDefault()
+    const diffX = Math.abs(clientX - dragStartXRef.current)
+    const diffY = Math.abs(clientY - dragStartYRef.current)
+
+    // Determine swipe direction on first significant movement
+    if (swipeDirectionRef.current === null && (diffX > 10 || diffY > 10)) {
+      swipeDirectionRef.current = diffX > diffY ? 'horizontal' : 'vertical'
     }
 
-    dragCurrentXRef.current = clientX
-    const currentX = gsap.getProperty(trackRef.current, 'x') as number
-    gsap.set(trackRef.current, { x: currentX + diff })
+    // If vertical swipe, allow default scrolling behavior
+    if (swipeDirectionRef.current === 'vertical') {
+      setIsDragging(false)
+      return
+    }
+
+    // Only handle horizontal swipes for carousel
+    if (swipeDirectionRef.current === 'horizontal') {
+      e.preventDefault()
+      const diff = clientX - dragCurrentXRef.current
+      dragCurrentXRef.current = clientX
+      const currentX = gsap.getProperty(trackRef.current, 'x') as number
+      gsap.set(trackRef.current, { x: currentX + diff })
+    }
   }
 
   const handlePointerUp = () => {
@@ -194,6 +217,12 @@ const SectionFeatureCarouselSP = ({
 
     setIsDragging(false)
     trackRef.current.style.cursor = 'grab'
+
+    // Only process if it was a horizontal swipe
+    if (swipeDirectionRef.current !== 'horizontal') {
+      swipeDirectionRef.current = null
+      return
+    }
 
     const totalDiff = dragCurrentXRef.current - dragStartXRef.current
     const duration = Date.now() - dragStartTimeRef.current
@@ -213,6 +242,8 @@ const SectionFeatureCarouselSP = ({
     } else {
       slideTo(currentIndex) // Snap back
     }
+
+    swipeDirectionRef.current = null
   }
 
   const backgroundColor = displayText(blockData.backgroundColor, language) || '#ffffff'
@@ -267,8 +298,8 @@ const SectionFeatureCarouselSP = ({
               {/* Cards Track */}
               <div
                 ref={trackRef}
-                className='scrollbar-hide flex touch-pan-x gap-6 overflow-x-auto sm:overflow-x-auto lg:gap-6'
-                style={{ cursor: editMode ? 'default' : 'grab', touchAction: 'pan-x pinch-zoom' }}
+                className='flex gap-6 lg:gap-6'
+                style={{ cursor: editMode ? 'default' : 'grab' }}
                 onPointerDown={editMode ? undefined : handlePointerDown}
                 onPointerMove={editMode ? undefined : handlePointerMove}
                 onPointerUp={editMode ? undefined : handlePointerUp}
@@ -409,7 +440,10 @@ function FeatureCard({
   const descriptionText = displayText(slide.description, language)
 
   return (
-    <div className={`flex-shrink-0 ${minWidthClass} ${cardWidthClass}`}>
+    <div
+      className={`flex-shrink-0 ${minWidthClass} ${cardWidthClass}`}
+      data-slide-id={slide.id}
+    >
       <div className='flex h-full max-h-[800px] flex-col overflow-hidden rounded-[40px] bg-spontaine-dark-bg p-10 sm:p-12 lg:max-h-[800px] lg:p-14'>
         {/* Icon */}
         <div className='mb-10 flex justify-center'>

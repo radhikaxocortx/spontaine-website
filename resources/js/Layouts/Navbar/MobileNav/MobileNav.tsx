@@ -1,3 +1,4 @@
+import { CalendarBooking } from '@/components/CalendarBooking'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { Language } from '@/components/ui/ui_interfaces'
@@ -7,7 +8,6 @@ import { NavMenu } from '@/Modules/PageBuilder/page_interfaces'
 import { Link, usePage } from '@inertiajs/react'
 import { Menu } from 'lucide-react'
 import { useState } from 'react'
-import { createPortal } from 'react-dom'
 import { MobileNavHeader } from './MobileNavHeader'
 
 // Reusable arrow icon component
@@ -102,8 +102,8 @@ export function MobileNav() {
   }
   const [view, setView] = useState<'root' | 'submenu'>('root')
   const [activeMenu, setActiveMenu] = useState<NavMenu | null>(null)
-  const [showModal, setShowModal] = useState(false)
   const [isSheetOpen, setIsSheetOpen] = useState(false)
+  const [shouldOpenCalendar, setShouldOpenCalendar] = useState(false)
 
   const handleNavigateSub = (item: NavMenu) => {
     setActiveMenu(item)
@@ -115,15 +115,9 @@ export function MobileNav() {
     setActiveMenu(null)
   }
 
-  const handleBookDemo = () => {
-    console.log('Book Demo clicked, opening modal')
-    setIsSheetOpen(false) // Close the sheet first
-    setShowModal(true)
-  }
-
-  const closeModal = () => {
-    console.log('Closing modal')
-    setShowModal(false)
+  const handleBookDemoClick = () => {
+    setIsSheetOpen(false)
+    setShouldOpenCalendar(true)
   }
 
   const handleSheetOpenChange = (open: boolean) => {
@@ -134,8 +128,6 @@ export function MobileNav() {
       setActiveMenu(null)
     }
   }
-
-  console.log('MobileNav render, showModal:', showModal)
 
   return (
     <>
@@ -236,7 +228,7 @@ export function MobileNav() {
           {/* Footer CTA - Always visible at bottom */}
           <div className='flex-shrink-0 border-t border-white/10 bg-white/0 p-6'>
             <Button
-              onClick={handleBookDemo}
+              onClick={handleBookDemoClick}
               size='lg'
               className='w-full rounded-full bg-spontaine-accent-bright py-6 text-white shadow-2xl'
             >
@@ -246,36 +238,17 @@ export function MobileNav() {
         </SheetContent>
       </Sheet>
 
-      {/* MODAL WITH IFRAME - Outside Sheet component */}
-      {showModal &&
-        createPortal(
-          <div
-            className='fixed inset-0 z-[99999] flex items-center justify-center bg-black/60 backdrop-blur-sm'
-            onClick={closeModal}
-            style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
-          >
-            <div
-              className='relative w-[90%] max-w-6xl overflow-hidden rounded-2xl bg-white p-1 shadow-2xl md:p-4 lg:p-14'
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Close Button */}
-              <button
-                onClick={closeModal}
-                className='absolute right-4 top-1 z-10 rounded-full p-1 text-xl text-spontaine-light hover:bg-white hover:text-gray-800'
-              >
-                ×
-              </button>
-
-              {/* Calendar Iframe */}
-              <iframe
-                src='https://cal.com/intuonfx/30min?embed=true&layout=month_view'
-                className='h-[475px] w-full border-0'
-                allow='fullscreen'
-              ></iframe>
-            </div>
-          </div>,
-          document.body
-        )}
+      {/* CalendarBooking outside Sheet to avoid unmounting issues */}
+      <CalendarBooking>
+        {({ openCalendar }) => {
+          // Auto-open calendar when shouldOpenCalendar is true
+          if (shouldOpenCalendar) {
+            setShouldOpenCalendar(false)
+            setTimeout(openCalendar, 100)
+          }
+          return null
+        }}
+      </CalendarBooking>
     </>
   )
 }

@@ -1,3 +1,4 @@
+import { CalendarBooking } from '@/components/CalendarBooking'
 import { Button } from '@/components/ui/button'
 import { Language } from '@/components/ui/ui_interfaces'
 import AppLayoutPadding from '@/Layouts/AppLayoutPadding'
@@ -6,8 +7,10 @@ import { MorphSVGPlugin } from 'gsap/MorphSVGPlugin'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useEffect, useRef, useState } from 'react'
 import { BlocKFieldInfo } from '../../Components/BlockEditor/BlockEditor'
+import { CTAEditModal } from '../../Components/CTAEditModal'
 import EditLabel from '../../Components/EditLabel'
 import Localization from '../../Components/Localization'
+import { OverlayEditModal } from '../../Components/OverlayEditModal'
 import { BlockConfiguration, BlockImage, LinkData, TextData } from '../../page_interfaces'
 
 gsap.registerPlugin(ScrollTrigger, MorphSVGPlugin)
@@ -80,15 +83,11 @@ const SectionHeroImageSP = ({
   language = 'en',
 }: Properties) => {
   const arcRef = useRef(null)
-  const [showModal, setShowModal] = useState(false)
   const [showBgEditModal, setShowBgEditModal] = useState(false)
-  const [tempOverlayColor, setTempOverlayColor] = useState(blockData.overlayColor || '#000000')
-  const [tempOverlayOpacity, setTempOverlayOpacity] = useState(blockData.overlayOpacity || 0)
+  const [showCTAEditModal, setShowCTAEditModal] = useState(false)
 
   const handleCTAClick = () => {
-    if (blockData.calendarUrl) {
-      setShowModal(true)
-    } else if (blockData.cta?.link) {
+    if (blockData.cta?.link) {
       if (blockData.cta.external) {
         window.open(blockData.cta.link, '_blank')
       } else {
@@ -97,8 +96,12 @@ const SectionHeroImageSP = ({
     }
   }
 
-  const closeModal = () => {
-    setShowModal(false)
+  const handleOverlaySave = (data: { overlayColor: string; overlayOpacity: number }) => {
+    Object.assign(blockData, data)
+  }
+
+  const handleCTASave = (data: { cta?: LinkData | null; calendarUrl?: string | null }) => {
+    Object.assign(blockData, data)
   }
 
   useEffect(() => {
@@ -287,47 +290,39 @@ const SectionHeroImageSP = ({
           {/* CTA Button */}
           {(blockData.cta || blockData.calendarUrl || editMode) && (
             <div className='mb-8'>
-              {(blockData.cta || blockData.calendarUrl) && (
-                <Button
-                  onClick={handleCTAClick}
-                  size='lg'
-                  className='relative overflow-hidden rounded-full bg-spontaine-highlight py-6 text-white shadow-2xl'
-                >
-                  <span className='nav-cta-text'>
-                    {blockData.calendarUrl ? (
-                      'Book Demo'
-                    ) : (
+              {blockData.calendarUrl ? (
+                <CalendarBooking>
+                  {({ openCalendar }) => (
+                    <Button
+                      onClick={openCalendar}
+                      size='lg'
+                      className='relative overflow-hidden rounded-full bg-spontaine-highlight py-6 text-white shadow-2xl'
+                    >
+                      <span className='nav-cta-text'>Book Demo</span>
+                    </Button>
+                  )}
+                </CalendarBooking>
+              ) : (
+                blockData.cta && (
+                  <Button
+                    onClick={handleCTAClick}
+                    size='lg'
+                    className='relative overflow-hidden rounded-full bg-spontaine-highlight py-6 text-white shadow-2xl'
+                  >
+                    <span className='nav-cta-text'>
                       <Localization
                         text={blockData.cta?.name || { english: 'Get Started', malayalam: null }}
                         language={language}
                       />
-                    )}
-                  </span>
-                </Button>
+                    </span>
+                  </Button>
+                )
               )}
               {editMode && onFieldEdit != null && (
-                <div className='mt-2 flex gap-2'>
+                <div className='mt-2'>
                   <EditLabel
-                    label='Edit CTA Button'
-                    onClick={() => {
-                      onFieldEdit({
-                        field: 'cta',
-                        fieldType: 'link',
-                        oldValue: blockData.cta,
-                        action: 'UPDATE',
-                      })
-                    }}
-                  />
-                  <EditLabel
-                    onClick={() => {
-                      onFieldEdit({
-                        field: 'calendarUrl',
-                        fieldType: 'text',
-                        oldValue: { english: blockData.calendarUrl || '', malayalam: null },
-                        action: 'UPDATE',
-                      })
-                    }}
-                    label='Edit Calendar URL'
+                    label='Edit CTA'
+                    onClick={() => setShowCTAEditModal(true)}
                   />
                 </div>
               )}
@@ -356,121 +351,22 @@ const SectionHeroImageSP = ({
         </div>
       )}
 
-      {/* MODAL WITH IFRAME */}
-      {showModal && blockData.calendarUrl && (
-        <div
-          className='fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm'
-          onClick={closeModal}
-        >
-          <div
-            className='relative w-[95%] max-w-6xl overflow-hidden rounded-2xl bg-white shadow-2xl'
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Close Button */}
-            <button
-              onClick={closeModal}
-              className='absolute right-4 top-4 z-10 rounded-full bg-white/90 p-1 text-2xl text-gray-600 shadow-md hover:bg-white hover:text-gray-800'
-            >
-              ×
-            </button>
+      {/* MODALS */}
+      <OverlayEditModal
+        show={showBgEditModal && editMode}
+        onClose={() => setShowBgEditModal(false)}
+        currentColor={blockData.overlayColor}
+        currentOpacity={blockData.overlayOpacity}
+        onSave={handleOverlaySave}
+      />
 
-            {/* Calendar Iframe */}
-            <iframe
-              src={blockData.calendarUrl}
-              className='h-[650px] w-full border-0'
-              allow='fullscreen'
-            ></iframe>
-          </div>
-        </div>
-      )}
-
-      {/* BACKGROUND EDIT MODAL */}
-      {showBgEditModal && editMode && onFieldEdit && (
-        <div
-          className='fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm'
-          onClick={() => setShowBgEditModal(false)}
-        >
-          <div
-            className='relative w-[95%] max-w-2xl overflow-hidden rounded-2xl bg-white p-6 shadow-2xl'
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Close Button */}
-            <button
-              onClick={() => setShowBgEditModal(false)}
-              className='absolute right-4 top-4 z-10 rounded-full bg-gray-100 p-1 text-2xl text-gray-600 hover:bg-gray-200 hover:text-gray-800'
-            >
-              ×
-            </button>
-
-            <h3 className='mb-6 text-2xl font-semibold'>Edit Overlay</h3>
-
-            {/* Overlay Settings */}
-            <div>
-              <h4 className='mb-4 text-lg font-semibold'>Overlay Settings</h4>
-
-              {/* Overlay Color */}
-              <div className='mb-4'>
-                <label className='mb-2 block text-sm font-medium text-gray-700'>
-                  Overlay Color
-                </label>
-                <div className='flex gap-2'>
-                  <input
-                    type='color'
-                    value={tempOverlayColor}
-                    onChange={(e) => setTempOverlayColor(e.target.value)}
-                    className='h-12 w-20 cursor-pointer rounded border border-gray-300'
-                  />
-                  <input
-                    type='text'
-                    value={tempOverlayColor}
-                    onChange={(e) => setTempOverlayColor(e.target.value)}
-                    placeholder='#ffffff'
-                    className='flex-1 rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500'
-                  />
-                </div>
-              </div>
-
-              {/* Overlay Opacity */}
-              <div className='mb-4'>
-                <label className='mb-2 block text-sm font-medium text-gray-700'>
-                  Overlay Opacity: {tempOverlayOpacity}%
-                </label>
-                <input
-                  type='range'
-                  min='0'
-                  max='100'
-                  value={tempOverlayOpacity}
-                  onChange={(e) => setTempOverlayOpacity(Number(e.target.value))}
-                  className='w-full'
-                />
-              </div>
-            </div>
-
-            {/* Save Button */}
-            <div className='mt-6 flex gap-2'>
-              <Button
-                onClick={() => {
-                  Object.assign(blockData, {
-                    overlayColor: tempOverlayColor,
-                    overlayOpacity: tempOverlayOpacity,
-                  })
-                  setShowBgEditModal(false)
-                }}
-                className='flex-1'
-              >
-                Save Settings
-              </Button>
-              <Button
-                onClick={() => setShowBgEditModal(false)}
-                variant='outline'
-                className='flex-1'
-              >
-                Cancel
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
+      <CTAEditModal
+        show={showCTAEditModal && editMode}
+        onClose={() => setShowCTAEditModal(false)}
+        currentCTA={blockData.cta}
+        currentCalendarUrl={blockData.calendarUrl}
+        onSave={handleCTASave}
+      />
     </section>
   )
 }

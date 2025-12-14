@@ -102,7 +102,7 @@ const FooterEditor = ({ footer }: Properties) => {
 
   return (
     <div className='flex flex-col gap-5'>
-      <div className='flex justify-between gap-5'>
+      <div className='mb-20 flex justify-between gap-5 pt-10'>
         <Button onClick={saveChanges}>SAVE</Button>
         <Button
           variant='secondary'

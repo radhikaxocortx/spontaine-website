@@ -1,3 +1,4 @@
+import { CalendarBooking } from '@/components/CalendarBooking'
 import ApplicationLogo2 from '@/components/CustomUI/ApplicationLogo2'
 import { Button } from '@/components/ui/button'
 import { Link } from '@inertiajs/react'
@@ -12,16 +13,7 @@ const Navbar = () => {
   const [isHeroVisible, setIsHeroVisible] = useState(true)
   const [isCollapsed, setIsCollapsed] = useState(false)
   const [isHoveringPill, setIsHoveringPill] = useState(false)
-  const [showModal, setShowModal] = useState(false)
   const [hideNavbar, setHideNavbar] = useState(false)
-
-  const handleBookDemo = () => {
-    setShowModal(true)
-  }
-
-  const closeModal = () => {
-    setShowModal(false)
-  }
 
   useEffect(() => {
     const handler = (e: CustomEvent) => {
@@ -108,13 +100,17 @@ const Navbar = () => {
 
                   {/* CTA Button (always visible) */}
                   <div className='hidden lg:block'>
-                    <Button
-                      onClick={handleBookDemo}
-                      size='lg'
-                      className='relative overflow-hidden rounded-full bg-spontaine-accent-bright py-6 text-black shadow-2xl'
-                    >
-                      <span className='nav-cta-text'>Book Demo</span>
-                    </Button>
+                    <CalendarBooking>
+                      {({ openCalendar }) => (
+                        <Button
+                          onClick={openCalendar}
+                          size='lg'
+                          className='relative overflow-hidden rounded-full bg-spontaine-accent-bright py-6 text-black shadow-2xl'
+                        >
+                          <span className='nav-cta-text'>Book Demo</span>
+                        </Button>
+                      )}
+                    </CalendarBooking>
                   </div>
                 </div>
               </div>
@@ -130,13 +126,17 @@ const Navbar = () => {
                   </Link>
                   {/* Right: CTA + Hamburger */}
                   <div className='flex items-center gap-3'>
-                    <Button
-                      onClick={handleBookDemo}
-                      size='lg'
-                      className='relative overflow-hidden rounded-full bg-spontaine-accent-bright px-4 py-2 text-black shadow-2xl'
-                    >
-                      <span className='nav-cta-text'>Book Demo</span>
-                    </Button>
+                    <CalendarBooking>
+                      {({ openCalendar }) => (
+                        <Button
+                          onClick={openCalendar}
+                          size='lg'
+                          className='relative overflow-hidden rounded-full bg-spontaine-accent-bright px-4 py-2 text-black shadow-2xl'
+                        >
+                          <span className='nav-cta-text'>Book Demo</span>
+                        </Button>
+                      )}
+                    </CalendarBooking>
                     <MobileNav />
                   </div>
                 </div>
@@ -144,34 +144,6 @@ const Navbar = () => {
             </div>
           </AppLayoutPadding>
         </motion.nav>
-      )}
-
-      {/* MODAL WITH IFRAME */}
-      {showModal && (
-        <div
-          className='fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm'
-          onClick={closeModal}
-        >
-          <div
-            className='relative w-[90%] max-w-6xl overflow-hidden rounded-2xl bg-white p-1 shadow-2xl md:p-4 lg:p-14'
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Close Button */}
-            <button
-              onClick={closeModal}
-              className='absolute right-4 top-1 z-10 rounded-full p-1 text-2xl text-gray-600 hover:bg-white hover:text-gray-800'
-            >
-              ×
-            </button>
-
-            {/* Calendar Iframe */}
-            <iframe
-              src='https://cal.com/intuonfx/30min?embed=true&layout=month_view'
-              className='h-[475px] w-full border-0'
-              allow='fullscreen'
-            ></iframe>
-          </div>
-        </div>
       )}
     </AnimatePresence>
   )

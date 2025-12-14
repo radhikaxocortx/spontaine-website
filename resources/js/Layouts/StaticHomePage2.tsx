@@ -11,6 +11,8 @@ import { FooterDataInterface } from '@/Modules/PageBuilder/FooterEditor/FooterEd
 import { Page } from '@/Modules/PageBuilder/page_interfaces'
 import { PageProps } from '@/types'
 import { usePage } from '@inertiajs/react'
+import 'cookieconsent'
+import 'cookieconsent/build/cookieconsent.min.css'
 import { useEffect } from 'react'
 import Footer from './Footer/Footer'
 import Navbar from './Navbar/Navbar'
@@ -25,7 +27,6 @@ interface StaticHomePage2Props {
 }
 
 const StaticHomePage2 = ({
-  featuredVideoPosts = [],
   featuredBlogs = [],
   title = 'No-Code Data Integration & AI Platform for Enterprise',
   description = `Transform your disconnected systems into an AI-driven command center with Spontaine's no-code data integration platform. Get real-time insights, eliminate data silos, and enable AI adoption across your organization - all in weeks, not quarters.`,
@@ -34,6 +35,34 @@ const StaticHomePage2 = ({
 }: StaticHomePage2Props) => {
   // Get footer data from Inertia shared props
   const { footer } = usePage<PageProps & { footer: { items: FooterDataInterface } }>().props
+
+  // Cookie consent initialization
+  useEffect(() => {
+    // @ts-expect-error - cookieconsent is loaded as a global
+    window.cookieconsent.initialise({
+      palette: {
+        popup: {
+          background: '#343434',
+          text: '#fff',
+        },
+        button: {
+          background: '#44ECA0',
+          text: '#000',
+        },
+      },
+      theme: 'classic',
+      position: 'bottom-right',
+      type: 'opt-in',
+      content: {
+        message:
+          'We use cookies to enhance your browsing experience, serve personalized content, and analyze our traffic.',
+        dismiss: 'Reject All',
+        allow: 'Accept All',
+        link: 'Privacy Policy',
+        href: '/privacy-policy',
+      },
+    })
+  }, [])
 
   // Premium smooth scroll implementation comparable to Devin.ai
   useEffect(() => {
