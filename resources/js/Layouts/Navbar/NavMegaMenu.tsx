@@ -1,6 +1,7 @@
 import { Language } from '@/components/ui/ui_interfaces'
 import Localization from '@/Modules/PageBuilder/Components/Localization'
 import { NavMenu } from '@/Modules/PageBuilder/page_interfaces'
+import { Link } from '@inertiajs/react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import NavLinkItem from './NavLinkItem'
@@ -149,47 +150,61 @@ const NavMegaMenu = ({ menu, lang = 'en' }: Properties) => {
                         <ul className='space-y-1'>
                           {item.links.map((link) => {
                             const isActive = activeLinkId === link.id
+                            const linkProps = {
+                              onMouseEnter: () => {
+                                if (linkHoverTimerRef.current)
+                                  window.clearTimeout(linkHoverTimerRef.current)
+                                linkHoverTimerRef.current = window.setTimeout(
+                                  () => setActiveLinkId(link.id),
+                                  110
+                                )
+                              },
+                              onMouseLeave: () => {
+                                if (linkHoverTimerRef.current) {
+                                  window.clearTimeout(linkHoverTimerRef.current)
+                                  linkHoverTimerRef.current = null
+                                }
+                              },
+                              onFocus: () => setActiveLinkId(link.id),
+                              className: `flex w-full items-start justify-between rounded-lg px-3 py-2 text-left font-heading ring-0 ${isActive ? 'text-spontaine-light' : 'text-spontaine-light/60'} hover:text-spontaine-light focus:outline-none focus:ring-0`,
+                            }
+
+                            const content = (
+                              <div className='flex min-w-0 items-center gap-2'>
+                                <span className='block text-3xl'>
+                                  <Localization
+                                    text={link.name}
+                                    language={lang}
+                                  />
+                                </span>
+                                <span
+                                  className={`inline-block transition-all duration-150 ${isActive ? 'translate-x-0 opacity-100' : '-translate-x-1 opacity-0'}`}
+                                  aria-hidden='true'
+                                >
+                                  <i className='fa-solid fa-circle-arrow-right text-3xl'></i>
+                                </span>
+                              </div>
+                            )
+
                             return (
                               <li key={link.id}>
-                                <button
-                                  type='button'
-                                  onMouseEnter={() => {
-                                    if (linkHoverTimerRef.current)
-                                      window.clearTimeout(linkHoverTimerRef.current)
-                                    linkHoverTimerRef.current = window.setTimeout(
-                                      () => setActiveLinkId(link.id),
-                                      110
-                                    )
-                                  }}
-                                  onMouseLeave={() => {
-                                    if (linkHoverTimerRef.current) {
-                                      window.clearTimeout(linkHoverTimerRef.current)
-                                      linkHoverTimerRef.current = null
-                                    }
-                                  }}
-                                  onFocus={() => setActiveLinkId(link.id)}
-                                  className={`flex w-full items-start justify-between rounded-lg px-3 py-2 text-left font-heading ring-0 ${isActive ? 'text-spontaine-light' : 'text-spontaine-light/60'} hover:text-spontaine-light focus:outline-none focus:ring-0`}
-                                >
-                                  <div className='flex min-w-0 items-center gap-2'>
-                                    <span className='block text-3xl'>
-                                      <Localization
-                                        text={link.name}
-                                        language={lang}
-                                      />
-                                    </span>
-                                    <span
-                                      className={`inline-block transition-all duration-150 ${isActive ? 'translate-x-0 opacity-100' : '-translate-x-1 opacity-0'}`}
-                                      aria-hidden='true'
-                                    >
-                                      <i className='fa-solid fa-circle-arrow-right text-3xl'></i>
-                                    </span>
-                                  </div>
-                                  {/* <InertiaLink
-                                    link={link}
-                                    language={lang}
-                                    className={`ml-3 shrink-0 text-xs underline ${isActive ? 'text-neutral-800' : 'text-neutral-graige-700'}`}
-                                  /> */}
-                                </button>
+                                {link.external ? (
+                                  <a
+                                    href={link.link ?? '#'}
+                                    target='_blank'
+                                    rel='noopener noreferrer'
+                                    {...linkProps}
+                                  >
+                                    {content}
+                                  </a>
+                                ) : (
+                                  <Link
+                                    href={link.link ?? '#'}
+                                    {...linkProps}
+                                  >
+                                    {content}
+                                  </Link>
+                                )}
                               </li>
                             )
                           })}
