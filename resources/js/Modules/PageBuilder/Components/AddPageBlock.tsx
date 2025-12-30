@@ -144,6 +144,17 @@ const pageBlocks = [
     description: 'Customizable CTA section with gradient background and optional booking button',
     icon: '📢',
   },
+  {
+    name: 'Spontaine - Image Carousel',
+    description: 'Full-width image carousel with peek of next slide and swipe navigation',
+    icon: '🖼️',
+  },
+  {
+    name: 'Spontaine - Bento Cards',
+    description:
+      'Bento grid layout with customizable cards, animated arcs, and gradient background',
+    icon: '🎴',
+  },
 ]
 
 interface Properties {

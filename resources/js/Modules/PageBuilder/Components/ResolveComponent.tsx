@@ -37,6 +37,9 @@ import SectionBannerGradient, {
   SectionBannerGradientBlock,
 } from '../Blocks/SpontaineBlocks/SectionBannerGradient'
 import SectionBannerSP, { SectionBannerSPBlock } from '../Blocks/SpontaineBlocks/SectionBannerSP'
+import SectionBentoCardsSP, {
+  BentoCardsSPData,
+} from '../Blocks/SpontaineBlocks/SectionBentoCardsSP'
 import SectionBreadcrumbs, {
   SectionBreadcrumbsData,
 } from '../Blocks/SpontaineBlocks/SectionBreadcrumbs'
@@ -49,6 +52,9 @@ import SectionHeroImageSP, {
   HeroImageBlock as HeroImageSPBlock,
 } from '../Blocks/SpontaineBlocks/SectionHeroImageSP'
 import SectionHeroVideoSP, { HeroVideoBlock } from '../Blocks/SpontaineBlocks/SectionHeroVideoSP'
+import SectionImageCarouselSP, {
+  ImageCarouselSPData,
+} from '../Blocks/SpontaineBlocks/SectionImageCarouselSP'
 import SectionMarqueeSP, { MarqueeSPData } from '../Blocks/SpontaineBlocks/SectionMarqueeSP'
 
 interface Properties {
@@ -309,6 +315,24 @@ const ResolveComponent = ({
           editMode={editMode}
           onFieldEdit={onFieldEdit}
           language={language}
+        />
+      )}
+      {blockName === 'Spontaine - Image Carousel' && (
+        <SectionImageCarouselSP
+          blockData={block as unknown as ImageCarouselSPData}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+          dispatch={dispatch}
+        />
+      )}
+      {blockName === 'Spontaine - Bento Cards' && (
+        <SectionBentoCardsSP
+          blockData={block as unknown as BentoCardsSPData}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+          dispatch={dispatch}
         />
       )}
     </>

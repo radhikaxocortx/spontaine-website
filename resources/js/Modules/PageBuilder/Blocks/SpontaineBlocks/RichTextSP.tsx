@@ -50,7 +50,7 @@ const RichTextSP = ({
 
   const renderContent = () => {
     const content = (
-      <div className='mx-auto max-w-xl py-16 text-center sm:py-24 lg:py-32'>
+      <div className='mx-auto max-w-xl justify-center py-16 sm:py-24 lg:py-32'>
         <RichTextDisplay data={displayText(blockData.text, language)} />
       </div>
     )

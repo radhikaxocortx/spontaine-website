@@ -14,7 +14,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Geist', ...defaultTheme.fontFamily.sans],
+        sans: ['Urbanist', ...defaultTheme.fontFamily.sans],
         'id-font': ['FragmentMono-Regular', ...defaultTheme.fontFamily.sans],
         'h1-stop': ['var(--font-h1-1stop)', ...defaultTheme.fontFamily.sans],
         'h2-1stop': ['var(--font-h2-1stop)', ...defaultTheme.fontFamily.sans],

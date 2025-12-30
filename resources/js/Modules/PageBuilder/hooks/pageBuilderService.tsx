@@ -19,12 +19,14 @@ import { sectionBannerCleanBlock } from '../Blocks/SpontaineBlocks/SectionBanner
 import { sectionBannerDarkBlock } from '../Blocks/SpontaineBlocks/SectionBannerDark'
 import { sectionBannerGradientBlock } from '../Blocks/SpontaineBlocks/SectionBannerGradient'
 import { sectionBannerSPBlock } from '../Blocks/SpontaineBlocks/SectionBannerSP'
+import { bentoCardsSPBlock } from '../Blocks/SpontaineBlocks/SectionBentoCardsSP'
 import { breadcrumbsData } from '../Blocks/SpontaineBlocks/SectionBreadcrumbs'
 import { sectionCarouselBlock } from '../Blocks/SpontaineBlocks/SectionCarousel'
 import { sectionCTASPBlock } from '../Blocks/SpontaineBlocks/SectionCTASP'
 import { featureCarouselSPBlock } from '../Blocks/SpontaineBlocks/SectionFeatureCarouselSP'
 import { heroImageBlock as heroImageSPBlock } from '../Blocks/SpontaineBlocks/SectionHeroImageSP'
 import { heroVideoBlock } from '../Blocks/SpontaineBlocks/SectionHeroVideoSP'
+import { imageCarouselSPBlock } from '../Blocks/SpontaineBlocks/SectionImageCarouselSP'
 import { marqueeSPBlock } from '../Blocks/SpontaineBlocks/SectionMarqueeSP'
 
 export interface PageBuilderAction {
@@ -187,6 +189,16 @@ const getBlockDefaultData = (blockName: string) => {
     case 'Spontaine - Call To Action': {
       return {
         ...sectionCTASPBlock,
+      }
+    }
+    case 'Spontaine - Image Carousel': {
+      return {
+        ...imageCarouselSPBlock,
+      }
+    }
+    case 'Spontaine - Bento Cards': {
+      return {
+        ...bentoCardsSPBlock,
       }
     }
     default: {

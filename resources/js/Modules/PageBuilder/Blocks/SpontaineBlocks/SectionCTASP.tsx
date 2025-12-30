@@ -22,6 +22,7 @@ gsap.registerPlugin(ScrollTrigger)
 export interface SectionCTASPBlock extends Block, BlockConfiguration {
   backgroundColor: TextData
   title: TextData
+  description?: TextData | null
   titleColor: TextData
   showCTA: TextData // 'true' | 'false'
   cta?: LinkData | null
@@ -45,6 +46,7 @@ export const sectionCTASPBlock: Omit<SectionCTASPBlock, keyof Block> = {
     english: 'Ready for your PoC?',
     malayalam: '',
   },
+  description: null,
   titleColor: {
     english: '#1a1a1a',
     malayalam: '',
@@ -71,6 +73,7 @@ const SectionCTASP = ({
   const isMounted = useMounted()
   const sectionRef = useRef<HTMLDivElement>(null)
   const headingRef = useRef<HTMLHeadingElement>(null)
+  const descriptionRef = useRef<HTMLParagraphElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
   const [showCTAEditModal, setShowCTAEditModal] = useState(false)
 
@@ -78,6 +81,7 @@ const SectionCTASP = ({
     displayText(blockData.backgroundColor, language) ||
     'linear-gradient(0deg, #44ECA0 0%, #C3FF6E 100%)'
   const title = displayText(blockData.title, language) || ''
+  const description = blockData.description ? displayText(blockData.description, language) : null
   const titleColor = displayText(blockData.titleColor, language) || '#1a1a1a'
   const showCTA = displayText(blockData.showCTA, language) === 'true'
 
@@ -110,7 +114,11 @@ const SectionCTASP = ({
     if (!isMounted || editMode) return
 
     const ctx = gsap.context(() => {
-      gsap.set([headingRef.current, buttonRef.current], { opacity: 0, y: 40 })
+      const elementsToAnimate = [headingRef.current]
+      if (description) elementsToAnimate.push(descriptionRef.current)
+      if (showCTA) elementsToAnimate.push(buttonRef.current)
+
+      gsap.set(elementsToAnimate, { opacity: 0, y: 40 })
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -127,6 +135,19 @@ const SectionCTASP = ({
         duration: 1,
         ease: 'power3.out',
       })
+
+      if (description) {
+        tl.to(
+          descriptionRef.current,
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            ease: 'power3.out',
+          },
+          '-=0.7'
+        )
+      }
 
       if (showCTA) {
         tl.to(
@@ -145,7 +166,7 @@ const SectionCTASP = ({
     return () => {
       ctx.revert()
     }
-  }, [isMounted, editMode, showCTA])
+  }, [isMounted, editMode, showCTA, description])
 
   return (
     <section
@@ -185,6 +206,31 @@ const SectionCTASP = ({
                 <EditLabel
                   label='Edit Title Color'
                   onClick={() => onEdit('titleColor', 'text', blockData.titleColor)}
+                />
+              </div>
+            )}
+
+            {/* Description */}
+            {description && (
+              <p
+                ref={descriptionRef}
+                className='mb-8 max-w-2xl font-urbanist text-lg leading-relaxed sm:mb-12 sm:text-xl'
+                style={{ color: titleColor }}
+              >
+                {description}
+              </p>
+            )}
+            {editMode && (
+              <div className='mb-4 flex flex-wrap justify-center gap-2'>
+                <EditLabel
+                  label={description ? 'Edit Description' : 'Add Description'}
+                  onClick={() =>
+                    onEdit(
+                      'description',
+                      'text',
+                      blockData.description || { english: '', malayalam: '' }
+                    )
+                  }
                 />
               </div>
             )}
