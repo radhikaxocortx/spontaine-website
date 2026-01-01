@@ -127,7 +127,7 @@ const defaultCard: BentoCard = {
     english: 'Add a compelling description for this card.',
     malayalam: '',
   },
-  image: { url: '/images/placeholder-card.png', caption: 'Card Image' },
+  image: { url: '/placeholder.jpeg', caption: 'Card Image' },
   backgroundColor: { english: '#44ECA0', malayalam: '' },
   textColor: { english: '#1a1a1a', malayalam: '' },
   gridClasses: { english: '', malayalam: '' },

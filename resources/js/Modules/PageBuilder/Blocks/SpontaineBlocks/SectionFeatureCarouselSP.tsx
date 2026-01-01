@@ -1,5 +1,6 @@
 import useMounted from '@/hooks/useMounted'
 import gsap from 'gsap'
+import { Sparkles } from 'lucide-react'
 import { Dispatch, useCallback, useEffect, useRef, useState } from 'react'
 import AddLabel from '../../Components/AddLabel'
 import {
@@ -52,14 +53,14 @@ export const featureCarouselSPBlock = {
 }
 
 const defaultSlide: FeatureSlide = {
-  icon: { url: '/images/icons/placeholder-icon.png', caption: 'Icon' },
+  icon: { url: '', caption: 'Icon' },
   title: { english: 'Feature Title', malayalam: '' },
   title2: { english: 'Second Title', malayalam: '' },
   description: {
     english: 'Feature description goes here. Add compelling details about this feature.',
     malayalam: '',
   },
-  image: { url: '/images/placeholder-feature.png', caption: 'Feature Image' },
+  image: { url: '/imge/home/card1.png', caption: 'Feature Image' },
 }
 
 const SectionFeatureCarouselSP = ({
@@ -448,12 +449,14 @@ function FeatureCard({
         {/* Icon */}
         <div className='mb-10 flex justify-center'>
           <div className='flex h-16 w-16 items-center justify-center rounded-2xl bg-spontaine-icon-bg'>
-            {slide.icon?.url && (
+            {slide.icon?.url ? (
               <img
                 src={slide.icon.url}
                 alt={slide.icon.caption || 'Icon'}
                 className='h-8 w-8 object-contain'
               />
+            ) : (
+              <Sparkles className='h-8 w-8 text-spontaine-light' />
             )}
           </div>
           {editMode && (

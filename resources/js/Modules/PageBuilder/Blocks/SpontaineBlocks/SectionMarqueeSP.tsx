@@ -58,7 +58,7 @@ export const marqueeSPBlock = {
 }
 
 const defaultLogoItem: MarqueeLogoItem = {
-  image: { url: '/images/logos/placeholder-logo.png', caption: 'Company Logo' },
+  image: { url: '/imge/logos/1.png', caption: 'Company Logo' },
   link: {
     link: null,
     name: { english: '', malayalam: '' },
@@ -192,7 +192,7 @@ const SectionMarqueeSP = ({
                     >
                       <div className='flex items-center justify-center'>
                         <img
-                          src={item.item.image.url ?? '/images/logos/placeholder-logo.png'}
+                          src={item.item.image.url ?? '/imge/logos/1.png'}
                           alt={item.item.image.caption || 'Company Logo'}
                           className='h-auto w-full max-w-[80px] object-contain transition-all duration-300 hover:opacity-100 hover:grayscale-0'
                           loading='lazy'

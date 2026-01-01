@@ -51,7 +51,7 @@ export const defaultMarqueeImageBlock = {
 }
 
 const defaultMarqueeImageCard: MarqueeImages = {
-  image: { url: '/images/logos/placeholder-logo.png', caption: 'Company Logo' },
+  image: { url: '/imge/logos/1.png', caption: 'Company Logo' },
   link: {
     link: null,
     name: { english: '', malayalam: '' },

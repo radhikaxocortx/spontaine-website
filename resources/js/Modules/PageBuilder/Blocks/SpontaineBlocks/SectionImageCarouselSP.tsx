@@ -1,6 +1,6 @@
 import useMounted from '@/hooks/useMounted'
 import gsap from 'gsap'
-import { Dispatch, useCallback, useRef, useState } from 'react'
+import { Dispatch, useCallback, useEffect, useRef, useState } from 'react'
 import AddLabel from '../../Components/AddLabel'
 import {
   BlocKFieldInfo,
@@ -14,6 +14,7 @@ import {
   Block,
   BlockConfiguration,
   BlockImage,
+  BlockVideo,
   ItemListField,
   TextData,
 } from '../../page_interfaces'
@@ -31,7 +32,9 @@ export interface ImageCarouselSPData extends Block, BlockConfiguration {
 
 export interface ImageSlide {
   id?: number
-  image: BlockImage
+  image?: BlockImage
+  video?: BlockVideo
+  mediaType?: 'image' | 'video'
 }
 
 interface Props {
@@ -56,7 +59,9 @@ export const imageCarouselSPBlock = {
 }
 
 const defaultSlide: ImageSlide = {
-  image: { url: '/images/placeholder-carousel.png', caption: 'Slide Image' },
+  image: { url: '/placeholder.jpeg', caption: 'Slide Image' },
+  video: undefined,
+  mediaType: 'image',
 }
 
 const SectionImageCarouselSP = ({
@@ -470,14 +475,101 @@ function ImageCard({
   dispatch,
   blockData,
 }: ImageCardProps) {
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [isPlaying, setIsPlaying] = useState(false)
+  const mediaType = slide.mediaType || 'image'
+
+  // Auto-play video when slide enters viewport
+  useEffect(() => {
+    if (!videoRef.current || editMode || mediaType !== 'video') return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Play when in viewport
+            videoRef.current
+              ?.play()
+              .then(() => setIsPlaying(true))
+              .catch(() => console.log('Video autoplay prevented'))
+          } else {
+            // Pause when out of viewport
+            videoRef.current?.pause()
+            setIsPlaying(false)
+          }
+        })
+      },
+      {
+        threshold: 0.5, // Play when 50% of slide is visible
+      }
+    )
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current)
+    }
+
+    return () => {
+      if (containerRef.current) {
+        observer.unobserve(containerRef.current)
+      }
+    }
+  }, [editMode, mediaType])
+
+  const handleVideoHover = (isHovering: boolean) => {
+    // Hover interaction is now optional/supplementary
+    if (videoRef.current && !editMode && mediaType === 'video') {
+      if (isHovering) {
+        videoRef.current.play()
+        setIsPlaying(true)
+      }
+      // Don't pause on hover leave - let viewport observer handle it
+    }
+  }
+
+  const switchMediaType = (newType: 'image' | 'video') => {
+    if (dispatch && blockData) {
+      dispatch({
+        action: 'UPDATE_LIST_ITEM_FIELD',
+        blockId: blockData.id,
+        fieldName: 'slides',
+        itemId: slide.id,
+        blockData: {
+          mediaType: newType,
+        },
+      })
+    }
+  }
+
   return (
     <div
+      ref={containerRef}
       className='w-[90%] flex-shrink-0 sm:w-[85%] lg:w-[80%]'
       data-slide-id={slide.id}
     >
-      <div className='relative overflow-hidden rounded-3xl bg-gray-100'>
-        {/* Image */}
-        {slide.image?.url ? (
+      <div
+        className='relative overflow-hidden rounded-3xl bg-gray-100'
+        onMouseEnter={() => handleVideoHover(true)}
+        onMouseLeave={() => handleVideoHover(false)}
+      >
+        {/* Media Content */}
+        {mediaType === 'video' && slide.video?.url ? (
+          <video
+            ref={videoRef}
+            className='h-auto w-full object-cover'
+            style={{ aspectRatio: '16/9' }}
+            muted
+            loop
+            playsInline
+            key={slide.video.url}
+          >
+            <source
+              src={slide.video.url}
+              type={slide.video.mime || 'video/mp4'}
+            />
+            Your browser does not support the video tag.
+          </video>
+        ) : mediaType === 'image' && slide.image?.url ? (
           <img
             src={slide.image.url}
             alt={slide.image.caption || 'Slide'}
@@ -489,36 +581,44 @@ function ImageCard({
             className='flex items-center justify-center bg-gray-200'
             style={{ aspectRatio: '16/9' }}
           >
-            <p className='text-gray-400'>No image</p>
+            <p className='text-gray-400'>No {mediaType}</p>
           </div>
         )}
 
         {editMode && (
-          <div className='absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 gap-2'>
-            <EditLabel
-              label='Update Image'
-              onClick={() =>
-                onFieldEdit?.({
-                  field: 'slides',
-                  oldValue: null,
-                  itemField: 'image',
-                  itemIndex: slide.id,
-                  fieldType: 'image',
-                  action: 'UPDATE',
-                })
-              }
-            />
-            <EditLabel
-              label='Remove Slide'
-              onClick={() => {
-                dispatch?.({
-                  action: 'REMOVE_LIST_ITEM',
-                  blockId: blockData?.id,
-                  fieldName: 'slides',
-                  itemId: slide.id,
-                })
-              }}
-            />
+          <div className='absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col gap-2'>
+            <div className='flex gap-2'>
+              <EditLabel
+                label={mediaType === 'image' ? 'Update Image' : 'Update Video'}
+                onClick={() =>
+                  onFieldEdit?.({
+                    field: 'slides',
+                    oldValue: null,
+                    itemField: mediaType,
+                    itemIndex: slide.id,
+                    fieldType: mediaType,
+                    action: 'UPDATE',
+                  })
+                }
+              />
+              <EditLabel
+                label='Remove Slide'
+                onClick={() => {
+                  dispatch?.({
+                    action: 'REMOVE_LIST_ITEM',
+                    blockId: blockData?.id,
+                    fieldName: 'slides',
+                    itemId: slide.id,
+                  })
+                }}
+              />
+            </div>
+            <div className='flex gap-2'>
+              <EditLabel
+                label={mediaType === 'image' ? 'Switch to Video' : 'Switch to Image'}
+                onClick={() => switchMediaType(mediaType === 'image' ? 'video' : 'image')}
+              />
+            </div>
           </div>
         )}
       </div>

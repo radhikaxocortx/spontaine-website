@@ -21,7 +21,7 @@ const UploadNewVideo = ({ onUpload }: Properties) => {
       .post(
         '/video-upload',
         {
-          video: file,
+          file: file,
           name: fileName,
         },
         {
