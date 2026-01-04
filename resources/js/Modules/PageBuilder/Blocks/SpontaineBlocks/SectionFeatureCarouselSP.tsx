@@ -542,7 +542,7 @@ function FeatureCard({
         )}
 
         {/* Image */}
-        <div className='overflow-hidden rounded-2xl'>
+        <div className='place-items-center overflow-hidden rounded-2xl'>
           {slide.image?.url && (
             <img
               src={slide.image.url}

@@ -13,7 +13,7 @@ use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 class ImageUploadRequest extends Data
 {
     public function __construct(
-        #[Max(2000)]
+        #[Max(5000)]
         #[Mimes(['jpeg', 'png', 'webp'])]
         public UploadedFile $file,
         #[Max(255)]

@@ -101,7 +101,7 @@ export default function SectionBannerDark({
       ref={sectionRef}
       className={cn(
         'relative flex w-full flex-col items-center justify-center bg-[#1B754C] pb-20 pt-40 text-white',
-        blockData.paddingTop || 'py-10',
+        blockData.paddingTop || '',
         blockData.paddingBottom,
         blockData.marginTop || '',
         blockData.marginBottom
@@ -146,7 +146,7 @@ export default function SectionBannerDark({
               {blockData?.description?.items.map((item) => (
                 <p
                   key={item.id.toString()}
-                  className='font-body mx-auto max-w-[560px] text-[16px] font-normal leading-[1.8] text-gray-300 sm:text-[20px]'
+                  className='mx-auto max-w-[560px] font-body text-[16px] font-normal leading-[1.8] text-gray-300 sm:text-[20px]'
                 >
                   <Localization
                     text={item.item}
