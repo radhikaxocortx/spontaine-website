@@ -102,11 +102,14 @@ export default function SectionChat() {
 
   // Questions for typewriter animation
   const questions = [
-    'What were the top 3 complaints from last week?',
-    'Show me risk alerts for the last 7 days.',
-    'Generate a dashboard for customer insights.',
-    'Which products had the highest return rate?',
-    'Summarize all feedback from enterprise clients.',
+    // 'What were the top 3 complaints from last week?',
+    // 'Show me risk alerts for the last 7 days.',
+    // 'Generate a dashboard for customer insights.',
+    // 'Which products had the highest return rate?',
+    // 'Summarize all feedback from enterprise clients.',
+    'Build me a dashboard about revenue realization.',
+    'Can you find current customer satisfaction numbers?',
+    'Where do we have recurring SLA breaches?',
   ]
 
   const typewriterText = useTypewriter(questions)

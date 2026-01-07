@@ -11,8 +11,6 @@ import { FooterDataInterface } from '@/Modules/PageBuilder/FooterEditor/FooterEd
 import { Page } from '@/Modules/PageBuilder/page_interfaces'
 import { PageProps } from '@/types'
 import { usePage } from '@inertiajs/react'
-import 'cookieconsent'
-import 'cookieconsent/build/cookieconsent.min.css'
 import { useEffect } from 'react'
 import Footer from './Footer/Footer'
 import Navbar from './Navbar/Navbar'
@@ -36,32 +34,45 @@ const StaticHomePage2 = ({
   // Get footer data from Inertia shared props
   const { footer } = usePage<PageProps & { footer: { items: FooterDataInterface } }>().props
 
-  // Cookie consent initialization
+  // Cookie consent initialization - client-side only to avoid SSR issues
   useEffect(() => {
-    // @ts-expect-error - cookieconsent is loaded as a global
-    window.cookieconsent.initialise({
-      palette: {
-        popup: {
-          background: '#343434',
-          text: '#fff',
-        },
-        button: {
-          background: '#44ECA0',
-          text: '#000',
-        },
-      },
-      theme: 'classic',
-      position: 'bottom-right',
-      type: 'opt-in',
-      content: {
-        message:
-          'We use cookies to enhance your browsing experience, serve personalized content, and analyze our traffic.',
-        dismiss: 'Reject All',
-        allow: 'Accept All',
-        link: 'Privacy Policy',
-        href: '/privacy-policy',
-      },
-    })
+    // Dynamically import cookieconsent only on the client side
+    const loadCookieConsent = async () => {
+      // Import the CSS
+      await import('cookieconsent/build/cookieconsent.min.css')
+      // Import the JS library
+      await import('cookieconsent')
+
+      // @ts-expect-error - cookieconsent is loaded as a global
+      if (window.cookieconsent) {
+        // @ts-expect-error - cookieconsent is loaded as a global
+        window.cookieconsent.initialise({
+          palette: {
+            popup: {
+              background: '#343434',
+              text: '#fff',
+            },
+            button: {
+              background: '#44ECA0',
+              text: '#000',
+            },
+          },
+          theme: 'classic',
+          position: 'bottom-right',
+          type: 'opt-in',
+          content: {
+            message:
+              'We use cookies to enhance your browsing experience, serve personalized content, and analyze our traffic.',
+            dismiss: 'Reject All',
+            allow: 'Accept All',
+            link: 'Privacy Policy',
+            href: '/privacy-policy',
+          },
+        })
+      }
+    }
+
+    loadCookieConsent()
   }, [])
 
   // Premium smooth scroll implementation comparable to Devin.ai
