@@ -151,8 +151,7 @@ const pageBlocks = [
   },
   {
     name: 'Spontaine - Bento Cards',
-    description:
-      'Bento grid layout with customizable cards, animated arcs, and gradient background',
+    description: 'Bento grid layout with 4 cards, gradient background, and animated arc transition',
     icon: '🎴',
   },
 ]

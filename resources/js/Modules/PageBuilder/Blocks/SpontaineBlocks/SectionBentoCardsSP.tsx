@@ -24,8 +24,11 @@ gsap.registerPlugin(ScrollTrigger, MorphSVGPlugin)
 
 export interface BentoCardsSPData extends Block, BlockConfiguration {
   backgroundColor: TextData
+  arcColor: TextData
   title: TextData
   titleColor: TextData
+  description?: TextData
+  descriptionColor?: TextData
   cards: ItemListField<BentoCard>
 }
 
@@ -49,11 +52,14 @@ interface Props {
 
 export const bentoCardsSPBlock = {
   backgroundColor: { english: 'linear-gradient(0deg, #44ECA0 0%, #D0D9FB 100%)', malayalam: '' },
+  arcColor: { english: '#D0D9FB', malayalam: '' },
   title: {
     english: 'Strategy-aligned action.\nFast, at scale.',
     malayalam: '',
   },
   titleColor: { english: '#1a1a1a', malayalam: '' },
+  description: { english: '', malayalam: '' },
+  descriptionColor: { english: '#1a1a1a', malayalam: '' },
   cards: {
     lastUUID: 4,
     items: [
@@ -136,11 +142,10 @@ const defaultCard: BentoCard = {
 const SectionBentoCardsSP = ({
   editMode,
   onFieldEdit,
-  blockData = bentoCardsSPBlock,
+  blockData = bentoCardsSPBlock as BentoCardsSPData,
   language = 'en',
   dispatch,
 }: Props) => {
-  const arcRef = useRef(null)
   const arcTopRef = useRef(null)
 
   const cards = blockData?.cards?.items || []
@@ -150,7 +155,7 @@ const SectionBentoCardsSP = ({
       onFieldEdit({
         field,
         fieldType,
-        oldValue: oldValue ?? '',
+        oldValue: oldValue ?? null,
         action: 'UPDATE',
       })
     }
@@ -173,7 +178,6 @@ const SectionBentoCardsSP = ({
     if (editMode) return
 
     const topArc = arcTopRef.current
-    const bottomArc = arcRef.current
 
     // Top arc animation
     const normalTopArc =
@@ -206,8 +210,11 @@ const SectionBentoCardsSP = ({
   }, [editMode])
 
   const backgroundColor = displayText(blockData.backgroundColor, language)
+  const arcColor = displayText(blockData.arcColor, language) || '#D0D9FB'
   const titleText = displayText(blockData.title, language)
   const titleColor = displayText(blockData.titleColor, language) || '#1a1a1a'
+  const descriptionText = displayText(blockData.description, language)
+  const descriptionColor = displayText(blockData.descriptionColor, language) || '#1a1a1a'
 
   return (
     <section
@@ -223,7 +230,7 @@ const SectionBentoCardsSP = ({
           <path
             ref={arcTopRef}
             d='M1920 128C1635.2 46.4 1308 0 960 0C612 0 284.8 46.4 0 128V183.067H1920V128Z'
-            fill={backgroundColor?.split(',')[0]?.match(/#[A-Fa-f0-9]{6}/)?.[0] || '#D0D9FB'}
+            fill={arcColor}
           />
         </svg>
       </div>
@@ -259,7 +266,49 @@ const SectionBentoCardsSP = ({
                 label='Edit Background'
                 onClick={() => onEdit('backgroundColor', 'text', blockData.backgroundColor)}
               />
+              <EditLabel
+                label='Edit Arc Color'
+                onClick={() => onEdit('arcColor', 'text', blockData.arcColor)}
+              />
             </div>
+          )}
+
+          {/* Description */}
+          {(descriptionText || editMode) && (
+            <>
+              {descriptionText && (
+                <p
+                  className='mx-auto mt-6 max-w-2xl font-body text-lg leading-relaxed sm:text-xl'
+                  style={{ color: descriptionColor }}
+                >
+                  {descriptionText}
+                </p>
+              )}
+              {editMode && (
+                <div className='mt-4 flex flex-wrap justify-center gap-2'>
+                  <EditLabel
+                    label={descriptionText ? 'Edit Description' : 'Add Description'}
+                    onClick={() =>
+                      onEdit(
+                        'description',
+                        'text',
+                        blockData.description || { english: '', malayalam: '' }
+                      )
+                    }
+                  />
+                  <EditLabel
+                    label='Edit Description Color'
+                    onClick={() =>
+                      onEdit(
+                        'descriptionColor',
+                        'text',
+                        blockData.descriptionColor || { english: '#1a1a1a', malayalam: '' }
+                      )
+                    }
+                  />
+                </div>
+              )}
+            </>
           )}
         </div>
 
@@ -270,6 +319,7 @@ const SectionBentoCardsSP = ({
               {cards.map((card, index) => (
                 <BentoCardComponent
                   key={card.id || index}
+                  cardId={card.id}
                   card={card.item}
                   language={language}
                   editMode={editMode}
@@ -305,6 +355,7 @@ const SectionBentoCardsSP = ({
  * BentoCardComponent
  */
 interface BentoCardComponentProps {
+  cardId: number
   card: BentoCard
   language: Language
   editMode?: boolean
@@ -314,6 +365,7 @@ interface BentoCardComponentProps {
 }
 
 function BentoCardComponent({
+  cardId,
   card,
   language,
   editMode,
@@ -348,7 +400,7 @@ function BentoCardComponent({
                   field: 'cards',
                   oldValue: card.title,
                   itemField: 'title',
-                  itemIndex: card.id,
+                  itemIndex: cardId,
                   fieldType: 'text',
                   action: 'UPDATE',
                 })
@@ -372,7 +424,7 @@ function BentoCardComponent({
                   field: 'cards',
                   oldValue: card.description,
                   itemField: 'description',
-                  itemIndex: card.id,
+                  itemIndex: cardId,
                   fieldType: 'text',
                   action: 'UPDATE',
                 })
@@ -382,7 +434,7 @@ function BentoCardComponent({
         )}
       </div>
 
-      <div className='mt-auto overflow-hidden rounded-3xl'>
+      <div className='mt-auto overflow-hidden rounded-b-3xl'>
         {card.image?.url && (
           <img
             src={card.image.url}
@@ -399,9 +451,9 @@ function BentoCardComponent({
             onClick={() =>
               onFieldEdit?.({
                 field: 'cards',
-                oldValue: null,
+                oldValue: card.image,
                 itemField: 'image',
-                itemIndex: card.id,
+                itemIndex: cardId,
                 fieldType: 'image',
                 action: 'UPDATE',
               })
@@ -414,7 +466,7 @@ function BentoCardComponent({
                 field: 'cards',
                 oldValue: card.backgroundColor,
                 itemField: 'backgroundColor',
-                itemIndex: card.id,
+                itemIndex: cardId,
                 fieldType: 'text',
                 action: 'UPDATE',
               })
@@ -427,7 +479,7 @@ function BentoCardComponent({
                 field: 'cards',
                 oldValue: card.textColor,
                 itemField: 'textColor',
-                itemIndex: card.id,
+                itemIndex: cardId,
                 fieldType: 'text',
                 action: 'UPDATE',
               })
@@ -440,7 +492,7 @@ function BentoCardComponent({
                 field: 'cards',
                 oldValue: card.gridClasses,
                 itemField: 'gridClasses',
-                itemIndex: card.id,
+                itemIndex: cardId,
                 fieldType: 'text',
                 action: 'UPDATE',
               })
@@ -453,7 +505,7 @@ function BentoCardComponent({
                 action: 'REMOVE_LIST_ITEM',
                 blockId: blockData?.id,
                 fieldName: 'cards',
-                itemId: card.id,
+                itemId: cardId,
               })
             }}
           />

@@ -201,6 +201,7 @@ const getBlockDefaultData = (blockName: string) => {
         ...bentoCardsSPBlock,
       }
     }
+
     default: {
       return {}
     }
