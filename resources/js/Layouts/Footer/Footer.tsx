@@ -90,7 +90,9 @@ const Footer = ({ editMode, onFieldEdit, language, blockData }: Properties) => {
                   <p className='font-bold text-spontaine-white-soft'>
                     INTUON ANALYTICS PRIVATE LIMITED
                   </p>
-                  <p className='mb-4 font-bold text-spontaine-white-soft'>CIN: 4HHKH454fg564676</p>
+                  <p className='mb-4 font-bold text-spontaine-white-soft'>
+                    CIN: U62010KL2025PTC094198
+                  </p>
                   <p className='mb-0'>9th Floor</p>
                   <p className='mb-0'>Jomer Symphony</p>
                   <p className='mb-0'>Vytila, Kochi</p>
