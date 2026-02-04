@@ -63,6 +63,7 @@ export default function VideoFeatureCarousel() {
   const dragCurrentXRef = useRef(0)
   const dragStartTimeRef = useRef(0)
   const swipeDirectionRef = useRef<'horizontal' | 'vertical' | null>(null)
+  const pointerStartedOnCarouselRef = useRef(false)
   const videoRefs = useRef<Map<number, HTMLVideoElement>>(new Map())
 
   const maxIndex = features.length - cardsPerView
@@ -127,50 +128,71 @@ export default function VideoFeatureCarousel() {
     const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX
     const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY
 
-    setIsDragging(true)
+    // Mark that pointer started on carousel
+    pointerStartedOnCarouselRef.current = true
+
+    // Don't set isDragging yet - wait to determine direction first
     dragStartXRef.current = clientX
     dragStartYRef.current = clientY
     dragCurrentXRef.current = clientX
     dragStartTimeRef.current = Date.now()
     swipeDirectionRef.current = null
-
-    if (trackRef.current && !('touches' in e)) {
-      trackRef.current.style.cursor = 'grabbing'
-    }
   }
 
   const handlePointerMove = (e: React.PointerEvent | React.TouchEvent) => {
-    if (!isDragging || !trackRef.current) return
+    if (!trackRef.current) return
 
+    // Only handle if pointer started on carousel
+    if (!pointerStartedOnCarouselRef.current) return
+
+    // If we already determined it's vertical, ignore completely
+    if (swipeDirectionRef.current === 'vertical') return
+
+    // If already dragging horizontally, continue handling
+    if (isDragging) {
+      e.preventDefault()
+      const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX
+      const diff = clientX - dragCurrentXRef.current
+      dragCurrentXRef.current = clientX
+      const currentX = gsap.getProperty(trackRef.current, 'x') as number
+      gsap.set(trackRef.current, { x: currentX + diff })
+      return
+    }
+
+    // Determine direction on first movement
     const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX
     const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY
 
     const diffX = Math.abs(clientX - dragStartXRef.current)
     const diffY = Math.abs(clientY - dragStartYRef.current)
 
-    // Determine swipe direction on first significant movement
-    if (swipeDirectionRef.current === null && (diffX > 10 || diffY > 10)) {
-      swipeDirectionRef.current = diffX > diffY ? 'horizontal' : 'vertical'
-    }
+    // Need at least 5px movement to determine direction
+    if (diffX < 5 && diffY < 5) return
 
-    // If vertical swipe, allow default scrolling behavior
-    if (swipeDirectionRef.current === 'vertical') {
-      setIsDragging(false)
-      return
-    }
-
-    // Only handle horizontal swipes for carousel
-    if (swipeDirectionRef.current === 'horizontal') {
-      e.preventDefault()
-      const diff = clientX - dragCurrentXRef.current
+    // Determine swipe direction
+    if (diffX > diffY) {
+      // Horizontal swipe - take control
+      swipeDirectionRef.current = 'horizontal'
+      setIsDragging(true)
       dragCurrentXRef.current = clientX
-      const currentX = gsap.getProperty(trackRef.current, 'x') as number
-      gsap.set(trackRef.current, { x: currentX + diff })
+      if (trackRef.current && !('touches' in e)) {
+        trackRef.current.style.cursor = 'grabbing'
+      }
+      e.preventDefault()
+    } else {
+      // Vertical swipe - release control for page scrolling
+      swipeDirectionRef.current = 'vertical'
     }
   }
 
   const handlePointerUp = (e: React.PointerEvent | React.TouchEvent) => {
-    if (!isDragging || !trackRef.current) return
+    // Reset the flag
+    pointerStartedOnCarouselRef.current = false
+
+    if (!isDragging || !trackRef.current) {
+      swipeDirectionRef.current = null
+      return
+    }
 
     setIsDragging(false)
     if (!('touches' in e)) {
@@ -262,14 +284,12 @@ export default function VideoFeatureCarousel() {
           <div
             ref={trackRef}
             className='flex gap-6 lg:gap-6'
-            style={{ cursor: 'grab' }}
+            style={{ cursor: 'grab', touchAction: 'pan-y' }}
             onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}
             onPointerUp={handlePointerUp}
             onPointerLeave={handlePointerUp}
-            onTouchStart={handlePointerDown}
-            onTouchMove={handlePointerMove}
-            onTouchEnd={handlePointerUp}
+            onPointerCancel={handlePointerUp}
           >
             {features.map((feature) => (
               <FeatureCard

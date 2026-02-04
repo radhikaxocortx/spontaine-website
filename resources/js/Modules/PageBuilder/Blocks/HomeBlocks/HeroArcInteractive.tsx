@@ -43,7 +43,7 @@ export default function HeroArcInteractive() {
       {/* HERO WITH VIDEO BACKGROUND */}
       <section
         id='hero'
-        className='relative min-h-screen w-full overflow-hidden'
+        className='relative min-h-screen w-full overflow-x-hidden'
       >
         {/* VIDEO BACKGROUND */}
         <video

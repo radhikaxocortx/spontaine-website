@@ -83,18 +83,13 @@ const StaticHomePage2 = ({
       /* Premium smooth scroll with optimized performance */
       html {
         scroll-behavior: smooth;
-        scroll-padding-top: 80px; /* Account for fixed navbar */
-        -webkit-overflow-scrolling: touch; /* iOS momentum scrolling */
-      }
-
-      /* Enhanced smooth scrolling for all elements */
-      * {
-        scroll-behavior: smooth;
+        scroll-padding-top: 80px;
+        -webkit-overflow-scrolling: touch;
       }
 
       /* Respect user's motion preferences for accessibility */
       @media (prefers-reduced-motion: reduce) {
-        html, * {
+        html {
           scroll-behavior: auto !important;
         }
       }
@@ -132,20 +127,13 @@ const StaticHomePage2 = ({
       /* Smooth page transitions and optimized rendering */
       body {
         overflow-x: hidden !important;
-        will-change: scroll-position;
         -webkit-overflow-scrolling: touch;
-        overscroll-behavior: contain;
+        overscroll-behavior-x: contain;
       }
 
       /* Ensure no elements can cause horizontal scroll */
       * {
         box-sizing: border-box;
-      }
-
-      /* Additional safety for root containers */
-      html, body, #app {
-        max-width: 100vw;
-        overflow-x: hidden !important;
       }
 
       /* Optimize scroll performance */
