@@ -24,7 +24,10 @@ export default function ViewBuilder({ page }: Props) {
   }, [flash])
   return (
     <PageBuilderProvider renderMode='page'>
-      <div className=''>
+      <div
+        className=''
+        id='top'
+      >
         {page.blocks.blocks.map((element, index) => {
           return (
             <Fragment key={element.id?.toString() ?? `block-${index}`}>
