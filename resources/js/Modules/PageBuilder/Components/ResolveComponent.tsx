@@ -10,6 +10,7 @@ import { Block, PageDataDependencies } from '@/Modules/PageBuilder/page_interfac
 import { Language } from '@/Modules/PageBuilder/Pages/PageBuilder'
 import React from 'react'
 import ContactUS from '../Blocks/ContactUS'
+import DPAAccordion, { DPAAccordionBlockData } from '../Blocks/DPAAccordion/DPAAccordion'
 
 import FAQ, { FAQBlockInfo } from '../Blocks/FAQ'
 import FullWidthImageWithTItle, {
@@ -48,6 +49,9 @@ import SectionCTASP, { SectionCTASPBlock } from '../Blocks/SpontaineBlocks/Secti
 import SectionFeatureCarouselSP, {
   FeatureCarouselSPData,
 } from '../Blocks/SpontaineBlocks/SectionFeatureCarouselSP'
+import SectionFullWidthVideoSP, {
+  SectionFullWidthVideoSPBlock,
+} from '../Blocks/SpontaineBlocks/SectionFullWidthVideoSP'
 import SectionHeroImageSP, {
   HeroImageBlock as HeroImageSPBlock,
 } from '../Blocks/SpontaineBlocks/SectionHeroImageSP'
@@ -192,6 +196,15 @@ const ResolveComponent = ({
           language={language}
         />
       )}
+      {blockName === 'Content Section - DPA Accordion' && (
+        <DPAAccordion
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          blockData={block as unknown as DPAAccordionBlockData}
+          language={language}
+          dispatch={dispatch}
+        />
+      )}
 
       {blockName === 'Home - Call To Action' && (
         <SectionCallToAction
@@ -270,6 +283,14 @@ const ResolveComponent = ({
       {blockName === 'Spontaine - Hero Video' && (
         <SectionHeroVideoSP
           blockData={block as unknown as HeroVideoBlock}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+        />
+      )}
+      {blockName === 'Spontaine - Full Width Video' && (
+        <SectionFullWidthVideoSP
+          blockData={block as unknown as SectionFullWidthVideoSPBlock}
           editMode={editMode}
           onFieldEdit={onFieldEdit}
           language={language}

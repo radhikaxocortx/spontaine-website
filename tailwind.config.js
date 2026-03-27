@@ -69,6 +69,14 @@ export default {
 
           'icon-bg': '#676557',
           'icon-text': '#F7F7F7',
+
+          'dpa-card': '#F7F7F7',
+          'dpa-header': '#D1DAF0',
+          'dpa-title': '#34495E',
+          'dpa-accent': '#47A88E',
+          'dpa-summary': '#333333',
+          'dpa-muted': '#666666',
+          'dpa-divider': '#DDDDDD',
         },
         primary: {
           50: '#f1f4ff', //light gray
@@ -236,6 +244,9 @@ export default {
         3: '3px',
         5: '5px',
         10: '10px',
+      },
+      boxShadow: {
+        'spontaine-dpa': '0 4px 15px rgba(0, 0, 0, 0.05)',
       },
       keyframes: {
         'accordion-down': {

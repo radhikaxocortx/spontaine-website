@@ -4,6 +4,7 @@ import { defaultPricePlanBlock } from '@/Modules/PageBuilder/Blocks/PricePlanCar
 import { richTextData } from '@/Modules/PageBuilder/Blocks/RichText/RichTextBlock'
 import { BlockFieldValues } from '@/Modules/PageBuilder/Components/BlockEditor/BlockEditor'
 import { Block, ItemListField, PageBlock } from '@/Modules/PageBuilder/page_interfaces'
+import { dpaAccordionBlock } from '../Blocks/DPAAccordion/DPAAccordion'
 import { faqBlock } from '../Blocks/FAQ'
 import { fullWidthImageWithTItleBlock } from '../Blocks/FullWidthImageWithTItle'
 import { gridWithVideoBlock } from '../Blocks/GridWithVideo'
@@ -24,6 +25,7 @@ import { breadcrumbsData } from '../Blocks/SpontaineBlocks/SectionBreadcrumbs'
 import { sectionCarouselBlock } from '../Blocks/SpontaineBlocks/SectionCarousel'
 import { sectionCTASPBlock } from '../Blocks/SpontaineBlocks/SectionCTASP'
 import { featureCarouselSPBlock } from '../Blocks/SpontaineBlocks/SectionFeatureCarouselSP'
+import { sectionFullWidthVideoSPBlock } from '../Blocks/SpontaineBlocks/SectionFullWidthVideoSP'
 import { heroImageBlock as heroImageSPBlock } from '../Blocks/SpontaineBlocks/SectionHeroImageSP'
 import { heroVideoBlock } from '../Blocks/SpontaineBlocks/SectionHeroVideoSP'
 import { imageCarouselSPBlock } from '../Blocks/SpontaineBlocks/SectionImageCarouselSP'
@@ -121,6 +123,12 @@ const getBlockDefaultData = (blockName: string) => {
       }
     }
 
+    case 'Content Section - DPA Accordion': {
+      return {
+        ...dpaAccordionBlock,
+      }
+    }
+
     case 'Formatted Text': {
       return {
         ...richTextData,
@@ -164,6 +172,11 @@ const getBlockDefaultData = (blockName: string) => {
     case 'Spontaine - Hero Video': {
       return {
         ...heroVideoBlock,
+      }
+    }
+    case 'Spontaine - Full Width Video': {
+      return {
+        ...sectionFullWidthVideoSPBlock,
       }
     }
     case 'Spontaine - Arc': {

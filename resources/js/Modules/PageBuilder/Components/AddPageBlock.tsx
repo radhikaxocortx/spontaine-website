@@ -63,6 +63,11 @@ const pageBlocks = [
     icon: '📞',
   },
   {
+    name: 'Content Section - DPA Accordion',
+    description: 'Nested legal sections with clauses and accordions for policy pages',
+    icon: '📚',
+  },
+  {
     name: 'Content Section - Price Plan',
     description: 'Display pricing plans and packages',
     icon: '💰',
@@ -118,6 +123,11 @@ const pageBlocks = [
     description:
       'Full-screen hero section with video background, customizable overlay, and animated arc',
     icon: '🎬',
+  },
+  {
+    name: 'Spontaine - Full Width Video',
+    description: 'Full-width video section with poster and play action',
+    icon: '📽️',
   },
   {
     name: 'Spontaine - Arc',
