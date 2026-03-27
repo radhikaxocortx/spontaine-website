@@ -23,6 +23,68 @@ Purpose: Enable immediate productive contributions while preserving established 
 - Styling: Tailwind-first. Use px-based utilities; extend design tokens in `tailwind.config.js`. Add custom animation only if aligned with existing keyframes (e.g. `reveal`, `shimmer`).
 - IDs in structured JSON (nav/page blocks) use incremental `lastUUID` patterns—always update `lastUUID` when appending.
 
+## Copilot Project Rules - Spontaine UI System
+
+### Architecture Rules
+
+- CSS is limited to design tokens and base/global styles.
+- Do not add feature-specific CSS files for sections, blocks, or page-level UI.
+- Do not introduce proliferating feature class systems (`sp-*`, `hero-*`, `card-*`, similar naming schemes).
+- Build feature UI as React components, not CSS-driven feature abstractions.
+
+### Styling Rules
+
+- Tailwind-first is mandatory for feature styling.
+- Use Tailwind config tokens and existing design tokens.
+- Do not hardcode raw hex colors in component markup.
+- Avoid inline styles unless there is no practical Tailwind/class alternative.
+- Keep spacing consistent with the existing Tailwind spacing scale.
+
+### Component Rules
+
+- Prefer component composition over class composition.
+- Avoid stacking semantic-style classes to simulate components (example to avoid: `hero-card feature-card large-card`).
+- Extract reusable primitives and shared UI to `resources/js/components/`.
+- Keep PageBuilder block-specific UI inside the PageBuilder module unless broadly reusable.
+
+### Page Builder Rules
+
+- Every block must have:
+  - A typed interface in `page_interfaces.ts` (or related typed module)
+  - Safe default data
+  - Correct `onFieldEdit` usage based on field type and context
+- Persisted block fields must be driven by `blockData` and reducer actions.
+- Do not directly mutate block JSON structures in component code.
+- Do not keep shadow UI state for persisted fields outside reducer-backed block state.
+
+### State & Editing Rules
+
+- Follow PageBuilder reducer action patterns strictly:
+  - `INSERT`
+  - `UPDATE`
+  - `INSERT_INTO_LIST`
+  - `REMOVE_LIST_ITEM`
+- Match top-level vs list-item edit semantics exactly as documented in this file.
+
+### Animation Rules
+
+- Use GSAP only where it adds clear interaction value.
+- Do not mix GSAP transforms with native scroll behavior on the same axis/element.
+- Prioritize smooth, mobile-safe performance over animation density.
+
+### Mobile-First Rules
+
+- Implement responsive behavior by default.
+- Explicitly define mobile behavior for layout, gestures, and interactions.
+- Avoid desktop-first assumptions in block/component structure.
+
+### Explicit Non-Goals
+
+- Do not introduce Technopark V2 typography systems.
+- Do not introduce `.tp-*` style systems.
+- Do not add new CSS layers for feature styling.
+- Do not break existing PageBuilder data shape or reducer flow.
+
 ## Workflows & Commands
 
 - Full stack dev (parallel processes): `composer dev` (runs PHP server, queue worker, log stream, Vite). Frontend only: `npm run dev`. Build: `npm run build` (client + SSR).
@@ -94,6 +156,32 @@ onFieldEdit({
 - Maintain strict types + casts symmetry (PHP model casts ↔ TS interfaces).
 - Keep static home untouched by experimental block logic; prototype inside dynamic builder first.
 - Never silently mutate JSON structures without bumping `lastUUID` where pattern requires.
+
+## Continuous Instruction Updates
+
+- Treat this file as a living contract for architecture and implementation patterns.
+- When introducing a new pattern, update this file in the same change set.
+- When fixing recurring bugs (for example swipe handling, reducer misuse, field-edit edge cases), document the fix pattern under a dedicated "Gotchas / Patterns" subsection.
+- When adding reusable cross-feature UI, document it under "Reusable Components" with purpose, location, and usage notes.
+- When PageBuilder field edit behavior changes, update "PageBuilder Field Edit Actions" immediately.
+- Prefer incremental updates over large rewrites so instruction history remains traceable.
+
+## Anti-Patterns to Avoid
+
+- Feature-specific CSS files or block-specific class taxonomies.
+- Inline style-heavy components when Tailwind utilities can express the same UI.
+- Duplicating UI logic instead of reusing existing shared components.
+- Direct JSON mutation inside PageBuilder components.
+- Breaking multilingual structures (`english`/`malayalam` pairs).
+- Hardcoding routes/URLs where Ziggy route helpers should be used.
+
+## Expected Copilot Behavior
+
+- Generate React component-based solutions first.
+- Prefer Tailwind utilities and existing design tokens.
+- Reuse established patterns from Navbar, CalendarBooking, and PageBuilder blocks before creating new abstractions.
+- Avoid introducing new architecture unless there is a clear, project-backed need.
+- Preserve consistency with existing block contracts, reducer actions, and multilingual data structures.
 
 Provide PR descriptions summarizing domain impact (e.g., "Adds new gallery block: schema, builder UI, renderer"). Ask if uncertain about schema evolution before broad refactors.
 
@@ -172,7 +260,7 @@ Implementation references:
   - When unchecked: enables custom button text (English + Malayalam), external link checkbox
   - Saves to `calendarUrl` when calendar mode; saves to `cta` object when regular link mode
 - **Background image editing:** Use `action: 'INSERT'` with `oldValue: blockData.backgroundImage`
-- **Overlay editor:** Modal with color picker and opacity slider; saves via `Object.assign(blockData, {...})`
+- **Overlay editor:** Modal with color picker and opacity slider; persist changes through reducer-compliant `onFieldEdit` flows (no direct block mutation)
 - **GSAP arc animation:** Optional SVG arc at bottom with morphSVG animation on scroll
 - **CalendarBooking integration:** Renders CalendarBooking component when `calendarUrl` is set
 

@@ -16,6 +16,8 @@ import PageBuilderService from '../hooks/pageBuilderService'
 
 export interface FooterDataInterface {
   image?: BlockImage | null
+  gdprIcon?: BlockImage | null
+  isoIcon?: BlockImage | null
   sectionOne: TextData | null
   sectionTwo: TextData | null
   sectionThree: TextData | null
@@ -31,10 +33,13 @@ export interface FooterDataInterface {
   copyright?: TextData | null
   copyrightLink?: LinkData | null
   compliance?: TextData | null
+  trustCenterLink?: LinkData | null
 }
 
 const defaultFooterData: FooterDataInterface = {
   image: null,
+  gdprIcon: null,
+  isoIcon: null,
   sectionOne: { english: '', malayalam: '' },
   sectionTwo: { english: '', malayalam: '' },
   sectionThree: { english: '', malayalam: '' },
@@ -56,6 +61,14 @@ const defaultFooterData: FooterDataInterface = {
     items: [],
   },
   compliance: { english: '', malayalam: '' },
+  trustCenterLink: {
+    link: null,
+    name: {
+      english: 'Trust Centre.',
+      malayalam: 'Trust Centre.',
+    },
+    external: false,
+  },
 }
 
 interface Properties {

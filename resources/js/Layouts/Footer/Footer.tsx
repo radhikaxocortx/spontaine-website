@@ -21,6 +21,7 @@ interface Properties {
 
 const Footer = ({ editMode, onFieldEdit, language, blockData }: Properties) => {
   const arcRef = useRef(null)
+  const currentYear = new Date().getFullYear()
 
   useEffect(() => {
     const arc = arcRef.current
@@ -51,7 +52,7 @@ const Footer = ({ editMode, onFieldEdit, language, blockData }: Properties) => {
   }, [])
 
   return (
-    <footer className='relative bg-spontaine-dark pt-20 text-white'>
+    <footer className='relative bg-spontaine-dark pt-16 text-white sm:pt-20'>
       {/* TOP ARC - matches SectionAlignedAction bottom arc pattern */}
       <div className='absolute left-0 top-0 w-full -translate-y-[calc(100%-1px)]'>
         <svg
@@ -68,22 +69,98 @@ const Footer = ({ editMode, onFieldEdit, language, blockData }: Properties) => {
       </div>
 
       <AppLayoutPadding>
-        <div className='space-y-2'>
+        <div className='space-y-4 sm:space-y-5'>
           {/* Top Section: Logo + Navigation Columns */}
           <div className='relative w-full'>
-            <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-[300px_1fr]'>
+            <div className='grid grid-cols-1 gap-10 sm:gap-8 lg:grid-cols-[280px_1fr] lg:gap-10'>
               {/* Left: Logo + Company Info */}
-              <div className='space-y-4'>
-                {/* Logo */}
-                <a href='/'>
-                  <div className='h-16 w-40'>
-                    <img
-                      src='/imge/intuon-logo.png'
-                      alt='Intuon Analytics'
-                      className='h-full w-full object-contain'
-                    />
+              <div className='space-y-4 text-left'>
+                <div className='grid grid-cols-2 gap-4'>
+                  {/* Logo */}
+                  <a href='/'>
+                    <div className='h-14 w-36 sm:mx-0 sm:h-16 sm:w-40'>
+                      <img
+                        src='/imge/intuon-logo.png'
+                        alt='Intuon Analytics'
+                        className='h-full w-full object-contain'
+                      />
+                    </div>
+                  </a>
+
+                  {/* Trust badges + trust centre link (mobile/tablet) */}
+                  <div className='lg:hidden'>
+                    <div className='inline-flex flex-col items-center space-y-3'>
+                      <div className='flex items-center gap-3 sm:gap-4'>
+                        {blockData?.gdprIcon?.url != null && (
+                          <img
+                            src={blockData.gdprIcon.url}
+                            alt='GDPR badge'
+                            className='h-[48px] w-[48px] object-contain sm:h-[52px] sm:w-[52px]'
+                          />
+                        )}
+
+                        {editMode && onFieldEdit != null && (
+                          <EditLabel
+                            label='Edit GDPR Icon'
+                            onClick={() =>
+                              onFieldEdit({
+                                action: 'INSERT',
+                                field: 'gdprIcon',
+                                oldValue: blockData?.gdprIcon,
+                                fieldType: 'image',
+                              })
+                            }
+                          />
+                        )}
+
+                        {blockData?.isoIcon?.url != null && (
+                          <img
+                            src={blockData.isoIcon.url}
+                            alt='ISO badge'
+                            className='h-[48px] w-[48px] object-contain sm:h-[52px] sm:w-[52px]'
+                          />
+                        )}
+
+                        {editMode && onFieldEdit != null && (
+                          <EditLabel
+                            label='Edit ISO Icon'
+                            onClick={() =>
+                              onFieldEdit({
+                                action: 'INSERT',
+                                field: 'isoIcon',
+                                oldValue: blockData?.isoIcon,
+                                fieldType: 'image',
+                              })
+                            }
+                          />
+                        )}
+                      </div>
+
+                      <div className='text-center'>
+                        {blockData?.trustCenterLink != null && (
+                          <InertiaLink
+                            className='font-body text-xs leading-relaxed text-spontaine-white-soft transition-colors hover:text-white'
+                            language={language}
+                            link={blockData.trustCenterLink}
+                          />
+                        )}
+                        {editMode && onFieldEdit != null && (
+                          <EditLabel
+                            label='Edit Trust Centre Link'
+                            onClick={() =>
+                              onFieldEdit({
+                                action: 'UPDATE',
+                                field: 'trustCenterLink',
+                                oldValue: blockData?.trustCenterLink,
+                                fieldType: 'link',
+                              })
+                            }
+                          />
+                        )}
+                      </div>
+                    </div>
                   </div>
-                </a>
+                </div>
 
                 {/* Company Address */}
                 <div className='font-body text-xs leading-relaxed text-spontaine-white-soft'>
@@ -101,10 +178,10 @@ const Footer = ({ editMode, onFieldEdit, language, blockData }: Properties) => {
               </div>
 
               {/* Right: Navigation Columns */}
-              <div className='grid grid-cols-1 gap-x-8 justify-self-end sm:grid-cols-4'>
+              <div className='grid w-full grid-cols-2 gap-x-8 gap-y-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:justify-self-end'>
                 {/*Section One - COMPANY*/}
                 <div>
-                  <h3 className='mb-4 font-body text-base font-bold uppercase tracking-wide text-spontaine-accent-bright'>
+                  <h3 className='mb-3 font-body text-[15px] font-bold uppercase tracking-wide text-spontaine-accent-bright sm:mb-4 sm:text-base'>
                     <Localization
                       text={blockData?.sectionOne}
                       language={language}
@@ -122,7 +199,7 @@ const Footer = ({ editMode, onFieldEdit, language, blockData }: Properties) => {
                       />
                     )}
                   </h3>
-                  <ul className=''>
+                  <ul className='space-y-1'>
                     {blockData?.oneLinks?.items?.map((item) => {
                       return (
                         <li key={item.id.toString()}>
@@ -167,7 +244,7 @@ const Footer = ({ editMode, onFieldEdit, language, blockData }: Properties) => {
 
                 {/*Section Two - POLICIES*/}
                 <div>
-                  <h3 className='mb-4 font-body text-base font-bold uppercase tracking-wide text-spontaine-accent-bright'>
+                  <h3 className='mb-3 font-body text-[15px] font-bold uppercase tracking-wide text-spontaine-accent-bright sm:mb-4 sm:text-base'>
                     <Localization
                       text={blockData?.sectionTwo}
                       language={language}
@@ -185,7 +262,7 @@ const Footer = ({ editMode, onFieldEdit, language, blockData }: Properties) => {
                       />
                     )}
                   </h3>
-                  <ul className=''>
+                  <ul className='space-y-1'>
                     {blockData?.twoLinks?.items?.map((item) => {
                       return (
                         <li key={item.id.toString()}>
@@ -230,7 +307,7 @@ const Footer = ({ editMode, onFieldEdit, language, blockData }: Properties) => {
 
                 {/*Section Three - RESOURCES*/}
                 <div>
-                  <h3 className='mb-4 font-body text-base font-bold uppercase tracking-wide text-spontaine-accent-bright'>
+                  <h3 className='mb-3 font-body text-[15px] font-bold uppercase tracking-wide text-spontaine-accent-bright sm:mb-4 sm:text-base'>
                     <Localization
                       text={blockData?.sectionThree}
                       language={language}
@@ -248,7 +325,7 @@ const Footer = ({ editMode, onFieldEdit, language, blockData }: Properties) => {
                       />
                     )}
                   </h3>
-                  <ul className=''>
+                  <ul className='space-y-1'>
                     {blockData?.threeLinks?.items?.map((item) => {
                       return (
                         <li key={item.id.toString()}>
@@ -290,55 +367,92 @@ const Footer = ({ editMode, onFieldEdit, language, blockData }: Properties) => {
                     )}
                   </ul>
                 </div>
+
+                {/* Trust badges + trust centre link */}
+                <div className='hidden space-y-3 text-left lg:block lg:justify-self-end'>
+                  <div className='inline-flex flex-col items-center space-y-3'>
+                    <div className='flex items-center gap-4'>
+                      {blockData?.gdprIcon?.url != null && (
+                        <img
+                          src={blockData.gdprIcon.url}
+                          alt='GDPR badge'
+                          className='h-[48px] w-[48px] object-contain sm:h-[52px] sm:w-[52px]'
+                        />
+                      )}
+
+                      {editMode && onFieldEdit != null && (
+                        <EditLabel
+                          label='Edit GDPR Icon'
+                          onClick={() =>
+                            onFieldEdit({
+                              action: 'INSERT',
+                              field: 'gdprIcon',
+                              oldValue: blockData?.gdprIcon,
+                              fieldType: 'image',
+                            })
+                          }
+                        />
+                      )}
+
+                      {blockData?.isoIcon?.url != null && (
+                        <img
+                          src={blockData.isoIcon.url}
+                          alt='ISO badge'
+                          className='h-[48px] w-[48px] object-contain sm:h-[52px] sm:w-[52px]'
+                        />
+                      )}
+
+                      {editMode && onFieldEdit != null && (
+                        <EditLabel
+                          label='Edit ISO Icon'
+                          onClick={() =>
+                            onFieldEdit({
+                              action: 'INSERT',
+                              field: 'isoIcon',
+                              oldValue: blockData?.isoIcon,
+                              fieldType: 'image',
+                            })
+                          }
+                        />
+                      )}
+                    </div>
+
+                    <div className='text-center'>
+                      {blockData?.trustCenterLink != null && (
+                        <InertiaLink
+                          className='font-body text-xs leading-relaxed text-spontaine-white-soft transition-colors hover:text-white'
+                          language={language}
+                          link={blockData.trustCenterLink}
+                        />
+                      )}
+                      {editMode && onFieldEdit != null && (
+                        <EditLabel
+                          label='Edit Trust Centre Link'
+                          onClick={() =>
+                            onFieldEdit({
+                              action: 'UPDATE',
+                              field: 'trustCenterLink',
+                              oldValue: blockData?.trustCenterLink,
+                              fieldType: 'link',
+                            })
+                          }
+                        />
+                      )}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Bottom Section: Copyright & Compliance */}
-          <div className='space-y-1 pt-8'>
-            {/* Copyright */}
+          <div className='space-y-2 pt-6 sm:pt-8'>
             <div className='text-center font-body text-xs text-spontaine-white-soft'>
-              <Localization
-                text={blockData?.copyright}
-                language={language}
-              />
-              {editMode && onFieldEdit != null && (
-                <EditLabel
-                  label='Edit Copyright'
-                  onClick={() =>
-                    onFieldEdit({
-                      action: 'INSERT',
-                      field: 'copyright',
-                      oldValue: blockData?.copyright,
-                      fieldType: 'text',
-                    })
-                  }
-                />
-              )}
-              {blockData?.copyrightLink != null && (
-                <InertiaLink
-                  className='transition hover:opacity-75'
-                  language={language}
-                  link={blockData?.copyrightLink}
-                />
-              )}
-              {editMode && onFieldEdit != null && (
-                <EditLabel
-                  label='Edit Copyright Link'
-                  onClick={() =>
-                    onFieldEdit({
-                      action: 'UPDATE',
-                      field: 'copyrightLink',
-                      oldValue: blockData?.copyrightLink,
-                      fieldType: 'link',
-                    })
-                  }
-                />
-              )}
+              {`© Copyright ${currentYear}, All Rights Reserved`}
             </div>
 
             {/* Compliance Text */}
-            <div className='mx-auto max-w-2xl pb-2 text-center font-body text-xs leading-relaxed text-spontaine-white-faint'>
+            <div className='mx-auto max-w-[700px] pb-2 text-center font-body text-xs leading-relaxed text-spontaine-white-faint'>
               <Localization
                 text={blockData?.compliance}
                 language={language}
