@@ -38,7 +38,7 @@ class ImageUploadController extends Controller
             return response()->json(['created' => false, 'message' => 'Failed To Upload Image']);
         }
 
-        $fileName = $this->save($request->file, $image->id, 'images');
+        $fileName = $this->saveSecure($request->file, 'images');
 
         if ($fileName == '') {
             DB::rollBack();

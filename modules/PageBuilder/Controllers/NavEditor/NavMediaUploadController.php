@@ -7,7 +7,6 @@ namespace Modules\PageBuilder\Controllers\NavEditor;
 use App\Http\Controllers\Controller;
 use App\Libs\SaveFile;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
 use Modules\PageBuilder\Request\UIEditor\NavMediaUploadRequest;
 
 final class NavMediaUploadController extends Controller
@@ -16,14 +15,11 @@ final class NavMediaUploadController extends Controller
 
     public function __invoke(NavMediaUploadRequest $request): JsonResponse
     {
-        $user = Auth::user(); // reserved if we later audit uploads
-
         $type = $request->input('type');
         $folder = $type === 'image' ? 'nav/images' : 'nav/videos';
 
         $file = $request->file('file');
-        $name = (string) now()->getTimestamp() . '-' . ($user?->id ?? 'guest');
-        $path = $this->save($file, $name, $folder, true);
+        $path = $this->saveSecure($file, $folder, true);
 
         if ($path === '') {
             return response()->json([

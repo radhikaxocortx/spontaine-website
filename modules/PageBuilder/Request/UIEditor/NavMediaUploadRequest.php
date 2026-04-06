@@ -28,9 +28,9 @@ final class NavMediaUploadRequest extends FormRequest
         ];
 
         if (($this->input('type') ?? '') === 'image') {
-            $rules['file'][] = 'mimes:jpeg,png,webp';
+            $rules['file'][] = 'mimetypes:image/jpeg,image/png,image/webp';
         } elseif (($this->input('type') ?? '') === 'video') {
-            $rules['file'][] = 'mimetypes:video/avi,video/mpeg,video/mp4,video/quicktime';
+            $rules['file'][] = 'mimetypes:video/mp4';
         }
 
         return $rules;
