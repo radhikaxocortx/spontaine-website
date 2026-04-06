@@ -32,6 +32,9 @@ const BlogDetailDrawer = ({
   const [previousFocusedElement, setPreviousFocusedElement] = useState<HTMLElement | null>(null)
   const closeButtonRef = useRef<HTMLButtonElement>(null)
   const [showShareMenu, setShowShareMenu] = useState(false)
+  const descriptionRef = useRef<HTMLParagraphElement>(null)
+  const [isExpanded, setIsExpanded] = useState(false)
+  const [canToggleDescription, setCanToggleDescription] = useState(false)
 
   // Handle opening animation
   useEffect(() => {
@@ -177,6 +180,16 @@ const BlogDetailDrawer = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [post?.id, isOpen])
 
+  useEffect(() => {
+    const el = descriptionRef.current
+
+    if (!el) return
+
+    const isOverflowing = el.scrollHeight > el.clientHeight
+
+    setCanToggleDescription(isOverflowing)
+  }, [post?.description])
+
   // Get scrollbar width for proper padding adjustment
   const getScrollbarWidth = () => {
     const outer = document.createElement('div')
@@ -295,6 +308,27 @@ const BlogDetailDrawer = ({
                   >
                     {post.title}
                   </SectionSubheading>
+
+                  {post.description && (
+                    <div className='max-w-xl'>
+                      <p
+                        ref={descriptionRef}
+                        className={`font-body text-base leading-[1.8] text-gray-700 sm:text-lg ${
+                          !isExpanded ? 'line-clamp-3' : ''
+                        }`}
+                      >
+                        {post.description}
+                      </p>
+                      {canToggleDescription && (
+                        <button
+                          onClick={() => setIsExpanded(!isExpanded)}
+                          className='mt-3 font-body text-sm font-medium text-spontaine-accent transition-colors hover:text-spontaine-accent-dark'
+                        >
+                          {isExpanded ? '...less' : '...more'}
+                        </button>
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 {/* Author Section - Top Right */}
@@ -373,21 +407,20 @@ const BlogDetailDrawer = ({
                   <img
                     src={coverImage}
                     alt={post.title}
-                    className='w-full bg-spontaine-light object-cover blur-sm'
+                    className='w-full object-cover opacity-70'
                   />
                   {downloadCaptureUrl && (
                     <div className='absolute inset-0 flex items-center justify-center'>
                       <Button
-                        asChild
                         size='lg'
-                        className='rounded-full border border-white/35 bg-spontaine-highlight px-8 py-6 text-[14px] font-semibold text-white shadow-2xl transition'
+                        className='relative overflow-hidden rounded-full bg-spontaine-accent py-6 text-spontaine-dark shadow-2xl'
                       >
                         <a
                           href={downloadCaptureUrl}
                           target='_blank'
                           rel='noopener noreferrer'
                         >
-                          Download Report
+                          <span className='nav-cta-text'>Download Report</span>
                         </a>
                       </Button>
                     </div>

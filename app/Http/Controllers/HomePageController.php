@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use Modules\PageBuilder\Models\Page;
 
 final class HomePageController extends Controller
 {
-    public function __invoke(): Response
+    public function __invoke(Request $request): Response
     {
         // Get featured posts with videos for the video section
         $featuredVideoPosts = Page::where('published', true)
@@ -33,6 +34,15 @@ final class HomePageController extends Controller
         return Inertia::render('HomePage', [
             'featuredVideoPosts' => $featuredVideoPosts,
             'featuredBlogs' => $featuredBlogs,
+        ])->withViewData([
+            'seo' => [
+                'title' => 'No-Code Data Integration & AI Platform for Enterprise',
+                'description' => "Transform your disconnected systems into an AI-driven command center with Spontaine's no-code data integration platform. Get real-time insights, eliminate data silos, and enable AI adoption across your organization - all in weeks, not quarters.",
+                'image' => rtrim((string) config('app.url'), '/') . '/storage/images/16.png',
+                'url' => $request->fullUrl(),
+                'type' => 'website',
+                'noIndex' => false,
+            ],
         ]);
     }
 }

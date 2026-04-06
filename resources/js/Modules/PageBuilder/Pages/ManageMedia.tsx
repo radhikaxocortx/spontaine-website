@@ -167,6 +167,14 @@ const ManageMedia = ({ media, filters, typeOptions }: ManageMediaProps) => {
   }, [])
 
   const rows = useMemo(() => {
+    const toRelativePublicUrl = (url: string | null): string => {
+      if (url == null || url.trim() === '') {
+        return '-'
+      }
+
+      return url.startsWith('/') ? url : `/${url}`
+    }
+
     return media.data.map((item) => {
       const fileKey = item.file_key || String(item.id)
 
@@ -194,7 +202,7 @@ const ManageMedia = ({ media, filters, typeOptions }: ManageMediaProps) => {
         name: item.name,
         type: typeLabelMap[item.type] || item.type,
         mime: item.mime,
-        url: fileViewUrl,
+        url: toRelativePublicUrl(item.url),
         actions: [
           {
             action: () => {

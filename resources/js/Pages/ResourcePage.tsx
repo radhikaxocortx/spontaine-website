@@ -265,21 +265,21 @@ const ResourcePage = ({ post }: ResourcePageProps) => {
                 <img
                   src={coverImage}
                   alt={post.title}
-                  className='w-full bg-spontaine-light object-cover blur-sm'
+                  className='w-full bg-spontaine-light object-cover'
                 />
                 {downloadLeadCaptureUrl && (
                   <div className='absolute inset-0 flex items-center justify-center'>
                     <Button
                       asChild
                       size='lg'
-                      className='rounded-full border border-white/35 bg-spontaine-highlight px-8 py-6 text-[14px] font-semibold text-white shadow-2xl transition'
+                      className='relative overflow-hidden rounded-full bg-spontaine-accent py-6 text-spontaine-dark shadow-2xl'
                     >
                       <a
                         href={downloadLeadCaptureUrl}
                         target='_blank'
                         rel='noopener noreferrer'
                       >
-                        Download Report
+                        <span className='nav-cta-text'>Download Report</span>
                       </a>
                     </Button>
                   </div>

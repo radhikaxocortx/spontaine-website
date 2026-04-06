@@ -6,10 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Libs\SaveFile;
 use Exception;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use Modules\PageBuilder\Models\Image;
 use Modules\PageBuilder\Models\Page;
+use Modules\PageBuilder\Models\Video;
 use Modules\PageBuilder\Request\PageBuilderFormRequest;
 
 class PagesController extends Controller
@@ -69,24 +73,15 @@ class PagesController extends Controller
             $previewVideoPath = null;
 
             if ($request->previewImage) {
-                $previewImagePath = $this->saveSecure(
-                    $request->previewImage,
-                    'page_previews'
-                );
+                $previewImagePath = $this->savePageImage($request->previewImage, $request->title . ' Preview Image');
             }
 
             if ($request->previewVideo) {
-                $previewVideoPath = $this->saveSecure(
-                    $request->previewVideo,
-                    'page_preview_videos'
-                );
+                $previewVideoPath = $this->savePageVideo($request->previewVideo, $request->title . ' Preview Video');
             }
 
             if ($request->coverImage) {
-                $coverImagePath = $this->saveSecure(
-                    $request->coverImage,
-                    'page_cover_images'
-                );
+                $coverImagePath = $this->savePageImage($request->coverImage, $request->title . ' Cover Image');
             }
 
             $record = Page::create([
@@ -135,24 +130,15 @@ class PagesController extends Controller
             $previewVideoPath = $record->preview_video;
 
             if ($request->previewImage) {
-                $previewImagePath = $this->saveSecure(
-                    $request->previewImage,
-                    'page_previews'
-                );
+                $previewImagePath = $this->savePageImage($request->previewImage, $record->title . ' Preview Image');
             }
 
             if ($request->previewVideo) {
-                $previewVideoPath = $this->saveSecure(
-                    $request->previewVideo,
-                    'page_preview_videos'
-                );
+                $previewVideoPath = $this->savePageVideo($request->previewVideo, $record->title . ' Preview Video');
             }
 
             if ($request->coverImage) {
-                $coverImagePath = $this->saveSecure(
-                    $request->coverImage,
-                    'page_cover_images'
-                );
+                $coverImagePath = $this->savePageImage($request->coverImage, $record->title . ' Cover Image');
             }
 
             $record->update([
@@ -183,5 +169,47 @@ class PagesController extends Controller
         return redirect()
             ->route('pages.index')
             ->with(['message' => 'Page Builder Deleted Successfully']);
+    }
+
+    private function savePageImage(UploadedFile $file, string $name): string
+    {
+        $path = $this->saveSecure($file, 'images');
+
+        if ($path === '') {
+            throw new Exception('Failed to upload image.');
+        }
+
+        $userId = Auth::id();
+
+        Image::create([
+            'name' => $name,
+            'url' => $path,
+            'mime' => $file->getMimeType(),
+            'created_by' => $userId,
+            'updated_by' => $userId,
+        ]);
+
+        return $path;
+    }
+
+    private function savePageVideo(UploadedFile $file, string $name): string
+    {
+        $path = $this->saveSecure($file, 'videos');
+
+        if ($path === '') {
+            throw new Exception('Failed to upload video.');
+        }
+
+        $userId = Auth::id();
+
+        Video::create([
+            'name' => $name,
+            'url' => $path,
+            'mime' => $file->getMimeType(),
+            'created_by' => $userId,
+            'updated_by' => $userId,
+        ]);
+
+        return $path;
     }
 }

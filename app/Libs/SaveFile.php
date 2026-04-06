@@ -35,7 +35,7 @@ trait SaveFile
     public function saveSecure(UploadedFile $file, string $folder, bool $public = true): string
     {
         try {
-            $fileName = $this->generateSecureFileName();
+            $fileName = $this->generateSecureFileName($file);
 
             if (! $public) {
                 $file->storeAs(
@@ -56,8 +56,11 @@ trait SaveFile
         return $public ? '/storage/' . $folder . '/' . $fileName : $fileName;
     }
 
-    private function generateSecureFileName(): string
+    private function generateSecureFileName(UploadedFile $file): string
     {
-        return Str::lower(Str::random(40));
+        $base = Str::lower(Str::uuid()->toString());
+        $extension = strtolower((string) $file->extension());
+
+        return $extension !== '' ? $base . '.' . $extension : $base;
     }
 }

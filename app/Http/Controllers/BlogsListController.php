@@ -13,10 +13,10 @@ final class BlogsListController extends Controller
 {
     public function __invoke(Request $request): Response
     {
-        return $this->renderBlogsList();
+        return $this->renderBlogsList($request);
     }
 
-    public function showBlog(string $slug): Response
+    public function showBlog(Request $request, string $slug): Response
     {
         // Find the blog post by slug
         $post = Page::where('published', true)
@@ -29,12 +29,24 @@ final class BlogsListController extends Controller
             ->firstOrFail();
 
         // Render the dedicated blog page
+        $title = (string) ($post->title ?? config('app.name', 'Spontaine'));
+        $description = (string) ($post->description ?? '');
+
         return Inertia::render('BlogPage', [
             'post' => $post,
+        ])->withViewData([
+            'seo' => [
+                'title' => $title,
+                'description' => $description,
+                'image' => $this->toAbsoluteImage($post->cover_image ?? $post->preview_image),
+                'url' => $request->fullUrl(),
+                'type' => 'article',
+                'noIndex' => false,
+            ],
         ]);
     }
 
-    private function renderBlogsList(?string $selectedBlogSlug = null): Response
+    private function renderBlogsList(Request $request, ?string $selectedBlogSlug = null): Response
     {
         // Get featured posts (Blog, Article, Opinion types that are marked as featured)
         $featuredPosts = Page::where('published', true)
@@ -54,6 +66,30 @@ final class BlogsListController extends Controller
             'featuredPosts' => $featuredPosts,
             'allPosts' => $allPosts,
             'selectedBlogSlug' => $selectedBlogSlug,
+        ])->withViewData([
+            'seo' => [
+                'title' => 'Blogs | Spontaine',
+                'description' => 'Insights, opinions, and updates from the Spontaine team.',
+                'image' => rtrim((string) config('app.url'), '/') . '/storage/images/16.png',
+                'url' => $request->fullUrl(),
+                'type' => 'website',
+                'noIndex' => false,
+            ],
         ]);
+    }
+
+    private function toAbsoluteImage(?string $image): string
+    {
+        $fallback = rtrim((string) config('app.url'), '/') . '/storage/images/16.png';
+
+        if ($image === null || trim($image) === '') {
+            return $fallback;
+        }
+
+        if (str_starts_with($image, 'http://') || str_starts_with($image, 'https://')) {
+            return $image;
+        }
+
+        return rtrim((string) config('app.url'), '/') . '/' . ltrim($image, '/');
     }
 }

@@ -57,7 +57,7 @@ const MetaTags = ({
         content='630'
       />
       <meta
-        name='og:url'
+        property='og:url'
         content={url}
       />
       <meta
@@ -80,7 +80,7 @@ const MetaTags = ({
         content={description}
       />
       <meta
-        property='twitter:url'
+        name='twitter:url'
         content={url}
       />
       <meta

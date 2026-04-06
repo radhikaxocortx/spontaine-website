@@ -16,7 +16,7 @@ final class NavMediaUploadController extends Controller
     public function __invoke(NavMediaUploadRequest $request): JsonResponse
     {
         $type = $request->input('type');
-        $folder = $type === 'image' ? 'nav/images' : 'nav/videos';
+        $folder = $type === 'image' ? 'images' : 'videos';
 
         $file = $request->file('file');
         $path = $this->saveSecure($file, $folder, true);

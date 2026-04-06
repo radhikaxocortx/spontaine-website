@@ -337,8 +337,8 @@ Implementation references:
 - Upload route: `media-upload`
 - Delete route: `manage-media.destroy`
 - View/download route: `manage-media.file`
-  - Uses extensionless key-based path (`type + file_key`)
-  - Uses relative URL output in table (non-absolute route generation)
+  - Uses key-based path (`type + file_key`), not DB id
+  - Uses relative URL output in table (public storage path for copy/link use)
 
 **Implementation Boundaries:**
 
@@ -360,7 +360,7 @@ Implementation references:
 
 - `VIEW` should open inline media response (`Content-Disposition: inline`).
 - `DOWNLOAD` should force attachment response with extension-aware filename.
-- Stored URL may be extensionless for new files; derive download extension from MIME type when needed.
+- New uploads should store with UUID-based filenames and proper file extensions.
 
 **Backward Compatibility:**
 
@@ -385,6 +385,17 @@ Implementation references:
   - Any executable/script-capable content type
 - Validate by server-side MIME detection from file content (not extension only).
 - Apply same whitelist policy to unified media upload and legacy upload endpoints.
+
+### Public Media Storage + Naming (Apr 2026)
+
+- All website-facing uploads are public files and must be stored on the `public` disk.
+- Folder contract is fixed: documents -> `documents`, images -> `images`, videos -> `videos`.
+- Use `SaveFile::saveSecure` for public media uploads; filenames must be UUID-based and non-guessable.
+- Preserve file extension on secure filenames (example: `<uuid>.jpg`, `<uuid>.mp4`, `<uuid>.pdf`).
+- Page metadata uploads (`preview_image`, `cover_image`, `preview_video`) should write into shared `images`/`videos` folders.
+- Nav media uploads should also write into shared `images`/`videos` folders.
+- When page uploads create media files, also create corresponding `Image`/`Video` records so assets appear in Manage Media and picker flows.
+- In Manage Media table mapping, display relative public URLs (`/storage/...`) for copy/paste usage in PageBuilder fields.
 
 ### SectionHeroImageSP
 
@@ -429,6 +440,16 @@ Implementation references:
 
 **Mobile Scroll Fix:** Swipe direction detection + conditional `preventDefault()` ensures vertical page scrolling works while preserving horizontal carousel navigation.
 
+## Server-rendered SEO Metadata (Apr 2026)
+
+- For public pages, set SEO payload via Inertia `withViewData(['seo' => ...])` in controllers.
+- Current coverage includes: `HomePageController`, `ViewBuilderController`, `BlogsListController`, `ResourcesListController`.
+- Keep SEO payload keys consistent: `title`, `description`, `image`, `url`, `type`, `noIndex`.
+- Resolve SEO image to an absolute URL in controllers; use app URL fallback (`/storage/images/16.png`) when missing.
+- Blade root view (`resources/views/app.blade.php`) is the source of truth for bot-visible tags.
+- Render canonical + robots + OG + Twitter tags server-side in Blade from `$seo` defaults.
+- Meta attribute conventions: OG uses `property="og:*"`; Twitter uses `name="twitter:*"`.
+
 ## Resources Experience (Apr 2026)
 
 ### Resources Routes + Slug Handling
@@ -465,6 +486,7 @@ Implementation references:
 
 - Prefer `cover_image` over `preview_image` when rendering detail hero/preview.
 - Resource and blog banners should show read-more toggles only when description actually overflows.
+- `BlogDetailDrawer` description should use overflow-aware `...more`/`...less` toggle behavior (no toggle when content fits).
 - Keep share utilities simple and web-safe (copy link, WhatsApp, LinkedIn).
 
 ## Lead Capture Flow (Apr 2026)

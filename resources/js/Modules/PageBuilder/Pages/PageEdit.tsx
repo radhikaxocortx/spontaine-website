@@ -87,7 +87,7 @@ export default function PageEdit({ page }: Props) {
         type: 'text',
         label: 'Download Report URL (Relative Path, Optional)',
         setValue: setFormValue('download_url'),
-        placeholder: '/media/file/document/your-file-key',
+        // placeholder: '/media/file/document/your-file-key',
       },
       description: {
         type: 'textarea',

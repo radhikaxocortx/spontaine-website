@@ -259,7 +259,7 @@ const LeadCapture = ({ editMode = false, onFieldEdit, blockData, language = 'en'
                     </div>
                   )}
 
-                  <div className='space-y-2 px-10 md:space-y-2 md:text-center lg:space-y-4 lg:text-start'>
+                  <div className='space-y-2 md:space-y-2 md:text-center lg:space-y-4 lg:text-start'>
                     {(
                       blockData?.leftDescription?.items ??
                       leadCaptureBlock.leftDescription?.items ??
