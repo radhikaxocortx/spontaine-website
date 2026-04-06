@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Modules\PageBuilder\Controllers\ImageSearchController;
 use Modules\PageBuilder\Controllers\ImageUploadController;
+use Modules\PageBuilder\Controllers\ManageMediaController;
 use Modules\PageBuilder\Controllers\NavEditor\NavEditorController;
 use Modules\PageBuilder\Controllers\NavEditor\UpdateNavMenuItemsController;
 use Modules\PageBuilder\Controllers\PagesController;
@@ -24,7 +25,20 @@ Route::middleware('auth')->group(function () {
         ->name('video-upload');
     Route::get('video-search', VideoSearchController::class)
         ->name('video-search');
+    Route::get('manage-media', [ManageMediaController::class, 'index'])
+        ->name('manage-media.index');
+    Route::get('manage-media/file/{type}/{key}', [ManageMediaController::class, 'file'])
+        ->where('key', '[A-Za-z0-9._-]+')
+        ->name('manage-media.file');
+    Route::post('media-upload', [ManageMediaController::class, 'upload'])
+        ->name('media-upload');
+    Route::delete('manage-media/{type}/{id}', [ManageMediaController::class, 'destroy'])
+        ->name('manage-media.destroy');
 });
+
+Route::get('media/file/{type}/{key}', [ManageMediaController::class, 'file'])
+    ->where('key', '[A-Za-z0-9._-]+')
+    ->name('media.file.public');
 
 // Nav Editor
 Route::resource('nav-editor', NavEditorController::class);

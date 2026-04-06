@@ -53,6 +53,19 @@ const SidebarMenuItems: SidebarMenuItem[] = [
           </svg>`,
         },
       },
+      {
+        name: 'Manage Media',
+        url: '/manage-media',
+        value: 'manage-media',
+        permission: 'pages.viewAny',
+        image: {
+          svg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 7C4 5.89543 4.89543 5 6 5H18C19.1046 5 20 5.89543 20 7V17C20 18.1046 19.1046 19 18 19H6C4.89543 19 4 18.1046 4 17V7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M8 11H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M8 15H13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>`,
+        },
+      },
     ],
   },
 
