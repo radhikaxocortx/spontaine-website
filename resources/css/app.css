@@ -295,6 +295,7 @@ body {
     --spontaine-white: #ffffff; /* Base white */
     --spontaine-white-soft: #ffffffa6; /* Semi-transparent white (footer) */
     --spontaine-white-faint: #ffffff8f; /* Fainter white (footer compliance) */
+    --spontaine-resources-bg: #f6f8f7; /* Resources page section background */
 
     /* === Support Elements === */
     --spontaine-icon-bg: #676557; /* Icon background */

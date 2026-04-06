@@ -44,7 +44,7 @@ const AppLayout = ({
         document.querySelector('[data-block-type]') || // Page builder blocks have this attribute
         document.querySelector('.min-h-screen > *:first-child > *:first-child') // First child of first child
 
-      console.log('First block found:', firstBlock) // Debug log
+      //   console.log('First block found:', firstBlock) // Debug log
 
       if (firstBlock) {
         // Create custom event dispatcher for navbar visibility

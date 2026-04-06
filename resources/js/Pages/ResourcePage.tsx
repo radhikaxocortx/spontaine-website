@@ -1,4 +1,5 @@
 import BlogContentRenderer from '@/components/BlogContentRenderer'
+import { Button } from '@/components/ui/button'
 import AppLayout from '@/Layouts/AppLayout'
 import AppLayoutPadding from '@/Layouts/AppLayoutPadding'
 import { Page } from '@/Modules/PageBuilder/page_interfaces'
@@ -10,8 +11,7 @@ import { useEffect, useRef, useState } from 'react'
 
 gsap.registerPlugin(ScrollTrigger)
 
-// Banner Component
-const BlogsBanner = ({ post, onShareClick }: { post: Page; onShareClick: () => void }) => {
+const ResourcesBanner = ({ post, onShareClick }: { post: Page; onShareClick: () => void }) => {
   const sectionRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
   const descriptionRef = useRef<HTMLParagraphElement>(null)
@@ -61,18 +61,15 @@ const BlogsBanner = ({ post, onShareClick }: { post: Page; onShareClick: () => v
       className='relative flex w-full flex-col items-center justify-center bg-white pt-16 text-black'
       data-banner-section='true'
     >
-      {/* Content */}
       <div
         ref={contentRef}
         className='relative z-10 flex w-full flex-col items-center justify-center px-6 pb-12 pt-10'
       >
         <div className='mx-auto max-w-3xl text-center'>
-          {/* Title */}
           <h1 className='mb-6 font-heading text-[32px] font-semibold leading-tight text-spontaine-dark sm:text-[40px]'>
             {post.title}
           </h1>
 
-          {/* Author and Date */}
           <div className='mb-4 flex items-center justify-center gap-6 text-base text-spontaine-dark'>
             {post.author && <span className='font-body tracking-wide'>{post.author}</span>}
             {post.created_at && (
@@ -86,18 +83,16 @@ const BlogsBanner = ({ post, onShareClick }: { post: Page; onShareClick: () => v
             )}
           </div>
 
-          {/* Share Button */}
           <div className='mb-6 inline-block'>
             <button
               onClick={onShareClick}
               className='flex h-[50px] w-[50px] items-center justify-center rounded-full bg-spontaine-accent shadow-lg transition-all hover:bg-spontaine-accent-dark hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-spontaine-accent focus:ring-offset-2'
-              aria-label='Share post'
+              aria-label='Share resource'
             >
               <Share2 className='h-6 w-6 text-white' />
             </button>
           </div>
 
-          {/* Description */}
           {post.description && (
             <div className='mx-auto max-w-2xl'>
               <p
@@ -124,7 +119,6 @@ const BlogsBanner = ({ post, onShareClick }: { post: Page; onShareClick: () => v
   )
 }
 
-// Breadcrumb Component
 const Breadcrumbs = ({ postTitle }: { postTitle: string }) => (
   <AppLayoutPadding>
     <nav className='flex items-center space-x-1 py-4 text-sm text-gray-600'>
@@ -136,10 +130,10 @@ const Breadcrumbs = ({ postTitle }: { postTitle: string }) => (
       </Link>
       <span className='mx-2 text-gray-400'>/</span>
       <Link
-        href='/blogs-list'
+        href='/resources'
         className='font-space-grotesk text-xs hover:text-gray-900'
       >
-        Blogs
+        Resources
       </Link>
       <span className='mx-2 text-gray-400'>/</span>
       <span className='font-space-grotesk text-xs text-gray-900'>{postTitle}</span>
@@ -147,23 +141,38 @@ const Breadcrumbs = ({ postTitle }: { postTitle: string }) => (
   </AppLayoutPadding>
 )
 
-interface BlogPageProps {
+interface ResourcePageProps {
   post: Page
 }
 
-const BlogPage = ({ post }: BlogPageProps) => {
+const ResourcePage = ({ post }: ResourcePageProps) => {
   const [showShareMenu, setShowShareMenu] = useState(false)
   const coverImage = post.cover_image || post.preview_image
 
-  // Scroll to top when component mounts
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
 
   const currentUrl =
     typeof window !== 'undefined'
-      ? `${window.location.origin}/blog/${post.url?.replace(/^\//, '')}`
-      : `/blog/${post.url?.replace(/^\//, '')}`
+      ? `${window.location.origin}/resource/${post.url?.replace(/^\//, '')}`
+      : `/resource/${post.url?.replace(/^\//, '')}`
+
+  const normalizedDownloadTarget =
+    post.download_url == null || post.download_url.trim() === ''
+      ? null
+      : (() => {
+          const normalized = post.download_url.startsWith('/')
+            ? post.download_url
+            : `/${post.download_url}`
+
+          return normalized.replace(/^\/manage-media\/file\//, '/media/file/')
+        })()
+
+  const downloadLeadCaptureUrl =
+    normalizedDownloadTarget == null
+      ? null
+      : `/resource-download?download=${encodeURIComponent(normalizedDownloadTarget)}&resource=${encodeURIComponent(post.title)}`
 
   const shareUrls = {
     whatsapp: `https://wa.me/?text=${encodeURIComponent(`${post.title} - ${currentUrl}`)}`,
@@ -181,9 +190,7 @@ const BlogPage = ({ post }: BlogPageProps) => {
     try {
       await navigator.clipboard.writeText(currentUrl)
       setShowShareMenu(false)
-      // You could add a toast notification here
     } catch (err) {
-      // Fallback for older browsers
       const textArea = document.createElement('textarea')
       textArea.value = currentUrl
       document.body.appendChild(textArea)
@@ -196,7 +203,7 @@ const BlogPage = ({ post }: BlogPageProps) => {
 
   return (
     <AppLayout
-      title={`${post.title} | Spontaine Blog`}
+      title={`${post.title} | Spontaine Resource`}
       description={post.description || ''}
       image={
         coverImage
@@ -205,20 +212,17 @@ const BlogPage = ({ post }: BlogPageProps) => {
       }
       url={
         typeof window !== 'undefined'
-          ? `${window.location.origin}/blog/${post.url?.replace(/^\//, '')}`
-          : `https://spontaine.com/blog/${post.url?.replace(/^\//, '')}`
+          ? `${window.location.origin}/resource/${post.url?.replace(/^\//, '')}`
+          : `https://spontaine.com/resource/${post.url?.replace(/^\//, '')}`
       }
     >
-      {/* Banner Section */}
-      <BlogsBanner
+      <ResourcesBanner
         post={post}
         onShareClick={() => setShowShareMenu(!showShareMenu)}
       />
 
-      {/* Breadcrumbs */}
       <Breadcrumbs postTitle={post.title} />
 
-      {/* Share Menu Popup - Position fixed so it can appear over banner */}
       {showShareMenu && (
         <div className='fixed left-1/2 top-32 z-50 w-44 -translate-x-1/2 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5'>
           <div className='py-1'>
@@ -255,20 +259,35 @@ const BlogPage = ({ post }: BlogPageProps) => {
 
       <div className='min-h-screen bg-gray-50 py-6'>
         <AppLayoutPadding>
-          {/* Featured Image */}
           {coverImage && (
             <div className='mb-6 py-4'>
-              <div className='overflow-hidden rounded-2xl'>
+              <div className='relative overflow-hidden rounded-2xl'>
                 <img
                   src={coverImage}
                   alt={post.title}
-                  className='w-full object-cover'
+                  className='w-full bg-spontaine-light object-cover blur-sm'
                 />
+                {downloadLeadCaptureUrl && (
+                  <div className='absolute inset-0 flex items-center justify-center'>
+                    <Button
+                      asChild
+                      size='lg'
+                      className='rounded-full border border-white/35 bg-spontaine-highlight px-8 py-6 text-[14px] font-semibold text-white shadow-2xl transition'
+                    >
+                      <a
+                        href={downloadLeadCaptureUrl}
+                        target='_blank'
+                        rel='noopener noreferrer'
+                      >
+                        Download Report
+                      </a>
+                    </Button>
+                  </div>
+                )}
               </div>
             </div>
           )}
 
-          {/* Content Section */}
           <div className='prose prose-lg mx-auto max-w-none'>
             <BlogContentRenderer post={post} />
           </div>
@@ -279,4 +298,4 @@ const BlogPage = ({ post }: BlogPageProps) => {
   )
 }
 
-export default BlogPage
+export default ResourcePage

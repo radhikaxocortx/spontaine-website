@@ -1,4 +1,5 @@
 import { Page } from '@/Modules/PageBuilder/page_interfaces'
+import { Button } from '@/components/ui/button'
 import SectionSubheading from '@/typography/SectionSubheading'
 import { gsap } from 'gsap'
 import { Copy, Linkedin, Share2, X } from 'lucide-react'
@@ -11,6 +12,8 @@ interface BlogDetailDrawerProps {
   onClose: () => void
   relatedPosts?: Page[]
   onPostClick?: (post: Page) => void
+  sharePathBase?: string
+  downloadCaptureBasePath?: string
 }
 
 const BlogDetailDrawer = ({
@@ -19,6 +22,8 @@ const BlogDetailDrawer = ({
   onClose,
   relatedPosts = [],
   onPostClick,
+  sharePathBase = '/blog',
+  downloadCaptureBasePath,
 }: BlogDetailDrawerProps) => {
   const drawerRef = useRef<HTMLDivElement>(null)
   const overlayRef = useRef<HTMLDivElement>(null)
@@ -123,6 +128,7 @@ const BlogDetailDrawer = ({
       document.addEventListener('keydown', handleEscape)
       return () => document.removeEventListener('keydown', handleEscape)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen])
 
   // Focus trap
@@ -168,6 +174,7 @@ const BlogDetailDrawer = ({
       { opacity: 0, y: 20 },
       { opacity: 1, y: 0, duration: 0.3, stagger: 0.05, ease: 'power2.out' }
     )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [post?.id, isOpen])
 
   // Get scrollbar width for proper padding adjustment
@@ -187,10 +194,10 @@ const BlogDetailDrawer = ({
   }
 
   // Share functionality
+  const normalizedShareBase = sharePathBase.startsWith('/') ? sharePathBase : `/${sharePathBase}`
+  const slug = post?.url?.replace(/^\//, '') || ''
   const currentUrl =
-    typeof window !== 'undefined'
-      ? `${window.location.origin}/blog/${post?.url?.replace(/^\//, '') || ''}`
-      : ''
+    typeof window !== 'undefined' ? `${window.location.origin}${normalizedShareBase}/${slug}` : ''
 
   const shareUrls = {
     whatsapp: `https://wa.me/?text=${encodeURIComponent(`${post?.title} - ${currentUrl}`)}`,
@@ -220,6 +227,22 @@ const BlogDetailDrawer = ({
   }
 
   if (!isOpen || !post) return null
+
+  const coverImage = post.cover_image || post.preview_image
+  const downloadTarget =
+    post.download_url == null || post.download_url.trim() === ''
+      ? null
+      : (() => {
+          const normalized = post.download_url.startsWith('/')
+            ? post.download_url
+            : `/${post.download_url}`
+
+          return normalized.replace(/^\/manage-media\/file\//, '/media/file/')
+        })()
+  const downloadCaptureUrl =
+    downloadCaptureBasePath == null || downloadTarget == null
+      ? null
+      : `${downloadCaptureBasePath}?download=${encodeURIComponent(downloadTarget)}&resource=${encodeURIComponent(post.title)}`
 
   return (
     <div
@@ -344,14 +367,31 @@ const BlogDetailDrawer = ({
             </div>
 
             {/* Featured Image */}
-            {post.preview_image && (
+            {coverImage && (
               <div className='px-2 pb-2 md:px-12 md:pb-6'>
-                <div className='overflow-hidden rounded-2xl'>
+                <div className='relative overflow-hidden rounded-2xl'>
                   <img
-                    src={post.preview_image}
+                    src={coverImage}
                     alt={post.title}
-                    className='w-full object-cover'
+                    className='w-full bg-spontaine-light object-cover blur-sm'
                   />
+                  {downloadCaptureUrl && (
+                    <div className='absolute inset-0 flex items-center justify-center'>
+                      <Button
+                        asChild
+                        size='lg'
+                        className='rounded-full border border-white/35 bg-spontaine-highlight px-8 py-6 text-[14px] font-semibold text-white shadow-2xl transition'
+                      >
+                        <a
+                          href={downloadCaptureUrl}
+                          target='_blank'
+                          rel='noopener noreferrer'
+                        >
+                          Download Report
+                        </a>
+                      </Button>
+                    </div>
+                  )}
                 </div>
               </div>
             )}

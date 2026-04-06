@@ -13,7 +13,9 @@ use App\Http\Controllers\EntityTemplate\EntityTemplateController;
 use App\Http\Controllers\EntityTemplate\EntityTemplateItemController;
 use App\Http\Controllers\EntityTemplate\workflowAPIController;
 use App\Http\Controllers\HomePageController;
+use App\Http\Controllers\LeadsCaptureController;
 use App\Http\Controllers\BlogsListController;
+use App\Http\Controllers\ResourcesListController;
 use App\Http\Controllers\PricePlan\PricePlanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Promotion\CouponManagementController;
@@ -37,6 +39,9 @@ use Modules\PageBuilder\Models\Page;
 Route::get('/', HomePageController::class)->name('home');
 Route::get('/blogs-list', BlogsListController::class)->name('blogs-list');
 Route::get('/blog/{slug}', [BlogsListController::class, 'showBlog'])->name('blog.show');
+Route::get('/resources', ResourcesListController::class)->name('resources.list');
+Route::get('/resources/{slug}', [ResourcesListController::class, 'showResource'])->name('resources.show');
+Route::get('/resource/{slug}', [ResourcesListController::class, 'showResource'])->name('resource.show');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -200,6 +205,7 @@ Route::post('nav/media-upload', NavMediaUploadController::class)
 Route::resource('footer-editor', UIBuilderFooterController::class);
 
 Route::post('send-contact-mail', [ContactController::class, 'sendMail']);
+Route::post('send-lead-capture-mail', [LeadsCaptureController::class, 'sendMail']);
 
 // file-download
 Route::get('file-download', FileDownloadController::class)

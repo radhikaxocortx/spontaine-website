@@ -77,6 +77,7 @@ export default {
           'dpa-summary': '#333333',
           'dpa-muted': '#666666',
           'dpa-divider': '#DDDDDD',
+          'resources-bg': 'var(--spontaine-resources-bg)',
         },
         primary: {
           50: '#f1f4ff', //light gray
