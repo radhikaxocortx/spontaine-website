@@ -1,6 +1,7 @@
 import FormBuilder, { FormItem } from '@/FormBuilder/FormBuilder'
 import useCustomForm from '@/hooks/useCustomForm'
 import useInertiaPost from '@/hooks/useInertiaPost'
+import { PAGE_TYPE_OPTIONS } from '@/Modules/PageBuilder/constants/pageTypes'
 import useNameUrl from '@/Modules/PageBuilder/hooks/UseNameUrl'
 import { FormEvent, useCallback, useEffect, useMemo } from 'react'
 
@@ -20,7 +21,9 @@ export default function PageEdit({ page }: Props) {
     featured: page.featured || false,
     type: page.type,
     preview_image: null,
+    cover_image: null,
     preview_video: null,
+    download_url: page.download_url || '',
     author: page.author || '',
   })
   const Url = useNameUrl(formData.title)
@@ -60,12 +63,7 @@ export default function PageEdit({ page }: Props) {
         type: 'select',
         label: 'Type',
         setValue: setFormValue('type'),
-        list: [
-          { value: 'Page', label: 'Page' },
-          { value: 'Blog', label: 'Blog' },
-          { value: 'Article', label: 'Article' },
-          { value: 'Opinion', label: 'Opinion' },
-        ],
+        list: PAGE_TYPE_OPTIONS,
         dataKey: 'value',
         displayKey: 'label',
       },
@@ -74,11 +72,22 @@ export default function PageEdit({ page }: Props) {
         label: 'Preview Image',
         setValue: setFormValue('preview_image'),
       },
+      cover_image: {
+        type: 'file',
+        label: 'Cover Image (Optional)',
+        setValue: setFormValue('cover_image'),
+      },
       preview_video: {
         type: 'file',
         label: 'Preview Video (Optional)',
         setValue: setFormValue('preview_video'),
         accept: 'video/*',
+      },
+      download_url: {
+        type: 'text',
+        label: 'Download Report URL (Relative Path, Optional)',
+        setValue: setFormValue('download_url'),
+        placeholder: '/media/file/document/your-file-key',
       },
       description: {
         type: 'textarea',

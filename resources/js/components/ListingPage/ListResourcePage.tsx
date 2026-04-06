@@ -41,7 +41,7 @@ interface Props<
   formData: Q
   formStyles?: string
   formItems: Record<P, FormItem<Q[P], R, S, L>>
-  paginator?: Paginator<{}>
+  paginator?: Paginator<object>
   title?: string
   subheading?: string
   searchUrl?: string
@@ -133,13 +133,6 @@ export default function ListResourcePage<
   }, [addUrl])
 
   const cardRef = useRef<HTMLDivElement>(null)
-
-  const handleCardRef = useCallback(() => {
-    if (cardRef.current == null) {
-      return
-    }
-    cardRef.current.scrollIntoView({ behavior: 'smooth' })
-  }, [])
 
   return (
     <div>

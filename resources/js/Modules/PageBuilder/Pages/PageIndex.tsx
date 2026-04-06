@@ -1,5 +1,6 @@
 import DeleteModal from '@/components/CustomUI/Modal/DeleteModal'
-import ListResourcePage, { ListItemKeys } from '@/components/ListingPage/ListResourcePage'
+import { ListItemKeys } from '@/components/ListingPage/ListResourcePage'
+import ListResourceTablePage from '@/components/ListingPage/ListResourceTablePage'
 import { FormItem } from '@/FormBuilder/FormBuilder'
 import useCustomForm from '@/hooks/useCustomForm'
 import { Page } from '@/Modules/PageBuilder/page_interfaces'
@@ -8,15 +9,59 @@ import { useEffect, useMemo, useState } from 'react'
 
 interface Props {
   pages: Page[]
+  filters?: {
+    search?: string
+    type?: string
+    published?: string
+    featured?: string
+  }
 }
 
-export default function PageIndex({ pages }: Props) {
+interface PageListItem {
+  id: number
+  title: string
+  page_title: string
+  type: string
+  description: string
+  published: string
+  featured: string
+  actions: {
+    action: () => void
+    title: string
+    boxStyles?: string
+    textStyles?: string
+  }[]
+}
+
+export default function PageIndex({ pages, filters }: Props) {
   const [selectedItem, setSelectedItem] = useState<Page | null>(null)
   const [showUpdateModal, setShowUpdateModal] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const { formData, setFormValue } = useCustomForm({
-    search: '',
+    search: filters?.search ?? '',
+    type: filters?.type ?? '',
+    published: filters?.published ?? '',
+    featured: filters?.featured ?? '',
   })
+
+  const pageTypeOptions = useMemo(() => {
+    return [
+      { id: 'Page', label: 'Page' },
+      { id: 'Blog', label: 'Blog' },
+      { id: 'Article', label: 'Article' },
+      { id: 'Opinion', label: 'Opinion' },
+      { id: 'Whitepapers', label: 'Whitepapers' },
+      { id: 'Use Cases', label: 'Use Cases' },
+      { id: 'Case Studies', label: 'Case Studies' },
+    ]
+  }, [])
+
+  const booleanOptions = useMemo(() => {
+    return [
+      { id: '1', label: 'Yes' },
+      { id: '0', label: 'No' },
+    ]
+  }, [])
 
   const formItems = useMemo(<
     T,
@@ -32,8 +77,38 @@ export default function PageIndex({ pages }: Props) {
         setValue: setFormValue('search'),
         placeholder: 'Search by Page Title',
       },
+      type: {
+        label: 'Type',
+        type: 'select',
+        setValue: setFormValue('type'),
+        list: pageTypeOptions,
+        displayKey: 'label',
+        dataKey: 'id',
+        showAllOption: true,
+        allOptionText: 'All Types',
+      },
+      published: {
+        label: 'Published',
+        type: 'select',
+        setValue: setFormValue('published'),
+        list: booleanOptions,
+        displayKey: 'label',
+        dataKey: 'id',
+        showAllOption: true,
+        allOptionText: 'All',
+      },
+      featured: {
+        label: 'Featured',
+        type: 'select',
+        setValue: setFormValue('featured'),
+        list: booleanOptions,
+        displayKey: 'label',
+        dataKey: 'id',
+        showAllOption: true,
+        allOptionText: 'All',
+      },
     } as Record<U, FormItem<T[U], K, G, L>>
-  }, [setFormValue])
+  }, [setFormValue, pageTypeOptions, booleanOptions])
 
   const data = useMemo(() => {
     return pages.map((page) => {
@@ -93,12 +168,7 @@ export default function PageIndex({ pages }: Props) {
         label: 'Featured',
         isShownInCard: true,
       },
-      {
-        key: 'description',
-        label: 'Description',
-        isShownInCard: true,
-      },
-    ] as ListItemKeys<Partial<Page>>[]
+    ] as ListItemKeys<PageListItem>[]
   }, [])
 
   useEffect(() => {
@@ -108,7 +178,7 @@ export default function PageIndex({ pages }: Props) {
   }, [showUpdateModal, selectedItem])
 
   return (
-    <ListResourcePage
+    <ListResourceTablePage
       rows={data}
       keys={keys}
       primaryKey={'id'}
@@ -129,6 +199,6 @@ export default function PageIndex({ pages }: Props) {
           </DeleteModal>
         )}
       </div>
-    </ListResourcePage>
+    </ListResourceTablePage>
   )
 }

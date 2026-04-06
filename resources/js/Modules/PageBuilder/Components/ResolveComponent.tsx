@@ -11,6 +11,7 @@ import { Language } from '@/Modules/PageBuilder/Pages/PageBuilder'
 import React from 'react'
 import ContactUS from '../Blocks/ContactUS'
 import DPAAccordion, { DPAAccordionBlockData } from '../Blocks/DPAAccordion/DPAAccordion'
+import LeadCapture, { LeadCaptureBlockInterface } from '../Blocks/LeadCapture'
 
 import FAQ, { FAQBlockInfo } from '../Blocks/FAQ'
 import FullWidthImageWithTItle, {
@@ -193,6 +194,14 @@ const ResolveComponent = ({
           editMode={editMode}
           onFieldEdit={onFieldEdit}
           blockData={block as unknown as RichTextBlockData}
+          language={language}
+        />
+      )}
+      {blockName === 'Content Section - Lead Capture' && (
+        <LeadCapture
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          blockData={block as unknown as LeadCaptureBlockInterface}
           language={language}
         />
       )}

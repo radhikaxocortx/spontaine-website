@@ -1,4 +1,5 @@
 import { Model } from '@/components/Interface/data_interface'
+import { PageType } from '@/Modules/PageBuilder/constants/pageTypes'
 import { FooterDataInterface } from '@/Modules/PageBuilder/FooterEditor/FooterEditor'
 
 export const loremIpsum = 'lorem ipsum'
@@ -20,9 +21,11 @@ export interface Page extends Model {
   url: string
   published: boolean
   featured: boolean
-  type: 'Page' | 'Blog' | 'Article' | 'Opinion'
+  type: PageType
   preview_image: string
+  cover_image?: string
   preview_video?: string
+  download_url?: string | null
   author?: string
   blocks: PageBlock
 }

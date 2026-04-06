@@ -9,6 +9,7 @@ import { faqBlock } from '../Blocks/FAQ'
 import { fullWidthImageWithTItleBlock } from '../Blocks/FullWidthImageWithTItle'
 import { gridWithVideoBlock } from '../Blocks/GridWithVideo'
 import { imageCardsBlock } from '../Blocks/ImageCards'
+import { leadCaptureBlock } from '../Blocks/LeadCapture'
 import { bannerBlock } from '../Blocks/SectionBanner'
 import { textBlock } from '../Blocks/SectionCallToAction'
 import { heroImageBlock } from '../Blocks/SectionHero'
@@ -126,6 +127,12 @@ const getBlockDefaultData = (blockName: string) => {
     case 'Content Section - DPA Accordion': {
       return {
         ...dpaAccordionBlock,
+      }
+    }
+
+    case 'Content Section - Lead Capture': {
+      return {
+        ...leadCaptureBlock,
       }
     }
 

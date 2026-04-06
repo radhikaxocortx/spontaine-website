@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Libs\SaveFile;
 use Exception;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use Modules\PageBuilder\Models\Page;
@@ -15,12 +16,42 @@ class PagesController extends Controller
 {
     use SaveFile;
 
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $pages = Page::all();
+        $search = trim((string) $request->query('search', ''));
+        $type = trim((string) $request->query('type', ''));
+        $published = $request->query('published');
+        $featured = $request->query('featured');
+
+        $pages = Page::query()
+            ->when($search !== '', function ($query) use ($search) {
+                $query->where(function ($subQuery) use ($search) {
+                    $subQuery
+                        ->where('title', 'like', '%' . $search . '%')
+                        ->orWhere('page_title', 'like', '%' . $search . '%')
+                        ->orWhere('description', 'like', '%' . $search . '%');
+                });
+            })
+            ->when($type !== '', function ($query) use ($type) {
+                $query->where('type', $type);
+            })
+            ->when($published !== null && $published !== '', function ($query) use ($published) {
+                $query->where('published', filter_var($published, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? (bool) $published);
+            })
+            ->when($featured !== null && $featured !== '', function ($query) use ($featured) {
+                $query->where('featured', filter_var($featured, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? (bool) $featured);
+            })
+            ->latest()
+            ->get();
 
         return Inertia::render('PageBuilder/PageBuilderIndex', [
             'pages' => $pages,
+            'filters' => [
+                'search' => $search,
+                'type' => $type,
+                'published' => $published !== null ? (string) $published : '',
+                'featured' => $featured !== null ? (string) $featured : '',
+            ],
         ]);
     }
 
@@ -34,28 +65,36 @@ class PagesController extends Controller
         try {
 
             $previewImagePath = null;
+            $coverImagePath = null;
             $previewVideoPath = null;
 
             if ($request->previewImage) {
-                $previewImagePath = $this->save(
+                $previewImagePath = $this->saveSecure(
                     $request->previewImage,
-                    time(),
                     'page_previews'
                 );
             }
 
             if ($request->previewVideo) {
-                $previewVideoPath = $this->save(
+                $previewVideoPath = $this->saveSecure(
                     $request->previewVideo,
-                    time(),
                     'page_preview_videos'
+                );
+            }
+
+            if ($request->coverImage) {
+                $coverImagePath = $this->saveSecure(
+                    $request->coverImage,
+                    'page_cover_images'
                 );
             }
 
             $record = Page::create([
                 ...$request->all(),
                 'preview_image' => $previewImagePath,
+                'cover_image' => $coverImagePath,
                 'preview_video' => $previewVideoPath,
+                'download_url' => $request->downloadUrl,
                 'blocks' => [
                     'lastUUID' => 1,
                     'blocks' => [],
@@ -92,28 +131,36 @@ class PagesController extends Controller
             $record = Page::findOrFail($id);
 
             $previewImagePath = $record->preview_image;
+            $coverImagePath = $record->cover_image;
             $previewVideoPath = $record->preview_video;
 
             if ($request->previewImage) {
-                $previewImagePath = $this->save(
+                $previewImagePath = $this->saveSecure(
                     $request->previewImage,
-                    time(),
                     'page_previews'
                 );
             }
 
             if ($request->previewVideo) {
-                $previewVideoPath = $this->save(
+                $previewVideoPath = $this->saveSecure(
                     $request->previewVideo,
-                    time(),
                     'page_preview_videos'
+                );
+            }
+
+            if ($request->coverImage) {
+                $coverImagePath = $this->saveSecure(
+                    $request->coverImage,
+                    'page_cover_images'
                 );
             }
 
             $record->update([
                 ...$request->all(),
                 'preview_image' => $previewImagePath,
+                'cover_image' => $coverImagePath,
                 'preview_video' => $previewVideoPath,
+                'download_url' => $request->downloadUrl,
             ]);
         } catch (Exception $e) {
             return redirect()->back()->with(['error' => $e->getMessage()]);

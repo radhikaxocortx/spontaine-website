@@ -31,6 +31,18 @@ export interface BlogsListProps {
   selectedBlogSlug?: string
 }
 
+export interface ResourcesListProps {
+  featuredPosts: Page[]
+  allPosts: {
+    data: Page[]
+    current_page: number
+    last_page: number
+    per_page: number
+    total: number
+  }
+  selectedResourceSlug?: string
+}
+
 export interface BlogCardProps {
   post: Page
   stacked?: boolean

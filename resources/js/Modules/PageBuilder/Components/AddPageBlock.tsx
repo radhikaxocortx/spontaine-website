@@ -63,6 +63,11 @@ const pageBlocks = [
     icon: '📞',
   },
   {
+    name: 'Content Section - Lead Capture',
+    description: 'Lead capture modal-style section with configurable download CTA',
+    icon: '📥',
+  },
+  {
     name: 'Content Section - DPA Accordion',
     description: 'Nested legal sections with clauses and accordions for policy pages',
     icon: '📚',
