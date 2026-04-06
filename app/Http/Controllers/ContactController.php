@@ -15,12 +15,10 @@ class ContactController extends Controller
 {
     public function sendMail(Request $request, RateLimitingService $rateLimitingService): RedirectResponse
     {
-
-
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
-            'phone' => 'required|string|max:255',
+            'phone' => 'nullable|string|max:255',
             'message' => 'required|string|max:1000',
             'privacy_policy' => 'required|boolean',
             'receiver_mail' => 'nullable|string|email|max:255',
@@ -32,6 +30,9 @@ class ContactController extends Controller
             'support' => 'nullable|boolean',
             'other' => 'nullable|boolean',
         ]);
+
+        $phone = $request->string('phone')->trim()->value();
+        $phone = $phone !== '' ? $phone : 'N/A';
 
 
 
@@ -49,7 +50,7 @@ class ContactController extends Controller
         // mail content
         $mailContent = "Name: $request->name <br />"
             . "Email: $request->email <br />"
-            . "Phone: $request->phone <br />"
+            . "Phone: $phone <br />"
             . "Selected Enquiries: $enquiryTypesString <br />"
             . 'Privacy Policy Accepted: ' . ($request->privacy_policy ? 'Yes' : 'No') . '<br /><br />'
             . "Message:<br /> $request->message";
@@ -60,7 +61,21 @@ class ContactController extends Controller
         if ($rateLimitingService->attemptsRemaining($rateLimitKey) > 0) {
             $rateLimitingService->incrementAttempts($rateLimitKey);
             try {
-                ContactMessage::create($request->all());
+                ContactMessage::create([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'phone' => $phone,
+                    'message' => $request->message,
+                    'privacy_policy' => $request->privacy_policy,
+                    'receiver_mail' => $request->receiver_mail,
+                    'subject' => $request->subject,
+                    'general_enquiries' => $request->general_enquiries,
+                    'partner_enquiries' => $request->partner_enquiries,
+                    'investor_enquiries' => $request->investor_enquiries,
+                    'career_enquiries' => $request->career_enquiries,
+                    'support' => $request->support,
+                    'other' => $request->other,
+                ]);
             } catch (Exception $exception) {
                 Log::info('Contact Message Creation Failed: ' . $exception->getMessage());
             }
