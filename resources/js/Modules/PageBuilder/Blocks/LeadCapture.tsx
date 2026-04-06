@@ -1,0 +1,507 @@
+import FullSpinnerWrapper from '@/components/CustomUI/FullSpinnerWrapper'
+import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
+import CountrySelect from '@/components/ui/country-select'
+import { Input } from '@/components/ui/input'
+import { Language } from '@/components/ui/ui_interfaces'
+import AppLayoutPadding from '@/Layouts/AppLayoutPadding'
+import SectionBody from '@/typography/SectionBody'
+import SectionDescription from '@/typography/SectionDescription'
+import SectionSubheading from '@/typography/SectionSubheading'
+import React from 'react'
+import useCustomForm from '../../../hooks/useCustomForm'
+import useInertiaPost from '../../../hooks/useInertiaPost'
+import AddLabel from '../Components/AddLabel'
+import { BlocKFieldInfo } from '../Components/BlockEditor/BlockEditor'
+import EditLabel from '../Components/EditLabel'
+import Localization from '../Components/Localization'
+import {
+  BlockConfiguration,
+  BlockImage,
+  ItemListField,
+  LinkData,
+  TextData,
+} from '../page_interfaces'
+
+interface Properties {
+  editMode?: boolean
+  onFieldEdit?: (field: BlocKFieldInfo) => void
+  blockData?: LeadCaptureBlockInterface
+  language?: Language
+}
+
+export interface LeadCaptureBlockInterface extends BlockConfiguration {
+  backgroundImage?: BlockImage
+  modalBackgroundImage?: BlockImage
+  leftTitle?: TextData
+  leftDescription?: ItemListField<TextData>
+  rightTitle?: TextData
+  submitButton?: LinkData
+  privacyStatement?: TextData
+  mailSubject?: TextData
+  receiverMail?: TextData
+}
+
+export const leadCaptureBlock: LeadCaptureBlockInterface = {
+  backgroundImage: {
+    url: '/imge/home/contact.png',
+    caption: 'Lead capture background',
+  },
+  modalBackgroundImage: {
+    url: '/imge/home/contact.png',
+    caption: 'Lead capture modal background',
+  },
+  leftTitle: {
+    english: 'Grab This Report Now',
+    malayalam: 'Grab This Report Now',
+  },
+  leftDescription: {
+    lastUUID: 1,
+    items: [
+      {
+        id: 1,
+        item: {
+          english:
+            'Unlock practical insights from our latest report. Share your details and get instant access.',
+          malayalam:
+            'Unlock practical insights from our latest report. Share your details and get instant access.',
+        },
+      },
+    ],
+  },
+  rightTitle: {
+    english: 'Download Report',
+    malayalam: 'Download Report',
+  },
+  submitButton: {
+    name: {
+      english: 'Download Report',
+      malayalam: 'Download Report',
+    },
+    link: null,
+    external: false,
+  },
+  privacyStatement: {
+    english: 'I agree to the privacy policy and consent to being contacted.',
+    malayalam: 'I agree to the privacy policy and consent to being contacted.',
+  },
+  mailSubject: {
+    english: 'Lead Capture Form Submission',
+    malayalam: 'Lead Capture Form Submission',
+  },
+  receiverMail: {
+    english: 'desk@intuonfx.com',
+    malayalam: 'desk@intuonfx.com',
+  },
+}
+
+const LeadCapture = ({ editMode = false, onFieldEdit, blockData, language = 'en' }: Properties) => {
+  const [focusedField, setFocusedField] = React.useState<
+    'name' | 'businessEmail' | 'organization' | null
+  >(null)
+
+  const { formData, setFormValue } = useCustomForm({
+    name: '',
+    businessEmail: '',
+    organization: '',
+    country: '',
+    privacyPolicy: false,
+  })
+
+  const { post, loading } = useInertiaPost('/send-lead-capture-mail', {
+    showErrorToast: true,
+    preserveState: false,
+    preserveScroll: true,
+    onComplete: () => {
+      const searchParams =
+        typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null
+      const queryDownload = searchParams?.get('download') ?? ''
+      const configuredDownload = blockData?.submitButton?.link ?? ''
+      const link = queryDownload !== '' ? queryDownload : configuredDownload
+
+      if (link == null || link === '') {
+        return
+      }
+
+      const normalizeDownloadLink = (rawLink: string) => {
+        const trimmedLink = rawLink.trim()
+        const isAbsolute =
+          trimmedLink.startsWith('http://') ||
+          trimmedLink.startsWith('https://') ||
+          trimmedLink.startsWith('/')
+        const normalized = isAbsolute ? trimmedLink : `/${trimmedLink}`
+
+        const publicNormalized = normalized.replace(/^\/manage-media\/file\//, '/media/file/')
+
+        // Media endpoint should open inline in the current tab.
+        if (!publicNormalized.includes('/media/file/')) {
+          return publicNormalized
+        }
+
+        try {
+          const parsed = new URL(publicNormalized, window.location.origin)
+          parsed.searchParams.delete('download')
+
+          return `${parsed.pathname}${parsed.search}${parsed.hash}`
+        } catch {
+          return publicNormalized
+        }
+      }
+
+      const downloadLink = normalizeDownloadLink(link)
+
+      if (blockData?.submitButton?.external) {
+        window.location.href = downloadLink
+        return
+      }
+
+      window.location.href = downloadLink
+    },
+  })
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    const searchParams =
+      typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null
+    const queryDownload = searchParams?.get('download') ?? ''
+    const requestedResource = searchParams?.get('resource') ?? ''
+    const configuredDownload = blockData?.submitButton?.link ?? ''
+    const rawDownloadLink = queryDownload !== '' ? queryDownload : configuredDownload
+
+    const resolveDownloadedFileName = (rawLink: string, fallbackName: string) => {
+      if (fallbackName !== '') {
+        return fallbackName
+      }
+
+      if (rawLink === '') {
+        return null
+      }
+
+      try {
+        const parsed = new URL(rawLink, window.location.origin)
+        const segment = parsed.pathname.split('/').filter(Boolean).pop()
+
+        return segment == null ? null : decodeURIComponent(segment)
+      } catch {
+        return null
+      }
+    }
+
+    const downloadedFileName = resolveDownloadedFileName(rawDownloadLink, requestedResource)
+
+    const countryName =
+      typeof Intl !== 'undefined' && formData.country !== ''
+        ? (new Intl.DisplayNames(['en'], { type: 'region' }).of(formData.country) ??
+          formData.country)
+        : formData.country
+
+    post({
+      name: formData.name,
+      email: formData.businessEmail,
+      organization: formData.organization,
+      country: formData.country,
+      country_name: countryName,
+      download_file_name: downloadedFileName,
+      privacy_policy: formData.privacyPolicy,
+      subject: blockData?.mailSubject?.english || 'Lead Capture Form Submission',
+      receiver_mail: blockData?.receiverMail?.english || 'desk@intuonfx.com',
+    })
+  }
+
+  return (
+    <section
+      className={`relative mb-10 overflow-hidden bg-white py-28 ${blockData?.marginTop} ${blockData?.marginBottom} ${blockData?.paddingTop} ${blockData?.paddingBottom}`}
+    >
+      <AppLayoutPadding>
+        <div className='relative z-10 px-2 pt-4 md:px-4 lg:px-4 xl:px-32'>
+          <div
+            className='relative overflow-hidden rounded-[15px] bg-cover bg-center shadow-xl'
+            style={{
+              backgroundImage: `url('${blockData?.modalBackgroundImage?.url ?? '/imge/home/contact.png'}')`,
+            }}
+          >
+            <div className='via-[#0f3d2a]/78 to-[#0f3d2a]/52 absolute inset-0 bg-gradient-to-r from-[#0f3d2a]/90' />
+            <div className='relative z-10 grid grid-cols-1 lg:grid-cols-2'>
+              <div className='relative flex flex-col items-center justify-start p-8 text-white md:justify-start md:p-8 lg:justify-center lg:p-12'>
+                <div className='relative z-10 flex flex-col items-center space-y-8 md:items-center lg:items-start lg:space-y-10'>
+                  <h3 className='font-heading text-[34px] font-bold leading-tight text-white md:text-[38px] lg:text-[44px]'>
+                    <Localization
+                      text={blockData?.leftTitle ?? leadCaptureBlock.leftTitle}
+                      language={language}
+                    />
+                  </h3>
+
+                  {editMode && onFieldEdit && (
+                    <div className='flex flex-wrap gap-4'>
+                      <EditLabel
+                        label='Edit Modal Background Image'
+                        onClick={() =>
+                          onFieldEdit({
+                            action: 'INSERT',
+                            field: 'modalBackgroundImage',
+                            fieldType: 'image',
+                            oldValue: blockData?.modalBackgroundImage,
+                          })
+                        }
+                      />
+                      <EditLabel
+                        label='Edit Left Title'
+                        onClick={() =>
+                          onFieldEdit({
+                            action: 'UPDATE',
+                            field: 'leftTitle',
+                            fieldType: 'text',
+                            oldValue: blockData?.leftTitle,
+                          })
+                        }
+                      />
+                    </div>
+                  )}
+
+                  <div className='space-y-2 px-10 md:space-y-2 md:text-center lg:space-y-4 lg:text-start'>
+                    {(
+                      blockData?.leftDescription?.items ??
+                      leadCaptureBlock.leftDescription?.items ??
+                      []
+                    ).map((item) => (
+                      <SectionDescription
+                        key={item.id}
+                        theme='dark'
+                        size='large'
+                        centered={false}
+                        className='text-lg leading-[1.6] text-white/95'
+                      >
+                        <Localization
+                          text={item.item}
+                          language={language}
+                        />
+                        {editMode && onFieldEdit && (
+                          <EditLabel
+                            label='Edit Description'
+                            onClick={() =>
+                              onFieldEdit({
+                                field: 'leftDescription',
+                                fieldType: 'textItems',
+                                oldValue: item.item,
+                                action: 'UPDATE',
+                                itemIndex: item.id,
+                              })
+                            }
+                          />
+                        )}
+                      </SectionDescription>
+                    ))}
+                    {editMode && onFieldEdit && (
+                      <AddLabel
+                        label='Add Description Line'
+                        onClick={() =>
+                          onFieldEdit({
+                            field: 'leftDescription',
+                            fieldType: 'textItems',
+                            oldValue: null,
+                            action: 'INSERT',
+                          })
+                        }
+                      />
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <div className='flex items-center justify-center'>
+                <div className='m-4 flex flex-col items-start justify-center rounded-lg bg-white p-8 lg:m-10'>
+                  <div className='space-y-2 pb-6'>
+                    <SectionSubheading
+                      theme='light'
+                      size='large'
+                      weight='semibold'
+                      centered={false}
+                      className='leading-tight text-spontaine-dark'
+                    >
+                      <Localization
+                        text={blockData?.rightTitle ?? leadCaptureBlock.rightTitle}
+                        language={language}
+                      />
+                    </SectionSubheading>
+                    {editMode && onFieldEdit && (
+                      <EditLabel
+                        label='Edit Right Title'
+                        onClick={() =>
+                          onFieldEdit({
+                            action: 'UPDATE',
+                            field: 'rightTitle',
+                            fieldType: 'text',
+                            oldValue: blockData?.rightTitle,
+                          })
+                        }
+                      />
+                    )}
+                    {/* <div>
+                      <p className='text-xs'>Please fill in this form to start your download.</p>
+                    </div> */}
+                    <SectionBody
+                      theme='gray'
+                      size='xs'
+                      centered={false}
+                    >
+                      Please fill in this form to start your download.
+                    </SectionBody>
+                  </div>
+
+                  <form
+                    onSubmit={onSubmit}
+                    className='space-y-5'
+                  >
+                    <Input
+                      className='placeholder:text-xs'
+                      placeholder={focusedField === 'name' ? '' : 'Your Name'}
+                      value={formData.name}
+                      onFocus={() => setFocusedField('name')}
+                      onBlur={() => setFocusedField(null)}
+                      onChange={(e) => setFormValue('name')(e.target.value)}
+                      required
+                    />
+
+                    <Input
+                      className='placeholder:text-xs'
+                      type='email'
+                      placeholder={focusedField === 'businessEmail' ? '' : 'Your business email'}
+                      value={formData.businessEmail}
+                      onFocus={() => setFocusedField('businessEmail')}
+                      onBlur={() => setFocusedField(null)}
+                      onChange={(e) => setFormValue('businessEmail')(e.target.value)}
+                      required
+                    />
+
+                    <Input
+                      className='placeholder:text-xs'
+                      placeholder={focusedField === 'organization' ? '' : 'Your organization'}
+                      value={formData.organization}
+                      onFocus={() => setFocusedField('organization')}
+                      onBlur={() => setFocusedField(null)}
+                      onChange={(e) => setFormValue('organization')(e.target.value)}
+                      required
+                    />
+
+                    <div className='space-y-2'>
+                      <CountrySelect
+                        value={formData.country}
+                        onChange={(value) => setFormValue('country')(value)}
+                        placeholder='Select country'
+                      />
+                    </div>
+
+                    <div className='space-y-3'>
+                      <div className='flex items-start gap-3'>
+                        <Checkbox
+                          id='lead-capture-privacy'
+                          checked={formData.privacyPolicy}
+                          onCheckedChange={(checked) => setFormValue('privacyPolicy')(!!checked)}
+                        />
+                        <SectionBody
+                          theme='gray'
+                          size='xs'
+                          centered={false}
+                        >
+                          <label htmlFor='lead-capture-privacy'>
+                            <Localization
+                              text={
+                                blockData?.privacyStatement ?? leadCaptureBlock.privacyStatement
+                              }
+                              language={language}
+                            />
+                          </label>
+                        </SectionBody>
+                      </div>
+                      {editMode && onFieldEdit && (
+                        <EditLabel
+                          label='Edit Privacy Statement'
+                          onClick={() =>
+                            onFieldEdit({
+                              action: 'UPDATE',
+                              field: 'privacyStatement',
+                              fieldType: 'text',
+                              oldValue: blockData?.privacyStatement,
+                            })
+                          }
+                        />
+                      )}
+                    </div>
+
+                    <div className='pt-4'>
+                      <FullSpinnerWrapper processing={loading}>
+                        <Button
+                          type='submit'
+                          className='w-full bg-spontaine-accent text-spontaine-dark hover:bg-spontaine-accent-dark'
+                          disabled={
+                            !formData.name ||
+                            !formData.businessEmail ||
+                            !formData.organization ||
+                            !formData.country ||
+                            !formData.privacyPolicy
+                          }
+                        >
+                          <Localization
+                            text={
+                              blockData?.submitButton?.name ?? leadCaptureBlock.submitButton?.name
+                            }
+                            language={language}
+                          />
+                        </Button>
+                      </FullSpinnerWrapper>
+                      {editMode && onFieldEdit && (
+                        <div className='mt-4'>
+                          <EditLabel
+                            label='Edit Submit Button + Download Document'
+                            onClick={() =>
+                              onFieldEdit({
+                                action: 'UPDATE',
+                                field: 'submitButton',
+                                fieldType: 'link',
+                                oldValue: blockData?.submitButton ?? leadCaptureBlock.submitButton,
+                              })
+                            }
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </form>
+
+                  {editMode && onFieldEdit && (
+                    <div className='mt-12 flex flex-wrap gap-4 rounded-md bg-gray-100 p-4'>
+                      <EditLabel
+                        label='Edit Mail Subject'
+                        onClick={() =>
+                          onFieldEdit({
+                            action: 'UPDATE',
+                            field: 'mailSubject',
+                            fieldType: 'text',
+                            oldValue: blockData?.mailSubject,
+                          })
+                        }
+                      />
+                      <EditLabel
+                        label='Edit Receiver Email'
+                        onClick={() =>
+                          onFieldEdit({
+                            action: 'UPDATE',
+                            field: 'receiverMail',
+                            fieldType: 'text',
+                            oldValue: blockData?.receiverMail,
+                          })
+                        }
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </AppLayoutPadding>
+    </section>
+  )
+}
+
+export default LeadCapture
