@@ -35,7 +35,7 @@ class VideoUploadController extends Controller
             return response()->json(['created' => false, 'message' => 'Failed To Upload Image']);
         }
 
-        $fileName = $this->save($request->file, $video->id, 'videos');
+        $fileName = $this->saveSecure($request->file, 'videos');
 
         if ($fileName == '') {
             DB::rollBack();

@@ -10,7 +10,6 @@ import { cleanupRipples, createRippleEffect } from '@/lib/ripple-utils'
 import Localization from '@/Modules/PageBuilder/Components/Localization'
 import { NavMenu } from '@/Modules/PageBuilder/page_interfaces'
 import { Link } from '@inertiajs/react'
-import { ChevronDownIcon } from 'lucide-react'
 
 interface Properties {
   item: NavMenu
@@ -31,12 +30,12 @@ const NavLinkItem = ({ item, lang = 'en' }: Properties) => {
         }}
         language={lang}
       />
-      {hasSubMenuItems && (
+      {/* {hasSubMenuItems && (
         <ChevronDownIcon
           className='-mr-1 ml-1 h-4 w-4 text-neutral-400'
           aria-hidden='true'
         />
-      )}
+      )} */}
     </>
   )
 
@@ -66,8 +65,8 @@ const NavLinkItem = ({ item, lang = 'en' }: Properties) => {
             href={linkInfo?.link ?? '#'}
             target={linkInfo?.external ? '_blank' : undefined}
             rel={linkInfo?.external ? 'noopener noreferrer' : undefined}
-            className={`relative overflow-hidden rounded-full py-4 text-white shadow-2xl transition-all duration-300 2xl:text-lg ${navigationMenuTriggerStyle()}`}
-            onMouseEnter={(e) => createRippleEffect(e, 'rgba(255, 255, 255, 0.3)')}
+            className={`relative overflow-hidden rounded-full py-4 font-heading text-lg text-white transition-all duration-300 2xl:text-lg ${navigationMenuTriggerStyle()} text-spontaine-dark/60 hover:text-spontaine-light/70`}
+            onMouseEnter={(e) => createRippleEffect(e, 'rgba(0, 0, 0, 0.08)')}
             onMouseLeave={(e) => cleanupRipples(e.currentTarget)}
           >
             <div className='inline-flex items-center'>{renderContent()}</div>

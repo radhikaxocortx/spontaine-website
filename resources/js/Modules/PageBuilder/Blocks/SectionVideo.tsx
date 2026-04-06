@@ -30,6 +30,7 @@ const SectionVideo = ({ editMode = false, blockData = videoBlock, onFieldEdit }:
         <div className='overflow-hidden rounded-3xl text-opacity-95 shadow-lg'>
           {blockData.video?.url && (
             <video
+              key={blockData.video.url}
               autoPlay
               muted
               loop

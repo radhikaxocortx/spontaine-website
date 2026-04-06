@@ -11,14 +11,20 @@ use App\Models\ReferenceData\ReferenceData;
 use App\Models\Workflow\Workflow;
 use App\Policies\CountryPolicy;
 use App\Policies\CustomerPricePlanPolicy;
+use App\Policies\DocumentPolicy;
+use App\Policies\ImagePolicy;
 use App\Policies\PriceplanPolicy;
 use App\Policies\ReferenceDataPolicy;
+use App\Policies\VideoPolicy;
 use App\Policies\WorkflowItemPolicy;
 use App\Policies\WorkflowModulePolicy;
 use App\Policies\WorkflowPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
+use Modules\PageBuilder\Models\Document;
+use Modules\PageBuilder\Models\Image;
+use Modules\PageBuilder\Models\Video;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -43,5 +49,8 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(EntityTemplate::class, WorkflowModulePolicy::class);
         Gate::policy(EntityTemplateItem::class, WorkflowItemPolicy::class);
         Gate::policy(CustomerPricePlan::class, CustomerPricePlanPolicy::class);
+        Gate::policy(Document::class, DocumentPolicy::class);
+        Gate::policy(Image::class, ImagePolicy::class);
+        Gate::policy(Video::class, VideoPolicy::class);
     }
 }

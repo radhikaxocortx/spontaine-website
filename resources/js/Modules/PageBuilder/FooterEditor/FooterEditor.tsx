@@ -16,6 +16,8 @@ import PageBuilderService from '../hooks/pageBuilderService'
 
 export interface FooterDataInterface {
   image?: BlockImage | null
+  gdprIcon?: BlockImage | null
+  isoIcon?: BlockImage | null
   sectionOne: TextData | null
   sectionTwo: TextData | null
   sectionThree: TextData | null
@@ -30,10 +32,14 @@ export interface FooterDataInterface {
   youtube?: LinkData
   copyright?: TextData | null
   copyrightLink?: LinkData | null
+  compliance?: TextData | null
+  trustCenterLink?: LinkData | null
 }
 
 const defaultFooterData: FooterDataInterface = {
   image: null,
+  gdprIcon: null,
+  isoIcon: null,
   sectionOne: { english: '', malayalam: '' },
   sectionTwo: { english: '', malayalam: '' },
   sectionThree: { english: '', malayalam: '' },
@@ -53,6 +59,15 @@ const defaultFooterData: FooterDataInterface = {
   fourLinks: {
     lastUUID: 0,
     items: [],
+  },
+  compliance: { english: '', malayalam: '' },
+  trustCenterLink: {
+    link: null,
+    name: {
+      english: 'Trust Centre.',
+      malayalam: 'Trust Centre.',
+    },
+    external: false,
   },
 }
 
@@ -100,7 +115,7 @@ const FooterEditor = ({ footer }: Properties) => {
 
   return (
     <div className='flex flex-col gap-5'>
-      <div className='flex justify-between gap-5'>
+      <div className='mb-20 flex justify-between gap-5 pt-10'>
         <Button onClick={saveChanges}>SAVE</Button>
         <Button
           variant='secondary'

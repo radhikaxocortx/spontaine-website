@@ -4,6 +4,7 @@ import { defaultPricePlanBlock } from '@/Modules/PageBuilder/Blocks/PricePlanCar
 import { richTextData } from '@/Modules/PageBuilder/Blocks/RichText/RichTextBlock'
 import { BlockFieldValues } from '@/Modules/PageBuilder/Components/BlockEditor/BlockEditor'
 import { Block, ItemListField, PageBlock } from '@/Modules/PageBuilder/page_interfaces'
+import { dpaAccordionBlock } from '../Blocks/DPAAccordion/DPAAccordion'
 import { faqBlock } from '../Blocks/FAQ'
 import { fullWidthImageWithTItleBlock } from '../Blocks/FullWidthImageWithTItle'
 import { gridWithVideoBlock } from '../Blocks/GridWithVideo'
@@ -13,9 +14,22 @@ import { textBlock } from '../Blocks/SectionCallToAction'
 import { heroImageBlock } from '../Blocks/SectionHero'
 import { defaultTestimonialBlock } from '../Blocks/SectionTestimonial'
 import { videoBlock } from '../Blocks/SectionVideo'
+import { richTextSPData } from '../Blocks/SpontaineBlocks/RichTextSP'
+import { arcBlock } from '../Blocks/SpontaineBlocks/SectionArc'
+import { sectionBannerCleanBlock } from '../Blocks/SpontaineBlocks/SectionBannerClean'
+import { sectionBannerDarkBlock } from '../Blocks/SpontaineBlocks/SectionBannerDark'
+import { sectionBannerGradientBlock } from '../Blocks/SpontaineBlocks/SectionBannerGradient'
 import { sectionBannerSPBlock } from '../Blocks/SpontaineBlocks/SectionBannerSP'
+import { bentoCardsSPBlock } from '../Blocks/SpontaineBlocks/SectionBentoCardsSP'
 import { breadcrumbsData } from '../Blocks/SpontaineBlocks/SectionBreadcrumbs'
 import { sectionCarouselBlock } from '../Blocks/SpontaineBlocks/SectionCarousel'
+import { sectionCTASPBlock } from '../Blocks/SpontaineBlocks/SectionCTASP'
+import { featureCarouselSPBlock } from '../Blocks/SpontaineBlocks/SectionFeatureCarouselSP'
+import { sectionFullWidthVideoSPBlock } from '../Blocks/SpontaineBlocks/SectionFullWidthVideoSP'
+import { heroImageBlock as heroImageSPBlock } from '../Blocks/SpontaineBlocks/SectionHeroImageSP'
+import { heroVideoBlock } from '../Blocks/SpontaineBlocks/SectionHeroVideoSP'
+import { imageCarouselSPBlock } from '../Blocks/SpontaineBlocks/SectionImageCarouselSP'
+import { marqueeSPBlock } from '../Blocks/SpontaineBlocks/SectionMarqueeSP'
 
 export interface PageBuilderAction {
   action:
@@ -51,6 +65,18 @@ const getBlockDefaultData = (blockName: string) => {
     case 'Home - Hero Section': {
       return {
         ...heroImageBlock,
+      }
+    }
+
+    case 'Home - Hero Video Section': {
+      return {
+        ...heroImageBlock,
+      }
+    }
+
+    case 'Spontaine - Hero Image With Overlay': {
+      return {
+        ...heroImageSPBlock,
       }
     }
 
@@ -97,6 +123,12 @@ const getBlockDefaultData = (blockName: string) => {
       }
     }
 
+    case 'Content Section - DPA Accordion': {
+      return {
+        ...dpaAccordionBlock,
+      }
+    }
+
     case 'Formatted Text': {
       return {
         ...richTextData,
@@ -112,6 +144,21 @@ const getBlockDefaultData = (blockName: string) => {
         ...sectionBannerSPBlock,
       }
     }
+    case 'Spontaine - Clean Banner': {
+      return {
+        ...sectionBannerCleanBlock,
+      }
+    }
+    case 'Spontaine - Dark Banner': {
+      return {
+        ...sectionBannerDarkBlock,
+      }
+    }
+    case 'Spontaine - Gradient Banner': {
+      return {
+        ...sectionBannerGradientBlock,
+      }
+    }
     case 'Spontaine - Breadcrumbs': {
       return {
         ...breadcrumbsData,
@@ -122,6 +169,52 @@ const getBlockDefaultData = (blockName: string) => {
         ...sectionCarouselBlock,
       }
     }
+    case 'Spontaine - Hero Video': {
+      return {
+        ...heroVideoBlock,
+      }
+    }
+    case 'Spontaine - Full Width Video': {
+      return {
+        ...sectionFullWidthVideoSPBlock,
+      }
+    }
+    case 'Spontaine - Arc': {
+      return {
+        ...arcBlock,
+      }
+    }
+    case 'Spontaine - Rich Text': {
+      return {
+        ...richTextSPData,
+      }
+    }
+    case 'Spontaine - Company Marquee': {
+      return {
+        ...marqueeSPBlock,
+      }
+    }
+    case 'Spontaine - Feature Carousel': {
+      return {
+        ...featureCarouselSPBlock,
+      }
+    }
+    case 'Spontaine - Call To Action': {
+      return {
+        ...sectionCTASPBlock,
+      }
+    }
+    case 'Spontaine - Image Carousel': {
+      return {
+        ...imageCarouselSPBlock,
+      }
+    }
+    case 'Spontaine - Bento Cards': {
+      return {
+        ...bentoCardsSPBlock,
+      }
+    }
+
     default: {
       return {}
     }
@@ -472,7 +565,7 @@ const updateBlockField = (
   fieldName?: string,
   fieldValue?: BlockFieldValues
 ): PageBlock => {
-  if (blockId == null || fieldName == null || fieldValue == null) {
+  if (blockId == null || fieldName == null || fieldValue === undefined) {
     return page
   }
   const updatedBlocks = page.blocks.map((block) => {

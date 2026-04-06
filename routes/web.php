@@ -30,6 +30,7 @@ use Modules\OTP\Controllers\RegisterOtpController;
 use Modules\OTP\Controllers\ValidateOtpController;
 use Modules\OTP\Controllers\VerifyOtpController;
 use Modules\PageBuilder\Controllers\NavEditor\NavEditorController as NavEditorNavEditorController;
+use Modules\PageBuilder\Controllers\NavEditor\NavMediaUploadController;
 use Modules\PageBuilder\Controllers\UIBuilder\FooterController as UIBuilderFooterController;
 use Modules\PageBuilder\Models\Page;
 
@@ -193,6 +194,9 @@ Route::get('verified-identity/{customer}', VerifiedIdentityController::class)
     ->name('verified-identity');
 
 Route::resource('nav-editor', NavEditorNavEditorController::class);
+Route::post('nav/media-upload', NavMediaUploadController::class)
+    ->middleware('auth')
+    ->name('nav.media.upload');
 Route::resource('footer-editor', UIBuilderFooterController::class);
 
 Route::post('send-contact-mail', [ContactController::class, 'sendMail']);

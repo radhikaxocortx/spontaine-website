@@ -10,6 +10,7 @@ import { Block, PageDataDependencies } from '@/Modules/PageBuilder/page_interfac
 import { Language } from '@/Modules/PageBuilder/Pages/PageBuilder'
 import React from 'react'
 import ContactUS from '../Blocks/ContactUS'
+import DPAAccordion, { DPAAccordionBlockData } from '../Blocks/DPAAccordion/DPAAccordion'
 
 import FAQ, { FAQBlockInfo } from '../Blocks/FAQ'
 import FullWidthImageWithTItle, {
@@ -25,11 +26,40 @@ import SectionHero, { HeroImageBlock } from '../Blocks/SectionHero'
 import SectionMarquee, { MarqueeData } from '../Blocks/SectionMarquee'
 import SectionTestimonial, { TestimonialBlock } from '../Blocks/SectionTestimonial'
 import SectionVideo, { VideoImageBlock } from '../Blocks/SectionVideo'
+import RichTextSP, { RichTextSPBlockData } from '../Blocks/SpontaineBlocks/RichTextSP'
+import SectionArc, { ArcBlock } from '../Blocks/SpontaineBlocks/SectionArc'
+import SectionBannerClean, {
+  SectionBannerCleanBlock,
+} from '../Blocks/SpontaineBlocks/SectionBannerClean'
+import SectionBannerDark, {
+  SectionBannerDarkBlock,
+} from '../Blocks/SpontaineBlocks/SectionBannerDark'
+import SectionBannerGradient, {
+  SectionBannerGradientBlock,
+} from '../Blocks/SpontaineBlocks/SectionBannerGradient'
 import SectionBannerSP, { SectionBannerSPBlock } from '../Blocks/SpontaineBlocks/SectionBannerSP'
+import SectionBentoCardsSP, {
+  BentoCardsSPData,
+} from '../Blocks/SpontaineBlocks/SectionBentoCardsSP'
 import SectionBreadcrumbs, {
   SectionBreadcrumbsData,
 } from '../Blocks/SpontaineBlocks/SectionBreadcrumbs'
 import SectionCarousel, { SectionCarouselBlock } from '../Blocks/SpontaineBlocks/SectionCarousel'
+import SectionCTASP, { SectionCTASPBlock } from '../Blocks/SpontaineBlocks/SectionCTASP'
+import SectionFeatureCarouselSP, {
+  FeatureCarouselSPData,
+} from '../Blocks/SpontaineBlocks/SectionFeatureCarouselSP'
+import SectionFullWidthVideoSP, {
+  SectionFullWidthVideoSPBlock,
+} from '../Blocks/SpontaineBlocks/SectionFullWidthVideoSP'
+import SectionHeroImageSP, {
+  HeroImageBlock as HeroImageSPBlock,
+} from '../Blocks/SpontaineBlocks/SectionHeroImageSP'
+import SectionHeroVideoSP, { HeroVideoBlock } from '../Blocks/SpontaineBlocks/SectionHeroVideoSP'
+import SectionImageCarouselSP, {
+  ImageCarouselSPData,
+} from '../Blocks/SpontaineBlocks/SectionImageCarouselSP'
+import SectionMarqueeSP, { MarqueeSPData } from '../Blocks/SpontaineBlocks/SectionMarqueeSP'
 
 interface Properties {
   block?: Block
@@ -73,6 +103,22 @@ const ResolveComponent = ({
           editMode={editMode}
           onFieldEdit={onFieldEdit}
           blockData={block as unknown as HeroImageBlock}
+          language={language}
+        />
+      )}
+      {blockName === 'Home - Hero Video Section' && (
+        <SectionHeroImageSP
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          blockData={block as unknown as HeroImageSPBlock}
+          language={language}
+        />
+      )}
+      {blockName === 'Spontaine - Hero Image With Overlay' && (
+        <SectionHeroImageSP
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          blockData={block as unknown as HeroImageSPBlock}
           language={language}
         />
       )}
@@ -150,6 +196,15 @@ const ResolveComponent = ({
           language={language}
         />
       )}
+      {blockName === 'Content Section - DPA Accordion' && (
+        <DPAAccordion
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          blockData={block as unknown as DPAAccordionBlockData}
+          language={language}
+          dispatch={dispatch}
+        />
+      )}
 
       {blockName === 'Home - Call To Action' && (
         <SectionCallToAction
@@ -184,6 +239,30 @@ const ResolveComponent = ({
           language={language}
         />
       )}
+      {blockName === 'Spontaine - Clean Banner' && (
+        <SectionBannerClean
+          blockData={block as unknown as SectionBannerCleanBlock}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+        />
+      )}
+      {blockName === 'Spontaine - Dark Banner' && (
+        <SectionBannerDark
+          blockData={block as unknown as SectionBannerDarkBlock}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+        />
+      )}
+      {blockName === 'Spontaine - Gradient Banner' && (
+        <SectionBannerGradient
+          blockData={block as unknown as SectionBannerGradientBlock}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+        />
+      )}
       {blockName === 'Spontaine - Breadcrumbs' && (
         <SectionBreadcrumbs
           block={block as unknown as SectionBreadcrumbsData}
@@ -195,6 +274,82 @@ const ResolveComponent = ({
       {blockName === 'Spontaine - Carousel' && (
         <SectionCarousel
           blockData={block as unknown as SectionCarouselBlock}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+          dispatch={dispatch}
+        />
+      )}
+      {blockName === 'Spontaine - Hero Video' && (
+        <SectionHeroVideoSP
+          blockData={block as unknown as HeroVideoBlock}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+        />
+      )}
+      {blockName === 'Spontaine - Full Width Video' && (
+        <SectionFullWidthVideoSP
+          blockData={block as unknown as SectionFullWidthVideoSPBlock}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+        />
+      )}
+      {blockName === 'Spontaine - Arc' && (
+        <SectionArc
+          blockData={block as unknown as ArcBlock}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+        />
+      )}
+      {blockName === 'Spontaine - Rich Text' && (
+        <RichTextSP
+          blockData={block as unknown as RichTextSPBlockData}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+        />
+      )}
+      {blockName === 'Spontaine - Company Marquee' && (
+        <SectionMarqueeSP
+          blockData={block as unknown as MarqueeSPData}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+          dispatch={dispatch}
+        />
+      )}
+      {blockName === 'Spontaine - Feature Carousel' && (
+        <SectionFeatureCarouselSP
+          blockData={block as unknown as FeatureCarouselSPData}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+          dispatch={dispatch}
+        />
+      )}
+      {blockName === 'Spontaine - Call To Action' && (
+        <SectionCTASP
+          blockData={block as unknown as SectionCTASPBlock}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+        />
+      )}
+      {blockName === 'Spontaine - Image Carousel' && (
+        <SectionImageCarouselSP
+          blockData={block as unknown as ImageCarouselSPData}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+          dispatch={dispatch}
+        />
+      )}
+      {blockName === 'Spontaine - Bento Cards' && (
+        <SectionBentoCardsSP
+          blockData={block as unknown as BentoCardsSPData}
           editMode={editMode}
           onFieldEdit={onFieldEdit}
           language={language}

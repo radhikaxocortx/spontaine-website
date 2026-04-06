@@ -14,7 +14,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Geist', ...defaultTheme.fontFamily.sans],
+        sans: ['Urbanist', ...defaultTheme.fontFamily.sans],
         'id-font': ['FragmentMono-Regular', ...defaultTheme.fontFamily.sans],
         'h1-stop': ['var(--font-h1-1stop)', ...defaultTheme.fontFamily.sans],
         'h2-1stop': ['var(--font-h2-1stop)', ...defaultTheme.fontFamily.sans],
@@ -29,12 +29,55 @@ export default {
         'data-sm-1stop': ['var(--font-data-sm-1stop)', ...defaultTheme.fontFamily.sans],
         'data-md-1stop': ['var(--font-data-md-1stop)', ...defaultTheme.fontFamily.sans],
         'data-lg-1stop': ['var(--font-data-lg-1stop)', ...defaultTheme.fontFamily.sans],
-        'urbanist': ['Urbanist', ...defaultTheme.fontFamily.sans],
-        'roboto-mono': ['Roboto Mono', ...defaultTheme.fontFamily.mono],
-        'space-grotesk': ['Space Grotesk', ...defaultTheme.fontFamily.sans],
+        // Generic font utilities
+        heading: ['var(--font-heading)', ...defaultTheme.fontFamily.sans],
+        body: ['var(--font-body)', ...defaultTheme.fontFamily.sans],
+        mono: ['var(--font-mono)', ...defaultTheme.fontFamily.mono],
+
+        // Specific font names (kept for backward compatibility)
+        urbanist: ['var(--font-heading)', ...defaultTheme.fontFamily.sans],
+        'roboto-mono': ['var(--font-mono)', ...defaultTheme.fontFamily.mono],
+        'space-grotesk': ['var(--font-body)', ...defaultTheme.fontFamily.sans],
         'font-awesome': ['Font Awesome 6 Free', ...defaultTheme.fontFamily.sans],
       },
       colors: {
+        spontaine: {
+          accent: '#45EDA1',
+          'accent-dark': '#00B563',
+          highlight: '#7776BC',
+          'accent-soft': '#90F4C7',
+          'accent-bright': '#C3FF6E',
+          'accent-ring': '#44ECA0',
+          'accent-footer': '#2FD47D',
+
+          dark: '#343434',
+          'dark-bg': '#242424',
+          gray: '#A7A7A7',
+          'gray-warm': '#918D8D',
+          'gray-cool': '#767676',
+          'gray-soft': '#A9BBB8',
+          'gray-muted': '#565555',
+          'gray-deep': '#454545',
+
+          light: '#F7F7F7',
+          'light-ice': '#BFFCEC',
+          'light-blue': '#D0D9FB',
+
+          white: '#FFFFFF',
+          'white-soft': '#FFFFFFA6',
+          'white-faint': '#FFFFFF8F',
+
+          'icon-bg': '#676557',
+          'icon-text': '#F7F7F7',
+
+          'dpa-card': '#F7F7F7',
+          'dpa-header': '#D1DAF0',
+          'dpa-title': '#34495E',
+          'dpa-accent': '#47A88E',
+          'dpa-summary': '#333333',
+          'dpa-muted': '#666666',
+          'dpa-divider': '#DDDDDD',
+        },
         primary: {
           50: '#f1f4ff', //light gray
           100: '#e6ecff',
@@ -202,6 +245,9 @@ export default {
         5: '5px',
         10: '10px',
       },
+      boxShadow: {
+        'spontaine-dpa': '0 4px 15px rgba(0, 0, 0, 0.05)',
+      },
       keyframes: {
         'accordion-down': {
           from: {
@@ -234,12 +280,24 @@ export default {
             opacity: '1',
           },
         },
+        'ken-burns': {
+          '0%': {
+            transform: 'scale(1) translate(0px, 0px)',
+          },
+          '50%': {
+            transform: 'scale(1.08) translate(-2px, -1px)',
+          },
+          '100%': {
+            transform: 'scale(1.12) translate(-4px, -2px)',
+          },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         shimmer: 'shimmer 2s linear infinite',
         reveal: 'reveal 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        'ken-burns': 'ken-burns 20s ease-out infinite alternate',
       },
     },
   },

@@ -1,3 +1,5 @@
+import { Page } from '@/Modules/PageBuilder/page_interfaces'
+
 export interface LaravelFlash {
   error: string | null
   message: string | null
@@ -15,6 +17,25 @@ export interface Paginator<T> {
   total: number
   last_page: number
   per_page: number
+}
+
+export interface BlogsListProps {
+  featuredPosts: Page[]
+  allPosts: {
+    data: Page[]
+    current_page: number
+    last_page: number
+    per_page: number
+    total: number
+  }
+  selectedBlogSlug?: string
+}
+
+export interface BlogCardProps {
+  post: Page
+  stacked?: boolean
+  aspectRatio?: string
+  onClick?: (post: Page) => void
 }
 
 export interface FormFieldProp {

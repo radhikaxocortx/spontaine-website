@@ -1,9 +1,9 @@
 import Modal from '@/components/CustomUI/Modal/Modal'
-import LinkForm from '@/Modules/PageBuilder/Components/Forms/LinkForm'
 import Localization from '@/Modules/PageBuilder/Components/Localization'
 import { BlockLink, LinkData } from '@/Modules/PageBuilder/page_interfaces'
 import { PencilIcon } from 'lucide-react'
 import { useCallback, useState } from 'react'
+import NavLinkForm from './NavLinkForm'
 
 interface Properties {
   link: BlockLink
@@ -46,7 +46,7 @@ const NavLinkEdit = ({ link, onUpdateLink, onRemoveLink, language }: Properties)
           title='Edit Link'
           setShowModal={setShowEditLink}
         >
-          <LinkForm
+          <NavLinkForm
             data={link}
             showRemove
             onLink={onLinkChange}

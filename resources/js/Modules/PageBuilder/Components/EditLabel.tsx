@@ -9,7 +9,7 @@ const EditLabel = ({ onClick, label = 'Edit' }: Properties) => {
   return (
     <button
       onClick={onClick}
-      className='text-info-600 hover:text-info-700 cursor-pointer font-normal hover:font-semibold'
+      className='cursor-pointer font-normal text-blue-600 hover:font-semibold hover:text-blue-700'
     >
       [{label}]
     </button>

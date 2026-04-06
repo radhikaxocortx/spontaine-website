@@ -25,6 +25,7 @@ class ManageNavMenu
      */
     public function create(array $data): RedirectResponse
     {
+        $data = $this->normalizeNavData($data);
         /**
          * @var ?NavMenuItem $alreadyExists
          */
@@ -52,6 +53,7 @@ class ManageNavMenu
      */
     private function addNewItem(array $data): RedirectResponse
     {
+        $data = $this->normalizeNavData($data);
         try {
             $this->navMenuRepository->create($data);
         } catch (Exception $e) {
@@ -62,7 +64,7 @@ class ManageNavMenu
 
         return redirect()
             ->back()
-            ->with(['message' => 'Added Nav Menu Section: '.$data['title']]);
+            ->with(['message' => 'Added Nav Menu Section: ' . $data['title']]);
     }
 
     /**
@@ -79,6 +81,7 @@ class ManageNavMenu
      */
     private function updateItem(int $menuItemId, array $data): RedirectResponse
     {
+        $data = $this->normalizeNavData($data);
         try {
             $this->navMenuRepository->update($menuItemId, $data);
         } catch (Exception $e) {
@@ -89,7 +92,7 @@ class ManageNavMenu
 
         return redirect()
             ->back()
-            ->with(['message' => 'Updated Nav Menu Section: '.$data['title']]);
+            ->with(['message' => 'Updated Nav Menu Section: ' . $data['title']]);
     }
 
     public function deleteSection(string $title): RedirectResponse
@@ -104,7 +107,7 @@ class ManageNavMenu
 
         return redirect()
             ->back()
-            ->with(['message' => 'Deleted Nav Menu Section: '.$title]);
+            ->with(['message' => 'Deleted Nav Menu Section: ' . $title]);
     }
 
     /**
@@ -128,6 +131,61 @@ class ManageNavMenu
 
         return redirect()
             ->back()
-            ->with(['message' => 'Updated Nav Menu Section: '.$data['title']]);
+            ->with(['message' => 'Updated Nav Menu Section: ' . $data['title']]);
+    }
+
+    /**
+     * Ensure submenu links contain safe defaults for optional fields.
+     *
+     * @param array{
+     *   data?: array{lastUUID: int, items?: array<array-key, mixed>}
+     * } $data
+     * @return array
+     */
+    private function normalizeNavData(array $data): array
+    {
+        if (! isset($data['data']) || ! is_array($data['data'])) {
+            return $data;
+        }
+
+        $items = $data['data']['items'] ?? [];
+        foreach ($items as $i => $item) {
+            if (! isset($item['links']) || ! is_array($item['links'])) {
+                continue;
+            }
+            foreach ($item['links'] as $j => $link) {
+                // description multilingual shape
+                $desc = $link['description'] ?? null;
+                if (! is_array($desc)) {
+                    $desc = ['english' => null, 'malayalam' => null];
+                } else {
+                    $desc['english'] = $desc['english'] ?? null;
+                    $desc['malayalam'] = $desc['malayalam'] ?? null;
+                }
+
+                // media object shape
+                $media = $link['media'] ?? null;
+                if (! is_array($media)) {
+                    $media = [
+                        'type' => null,
+                        'source' => null,
+                        'pathOrUrl' => null,
+                        'thumbnail' => null,
+                    ];
+                } else {
+                    $media['type'] = $media['type'] ?? null;
+                    $media['source'] = $media['source'] ?? null;
+                    $media['pathOrUrl'] = $media['pathOrUrl'] ?? null;
+                    $media['thumbnail'] = $media['thumbnail'] ?? null;
+                }
+
+                $item['links'][$j]['description'] = $desc;
+                $item['links'][$j]['media'] = $media;
+            }
+            $items[$i] = $item;
+        }
+
+        $data['data']['items'] = $items;
+        return $data;
     }
 }

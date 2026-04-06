@@ -63,6 +63,11 @@ const pageBlocks = [
     icon: '📞',
   },
   {
+    name: 'Content Section - DPA Accordion',
+    description: 'Nested legal sections with clauses and accordions for policy pages',
+    icon: '📚',
+  },
+  {
     name: 'Content Section - Price Plan',
     description: 'Display pricing plans and packages',
     icon: '💰',
@@ -83,6 +88,21 @@ const pageBlocks = [
     icon: '🎭',
   },
   {
+    name: 'Spontaine - Clean Banner',
+    description: 'Clean white banner with centered title and description - BlogsList style',
+    icon: '✨',
+  },
+  {
+    name: 'Spontaine - Dark Banner',
+    description: 'Dark banner with black background and white text',
+    icon: '🌙',
+  },
+  {
+    name: 'Spontaine - Gradient Banner',
+    description: 'Banner with gradient background (green to blue) and centered content',
+    icon: '🎨',
+  },
+  {
     name: 'Spontaine - Breadcrumbs',
     description: 'Navigation breadcrumbs with customizable links and styling',
     icon: '🍞',
@@ -91,6 +111,58 @@ const pageBlocks = [
     name: 'Spontaine - Carousel',
     description: 'Full-width responsive image carousel with smooth GSAP animations',
     icon: '🎠',
+  },
+  {
+    name: 'Spontaine - Hero Image With Overlay',
+    description:
+      'Full-screen hero section with image background, customizable overlay, and animated arc',
+    icon: '🌄',
+  },
+  {
+    name: 'Spontaine - Hero Video',
+    description:
+      'Full-screen hero section with video background, customizable overlay, and animated arc',
+    icon: '🎬',
+  },
+  {
+    name: 'Spontaine - Full Width Video',
+    description: 'Full-width video section with poster and play action',
+    icon: '📽️',
+  },
+  {
+    name: 'Spontaine - Arc',
+    description: 'Animated arc transition with customizable color and gradient support',
+    icon: '🌊',
+  },
+  {
+    name: 'Spontaine - Rich Text',
+    description: 'Centered rich text content with Urbanist and Space Grotesk typography',
+    icon: '📝',
+  },
+  {
+    name: 'Spontaine - Company Marquee',
+    description: 'Animated company logos marquee with arc transition, editable label and title',
+    icon: '🏢',
+  },
+  {
+    name: 'Spontaine - Feature Carousel',
+    description: 'Swipeable feature carousel with icon, title, description and images',
+    icon: '🎠',
+  },
+  {
+    name: 'Spontaine - Call To Action',
+    description: 'Customizable CTA section with gradient background and optional booking button',
+    icon: '📢',
+  },
+  {
+    name: 'Spontaine - Image Carousel',
+    description: 'Full-width image carousel with peek of next slide and swipe navigation',
+    icon: '🖼️',
+  },
+  {
+    name: 'Spontaine - Bento Cards',
+    description: 'Bento grid layout with 4 cards, gradient background, and animated arc transition',
+    icon: '🎴',
   },
 ]
 
