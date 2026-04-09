@@ -22,9 +22,17 @@ class LeadsCaptureController extends Controller
             'country_name' => 'nullable|string|max:255',
             'download_file_name' => 'nullable|string|max:255',
             'privacy_policy' => 'accepted',
-            'receiver_mail' => 'nullable|string|email|max:255',
+            'receiver_mail' => 'nullable|string|max:2000',
             'subject' => 'nullable|string|max:255',
         ]);
+
+        $recipients = $this->resolveRecipients($validated['receiver_mail'] ?? null);
+
+        if ($recipients === []) {
+            return redirect()->back()->with([
+                'error' => 'Receiver email must contain one or more valid email addresses.',
+            ]);
+        }
 
         $rateLimitKey = 'lead-capture' . $request->ip();
 
@@ -39,7 +47,7 @@ class LeadsCaptureController extends Controller
         $rateLimitingService->incrementAttempts($rateLimitKey);
 
         try {
-            Mail::to($validated['receiver_mail'] ?? 'desk@intuonfx.com')
+            Mail::to($recipients)
                 ->send(new LeadCaptureMail(
                     name: $validated['name'],
                     businessEmail: $validated['email'],
@@ -56,5 +64,29 @@ class LeadsCaptureController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private function resolveRecipients(?string $rawRecipients): array
+    {
+        if ($rawRecipients === null || trim($rawRecipients) === '') {
+            return ['desk@intuonfx.com'];
+        }
+
+        $parts = preg_split('/[\s,;]+/', $rawRecipients) ?: [];
+
+        $emails = array_values(array_filter(array_map(static function (string $email): ?string {
+            $trimmed = trim($email);
+
+            if ($trimmed === '' || filter_var($trimmed, FILTER_VALIDATE_EMAIL) === false) {
+                return null;
+            }
+
+            return $trimmed;
+        }, $parts)));
+
+        return array_values(array_unique($emails));
     }
 }

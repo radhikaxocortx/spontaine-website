@@ -11,6 +11,10 @@ use Modules\PageBuilder\Models\Page;
 
 final class BlogsListController extends Controller
 {
+    private const LIST_SEO_TITLE = 'Blogs | Spontaine';
+    private const LIST_SEO_DESCRIPTION = 'Read insights, opinions, and product thinking from the Spontaine team on data, AI, and decision intelligence.';
+    private const LIST_SEO_IMAGE = '/storage/images/0f631aea-7147-4194-97b4-e0aa74e10c49.png';
+
     public function __invoke(Request $request): Response
     {
         return $this->renderBlogsList($request);
@@ -68,9 +72,9 @@ final class BlogsListController extends Controller
             'selectedBlogSlug' => $selectedBlogSlug,
         ])->withViewData([
             'seo' => [
-                'title' => 'Blogs | Spontaine',
-                'description' => 'Insights, opinions, and updates from the Spontaine team.',
-                'image' => rtrim((string) config('app.url'), '/') . '/storage/images/16.png',
+                'title' => self::LIST_SEO_TITLE,
+                'description' => self::LIST_SEO_DESCRIPTION,
+                'image' => $this->toAbsoluteImage(self::LIST_SEO_IMAGE),
                 'url' => $request->fullUrl(),
                 'type' => 'website',
                 'noIndex' => false,

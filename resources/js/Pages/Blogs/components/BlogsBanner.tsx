@@ -70,9 +70,9 @@ const BlogsBanner = () => {
             className='mx-auto max-w-3xl'
           >
             <p className='mx-auto max-w-[560px] font-body text-[16px] font-normal leading-[1.8] text-gray-800 sm:text-[20px]'>
-              Expert perspectives on data, leadership, and the future of data, AI and business
-              intelligence. Read case studies on regaining trust, expert takes on industry shifts,
-              and the thinking behind our semantic revolution.
+              Expert perspectives on data, leadership, and the future of intelligent automation.
+              Relevant opinion and thinking on industry shifts, and the thinking behind our semantic
+              revolution.
             </p>
           </div>
         </div>

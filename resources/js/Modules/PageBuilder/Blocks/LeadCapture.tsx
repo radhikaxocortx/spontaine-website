@@ -99,6 +99,7 @@ const LeadCapture = ({ editMode = false, onFieldEdit, blockData, language = 'en'
   const [focusedField, setFocusedField] = React.useState<
     'name' | 'businessEmail' | 'organization' | null
   >(null)
+  const [showDownloadModal, setShowDownloadModal] = React.useState(false)
 
   const { formData, setFormValue } = useCustomForm({
     name: '',
@@ -108,9 +109,70 @@ const LeadCapture = ({ editMode = false, onFieldEdit, blockData, language = 'en'
     privacyPolicy: false,
   })
 
+  const resolveDownloadFileName = React.useCallback(
+    (headerValue: string | null, fallback: string) => {
+      if (headerValue == null || headerValue.trim() === '') {
+        return fallback
+      }
+
+      const encodedMatch = headerValue.match(/filename\*=UTF-8''([^;]+)/i)
+
+      if (encodedMatch?.[1]) {
+        try {
+          return decodeURIComponent(encodedMatch[1])
+        } catch {
+          return fallback
+        }
+      }
+
+      const regularMatch = headerValue.match(/filename="?([^";]+)"?/i)
+
+      return regularMatch?.[1] ? regularMatch[1] : fallback
+    },
+    []
+  )
+
+  const downloadFileAndShowModal = React.useCallback(
+    async (downloadLink: string) => {
+      try {
+        const absoluteUrl = new URL(downloadLink, window.location.origin)
+        const response = await fetch(absoluteUrl.toString(), {
+          credentials: 'same-origin',
+        })
+
+        if (!response.ok) {
+          window.location.href = downloadLink
+
+          return
+        }
+
+        const blob = await response.blob()
+        const fallbackName = absoluteUrl.pathname.split('/').filter(Boolean).pop() ?? 'download'
+        const fileName = resolveDownloadFileName(
+          response.headers.get('Content-Disposition'),
+          fallbackName
+        )
+
+        const objectUrl = window.URL.createObjectURL(blob)
+        const anchor = document.createElement('a')
+        anchor.href = objectUrl
+        anchor.download = fileName
+        document.body.appendChild(anchor)
+        anchor.click()
+        anchor.remove()
+        window.URL.revokeObjectURL(objectUrl)
+
+        setShowDownloadModal(true)
+      } catch {
+        window.location.href = downloadLink
+      }
+    },
+    [resolveDownloadFileName]
+  )
+
   const { post, loading } = useInertiaPost('/send-lead-capture-mail', {
     showErrorToast: true,
-    preserveState: false,
+    preserveState: true,
     preserveScroll: true,
     onComplete: () => {
       const searchParams =
@@ -133,18 +195,20 @@ const LeadCapture = ({ editMode = false, onFieldEdit, blockData, language = 'en'
 
         const publicNormalized = normalized.replace(/^\/manage-media\/file\//, '/media/file/')
 
-        // Media endpoint should open inline in the current tab.
+        // Media endpoint should force download while preserving file naming from server.
         if (!publicNormalized.includes('/media/file/')) {
           return publicNormalized
         }
 
         try {
           const parsed = new URL(publicNormalized, window.location.origin)
-          parsed.searchParams.delete('download')
+          parsed.searchParams.set('download', '1')
 
           return `${parsed.pathname}${parsed.search}${parsed.hash}`
         } catch {
-          return publicNormalized
+          const hasQuery = publicNormalized.includes('?')
+
+          return `${publicNormalized}${hasQuery ? '&' : '?'}download=1`
         }
       }
 
@@ -152,6 +216,11 @@ const LeadCapture = ({ editMode = false, onFieldEdit, blockData, language = 'en'
 
       if (blockData?.submitButton?.external) {
         window.location.href = downloadLink
+        return
+      }
+
+      if (downloadLink.includes('/media/file/')) {
+        void downloadFileAndShowModal(downloadLink)
         return
       }
 
@@ -196,6 +265,13 @@ const LeadCapture = ({ editMode = false, onFieldEdit, blockData, language = 'en'
           formData.country)
         : formData.country
 
+    const receiverMailRaw = blockData?.receiverMail?.english || 'desk@intuonfx.com'
+    const receiverMail = receiverMailRaw
+      .split(/[\n,;]+/)
+      .map((email) => email.trim())
+      .filter((email) => email !== '')
+      .join(',')
+
     post({
       name: formData.name,
       email: formData.businessEmail,
@@ -205,7 +281,7 @@ const LeadCapture = ({ editMode = false, onFieldEdit, blockData, language = 'en'
       download_file_name: downloadedFileName,
       privacy_policy: formData.privacyPolicy,
       subject: blockData?.mailSubject?.english || 'Lead Capture Form Submission',
-      receiver_mail: blockData?.receiverMail?.english || 'desk@intuonfx.com',
+      receiver_mail: receiverMail,
     })
   }
 
@@ -499,6 +575,52 @@ const LeadCapture = ({ editMode = false, onFieldEdit, blockData, language = 'en'
             </div>
           </div>
         </div>
+
+        {showDownloadModal && (
+          <div className='fixed inset-0 z-[80] flex items-center justify-center px-4'>
+            <button
+              type='button'
+              className='absolute inset-0 bg-black/45 backdrop-blur-[2px]'
+              aria-label='Close download complete modal'
+              onClick={() => setShowDownloadModal(false)}
+            />
+            <div className='relative w-full max-w-md rounded-2xl border border-spontaine-accent/20 bg-white p-8 shadow-2xl duration-300 animate-in fade-in zoom-in-95'>
+              <SectionSubheading
+                theme='light'
+                size='large'
+                weight='semibold'
+                centered={false}
+                className='text-spontaine-dark'
+              >
+                Download Complete
+              </SectionSubheading>
+              <SectionBody
+                theme='gray'
+                size='sm'
+                centered={false}
+                className='mt-3'
+              >
+                Your report was downloaded successfully.
+              </SectionBody>
+
+              <div className='mt-8 flex flex-wrap items-center gap-3'>
+                <Button
+                  type='button'
+                  className='bg-spontaine-accent text-spontaine-dark hover:bg-spontaine-accent-dark'
+                  onClick={() => setShowDownloadModal(false)}
+                >
+                  Close
+                </Button>
+                <a
+                  href='/resources'
+                  className='text-sm font-medium text-spontaine-dark underline decoration-spontaine-accent/50 underline-offset-4 transition hover:decoration-spontaine-accent'
+                >
+                  Back to Resources
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
       </AppLayoutPadding>
     </section>
   )

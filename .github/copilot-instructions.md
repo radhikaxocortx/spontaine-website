@@ -360,6 +360,7 @@ Implementation references:
 
 - `VIEW` should open inline media response (`Content-Disposition: inline`).
 - `DOWNLOAD` should force attachment response with extension-aware filename.
+- Download response should preserve the original media `name` where possible (sanitize only invalid filename characters; do not slugify).
 - New uploads should store with UUID-based filenames and proper file extensions.
 
 **Backward Compatibility:**
@@ -445,6 +446,7 @@ Implementation references:
 - For public pages, set SEO payload via Inertia `withViewData(['seo' => ...])` in controllers.
 - Current coverage includes: `HomePageController`, `ViewBuilderController`, `BlogsListController`, `ResourcesListController`.
 - Keep SEO payload keys consistent: `title`, `description`, `image`, `url`, `type`, `noIndex`.
+- List pages (`/resources`, `/blogs-list`) should define dedicated controller-level SEO constants for title/description/image and pass them through `withViewData`.
 - Resolve SEO image to an absolute URL in controllers; use app URL fallback (`/storage/images/16.png`) when missing.
 - Blade root view (`resources/views/app.blade.php`) is the source of truth for bot-visible tags.
 - Render canonical + robots + OG + Twitter tags server-side in Blade from `$seo` defaults.
@@ -469,6 +471,7 @@ Implementation references:
   - `FeaturedResources`
   - `AllResources`
 - Keep this split; do not collapse everything into one page component.
+- Resources banner background asset path should use `/imge/resourcesbanner.png` (avoid misspelled legacy path variants).
 - Shared drawer component is reused (`BlogDetailDrawer`) with configurable props:
   - `sharePathBase='/resource'`
   - `downloadCaptureBasePath='/resource-download'`
@@ -511,6 +514,7 @@ Implementation references:
   - `download_file_name`
   - `privacy_policy`
   - Optional email overrides: `receiver_mail`, `subject`
+- `receiver_mail` supports single or multiple recipients. Accept comma/semicolon/newline-separated values and validate each address server-side.
 - Do not reintroduce phone as a required lead-capture field.
 
 ### Lead Capture UI Block Rules
@@ -523,5 +527,7 @@ Implementation references:
   - `resources/js/components/ui/country-select.tsx`
 - Download/open behavior after successful lead submit:
   - Normalize to public media path when needed.
-  - Open target in the current tab for media view flow.
-  - Keep download query cleanup logic for inline viewing.
+  - For media links, force download mode by setting `download=1` on `/media/file/...` URLs.
+  - Inertia submit should preserve component state so post-submit UI can render (`preserveState: true`).
+  - Show a styled download-complete modal after the browser download is triggered, with a `Back to Resources` link.
+  - Keep non-media links using normal navigation behavior.

@@ -48,7 +48,7 @@ const ResourcesBanner = () => {
   return (
     <section
       ref={sectionRef}
-      className='relative flex w-full flex-col items-center justify-center overflow-hidden bg-[url("/imge/resoucesbg.png")] bg-cover bg-center bg-no-repeat pb-20 pt-40 text-white'
+      className='relative flex w-full flex-col items-center justify-center overflow-hidden bg-[url("/imge/resourcesbanner.png")] bg-cover bg-center bg-no-repeat pb-20 pt-40 text-white'
       data-banner-section='true'
     >
       {/* <div className='absolute inset-0 bg-black/45' /> */}

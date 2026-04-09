@@ -13,6 +13,9 @@ final class ResourcesListController extends Controller
 {
     /** @var array<int, string> */
     private const RESOURCE_TYPES = ['Whitepapers', 'Use Cases', 'Case Studies'];
+    private const LIST_SEO_TITLE = 'Resources | Spontaine';
+    private const LIST_SEO_DESCRIPTION = 'Explore Spontaine resources: case studies, whitepapers, and practical guides for faster AI-powered business decisions.';
+    private const LIST_SEO_IMAGE = '/storage/images/27417a93-39e7-49cb-82f0-3ccfbeb41d63.png';
 
     public function __invoke(Request $request): Response
     {
@@ -96,9 +99,9 @@ final class ResourcesListController extends Controller
             'selectedResourceSlug' => $selectedResourceSlug,
         ])->withViewData([
             'seo' => [
-                'title' => 'Resources | Spontaine',
-                'description' => 'Case studies, whitepapers, and practical guides from Spontaine.',
-                'image' => rtrim((string) config('app.url'), '/') . '/storage/images/16.png',
+                'title' => self::LIST_SEO_TITLE,
+                'description' => self::LIST_SEO_DESCRIPTION,
+                'image' => $this->toAbsoluteImage(self::LIST_SEO_IMAGE),
                 'url' => $request->fullUrl(),
                 'type' => 'website',
                 'noIndex' => false,

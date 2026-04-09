@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 use Modules\PageBuilder\Models\Document;
@@ -129,10 +128,26 @@ class ManageMediaController extends Controller
 
     private function buildDownloadName(string $name, string $extension): string
     {
-        $safeName = Str::of($name)->slug('_')->toString();
-        $base = $safeName !== '' ? $safeName : 'file';
+        $base = trim($name);
 
-        return $base . '.' . $extension;
+        if ($base === '') {
+            $base = 'file';
+        }
+
+        // Remove characters that are not valid in common filesystem filenames.
+        $base = preg_replace('/[\\\\\/:*?"<>|\x00-\x1F]+/', '_', $base) ?? 'file';
+
+        if ($base === '') {
+            $base = 'file';
+        }
+
+        $suffix = '.' . strtolower($extension);
+
+        if (strtolower(substr($base, -strlen($suffix))) === $suffix) {
+            return $base;
+        }
+
+        return $base . $suffix;
     }
 
     private function resolveExtension(string $mime, string $storedUrl): string
