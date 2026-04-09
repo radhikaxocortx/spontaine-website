@@ -132,8 +132,44 @@ const LeadCapture = ({ editMode = false, onFieldEdit, blockData, language = 'en'
     []
   )
 
+  const resolveExtensionFromContentType = React.useCallback((contentType: string): string => {
+    const normalized = contentType.toLowerCase()
+
+    if (normalized.includes('application/pdf')) return 'pdf'
+    if (normalized.includes('application/msword')) return 'doc'
+    if (
+      normalized.includes('application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+    ) {
+      return 'docx'
+    }
+    if (normalized.includes('application/vnd.ms-excel')) return 'xls'
+    if (normalized.includes('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')) {
+      return 'xlsx'
+    }
+    if (normalized.includes('text/plain')) return 'txt'
+
+    return ''
+  }, [])
+
+  const shouldHandleDownloadInApp = React.useCallback((downloadLink: string): boolean => {
+    try {
+      const parsed = new URL(downloadLink, window.location.origin)
+
+      if (parsed.origin !== window.location.origin) {
+        return false
+      }
+
+      return (
+        parsed.pathname.startsWith('/media/file/') ||
+        parsed.pathname.startsWith('/storage/documents/')
+      )
+    } catch {
+      return false
+    }
+  }, [])
+
   const downloadFileAndShowModal = React.useCallback(
-    async (downloadLink: string) => {
+    async (downloadLink: string, preferredBaseName?: string) => {
       try {
         const absoluteUrl = new URL(downloadLink, window.location.origin)
         const response = await fetch(absoluteUrl.toString(), {
@@ -147,7 +183,20 @@ const LeadCapture = ({ editMode = false, onFieldEdit, blockData, language = 'en'
         }
 
         const blob = await response.blob()
-        const fallbackName = absoluteUrl.pathname.split('/').filter(Boolean).pop() ?? 'download'
+        const fallbackSegment = absoluteUrl.pathname.split('/').filter(Boolean).pop() ?? 'download'
+        const fallbackExtension = fallbackSegment.includes('.')
+          ? (fallbackSegment.split('.').pop()?.toLowerCase() ?? '')
+          : ''
+        const contentType = response.headers.get('Content-Type') ?? ''
+        const contentTypeExtension = resolveExtensionFromContentType(contentType)
+        const sanitizedPreferredBaseName =
+          preferredBaseName?.trim().replace(/[\\/:*?"<>|]+/g, '_') ?? ''
+        const fallbackName =
+          sanitizedPreferredBaseName !== ''
+            ? `${sanitizedPreferredBaseName}.${
+                fallbackExtension !== '' ? fallbackExtension : contentTypeExtension || 'pdf'
+              }`
+            : fallbackSegment
         const fileName = resolveDownloadFileName(
           response.headers.get('Content-Disposition'),
           fallbackName
@@ -167,7 +216,7 @@ const LeadCapture = ({ editMode = false, onFieldEdit, blockData, language = 'en'
         window.location.href = downloadLink
       }
     },
-    [resolveDownloadFileName]
+    [resolveDownloadFileName, resolveExtensionFromContentType]
   )
 
   const { post, loading } = useInertiaPost('/send-lead-capture-mail', {
@@ -178,6 +227,7 @@ const LeadCapture = ({ editMode = false, onFieldEdit, blockData, language = 'en'
       const searchParams =
         typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null
       const queryDownload = searchParams?.get('download') ?? ''
+      const requestedResource = searchParams?.get('resource') ?? ''
       const configuredDownload = blockData?.submitButton?.link ?? ''
       const link = queryDownload !== '' ? queryDownload : configuredDownload
 
@@ -219,8 +269,8 @@ const LeadCapture = ({ editMode = false, onFieldEdit, blockData, language = 'en'
         return
       }
 
-      if (downloadLink.includes('/media/file/')) {
-        void downloadFileAndShowModal(downloadLink)
+      if (shouldHandleDownloadInApp(downloadLink)) {
+        void downloadFileAndShowModal(downloadLink, requestedResource)
         return
       }
 
