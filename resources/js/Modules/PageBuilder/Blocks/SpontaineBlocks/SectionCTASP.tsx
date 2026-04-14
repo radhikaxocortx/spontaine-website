@@ -6,6 +6,7 @@ import { BlocKFieldInfo } from '@/Modules/PageBuilder/Components/BlockEditor/Blo
 import { CTAEditModal } from '@/Modules/PageBuilder/Components/CTAEditModal'
 import EditLabel from '@/Modules/PageBuilder/Components/EditLabel'
 import { displayText } from '@/Modules/PageBuilder/Components/Localization'
+import { usePageBuilderContext } from '@/Modules/PageBuilder/contexts/PageBuilderContext'
 import {
   Block,
   BlockConfiguration,
@@ -57,10 +58,6 @@ export const sectionCTASPBlock: Omit<SectionCTASPBlock, keyof Block> = {
   },
   cta: null,
   calendarUrl: 'intuonfx/30min',
-  marginTop: '',
-  marginBottom: '',
-  paddingTop: '',
-  paddingBottom: '',
 }
 
 const SectionCTASP = ({
@@ -71,6 +68,7 @@ const SectionCTASP = ({
   className,
 }: SectionCTASPProps) => {
   const isMounted = useMounted()
+  const { renderMode } = usePageBuilderContext()
   const sectionRef = useRef<HTMLDivElement>(null)
   const headingRef = useRef<HTMLHeadingElement>(null)
   const descriptionRef = useRef<HTMLParagraphElement>(null)
@@ -114,20 +112,24 @@ const SectionCTASP = ({
     if (!isMounted || editMode) return
 
     const ctx = gsap.context(() => {
-      const elementsToAnimate = [headingRef.current]
+      const elementsToAnimate: Array<HTMLElement | null> = [headingRef.current]
       if (description) elementsToAnimate.push(descriptionRef.current)
       if (showCTA) elementsToAnimate.push(buttonRef.current)
 
       gsap.set(elementsToAnimate, { opacity: 0, y: 40 })
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 80%',
-          end: 'bottom 20%',
-          toggleActions: 'play none none reverse',
-        },
-      })
+      const tl = gsap.timeline(
+        renderMode === 'page'
+          ? {
+              scrollTrigger: {
+                trigger: sectionRef.current,
+                start: 'top 80%',
+                end: 'bottom 20%',
+                toggleActions: 'play none none reverse',
+              },
+            }
+          : undefined
+      )
 
       tl.to(headingRef.current, {
         opacity: 1,
@@ -166,7 +168,7 @@ const SectionCTASP = ({
     return () => {
       ctx.revert()
     }
-  }, [isMounted, editMode, showCTA, description])
+  }, [isMounted, editMode, showCTA, description, renderMode])
 
   return (
     <section

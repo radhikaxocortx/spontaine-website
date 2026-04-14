@@ -71,6 +71,9 @@ Purpose: Enable immediate productive contributions while preserving established 
 - Use GSAP only where it adds clear interaction value.
 - Do not mix GSAP transforms with native scroll behavior on the same axis/element.
 - Prioritize smooth, mobile-safe performance over animation density.
+- For components rendered in multiple contexts (full page + drawer/modal), gate animation behavior by render mode.
+- Use ScrollTrigger only in page context; in drawer/modal context use mount-based GSAP timelines (no ScrollTrigger dependency).
+- Never leave cross-context content in hidden initial states (`opacity: 0`, translated) when trigger conditions may not fire.
 
 ### Mobile-First Rules
 
@@ -480,6 +483,8 @@ Implementation references:
 
 - Drawer deep-link behavior uses history state via `useResourceDrawer`.
 - Keep URL normalization logic for both `/resources/*` and `/resource/*` paths.
+- Blocks rendered inside `BlogDetailDrawer` run in `PageBuilderProvider` drawer mode; block animations must support this context.
+- For CTA-like sections (example: `SectionCTASP`), keep scroll-triggered animation for page mode and mount animation fallback for drawer mode.
 - If a resource has `download_url`, CTA should route users to lead capture:
   - `/resource-download?download=<normalized_target>&resource=<title>`
 - Normalize file targets from old manage-media paths to public paths:
@@ -528,6 +533,8 @@ Implementation references:
 - Download/open behavior after successful lead submit:
   - Normalize to public media path when needed.
   - For media links, force download mode by setting `download=1` on `/media/file/...` URLs.
+  - Treat same-origin `/storage/documents/...` links as downloadable report targets as well (not only `/media/file/...`).
   - Inertia submit should preserve component state so post-submit UI can render (`preserveState: true`).
   - Show a styled download-complete modal after the browser download is triggered, with a `Back to Resources` link.
+  - For in-app blob downloads, derive filename from `Content-Disposition` first; use resource title as fallback base name.
   - Keep non-media links using normal navigation behavior.
