@@ -1,0 +1,60 @@
+/*
+  Spontaine design token foundation.
+  These definitions are additive only; existing legacy/admin/editor tokens stay in app.css.
+  Components should migrate to these tokens in later PRs, not in PR-02.
+*/
+
+:root {
+  /* Colors */
+  --spontaine-color-accent-mint: #45eda1;
+  --spontaine-color-accent-lime: #c3ff6e;
+  --spontaine-color-accent-ink: #0a7a55;
+  --spontaine-color-accent-periwinkle: #7776bc;
+  --spontaine-color-ink-900: #242424;
+  --spontaine-color-ink-700: #343434;
+  --spontaine-color-paper: #ffffff;
+  --spontaine-color-gray-50: #f7f7f7;
+  --spontaine-color-gray-100: #f3f4f6;
+  --spontaine-color-cream: #f0eee4;
+  --spontaine-color-border-hairline: rgba(0, 0, 0, 0.1);
+
+  /* Radius */
+  --spontaine-radius-pill: 9999px;
+  --spontaine-radius-card: 24px;
+  --spontaine-radius-control: 12px;
+  --spontaine-radius-artifact: 12px;
+
+  /* Borders and focus */
+  --spontaine-border-width-hairline: 1px;
+  --spontaine-focus-ring-width: 3px;
+  --spontaine-focus-ring-offset: 3px;
+  --spontaine-focus-ring-color: var(--spontaine-color-accent-mint);
+
+  /* Shadows */
+  --spontaine-shadow-floating: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --spontaine-shadow-arc: 0 -16px 40px rgba(0, 0, 0, 0.1);
+  --spontaine-shadow-arc-dark: 0 -16px 40px rgba(0, 0, 0, 0.35);
+
+  /* Spacing and layout rhythm */
+  --spontaine-space-section-y: 128px;
+  --spontaine-space-section-y-mobile: 64px;
+  --spontaine-space-arc-height: 64px;
+  --spontaine-space-arc-height-mobile: 32px;
+  --spontaine-measure-copy: 680px;
+
+  /* Motion */
+  --spontaine-motion-settle-duration: 600ms;
+  --spontaine-motion-settle-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --spontaine-motion-stack-duration: 700ms;
+  --spontaine-motion-stack-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --spontaine-motion-scrub-ease: linear;
+  --spontaine-motion-chip-pop-duration: 240ms;
+  --spontaine-motion-chip-pop-ease: cubic-bezier(0.2, 0.9, 0.3, 1);
+  --spontaine-motion-crossfade-out-duration: 200ms;
+  --spontaine-motion-crossfade-in-duration: 300ms;
+  --spontaine-motion-crossfade-overlap: 80ms;
+  --spontaine-motion-crossfade-ease: ease-out;
+  --spontaine-motion-stagger: 70ms;
+  --spontaine-motion-stagger-max-items: 5;
+  --spontaine-motion-reduced-duration: 200ms;
+}

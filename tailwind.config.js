@@ -41,6 +41,28 @@ export default {
         'font-awesome': ['Font Awesome 6 Free', ...defaultTheme.fontFamily.sans],
       },
       colors: {
+        // PR-02 additive design-token aliases. Existing `spontaine` and legacy palettes remain untouched.
+        spontaineDesign: {
+          accent: {
+            mint: 'var(--spontaine-color-accent-mint)',
+            lime: 'var(--spontaine-color-accent-lime)',
+            ink: 'var(--spontaine-color-accent-ink)',
+            periwinkle: 'var(--spontaine-color-accent-periwinkle)',
+          },
+          ink: {
+            900: 'var(--spontaine-color-ink-900)',
+            700: 'var(--spontaine-color-ink-700)',
+          },
+          paper: 'var(--spontaine-color-paper)',
+          gray: {
+            50: 'var(--spontaine-color-gray-50)',
+            100: 'var(--spontaine-color-gray-100)',
+          },
+          cream: 'var(--spontaine-color-cream)',
+          border: {
+            hairline: 'var(--spontaine-color-border-hairline)',
+          },
+        },
         spontaine: {
           accent: '#45EDA1',
           'accent-dark': '#00B563',
@@ -245,9 +267,54 @@ export default {
         3: '3px',
         5: '5px',
         10: '10px',
+        'spontaine-hairline': 'var(--spontaine-border-width-hairline)',
+      },
+      borderRadius: {
+        'spontaine-pill': 'var(--spontaine-radius-pill)',
+        'spontaine-card': 'var(--spontaine-radius-card)',
+        'spontaine-control': 'var(--spontaine-radius-control)',
+        'spontaine-artifact': 'var(--spontaine-radius-artifact)',
       },
       boxShadow: {
         'spontaine-dpa': '0 4px 15px rgba(0, 0, 0, 0.05)',
+        'spontaine-floating': 'var(--spontaine-shadow-floating)',
+        'spontaine-arc': 'var(--spontaine-shadow-arc)',
+        'spontaine-arc-dark': 'var(--spontaine-shadow-arc-dark)',
+      },
+      spacing: {
+        'spontaine-section-y': 'var(--spontaine-space-section-y)',
+        'spontaine-section-y-mobile': 'var(--spontaine-space-section-y-mobile)',
+        'spontaine-arc-height': 'var(--spontaine-space-arc-height)',
+        'spontaine-arc-height-mobile': 'var(--spontaine-space-arc-height-mobile)',
+        'spontaine-copy': 'var(--spontaine-measure-copy)',
+      },
+      ringWidth: {
+        spontaine: 'var(--spontaine-focus-ring-width)',
+      },
+      ringOffsetWidth: {
+        spontaine: 'var(--spontaine-focus-ring-offset)',
+      },
+      ringColor: {
+        spontaine: 'var(--spontaine-focus-ring-color)',
+      },
+      transitionDuration: {
+        'spontaine-settle': 'var(--spontaine-motion-settle-duration)',
+        'spontaine-stack': 'var(--spontaine-motion-stack-duration)',
+        'spontaine-chip-pop': 'var(--spontaine-motion-chip-pop-duration)',
+        'spontaine-crossfade-out': 'var(--spontaine-motion-crossfade-out-duration)',
+        'spontaine-crossfade-in': 'var(--spontaine-motion-crossfade-in-duration)',
+        'spontaine-reduced': 'var(--spontaine-motion-reduced-duration)',
+      },
+      transitionDelay: {
+        'spontaine-crossfade-overlap': 'var(--spontaine-motion-crossfade-overlap)',
+        'spontaine-stagger': 'var(--spontaine-motion-stagger)',
+      },
+      transitionTimingFunction: {
+        'spontaine-settle': 'var(--spontaine-motion-settle-ease)',
+        'spontaine-stack': 'var(--spontaine-motion-stack-ease)',
+        'spontaine-scrub': 'var(--spontaine-motion-scrub-ease)',
+        'spontaine-chip-pop': 'var(--spontaine-motion-chip-pop-ease)',
+        'spontaine-crossfade': 'var(--spontaine-motion-crossfade-ease)',
       },
       keyframes: {
         'accordion-down': {
