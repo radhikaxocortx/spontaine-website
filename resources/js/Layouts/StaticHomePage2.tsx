@@ -1,6 +1,6 @@
 import MetaTags from '@/components/MetaTags'
+import PrismHero from '@/HomePage/Hero/PrismHero'
 import CompanyLogosMarquee from '@/Modules/PageBuilder/Blocks/HomeBlocks/CompanyLogosMarquee'
-import HeroArcInteractive from '@/Modules/PageBuilder/Blocks/HomeBlocks/HeroArcInteractive'
 import SectionAlignedAction from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionAlignedAction'
 import SectionBlogsCarousel from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionBlogsCarousel'
 import SectionChat from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionChat'
@@ -242,7 +242,7 @@ const StaticHomePage2 = ({
         noIndex={noIndex}
       />
       <div className='relative min-h-screen w-full max-w-full overflow-x-hidden bg-white'>
-        <HeroArcInteractive />
+        <PrismHero />
 
         <SectionChat />
         <VideoFeatureCarousel />

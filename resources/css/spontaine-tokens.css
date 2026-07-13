@@ -18,6 +18,73 @@
   --spontaine-color-cream: #f0eee4;
   --spontaine-color-border-hairline: rgba(0, 0, 0, 0.1);
 
+  /* Typography families */
+  --spontaine-font-family-ui: 'Urbanist', sans-serif;
+  --spontaine-font-family-data: 'Roboto Mono', monospace;
+  --spontaine-font-family-fine: 'Inter', 'Urbanist', sans-serif;
+
+  /* Typography weights */
+  --spontaine-font-weight-light: 300;
+  --spontaine-font-weight-regular: 400;
+  --spontaine-font-weight-semibold: 600;
+  --spontaine-font-weight-bold: 700;
+
+  /* Typography scale */
+  --spontaine-font-size-display-2xl: clamp(2.25rem, 1.321rem + 3.81vw, 4rem);
+  --spontaine-line-height-display-2xl: 1.04;
+  --spontaine-letter-spacing-display-2xl: -0.02em;
+  --spontaine-font-weight-display-2xl: var(--spontaine-font-weight-bold);
+
+  --spontaine-font-size-display-xl: clamp(2rem, 1.469rem + 2.177vw, 3rem);
+  --spontaine-line-height-display-xl: 1.04;
+  --spontaine-letter-spacing-display-xl: -0.02em;
+  --spontaine-font-weight-display-xl: var(--spontaine-font-weight-bold);
+
+  --spontaine-font-size-display-lg: clamp(1.625rem, 1.294rem + 1.361vw, 2.25rem);
+  --spontaine-line-height-display-lg: 1.16;
+  --spontaine-letter-spacing-display-lg: -0.02em;
+  --spontaine-font-weight-display-lg: var(--spontaine-font-weight-semibold);
+
+  --spontaine-font-size-display-md: clamp(1.5rem, 1.367rem + 0.544vw, 1.75rem);
+  --spontaine-line-height-display-md: 1.16;
+  --spontaine-letter-spacing-display-md: 0;
+  --spontaine-font-weight-display-md: var(--spontaine-font-weight-semibold);
+
+  --spontaine-font-size-display-sm: clamp(1.25rem, 1.184rem + 0.272vw, 1.375rem);
+  --spontaine-line-height-display-sm: 1.16;
+  --spontaine-letter-spacing-display-sm: 0;
+  --spontaine-font-weight-display-sm: var(--spontaine-font-weight-semibold);
+
+  --spontaine-font-size-body-lg: 1.125rem;
+  --spontaine-line-height-body-lg: 1.6;
+  --spontaine-letter-spacing-body-lg: 0;
+  --spontaine-font-weight-body-lg: var(--spontaine-font-weight-regular);
+
+  --spontaine-font-size-body-md: 1rem;
+  --spontaine-line-height-body-md: 1.5;
+  --spontaine-letter-spacing-body-md: 0;
+  --spontaine-font-weight-body-md: var(--spontaine-font-weight-regular);
+
+  --spontaine-font-size-body-sm: 0.875rem;
+  --spontaine-line-height-body-sm: 1.5;
+  --spontaine-letter-spacing-body-sm: 0;
+  --spontaine-font-weight-body-sm: var(--spontaine-font-weight-regular);
+
+  --spontaine-font-size-label: 0.75rem;
+  --spontaine-line-height-label: 1.2;
+  --spontaine-letter-spacing-label: 0.08em;
+  --spontaine-font-weight-label: var(--spontaine-font-weight-semibold);
+
+  --spontaine-font-size-mono-data: 0.875rem;
+  --spontaine-line-height-mono-data: 1.4;
+  --spontaine-letter-spacing-mono-data: 0;
+  --spontaine-font-weight-mono-data: var(--spontaine-font-weight-regular);
+
+  --spontaine-font-size-fine-print: 0.75rem;
+  --spontaine-line-height-fine-print: 1.5;
+  --spontaine-letter-spacing-fine-print: 0;
+  --spontaine-font-weight-fine-print: var(--spontaine-font-weight-light);
+
   /* Radius */
   --spontaine-radius-pill: 9999px;
   --spontaine-radius-card: 24px;

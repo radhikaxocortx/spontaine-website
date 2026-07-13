@@ -39,6 +39,99 @@ export default {
         'roboto-mono': ['var(--font-mono)', ...defaultTheme.fontFamily.mono],
         'space-grotesk': ['var(--font-body)', ...defaultTheme.fontFamily.sans],
         'font-awesome': ['Font Awesome 6 Free', ...defaultTheme.fontFamily.sans],
+        'spontaine-ui': ['var(--spontaine-font-family-ui)', ...defaultTheme.fontFamily.sans],
+        'spontaine-data': ['var(--spontaine-font-family-data)', ...defaultTheme.fontFamily.mono],
+        'spontaine-fine': ['var(--spontaine-font-family-fine)', ...defaultTheme.fontFamily.sans],
+      },
+      fontSize: {
+        'spontaine-display-2xl': [
+          'var(--spontaine-font-size-display-2xl)',
+          {
+            lineHeight: 'var(--spontaine-line-height-display-2xl)',
+            letterSpacing: 'var(--spontaine-letter-spacing-display-2xl)',
+            fontWeight: 'var(--spontaine-font-weight-display-2xl)',
+          },
+        ],
+        'spontaine-display-xl': [
+          'var(--spontaine-font-size-display-xl)',
+          {
+            lineHeight: 'var(--spontaine-line-height-display-xl)',
+            letterSpacing: 'var(--spontaine-letter-spacing-display-xl)',
+            fontWeight: 'var(--spontaine-font-weight-display-xl)',
+          },
+        ],
+        'spontaine-display-lg': [
+          'var(--spontaine-font-size-display-lg)',
+          {
+            lineHeight: 'var(--spontaine-line-height-display-lg)',
+            letterSpacing: 'var(--spontaine-letter-spacing-display-lg)',
+            fontWeight: 'var(--spontaine-font-weight-display-lg)',
+          },
+        ],
+        'spontaine-display-md': [
+          'var(--spontaine-font-size-display-md)',
+          {
+            lineHeight: 'var(--spontaine-line-height-display-md)',
+            letterSpacing: 'var(--spontaine-letter-spacing-display-md)',
+            fontWeight: 'var(--spontaine-font-weight-display-md)',
+          },
+        ],
+        'spontaine-display-sm': [
+          'var(--spontaine-font-size-display-sm)',
+          {
+            lineHeight: 'var(--spontaine-line-height-display-sm)',
+            letterSpacing: 'var(--spontaine-letter-spacing-display-sm)',
+            fontWeight: 'var(--spontaine-font-weight-display-sm)',
+          },
+        ],
+        'spontaine-body-lg': [
+          'var(--spontaine-font-size-body-lg)',
+          {
+            lineHeight: 'var(--spontaine-line-height-body-lg)',
+            letterSpacing: 'var(--spontaine-letter-spacing-body-lg)',
+            fontWeight: 'var(--spontaine-font-weight-body-lg)',
+          },
+        ],
+        'spontaine-body-md': [
+          'var(--spontaine-font-size-body-md)',
+          {
+            lineHeight: 'var(--spontaine-line-height-body-md)',
+            letterSpacing: 'var(--spontaine-letter-spacing-body-md)',
+            fontWeight: 'var(--spontaine-font-weight-body-md)',
+          },
+        ],
+        'spontaine-body-sm': [
+          'var(--spontaine-font-size-body-sm)',
+          {
+            lineHeight: 'var(--spontaine-line-height-body-sm)',
+            letterSpacing: 'var(--spontaine-letter-spacing-body-sm)',
+            fontWeight: 'var(--spontaine-font-weight-body-sm)',
+          },
+        ],
+        'spontaine-label': [
+          'var(--spontaine-font-size-label)',
+          {
+            lineHeight: 'var(--spontaine-line-height-label)',
+            letterSpacing: 'var(--spontaine-letter-spacing-label)',
+            fontWeight: 'var(--spontaine-font-weight-label)',
+          },
+        ],
+        'spontaine-mono-data': [
+          'var(--spontaine-font-size-mono-data)',
+          {
+            lineHeight: 'var(--spontaine-line-height-mono-data)',
+            letterSpacing: 'var(--spontaine-letter-spacing-mono-data)',
+            fontWeight: 'var(--spontaine-font-weight-mono-data)',
+          },
+        ],
+        'spontaine-fine-print': [
+          'var(--spontaine-font-size-fine-print)',
+          {
+            lineHeight: 'var(--spontaine-line-height-fine-print)',
+            letterSpacing: 'var(--spontaine-letter-spacing-fine-print)',
+            fontWeight: 'var(--spontaine-font-weight-fine-print)',
+          },
+        ],
       },
       colors: {
         // PR-02 additive design-token aliases. Existing `spontaine` and legacy palettes remain untouched.
