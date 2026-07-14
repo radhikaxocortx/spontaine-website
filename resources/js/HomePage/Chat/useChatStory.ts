@@ -281,7 +281,7 @@ export function useChatStory({ stageRef, tableRef, approvalRef }: UseChatStoryPr
 
     const approvalTableTrigger = ScrollTrigger.create({
       trigger: table,
-      start: 'bottom 60%',
+      start: 'center 50%',
       onEnter: () => {
         tableScrolledUpRef.current = true
         markStageInViewport()
