@@ -6,7 +6,7 @@ export default function PrismHero() {
   return (
     <section
       id='hero'
-      className='relative isolate flex min-h-[760px] w-full flex-col overflow-hidden bg-[#f7f1e7] lg:min-h-[1046px] 2xl:min-h-[1293px]'
+      className='bg-spontaine-surface-cream relative isolate flex min-h-[760px] w-full flex-col overflow-hidden lg:min-h-[1046px] 2xl:min-h-[1293px]'
     >
       <HeroVideo />
 

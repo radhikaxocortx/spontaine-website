@@ -6,6 +6,20 @@
 
 :root {
   /* Colors */
+  --spontaine-color-surface-cream: #f7f1e7;
+  --spontaine-color-pale-gray: #f5f5f5;
+  --spontaine-color-bright-gray: #ededf2;
+  --spontaine-color-border-muted: #d1d5db;
+  --spontaine-color-accent: #0fe5a8;
+  --spontaine-color-accent-hover: #2befb6;
+
+  /* Text */
+  --spontaine-color-ink-soft: #2e2e2e;
+  --spontaine-color-ink-dark: #0f172a;
+  --spontaine-color-ink-normal: #374151;
+  --spontaine-color-ink-accent: #12d6a0;
+  --spontaine-color-ink-highlight: #0cce97;
+
   --spontaine-color-accent-mint: #45eda1;
   --spontaine-color-accent-lime: #c3ff6e;
   --spontaine-color-accent-ink: #0a7a55;
@@ -30,6 +44,11 @@
   --spontaine-font-weight-bold: 700;
 
   /* Typography scale */
+  --spontaine-font-size-display-hero: clamp(2.625rem, 2.2321rem + 1.9643vw, 4rem);
+  --spontaine-line-height-display-hero: clamp(2.875rem, 2.4464rem + 2.1429vw, 4.375rem);
+  --spontaine-letter-spacing-display-hero: -0.02em;
+  --spontaine-font-weight-display-hero: var(--spontaine-font-weight-bold);
+
   --spontaine-font-size-display-2xl: clamp(2.25rem, 1.321rem + 3.81vw, 4rem);
   --spontaine-line-height-display-2xl: 1.04;
   --spontaine-letter-spacing-display-2xl: -0.02em;
@@ -101,6 +120,11 @@
   --spontaine-shadow-floating: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   --spontaine-shadow-arc: 0 -16px 40px rgba(0, 0, 0, 0.1);
   --spontaine-shadow-arc-dark: 0 -16px 40px rgba(0, 0, 0, 0.35);
+  --spontaine-shadow-glass: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+
+  /* Effects */
+  --spontaine-blur-sm: 2px;
+  --spontaine-blur-md: 3px;
 
   /* Spacing and layout rhythm */
   --spontaine-space-section-y: 128px;

@@ -23,7 +23,7 @@ export default function HeroVideo() {
         />
       </video>
       <div className='absolute inset-0 bg-white/15' />
-      <div className='absolute inset-y-0 left-0 w-full bg-gradient-to-r from-[#f8f2e8]/75 via-[#f8f2e8]/35 to-transparent lg:w-[58%]' />
+      <div className='from-spontaine-surface-cream/75 via-spontaine-surface-cream/35 absolute inset-y-0 left-0 w-full bg-gradient-to-r to-transparent lg:w-[58%]' />
     </div>
   )
 }

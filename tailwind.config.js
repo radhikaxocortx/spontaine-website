@@ -31,7 +31,8 @@ export default {
         'data-lg-1stop': ['var(--font-data-lg-1stop)', ...defaultTheme.fontFamily.sans],
         // Generic font utilities
         heading: ['var(--font-heading)', ...defaultTheme.fontFamily.sans],
-        body: ['var(--font-body)', ...defaultTheme.fontFamily.sans],
+        display: ['Urbanist', ...defaultTheme.fontFamily.sans],
+        body: ['Space Grotesk', ...defaultTheme.fontFamily.sans],
         mono: ['var(--font-mono)', ...defaultTheme.fontFamily.mono],
 
         // Specific font names (kept for backward compatibility)
@@ -44,6 +45,14 @@ export default {
         'spontaine-fine': ['var(--spontaine-font-family-fine)', ...defaultTheme.fontFamily.sans],
       },
       fontSize: {
+        'display-hero': [
+          'var(--spontaine-font-size-display-hero)',
+          {
+            lineHeight: 'var(--spontaine-line-height-display-hero)',
+            letterSpacing: 'var(--spontaine-letter-spacing-display-hero)',
+            fontWeight: 'var(--spontaine-font-weight-display-hero)',
+          },
+        ],
         'spontaine-display-2xl': [
           'var(--spontaine-font-size-display-2xl)',
           {
@@ -134,29 +143,38 @@ export default {
         ],
       },
       colors: {
-        // PR-02 additive design-token aliases. Existing `spontaine` and legacy palettes remain untouched.
-        spontaineDesign: {
-          accent: {
-            mint: 'var(--spontaine-color-accent-mint)',
-            lime: 'var(--spontaine-color-accent-lime)',
-            ink: 'var(--spontaine-color-accent-ink)',
-            periwinkle: 'var(--spontaine-color-accent-periwinkle)',
+        spontaine: {
+          surface: {
+            cream: 'var(--spontaine-color-surface-cream)',
           },
           ink: {
             900: 'var(--spontaine-color-ink-900)',
             700: 'var(--spontaine-color-ink-700)',
+            soft: 'var(--spontaine-color-ink-soft)',
+            dark: 'var(--spontaine-color-ink-dark)',
+            normal: 'var(--spontaine-color-ink-normal)',
+            accent: 'var(--spontaine-color-ink-accent)',
+            highlight: 'var(--spontaine-color-ink-highlight)',
+          },
+          border: {
+            hairline: 'var(--spontaine-color-border-hairline)',
+            muted: 'var(--spontaine-color-border-muted)',
           },
           paper: 'var(--spontaine-color-paper)',
+          cream: 'var(--spontaine-color-cream)',
+          'pale-gray': 'var(--spontaine-color-pale-gray)',
+          'bright-gray': 'var(--spontaine-color-bright-gray)',
           gray: {
+            DEFAULT: '#A7A7A7',
             50: 'var(--spontaine-color-gray-50)',
             100: 'var(--spontaine-color-gray-100)',
           },
-          cream: 'var(--spontaine-color-cream)',
-          border: {
-            hairline: 'var(--spontaine-color-border-hairline)',
-          },
-        },
-        spontaine: {
+          'accent-approved': 'var(--spontaine-color-accent)',
+          'accent-hover': 'var(--spontaine-color-accent-hover)',
+          'accent-mint': 'var(--spontaine-color-accent-mint)',
+          'accent-lime': 'var(--spontaine-color-accent-lime)',
+          'accent-ink': 'var(--spontaine-color-accent-ink)',
+          'accent-periwinkle': 'var(--spontaine-color-accent-periwinkle)',
           accent: '#45EDA1',
           'accent-dark': '#00B563',
           highlight: '#7776BC',
@@ -167,7 +185,6 @@ export default {
 
           dark: '#343434',
           'dark-bg': '#242424',
-          gray: '#A7A7A7',
           'gray-warm': '#918D8D',
           'gray-cool': '#767676',
           'gray-soft': '#A9BBB8',
@@ -373,6 +390,11 @@ export default {
         'spontaine-floating': 'var(--spontaine-shadow-floating)',
         'spontaine-arc': 'var(--spontaine-shadow-arc)',
         'spontaine-arc-dark': 'var(--spontaine-shadow-arc-dark)',
+        'spontaine-glass': 'var(--spontaine-shadow-glass)',
+      },
+      backdropBlur: {
+        'spontaine-sm': 'var(--spontaine-blur-sm)',
+        'spontaine-md': 'var(--spontaine-blur-md)',
       },
       spacing: {
         'spontaine-section-y': 'var(--spontaine-space-section-y)',

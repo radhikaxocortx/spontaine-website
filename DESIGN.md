@@ -24,7 +24,7 @@ The current failure mode is measured: ~70% of visitors leave from the homepage. 
 
 ### 1.1 Color
 
-**Colr palette:** Regenerate `spontaine-tokens.json` against the values below before any further Figma work.
+**Color palette:** Regenerate `spontaine-tokens.json` against the values below before any further Figma work. The approved PrismHero establishes the current homepage cream surface, green emphasis treatment, and translucent glass support; do not overwrite those approved decisions with earlier planning colors without design review.
 
 | Token               | Hex                                     | Role                                                                                    | Hard rules                                                                                                                      |
 | ------------------- | --------------------------------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
@@ -42,6 +42,8 @@ The current failure mode is measured: ~70% of visitors leave from the homepage. 
 
 **Text on color, memorized:** dark text on mint. Dark text on lime. White text on charcoal. Nothing else.
 **Banned:** blue-purple SaaS gradients. There are none in the source; resist reaching for one. Periwinkle→mint is the one sanctioned gradient band.
+
+**Approved hero color decisions:** PrismHero is the current reference for the homepage cream surface and green emphasis treatment. `surface/cream` is the approved warm hero surface; legacy `cream` remains available for older deck-style layouts. `ink/accent` is approved for large flagship display emphasis after review, while `accent/ink` remains the conservative green choice for smaller text and links that must pass AA contrast. Do not document one-off hero artwork colors as system colors unless they recur in another approved section.
 
 ### 1.2 Typography
 
@@ -64,6 +66,8 @@ The current failure mode is measured: ~70% of visitors leave from the homepage. 
 **Casing law:** sentence case everywhere — headlines, buttons, nav, card titles. **Never Title Case.** All-caps is permitted _only_ at 11–12px eyebrow scale, where letter-spacing (not size) carries the emphasis.
 **Practical note for a designer:** Urbanist is geometric and runs wide. Long paragraphs (the hero subhead, demo artifacts) need 160% line-height and a ≤680px measure or they read airy and loose. Below 14px, switch to Inter Light — that's why the brand already does.
 
+**`display-hero`:** a first-class typography primitive above `display-2xl`, reserved for flagship marketing surfaces that need the approved PrismHero scale and responsive behavior. It is not homepage-namespaced, and it must not be broken into hero-specific breakpoint tokens.
+
 ### 1.3 Shape, shadow, border
 
 | Property                                             | Value                                                                                     | Note                                                                                                |
@@ -77,6 +81,10 @@ The current failure mode is measured: ~70% of visitors leave from the homepage. 
 | Backdrop blur                                        | Only two places: the Windfall "found for you" ticket, and the scrollytelling glass cards. | Always over dark or photographic backdrops. **Never over a plain white section.**                   |
 | Section padding                                      | 128px desktop / 64px mobile                                                               | Generous horizontal rhythm                                                                          |
 | Nav                                                  | Floating pill with margin on all sides                                                    | The header is **never** a flush full-width bar                                                      |
+
+**Approved glass primitives:** the approved hero promotes subtle glass blur and a restrained inset glass shadow as reusable visual primitives. Use them for translucent bars, glass panels, demo artifacts, and future approved overlays where the background has enough texture to justify glass. Do not use glass as default card styling, and do not add colored glows.
+
+**Hero CTA shape exception:** global buttons remain pills. The approved PrismHero CTA pair uses a compact small-radius shape as an art-directed homepage hero exception. Do not generalize that shape into the global button system unless another approved marketing surface proves the same need.
 
 ### 1.4 Motion
 
@@ -110,6 +118,14 @@ The brand's documented motion is deliberately minimal: CSS-transition fades, sho
 | **Data-sculpture renders ×7** | Stack build, one per layer                       | 1200×900, transparent bg, ≤80KB each. Consistent ¾-high camera, soft studio light, tokens-only palette. Extends the existing bar-chart/block-stack render family. |
 | **Gradient bands**            | Demo section, offer block                        | CSS radial/linear gradients (periwinkle→mint, ice→mint). Never a PNG. Never animated.                                                                             |
 | **Founder photograph**        | Founder close **and** the Company megamenu panel | Real: the three founders at a screen, the product visible. Warm, natural light. This is the "no account reps" claim as an image.                                  |
+
+### 1.7 Approved Hero Decisions
+
+- PrismHero is the approved homepage reference implementation and the first production-quality section of the redesign.
+- `display-hero` is now part of the typography system, above `display-2xl`, for flagship marketing surfaces.
+- Glass blur and the restrained glass inset shadow are approved reusable visual primitives.
+- Hero-specific art direction remains local until reuse is demonstrated elsewhere.
+- Design-system primitives should be extracted from approved implementations, not invented in advance.
 
 ---
 
@@ -244,6 +260,8 @@ Band rhythm: no two dark sheets adjacent, except the intentional founder-close�
 
 ## 6. Component inventory
 
+**Typography and effect primitives established by the approved hero:** `display-hero` · glass blur treatment · restrained glass inset shadow.
+
 **Primitives:** `Button` (primary/dark/accent/outline/ghost × 3 sizes, all pills) · `Badge`/`Eyebrow` · `Chip` (governance, 12px radius) · `FilterChip` · `IconButton` (40×40 circle) · `Card` (24px) · `Input`/`Textarea`/`Select` · `Stamp` (mono) · `SkeletonLine` · `SectionDivider` (the arc) · `Logo`.
 
 **Compounds:** `InfoCard` (+`CardTriplet`) · `StatCallout` · `PullQuote` · `TimeStamp` + rail · `PathStep` · `GlassPanel` (the _only_ glass implementation — scrolly cards, pricing modal, Windfall ticket) · `ModalShell` (Radix Dialog + animated exit) · `ChatInput`.
@@ -283,53 +301,27 @@ Band rhythm: no two dark sheets adjacent, except the intentional founder-close�
 
 ---
 
-## 9. Design critique — the hero, as built
+## 9. Approved Hero Decisions
 
-### Overall impression
+PrismHero is the approved homepage hero and the first production-quality reference section for the redesign. It supersedes the earlier hero critique in this document.
 
-The prism is doing exactly what a signature asset should — it's beautiful, unmistakably this brand, and nobody else's. The eyebrow is the best-written line on the page: it names both audiences _and_ plants the ownership claim before the headline arrives. The problem is that the artwork and the argument are fighting for the same pixels, and the copy is losing.
+### Approved decisions
 
-### Usability
+- The hero remains a custom homepage component, not a PageBuilder block.
+- The prism media, left-led content, CTA pair, microcopy, and router strip form the approved hero composition.
+- `display-hero` is a reusable typography primitive above `display-2xl`, intended for flagship marketing surfaces.
+- Glass blur and the restrained inset glass shadow are reusable visual primitives.
+- Hero-specific art direction stays local until reuse is proven by another approved section.
 
-| Finding                                                 | Severity    | Recommendation                                                                                                                                                                      |
-| ------------------------------------------------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Subhead reads **"in your next cloud"**                  | 🔴 Critical | Almost certainly a typo for **"your own cloud."** "Next cloud" implies a migration — the exact inverse of the non-intrusion promise the entire page rests on.                       |
-| Nav CTA reads **`Book Demo`**                           | 🔴 Critical | Retired verb (§2.4) _and_ Title Case (§1.2). Use `Book the working session`.                                                                                                        |
-| Primary CTA reads **`See it at your Company`**          | 🟡 Moderate | Off-string and mid-sentence Title Case. The agreed line is `See it on your own numbers` — "your numbers" is concrete; "your Company" is a form field.                               |
-| `Play the video` replaced `Read the architecture brief` | 🟡 Moderate | This removes the only smaller-yes for the CDO who won't book anything before reading the governance model. Keep both: brief as the outlined secondary, film as a text link beneath. |
-| No scroll cue below the fold                            | 🟢 Minor    | The arc-stack's first burial is the page's best moment. A faint chevron or the arc's leading edge peeking above the fold would earn the scroll.                                     |
+### Token extraction philosophy
 
-### Visual hierarchy
+- Prefer existing Tailwind utilities first when they preserve the approved design.
+- Promote reusable design decisions into the design system.
+- Keep art-directed values local until reuse is proven.
+- Do not create tokens solely because a value exists.
 
-- **What draws the eye first:** the crystal, not the headline. On a page whose 70% problem is a five-second recognition failure, that's inverted. Move the crystal down-right, or add a subtle light scrim behind the text column.
-- **Reading flow:** breaks at the subhead. The rainbow refraction runs diagonally straight through the paragraph — lines 1–3 sit on bright, high-chroma pixels.
-- **Emphasis:** the headline sets in three lines with a short orphaned middle line ("engagement"). And **"Power to run every…"** buries the verb — "Power to" is filler. `Run every engagement like it's your biggest.` is stronger, shorter, and sets in two clean lines.
-- The period after the italic _biggest_ appears to sit outside the italic run, in a different weight. Small, but this audience reads for precision.
+### Guardrails
 
-### Consistency
-
-| Element                                   | Issue                                                         | Fix                                                                              |
-| ----------------------------------------- | ------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| Emphasis word `biggest` in mint           | `#45EDA1` on cream is ~1.2:1 — fails at any size              | Use `accent/ink` (`#0A7A55`, verified) for all green letterforms                 |
-| Tier-2 line (_"Built from the systems…"_) | Italic, low-contrast gray, over the busiest part of the image | Non-italic, `ink/700` at 60%, and move off the refraction                        |
-| Eyebrow separator                         | Hyphen `-` used as a dash                                     | Use `·` or an em dash                                                            |
-| Logo mark                                 | The interim mockup redraws it as a diamond                    | Never redraw. Use `assets/logo/` crops; the white wordmark SVG for the dark pill |
-
-### Accessibility
-
-- **Contrast:** the mint emphasis word and the italic tier-2 line both fail AA. The subhead over the crystal fails in patches — which is worse than failing uniformly, because it's unpredictable.
-- **Touch targets:** CTA pills pass. Nav links are tight; verify ≥44px hit area including padding.
-- **Alt text:** prism is decorative → `alt=""`, `role="presentation"`.
-
-### What works well
-
-- The eyebrow. It solved the two-audience problem in one line and got ownership above the fold without spending a headline on it.
-- The prism as a signature. Genuinely ownable; worth the LCP budget it will cost.
-- The router strip — quiet, correctly subordinate to the hero CTA, and the one element on the page already doing its job perfectly.
-- The floating pill nav with the lime CTA. Correct brand shape language, and the lime earns its scarcity.
-
-### Priority recommendations
-
-1. **Fix "next cloud" → "own cloud."** One word, and it currently inverts the product's central promise.
-2. **Separate the art from the argument.** Shift the crystal down-right and hold the copy in a ≤680px column on clean pixels; the refraction should _frame_ the text, never cross it.
-3. **Retire `Book Demo`, restore `See it on your own numbers`, and darken every green letterform to `accent/ink`.** Three small edits that align the page with its own brand law and its own conversion strategy.
+- Do not copy hero-specific widths, heights, media offsets, or CTA dimensions into global tokens.
+- Do not rewrite future homepage sections from this hero alone.
+- Do not use implementation measurements in this document as a substitute for approved design decisions.
