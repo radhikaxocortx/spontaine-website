@@ -3,7 +3,7 @@ import PrismHero from '@/HomePage/Hero/PrismHero'
 import CompanyLogosMarquee from '@/Modules/PageBuilder/Blocks/HomeBlocks/CompanyLogosMarquee'
 import SectionAlignedAction from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionAlignedAction'
 import SectionBlogsCarousel from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionBlogsCarousel'
-import SectionChat from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionChat'
+import SectionChatV3 from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionChatV3'
 import SectionCTA from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionCTA'
 import SectionTestimonial from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionTestimonial'
 import VideoFeatureCarousel from '@/Modules/PageBuilder/Blocks/HomeBlocks/VideoFeatureCarousel'
@@ -244,7 +244,8 @@ const StaticHomePage2 = ({
       <div className='relative min-h-screen w-full max-w-full overflow-x-hidden bg-white'>
         <PrismHero />
 
-        <SectionChat />
+        {/* <SectionChat /> */}
+        <SectionChatV3 />
         <VideoFeatureCarousel />
         {/* <div className='hidden md:-mt-12 md:block'>
           <CompanyLogosSection />
