@@ -24,21 +24,21 @@ function BentoCard({
     <article
       ref={cardRef}
       className={[
-        'relative flex min-h-[360px] flex-col overflow-hidden rounded-[40px] shadow-[0_10px_15px_-3px_rgba(0,0,0,0.1),0_4px_6px_-4px_rgba(0,0,0,0.1)]',
+        'relative flex min-h-[320px] w-full max-w-[380px] flex-col justify-self-center overflow-hidden rounded-[40px]',
         surface,
         text,
         className,
       ].join(' ')}
     >
       <div
-        className={['relative z-10 flex flex-1 flex-col p-6 sm:p-8 lg:p-8', contentClassName]
+        className={['relative z-10 flex flex-1 flex-col p-5 sm:p-7', contentClassName]
           .filter(Boolean)
           .join(' ')}
       >
         {header}
         <h3
           className={[
-            'text-center font-display text-2xl font-bold leading-[1.16] tracking-[-0.02em] sm:text-[28px]',
+            'text-center font-display text-xl font-bold leading-[1.16] tracking-[-0.02em] sm:text-2xl',
             titleClassName,
           ]
             .filter(Boolean)
@@ -47,7 +47,7 @@ function BentoCard({
           {title}
         </h3>
         <div
-          className={['mt-5 font-body text-sm leading-[1.6] sm:text-sm', bodyClassName]
+          className={['mt-5 font-body text-sm leading-[1.55] sm:text-sm', bodyClassName]
             .filter(Boolean)
             .join(' ')}
         >
@@ -64,7 +64,7 @@ export default function SectionBentoV3() {
   let cardIndex = 0
 
   return (
-    <section className='relative w-full overflow-hidden bg-white'>
+    <section className='relative w-full overflow-hidden bg-white pb-10 md:pb-4'>
       <div className='relative -mb-1 w-full'>
         <svg
           viewBox='0 0 1920 183'
@@ -81,16 +81,16 @@ export default function SectionBentoV3() {
 
       <div className='bg-gradient-to-b from-[#d4eeff] to-spontaine-surface-cream'>
         <AppLayoutPadding className='pb-24 pt-10 sm:pb-32 lg:pb-44 lg:pt-16'>
-          <div className='mx-auto w-full max-w-6xl'>
+          <div className='mx-auto w-full max-w-[860px]'>
             <div className='mx-auto mb-14 flex h-10 w-48 items-center justify-center rounded-lg bg-black/5 font-mono text-sm tracking-[-0.025em] text-spontaine-gray'>
               Options
             </div>
 
-            <div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-11'>
+            <div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8'>
               {bentoColumns.map((column, columnIndex) => (
                 <div
                   key={columnIndex}
-                  className='flex flex-col gap-6 lg:gap-11'
+                  className='flex flex-col items-center gap-6 lg:gap-8'
                 >
                   {column.map((card) => {
                     const currentCardIndex = cardIndex

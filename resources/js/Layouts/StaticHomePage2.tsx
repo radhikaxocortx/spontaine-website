@@ -1,6 +1,7 @@
 import MetaTags from '@/components/MetaTags'
 import SectionBentoV3 from '@/HomePage/Bento/SectionBentoV3'
 import PrismHero from '@/HomePage/Hero/PrismHero'
+import SectionStackV3 from '@/HomePage/Stack/SectionStackV3'
 import CompanyLogosMarquee from '@/Modules/PageBuilder/Blocks/HomeBlocks/CompanyLogosMarquee'
 import SectionBlogsCarousel from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionBlogsCarousel'
 import SectionChatV3 from '@/HomePage/Chat/SectionChatV3'
@@ -253,6 +254,7 @@ const StaticHomePage2 = ({
           <CompanyLogosSection />
         </div> */}
         <SectionBentoV3 />
+        <SectionStackV3 />
         <CompanyLogosMarquee />
         <SectionTestimonial />
 

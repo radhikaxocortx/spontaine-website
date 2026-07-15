@@ -43,7 +43,7 @@ export const bentoCards: BentoCardData[] = [
     title: 'Bolt-on co-pilot',
     surface: 'bg-[rgba(74,74,74,0.6)]',
     text: 'text-slate-200',
-    className: 'lg:min-h-[580px]',
+    className: 'py-2',
     body: (
       <>
         <p>
@@ -63,7 +63,7 @@ export const bentoCards: BentoCardData[] = [
     title: 'Commission a build',
     surface: 'bg-[#4A4A4A]',
     text: 'text-[#D5DDE9]',
-    className: 'lg:min-h-[360px]',
+    className: '',
     body: (
       <>
         <p>
@@ -82,9 +82,10 @@ export const bentoCards: BentoCardData[] = [
     title: 'Unify once. Iterate forever.',
     surface: 'bg-[rgba(213,221,233,0.3)]',
     text: 'text-spontaine-ink-soft',
-    className: 'lg:min-h-[720px]',
-    contentClassName: 'lg:px-12 lg:pb-16 lg:pt-24',
-    titleClassName: 'mx-auto max-w-[340px] lg:mt-24',
+    className:
+      'shadow-[0_10px_15px_-3px_rgba(0,0,0,0.1),0_4px_6px_-4px_rgba(0,0,0,0.1)]',
+    contentClassName: '',
+    titleClassName: 'mx-auto max-w-[340px]',
     bodyClassName: '!mt-auto max-w-[520px] text-left',
     header: <SpontaineLogo />,
     body: (
@@ -97,6 +98,6 @@ export const bentoCards: BentoCardData[] = [
 ]
 
 export const bentoColumns: readonly BentoCardData[][] = [
-  [bentoCards[0], bentoCards[1]],
-  [bentoCards[2], bentoCards[3]],
+  [bentoCards[0], bentoCards[3]],
+  [bentoCards[2], bentoCards[1]],
 ]
