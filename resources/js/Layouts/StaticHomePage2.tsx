@@ -1,12 +1,11 @@
 import MetaTags from '@/components/MetaTags'
+import SectionBentoV3 from '@/HomePage/Bento/SectionBentoV3'
 import PrismHero from '@/HomePage/Hero/PrismHero'
 import CompanyLogosMarquee from '@/Modules/PageBuilder/Blocks/HomeBlocks/CompanyLogosMarquee'
-import SectionAlignedAction from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionAlignedAction'
 import SectionBlogsCarousel from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionBlogsCarousel'
-import SectionChatV3 from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionChatV3'
+import SectionChatV3 from '@/HomePage/Chat/SectionChatV3'
 import SectionCTA from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionCTA'
 import SectionTestimonial from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionTestimonial'
-import VideoFeatureCarousel from '@/Modules/PageBuilder/Blocks/HomeBlocks/VideoFeatureCarousel'
 import { FooterDataInterface } from '@/Modules/PageBuilder/FooterEditor/FooterEditor'
 import { Page } from '@/Modules/PageBuilder/page_interfaces'
 import { PageProps } from '@/types'
@@ -246,11 +245,14 @@ const StaticHomePage2 = ({
 
         {/* <SectionChat /> */}
         <SectionChatV3 />
-        <VideoFeatureCarousel />
+
+        {/* Commenting the video feature carousel */}
+        {/* <VideoFeatureCarousel /> */}
+
         {/* <div className='hidden md:-mt-12 md:block'>
           <CompanyLogosSection />
         </div> */}
-        <SectionAlignedAction />
+        <SectionBentoV3 />
         <CompanyLogosMarquee />
         <SectionTestimonial />
 

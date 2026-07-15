@@ -22,7 +22,7 @@ export default function ResultsTable() {
     <ChatSurface
       variant='card'
       size='none'
-      className='!bg-spontaine-paper overflow-hidden !rounded-[40px] px-5 py-6 !shadow-[0_4px_12px_rgba(46,46,46,0.08),0_12px_32px_-8px_rgba(46,46,46,0.12)] sm:px-7 lg:px-8'
+      className='overflow-hidden !rounded-[40px] !bg-spontaine-paper px-5 py-6 !shadow-[0_4px_12px_rgba(46,46,46,0.08),0_12px_32px_-8px_rgba(46,46,46,0.12)] sm:px-7 lg:px-8'
     >
       <div className='overflow-x-auto'>
         <div className='min-w-[720px]'>
@@ -37,7 +37,7 @@ export default function ResultsTable() {
             {rows.map((row) => (
               <div
                 key={row.engagement}
-                className='font-display text-spontaine-ink-dark grid grid-cols-[380px_100px_130px_1fr] py-2.5 text-sm leading-normal'
+                className='grid grid-cols-[380px_100px_130px_1fr] py-2.5 font-display text-sm leading-normal text-spontaine-ink-dark'
               >
                 <span className='font-medium'>{row.engagement}</span>
                 <span>{row.margin}</span>
@@ -55,10 +55,10 @@ export default function ResultsTable() {
 
       <div className='mt-5 grid gap-6 lg:grid-cols-[1.05fr_1fr] lg:gap-8'>
         <div className='min-w-0'>
-          <div className='font-display text-spontaine-ink-soft flex items-center gap-3 text-sm font-semibold'>
+          <div className='flex items-center gap-3 font-display text-sm font-semibold text-spontaine-ink-soft'>
             <svg
               aria-hidden='true'
-              className='text-spontaine-ink-accent h-4 w-4'
+              className='h-4 w-4 text-spontaine-ink-accent'
               fill='none'
               viewBox='0 0 16 16'
             >
@@ -83,7 +83,7 @@ export default function ResultsTable() {
             <p className='font-display text-3xl font-bold leading-none text-slate-400 sm:text-4xl'>
               &euro;12,596.98
             </p>
-            <span className='bg-spontaine-accent-approved/15 font-display text-spontaine-ink-highlight inline-flex items-center rounded-full px-3 py-1 text-xs font-bold'>
+            <span className='bg-spontaine-accent-approved/15 inline-flex items-center rounded-full px-3 py-1 font-display text-xs font-bold text-spontaine-ink-highlight'>
               &#8599; 12%
             </span>
             <span className='pb-1 font-body text-xs text-slate-400'>YoY</span>
@@ -123,7 +123,7 @@ export default function ResultsTable() {
               <text
                 x='75'
                 y='90'
-                className='font-display fill-white text-[10px] font-semibold'
+                className='fill-white font-display text-[10px] font-semibold'
               >
                 Avg 6.8%
               </text>
@@ -140,7 +140,7 @@ export default function ResultsTable() {
               ))}
             </div>
 
-            <span className='bg-spontaine-accent-approved/10 font-display text-spontaine-ink-highlight absolute bottom-0 left-[62%] rounded-full px-4 py-2 text-xs font-bold'>
+            <span className='bg-spontaine-accent-approved/10 absolute bottom-0 left-[62%] rounded-full px-4 py-2 font-display text-xs font-bold text-spontaine-ink-highlight'>
               May
             </span>
           </div>
@@ -157,11 +157,11 @@ export default function ResultsTable() {
             </li>
           </ul>
 
-          <div className='border-spontaine-border-muted mt-4 rounded-2xl border bg-white p-4'>
+          <div className='mt-4 rounded-2xl border border-spontaine-border-muted bg-white p-4'>
             <span className='inline-flex rounded-md bg-sky-100 px-2 py-1 font-mono text-[10px] font-bold uppercase text-sky-600'>
               Arc
             </span>
-            <p className='font-display text-spontaine-ink-dark mt-3 text-sm font-bold'>
+            <p className='mt-3 font-display text-sm font-bold text-spontaine-ink-dark'>
               Firm-wide Margin Leakage by Service Line
             </p>
             <p className='mt-1 font-body text-[10px] leading-4 text-slate-400'>
@@ -171,7 +171,7 @@ export default function ResultsTable() {
 
           <button
             type='button'
-            className='bg-spontaine-accent-approved font-display text-spontaine-ink-dark hover:bg-spontaine-accent-hover focus-visible:ring-spontaine-ink-accent mt-3 flex min-h-11 w-full items-center justify-between rounded-lg px-5 text-sm font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
+            className='focus-visible:ring-spontaine-ink-accent mt-3 flex min-h-11 w-full items-center justify-between rounded-lg bg-spontaine-accent-approved px-5 font-display text-sm font-bold text-spontaine-ink-dark transition-colors hover:bg-spontaine-accent-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
           >
             <span className='flex items-center gap-3'>
               <span aria-hidden='true'>+</span>

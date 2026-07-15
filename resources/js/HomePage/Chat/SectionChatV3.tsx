@@ -1,7 +1,7 @@
-import ApprovalCard from '@/HomePage/Chat/ApprovalCard'
-import ChatSurface from '@/HomePage/Chat/ChatSurface'
-import ResultsTable from '@/HomePage/Chat/ResultsTable'
-import { useChatStory } from '@/HomePage/Chat/useChatStory'
+import ApprovalCard from './ApprovalCard'
+import ChatSurface from './ChatSurface'
+import ResultsTable from './ResultsTable'
+import { useChatStory } from './useChatStory'
 import { gsap } from 'gsap'
 import { MorphSVGPlugin } from 'gsap/MorphSVGPlugin'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -150,7 +150,7 @@ export default function SectionChatV3() {
 
   return (
     <section
-      className='relative -mt-32 w-full pb-0 md:pb-0 lg:pb-20'
+      className='relative -mt-32 w-full pb-0 md:pb-0 lg:pb-32'
       data-story-state={storyState}
     >
       <div className='relative w-full'>
