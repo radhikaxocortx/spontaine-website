@@ -131,7 +131,7 @@ export default function SectionCardStackV3() {
             </p>
             <h2
               id='stack-legora-title'
-              className='mt-4 max-w-5xl font-display text-4xl font-bold leading-tight text-spontaine-ink-soft sm:text-5xl lg:text-6xl'
+              className='mt-4 max-w-5xl font-display text-2xl font-bold leading-tight text-spontaine-ink-soft sm:text-3xl lg:text-4xl'
             >
               Governed data and safe AI inference from what you already own.
             </h2>
@@ -260,7 +260,7 @@ export default function SectionCardStackV3() {
                   </div>
 
                   <motion.div
-                    className='absolute bottom-7 left-6 right-6 z-50 h-1.5 overflow-hidden rounded-full bg-white/80 shadow-sm backdrop-blur sm:bottom-9 sm:left-8 sm:right-8'
+                    className='absolute bottom-4 left-1/2 z-50 h-1.5 w-[min(320px,calc(100%_-_48px))] -translate-x-1/2 overflow-hidden rounded-full bg-white/80 shadow-sm backdrop-blur sm:bottom-5 sm:w-[min(360px,calc(100%_-_64px))]'
                     aria-hidden='true'
                   >
                     <motion.div
@@ -406,7 +406,7 @@ function StackCard({
           </p>
           <h3
             className={[
-              'mt-4 max-w-lg font-display text-2xl font-bold leading-tight sm:text-3xl',
+              'mt-4 max-w-lg font-display text-lg font-bold leading-tight sm:text-xl',
               compact ? 'text-xl sm:text-2xl' : '',
               card.titleTone === 'green' ? 'text-[#1e3a34]' : 'text-spontaine-ink-soft',
             ].join(' ')}
