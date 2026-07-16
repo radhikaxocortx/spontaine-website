@@ -2,11 +2,10 @@ import MetaTags from '@/components/MetaTags'
 import SectionBentoV3 from '@/HomePage/Bento/SectionBentoV3'
 import SectionChatV3 from '@/HomePage/Chat/SectionChatV3'
 import PrismHero from '@/HomePage/Hero/PrismHero'
+import SectionBlogsCarouselV3 from '@/HomePage/SectionBlogsCarouselV3'
+import SectionCTAV3 from '@/HomePage/SectionCTAV3'
+import SectionTestimonialV3 from '@/HomePage/SectionTestimonialV3'
 import SectionCardStackV3 from '@/HomePage/Stack/SectionCardStackV3'
-import CompanyLogosMarquee from '@/Modules/PageBuilder/Blocks/HomeBlocks/CompanyLogosMarquee'
-import SectionBlogsCarousel from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionBlogsCarousel'
-import SectionCTA from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionCTA'
-import SectionTestimonial from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionTestimonial'
 import { FooterDataInterface } from '@/Modules/PageBuilder/FooterEditor/FooterEditor'
 import { Page } from '@/Modules/PageBuilder/page_interfaces'
 import { PageProps } from '@/types'
@@ -255,11 +254,11 @@ const StaticHomePage2 = ({
         </div> */}
         <SectionBentoV3 />
         <SectionCardStackV3 />
-        <CompanyLogosMarquee />
-        <SectionTestimonial />
+        {/* <CompanyLogosMarquee /> */}
+        <SectionTestimonialV3 />
 
-        <SectionBlogsCarousel featuredBlogs={featuredBlogs} />
-        <SectionCTA />
+        <SectionBlogsCarouselV3 featuredBlogs={featuredBlogs} />
+        <SectionCTAV3 />
         {/* <SectionVideos featuredPosts={featuredVideoPosts} />
         <SectionLargeText /> */}
 
