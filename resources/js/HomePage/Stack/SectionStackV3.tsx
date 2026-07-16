@@ -14,7 +14,13 @@ interface StackCardData {
   readonly compactRightPadding?: boolean
 }
 
-type StackArtworkKind = 'connectors' | 'meaning' | 'answers' | 'persistence' | 'safety' | 'new-ip'
+export type StackArtworkKind =
+  | 'connectors'
+  | 'meaning'
+  | 'answers'
+  | 'persistence'
+  | 'safety'
+  | 'new-ip'
 
 const stackCards: StackCardData[] = [
   {
@@ -128,7 +134,6 @@ export default function SectionStackV3() {
 
     const step = 1 / (stackCards.length + 1)
     const revealWindow = step * 1.75
-    const totalCards = stackCards.length
     const setProgress = gsap.quickSetter(progressBar, 'scaleX') as (value: number) => void
 
     const setters = cards.map((card, index) => {
@@ -150,7 +155,7 @@ export default function SectionStackV3() {
 
     const updateStack = (progress: number) => {
       let nextCurrentCard = 0
-      const layerProgressByIndex = stackCards.map((_, index) => {
+      stackCards.forEach((_, index) => {
         const start = index * step
         const layerProgress = clamp((progress - start) / revealWindow, 0, 1)
 
@@ -354,7 +359,7 @@ function StackCard({
   )
 }
 
-function StackArtwork({ artwork }: { readonly artwork: StackArtworkKind }) {
+export function StackArtwork({ artwork }: { readonly artwork: StackArtworkKind }) {
   const className = 'mx-auto h-[180px] w-[190px] shrink-0 md:mx-0 md:h-[205px] md:w-[206px]'
 
   if (artwork === 'connectors') {

@@ -7,7 +7,8 @@ import {
   useScroll,
   useTransform,
 } from 'framer-motion'
-import { useMemo, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
+import { StackArtwork, type StackArtworkKind } from './SectionStackV3'
 
 interface StackCardData {
   readonly label: string
@@ -16,8 +17,6 @@ interface StackCardData {
   readonly artwork: StackArtworkKind
   readonly titleTone?: 'default' | 'green'
 }
-
-type StackArtworkKind = 'connectors' | 'meaning' | 'answers' | 'persistence' | 'safety' | 'new-ip'
 
 const stackCards: StackCardData[] = [
   {
@@ -146,9 +145,9 @@ export default function SectionCardStackV3() {
 
       <div
         ref={sceneRef}
-        className='relative lg:h-[340vh]'
+        className='relative h-[320vh] pb-10 lg:h-[340vh]'
       >
-        <div className='lg:sticky lg:top-0 lg:flex lg:min-h-screen lg:items-center'>
+        <div className='sticky top-[92px] flex min-h-[calc(100vh-92px)] items-center sm:top-[104px] sm:min-h-[calc(100vh-104px)] lg:top-[112px] lg:min-h-[calc(100vh-112px)]'>
           <AppLayoutPadding>
             <div className='mx-auto grid w-full max-w-[1224px] gap-10 pb-20 sm:pb-24 lg:grid-cols-[260px_minmax(0,1fr)] lg:items-center lg:gap-12 lg:pb-0'>
               <nav
@@ -197,12 +196,12 @@ export default function SectionCardStackV3() {
 
               <div className='hidden lg:block'>
                 <motion.div
-                  className='relative ml-auto flex h-[clamp(620px,calc(100vh_-_48px),720px)] w-full max-w-[860px] flex-col justify-center'
+                  className='relative ml-auto flex h-[clamp(560px,calc(100vh_-_176px),680px)] w-full max-w-[860px] flex-col justify-center'
                   style={{ scale: stageScale, y: stageY }}
                 >
                   <div className='absolute inset-x-0 bottom-20 top-8 rounded-[32px] bg-[#e9eef5]' />
 
-                  <div className='relative z-10 mx-10 h-[min(560px,calc(100%_-_100px))] min-h-[520px] overflow-visible'>
+                  <div className='relative z-10 mx-10 h-[min(520px,calc(100%_-_92px))] min-h-[460px] overflow-visible'>
                     {stackCards.map((card, index) => (
                       <StackLayer
                         key={card.label}
@@ -215,7 +214,7 @@ export default function SectionCardStackV3() {
                   </div>
 
                   <motion.div
-                    className='relative z-40 mx-auto mt-5 flex flex-wrap justify-center gap-2 py-4'
+                    className='relative z-40 mx-auto mt-5 flex flex-wrap justify-center gap-2 py-2'
                     style={{ opacity: chipOpacity, y: chipY }}
                   >
                     {trustChips.map((chip) => (
@@ -240,14 +239,36 @@ export default function SectionCardStackV3() {
                 </motion.div>
               </div>
 
-              <div className='grid gap-5 lg:hidden'>
-                {stackCards.map((card) => (
-                  <StackCard
-                    key={card.label}
-                    card={card}
-                    isActive
-                  />
-                ))}
+              <div className='lg:hidden'>
+                <motion.div
+                  className='relative mx-auto h-[clamp(420px,calc(100vh_-_150px),560px)] w-full max-w-[560px]'
+                  style={{ scale: stageScale, y: stageY }}
+                >
+                  <div className='absolute inset-0 rounded-[28px] bg-[#e9eef5]' />
+
+                  <div className='absolute inset-x-3 bottom-9 top-3 overflow-visible sm:inset-x-5 sm:bottom-10 sm:top-5'>
+                    {stackCards.map((card, index) => (
+                      <StackLayer
+                        key={card.label}
+                        card={card}
+                        index={index}
+                        scrollYProgress={scrollYProgress}
+                        isActive={index === activeIndex}
+                        compact
+                      />
+                    ))}
+                  </div>
+
+                  <motion.div
+                    className='absolute bottom-7 left-6 right-6 z-50 h-1.5 overflow-hidden rounded-full bg-white/80 shadow-sm backdrop-blur sm:bottom-9 sm:left-8 sm:right-8'
+                    aria-hidden='true'
+                  >
+                    <motion.div
+                      className='h-full origin-left rounded-full bg-spontaine-accent'
+                      style={{ scaleX: progressScale }}
+                    />
+                  </motion.div>
+                </motion.div>
               </div>
             </div>
           </AppLayoutPadding>
@@ -262,19 +283,29 @@ function StackLayer({
   index,
   scrollYProgress,
   isActive,
+  compact = false,
 }: {
   readonly card: StackCardData
   readonly index: number
   readonly scrollYProgress: MotionValue<number>
   readonly isActive: boolean
+  readonly compact?: boolean
 }) {
   const layerProgress = useTransform(scrollYProgress, (value) => getCardProgress(value, index))
-  const y = useTransform(layerProgress, [-1.15, -0.2, 0, 1, 2, 3], [120, 34, 0, 30, 58, 84])
-  const x = useTransform(layerProgress, [-1.15, -0.2, 0, 1, 2, 3], [0, 0, 0, 22, 40, 56])
+  const y = useTransform(
+    layerProgress,
+    [-1.15, -0.2, 0, 1, 2, 3],
+    compact ? [82, 24, 0, 18, 34, 48] : [120, 34, 0, 30, 58, 84]
+  )
+  const x = useTransform(
+    layerProgress,
+    [-1.15, -0.2, 0, 1, 2, 3],
+    compact ? [0, 0, 0, 10, 18, 24] : [0, 0, 0, 22, 40, 56]
+  )
   const scale = useTransform(
     layerProgress,
     [-1.15, -0.2, 0, 1, 2, 3],
-    [0.985, 0.995, 1, 0.96, 0.92, 0.9]
+    compact ? [0.985, 0.995, 1, 0.972, 0.946, 0.925] : [0.985, 0.995, 1, 0.96, 0.92, 0.9]
   )
   const opacity = useTransform(
     layerProgress,
@@ -303,6 +334,7 @@ function StackLayer({
         card={card}
         isActive={isActive}
         fitStage
+        compact={compact}
       />
     </motion.div>
   )
@@ -346,20 +378,28 @@ function StackCard({
   card,
   isActive,
   fitStage = false,
+  compact = false,
 }: {
   readonly card: StackCardData
   readonly isActive: boolean
   readonly fitStage?: boolean
+  readonly compact?: boolean
 }) {
   return (
     <article
       className={[
         'shadow-spontaine-ink-dark/10 relative flex min-h-[520px] flex-col justify-between overflow-hidden rounded-[28px] border border-white/70 px-6 pb-6 pt-5 shadow-2xl backdrop-blur sm:px-9 sm:pt-8',
-        fitStage ? 'lg:h-full lg:min-h-0' : '',
+        fitStage ? 'h-full min-h-0' : '',
+        compact ? 'px-5 pb-10 pt-5 sm:px-7 sm:pt-7' : '',
         isActive ? 'bg-[rgba(229,236,246,0.94)]' : 'bg-[rgba(229,236,246,0.74)]',
       ].join(' ')}
     >
-      <div className='relative z-10 grid gap-8 md:grid-cols-[minmax(0,1fr)_220px] md:items-start'>
+      <div
+        className={[
+          'relative z-10 grid gap-8 md:grid-cols-[minmax(0,1fr)_220px] md:items-start',
+          compact ? 'gap-5 md:grid-cols-[minmax(0,1fr)_170px]' : '',
+        ].join(' ')}
+      >
         <div>
           <p className='text-spontaine-ink-normal/55 font-mono text-xs font-semibold uppercase tracking-[0.16em]'>
             {card.label}
@@ -367,79 +407,28 @@ function StackCard({
           <h3
             className={[
               'mt-4 max-w-lg font-display text-2xl font-bold leading-tight sm:text-3xl',
+              compact ? 'text-xl sm:text-2xl' : '',
               card.titleTone === 'green' ? 'text-[#1e3a34]' : 'text-spontaine-ink-soft',
             ].join(' ')}
           >
             {card.title}
           </h3>
-          <div className='mt-5 space-y-4 font-body text-sm leading-6 text-[#2b2e33] sm:text-base sm:leading-7'>
+          <div
+            className={[
+              'mt-5 space-y-4 font-body text-sm leading-6 text-[#2b2e33] sm:text-base sm:leading-7',
+              compact ? 'mt-4 space-y-3 text-[13px] leading-5 sm:text-sm sm:leading-6' : '',
+            ].join(' ')}
+          >
             {card.description.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}
           </div>
         </div>
 
-        <StackArtwork artwork={card.artwork} />
+        <div className={compact ? 'hidden md:block' : ''}>
+          <StackArtwork artwork={card.artwork} />
+        </div>
       </div>
     </article>
-  )
-}
-
-function StackArtwork({ artwork }: { readonly artwork: StackArtworkKind }) {
-  const config = useMemo(() => {
-    const configs: Record<
-      StackArtworkKind,
-      {
-        readonly accent: string
-        readonly soft: string
-        readonly label: string
-      }
-    > = {
-      connectors: { accent: '#45EDA1', soft: '#5DAFE4', label: 'Sources' },
-      meaning: { accent: '#42D6EC', soft: '#A526E4', label: 'Context' },
-      answers: { accent: '#7DE4F4', soft: '#4C8EF9', label: 'Answers' },
-      persistence: { accent: '#2ECA9E', soft: '#09C7A4', label: 'Blocks' },
-      safety: { accent: '#F0DE50', soft: '#4C8EF9', label: 'Safe' },
-      'new-ip': { accent: '#A526E4', soft: '#EE7007', label: 'IP' },
-    }
-
-    return configs[artwork]
-  }, [artwork])
-
-  return (
-    <div
-      className='relative mx-auto h-[210px] w-[220px] shrink-0 md:mx-0'
-      aria-hidden='true'
-    >
-      {[0, 1, 2].map((index) => (
-        <div
-          key={index}
-          className='absolute rounded-[26px] border border-white/60 shadow-xl shadow-black/5'
-          style={{
-            inset: `${42 - index * 14}px ${34 + index * 10}px ${28 + index * 12}px ${22 - index * 4}px`,
-            rotate: `${-10 + index * 7}deg`,
-            background: `linear-gradient(135deg, ${config.accent}${42 + index * 18}, ${config.soft}${28 + index * 16})`,
-          }}
-        />
-      ))}
-      <div className='absolute inset-x-8 bottom-12 top-8 rounded-[30px] border border-white/80 bg-white/45 shadow-2xl shadow-black/10 backdrop-blur'>
-        <div className='absolute left-5 right-5 top-6 h-2 rounded-full bg-white/80' />
-        <div
-          className='absolute bottom-6 left-6 right-6 rounded-2xl px-4 py-3 font-mono text-xs font-semibold text-spontaine-ink-soft'
-          style={{ backgroundColor: `${config.accent}42` }}
-        >
-          {config.label}
-        </div>
-        <div className='absolute left-6 top-14 grid gap-2'>
-          {[0, 1, 2].map((index) => (
-            <span
-              key={index}
-              className='block h-2 rounded-full bg-white/75'
-              style={{ width: `${72 - index * 14}px` }}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
   )
 }
