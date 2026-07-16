@@ -1,10 +1,10 @@
 import MetaTags from '@/components/MetaTags'
 import SectionBentoV3 from '@/HomePage/Bento/SectionBentoV3'
+import SectionChatV3 from '@/HomePage/Chat/SectionChatV3'
 import PrismHero from '@/HomePage/Hero/PrismHero'
-import SectionStackV3 from '@/HomePage/Stack/SectionStackV3'
+import SectionCardStackV3 from '@/HomePage/Stack/SectionCardStackV3'
 import CompanyLogosMarquee from '@/Modules/PageBuilder/Blocks/HomeBlocks/CompanyLogosMarquee'
 import SectionBlogsCarousel from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionBlogsCarousel'
-import SectionChatV3 from '@/HomePage/Chat/SectionChatV3'
 import SectionCTA from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionCTA'
 import SectionTestimonial from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionTestimonial'
 import { FooterDataInterface } from '@/Modules/PageBuilder/FooterEditor/FooterEditor'
@@ -126,7 +126,7 @@ const StaticHomePage2 = ({
 
       /* Smooth page transitions and optimized rendering */
       body {
-        overflow-x: hidden !important;
+        overflow-x: clip !important;
         -webkit-overflow-scrolling: touch;
         overscroll-behavior-x: contain;
       }
@@ -233,7 +233,7 @@ const StaticHomePage2 = ({
   }, [])
 
   return (
-    <div className='overflow-x-hidden'>
+    <div className='[overflow-x:clip]'>
       <Navbar />
       <MetaTags
         title={title}
@@ -241,7 +241,7 @@ const StaticHomePage2 = ({
         image={image}
         noIndex={noIndex}
       />
-      <div className='relative min-h-screen w-full max-w-full overflow-x-hidden bg-white'>
+      <div className='relative min-h-screen w-full max-w-full bg-white [overflow-x:clip]'>
         <PrismHero />
 
         {/* <SectionChat /> */}
@@ -254,7 +254,7 @@ const StaticHomePage2 = ({
           <CompanyLogosSection />
         </div> */}
         <SectionBentoV3 />
-        <SectionStackV3 />
+        <SectionCardStackV3 />
         <CompanyLogosMarquee />
         <SectionTestimonial />
 
