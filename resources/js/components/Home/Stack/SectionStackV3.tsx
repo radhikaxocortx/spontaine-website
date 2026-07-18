@@ -21,7 +21,7 @@ const stackCards: StackCardData[] = [
     title: 'Connect any source, from anywhere.',
     description: [
       'Spontaine plugs into your data systems in-place, and runs automatically so your processes are untouched. Nothing to replace, nothing to reconfigure.',
-      'And unlike enterprise vendors, youâ€™re not locked in to any one stack or limited by a set of supported connectors.',
+      'And unlike enterprise vendors, you are not locked in to any one stack or limited by a set of supported connectors.',
     ],
     artwork: 'connectors',
   },
@@ -131,6 +131,15 @@ export default function SectionStackV3() {
 
     const hiddenCardOffset = Math.max(stackStage.offsetHeight + 120, window.innerHeight * 0.72)
     const setProgress = gsap.quickSetter(progressBar, 'scaleX') as (value: number) => void
+    const getStackOffset = (index: number) => {
+      const offset = figmaStackOffsets[index] ?? figmaStackOffsets[figmaStackOffsets.length - 1]
+      const isNarrow = window.matchMedia('(max-width: 767px)').matches
+
+      return {
+        x: isNarrow ? 0 : offset.x,
+        y: offset.y,
+      }
+    }
 
     const setters = cards.map((card, index) => {
       gsap.set(card, {
@@ -165,8 +174,7 @@ export default function SectionStackV3() {
       setters.forEach((setter, index) => {
         if (index <= nextCurrentCard) {
           const depth = nextCurrentCard - index
-          const stackOffset =
-            figmaStackOffsets[index] ?? figmaStackOffsets[figmaStackOffsets.length - 1]
+          const stackOffset = getStackOffset(index)
 
           setter.opacity(index === nextCurrentCard ? 1 : clamp(0.78 - depth * 0.04, 0.65, 0.78))
           setter.x(stackOffset.x)
@@ -265,10 +273,10 @@ export default function SectionStackV3() {
                   aria-label={`Show ${card.label}`}
                   onClick={() => goToCard(index)}
                   className={[
-                    'group -mx-2 flex items-center gap-3 rounded-[var(--radius-pill)] border-0 bg-transparent px-2 py-1 text-left font-mono text-xs transition-colors duration-200 hover:bg-spontaine-surface-ice/55 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-spontaine-accent-dark',
+                    'hover:bg-spontaine-surface-ice/55 group -mx-2 flex items-center gap-3 rounded-[var(--radius-pill)] border-0 bg-transparent px-2 py-1 text-left font-mono text-xs transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-spontaine-accent-dark',
                     index === currentCard
                       ? 'text-spontaine-text-primary font-semibold'
-                      : 'font-normal text-spontaine-gray-muted hover:text-spontaine-text-primary',
+                      : 'hover:text-spontaine-text-primary font-normal text-spontaine-gray-muted',
                   ].join(' ')}
                 >
                   <span
@@ -280,7 +288,7 @@ export default function SectionStackV3() {
                         : 'bg-spontaine-surface-muted group-hover:bg-spontaine-accent/60',
                     ].join(' ')}
                   />
-                  <span className='text-[inherit] leading-[inherit]'>{card.label}</span>
+                  <span className='leading-[inherit] text-[inherit]'>{card.label}</span>
                 </button>
               ))}
             </div>
@@ -308,9 +316,9 @@ export default function SectionStackV3() {
               ) : (
                 <div
                   ref={stackStageRef}
-                  className='relative -mx-4 min-h-[500px] w-[calc(100%+2rem)] max-w-[calc(730px+2rem)] overflow-hidden px-4 sm:-mx-6 sm:min-h-[560px] sm:w-[calc(100%+3rem)] sm:max-w-[calc(730px+3rem)] sm:px-6 lg:-ml-8 lg:-mr-14 lg:w-[calc(100%+5.5rem)] lg:max-w-[calc(730px+5.5rem)] lg:pl-8 lg:pr-14 xl:-mr-16 xl:w-[calc(100%+6rem)] xl:max-w-[calc(730px+6rem)] xl:pr-16'
+                  className='relative min-h-[500px] w-full max-w-[730px] overflow-hidden sm:min-h-[560px] md:-ml-6 md:-mr-12 md:w-[calc(100%+4.5rem)] md:max-w-[calc(730px+4.5rem)] md:pl-6 md:pr-12 lg:-ml-8 lg:-mr-14 lg:w-[calc(100%+5.5rem)] lg:max-w-[calc(730px+5.5rem)] lg:pl-8 lg:pr-14 xl:-mr-16 xl:w-[calc(100%+6rem)] xl:max-w-[calc(730px+6rem)] xl:pr-16'
                 >
-                  <div className='absolute inset-x-4 bottom-14 top-0 overflow-visible sm:inset-x-6 lg:left-8 lg:right-14 xl:right-16'>
+                  <div className='absolute inset-x-0 bottom-14 top-0 overflow-visible md:left-6 md:right-12 lg:left-8 lg:right-14 xl:right-16'>
                     {stackCards.map((card, index) => (
                       <div
                         key={card.label}
@@ -353,7 +361,7 @@ function StackCard({
   return (
     <article
       className={[
-        'border-spontaine-border-glass-edge relative flex flex-col gap-7 overflow-hidden rounded-[var(--radius-panel)] border px-6 py-5 shadow-surface sm:px-8 md:flex-row md:items-center md:gap-8',
+        'border-spontaine-border-glass-edge relative flex flex-row gap-7 overflow-hidden rounded-[var(--radius-panel)] border px-6 py-5 shadow-surface sm:px-8 md:flex-row md:items-center md:gap-8',
         isActive ? 'bg-spontaine-surface-ice/90' : 'bg-spontaine-surface-ice/35 shadow-none',
         card.compactRightPadding ? 'md:pr-8' : 'md:pr-12',
       ].join(' ')}
@@ -384,7 +392,7 @@ function StackCard({
       </div>
       <div
         className={[
-          'flex h-[180px] w-[190px] shrink-0 items-center justify-center self-center transition-all duration-300 md:h-[205px] md:w-[206px]',
+          'hidden h-[180px] w-[190px] shrink-0 items-center justify-center self-center transition-all duration-300 md:flex md:h-[205px] md:w-[206px]',
           isActive ? 'scale-100 opacity-100 blur-0' : 'scale-105 opacity-25 blur-lg',
         ].join(' ')}
       >
