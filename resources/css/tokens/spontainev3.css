@@ -53,6 +53,20 @@
   --spontaine-icon-bg: #676557;
   /* Use for icon foreground text on icon tile backgrounds. */
   --spontaine-icon-text: #fbfbf7;
+  /* Use for answer prompt card body text in V3 product visuals. */
+  --spontaine-prompt-text: #455258;
+  /* Use for the first reusable V3 pill or compact status variant. */
+  --spontaine-pill-variant-1-bg: #edf8f4;
+  --spontaine-pill-variant-1-text: #438675;
+  /* Use for the second reusable V3 pill or compact status variant. */
+  --spontaine-pill-variant-2-bg: #f0eff9;
+  --spontaine-pill-variant-2-text: #6860a2;
+  /* Use for the third reusable V3 pill or compact status variant. */
+  --spontaine-pill-variant-3-bg: #fff5df;
+  --spontaine-pill-variant-3-text: #98712e;
+  /* Use for the fourth reusable V3 pill or compact status variant. */
+  --spontaine-pill-variant-4-bg: #e7f5fb;
+  --spontaine-pill-variant-4-text: #34708b;
   /* Use for desktop shell gutters and constrained page padding. */
   --space-shell: 24px;
   /* Use for mobile shell gutters. */

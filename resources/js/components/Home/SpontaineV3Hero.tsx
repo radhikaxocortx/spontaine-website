@@ -1,9 +1,30 @@
-import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowUpRight } from 'lucide-react'
+import { useEffect, useRef } from 'react'
 
-const decisionStates = ['Governed answer', 'Reusable block', 'Secure endpoint', 'Workflow']
+const decisionStates = [
+  {
+    label: 'Governed answer',
+    className:
+      'bg-[var(--spontaine-pill-variant-1-bg)] text-[var(--spontaine-pill-variant-1-text)]',
+  },
+  {
+    label: 'Reusable Block',
+    className:
+      'bg-[var(--spontaine-pill-variant-2-bg)] text-[var(--spontaine-pill-variant-2-text)]',
+  },
+  {
+    label: 'Secure endpoint',
+    className:
+      'bg-[var(--spontaine-pill-variant-3-bg)] text-[var(--spontaine-pill-variant-3-text)]',
+  },
+  {
+    label: 'Workflow',
+    className:
+      'bg-[var(--spontaine-pill-variant-4-bg)] text-[var(--spontaine-pill-variant-4-text)]',
+  },
+]
 
 export default function SpontaineV3Hero() {
   const heroRef = useRef<HTMLElement | null>(null)
@@ -154,19 +175,19 @@ export default function SpontaineV3Hero() {
           {/* Answer prompt card */}
           <div
             ref={promptCardRef}
-            className='absolute bottom-5 left-0 w-full max-w-[470px] rounded-[var(--radius-card)] border border-spontaine-white/90 bg-spontaine-white/85 p-[var(--space-card)] shadow-surface backdrop-blur-md lg:bottom-[15px]'
+            className='absolute bottom-5 left-0 w-[min(470px,100%)] rounded-[18px] border border-spontaine-white/90 bg-spontaine-white/[0.84] px-[17px] py-[15px] shadow-surface backdrop-blur-[16px] lg:bottom-[15px]'
           >
-            <p className='font-body text-sm font-semibold text-spontaine-gray-deep'>
+            <p className='font-body text-[0.78rem] font-semibold text-[var(--spontaine-prompt-text)]'>
               Which engagements are likely to miss target margin this quarter?
             </p>
 
-            <div className='mt-4 flex flex-wrap gap-2'>
+            <div className='mt-3 flex flex-wrap gap-[7px]'>
               {decisionStates.map((state) => (
                 <span
-                  key={state}
-                  className='rounded-[var(--radius-pill)] bg-spontaine-light-ice px-3 py-2 font-mono text-[11px] font-medium text-spontaine-accent-dark'
+                  key={state.label}
+                  className={`rounded-full px-[9px] py-[2px] font-mono text-[0.63rem] font-medium tracking-[-0.035em] ${state.className}`}
                 >
-                  {state}
+                  {state.label}
                 </span>
               ))}
             </div>
