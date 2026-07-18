@@ -69,10 +69,10 @@ export default function HeroArcInteractive() {
           <div className='relative z-10 flex min-h-screen flex-col items-center justify-center pb-28 pt-32 text-center sm:pb-36 sm:pt-48'>
             {/* Main Title */}
             <div className='mb-8'>
-              <h1 className='mb-2 font-heading text-[48px] font-medium leading-[1] text-black sm:text-[64px] lg:text-[80px] xl:text-[96px]'>
+              <h1 className='mb-2 font-display text-[48px] font-medium leading-[1] text-black sm:text-[64px] lg:text-[80px] xl:text-[96px]'>
                 One Source of Truth.
               </h1>
-              <h2 className='font-heading text-[48px] font-medium leading-[1.1] text-black sm:text-[64px] lg:text-[80px] xl:text-[96px]'>
+              <h2 className='font-display text-[48px] font-medium leading-[1.1] text-black sm:text-[64px] lg:text-[80px] xl:text-[96px]'>
                 <em className='font-light italic'>Infinite</em> Automation.
               </h2>
             </div>

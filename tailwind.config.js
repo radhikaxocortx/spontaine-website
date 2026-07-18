@@ -10,11 +10,35 @@ export default {
     './resources/views/**/*.blade.php',
     './resources/js/**/*.tsx',
   ],
+  safelist: [
+    'rounded-card',
+    'rounded-panel',
+    'rounded-control',
+    'rounded-pill',
+    'shadow-surface',
+    'shadow-nav',
+    'shadow-card-lift',
+    'shadow-cta-glow',
+    'bg-hero-wash',
+    'bg-cta-wash',
+    'bg-mint-lime',
+    'bg-mint-blue',
+    'bg-prism-surface',
+    'bg-text-highlight',
+    'display-hero',
+    'display-xl',
+    'display-lg',
+    'heading-xl',
+    'heading-lg',
+    'body-lg',
+    'body-md',
+    'eyebrow',
+  ],
 
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Urbanist', ...defaultTheme.fontFamily.sans],
+        sans: ['var(--font-body)', ...defaultTheme.fontFamily.sans],
         'id-font': ['FragmentMono-Regular', ...defaultTheme.fontFamily.sans],
         'h1-stop': ['var(--font-h1-1stop)', ...defaultTheme.fontFamily.sans],
         'h2-1stop': ['var(--font-h2-1stop)', ...defaultTheme.fontFamily.sans],
@@ -30,14 +54,10 @@ export default {
         'data-md-1stop': ['var(--font-data-md-1stop)', ...defaultTheme.fontFamily.sans],
         'data-lg-1stop': ['var(--font-data-lg-1stop)', ...defaultTheme.fontFamily.sans],
         // Generic font utilities
-        heading: ['var(--font-heading)', ...defaultTheme.fontFamily.sans],
+        display: ['var(--font-display)', ...defaultTheme.fontFamily.sans],
         body: ['var(--font-body)', ...defaultTheme.fontFamily.sans],
         mono: ['var(--font-mono)', ...defaultTheme.fontFamily.mono],
 
-        // Specific font names (kept for backward compatibility)
-        urbanist: ['var(--font-heading)', ...defaultTheme.fontFamily.sans],
-        'roboto-mono': ['var(--font-mono)', ...defaultTheme.fontFamily.mono],
-        'space-grotesk': ['var(--font-body)', ...defaultTheme.fontFamily.sans],
         'font-awesome': ['Font Awesome 6 Free', ...defaultTheme.fontFamily.sans],
       },
       colors: {
@@ -246,8 +266,36 @@ export default {
         5: '5px',
         10: '10px',
       },
+      spacing: {
+        shell: '28px',
+        'shell-sm': '19px',
+        section: '120px',
+        'section-lg': '150px',
+        'card-sm': '16px',
+        card: '22px',
+        'card-lg': '29px',
+        stack: '14px',
+      },
+      borderRadius: {
+        card: '20px',
+        panel: '24px',
+        control: '10px',
+        pill: '999px',
+      },
       boxShadow: {
         'spontaine-dpa': '0 4px 15px rgba(0, 0, 0, 0.05)',
+        surface: 'var(--shadow-surface)',
+        nav: 'var(--shadow-nav)',
+        'card-lift': 'var(--shadow-card-lift)',
+        'cta-glow': 'var(--shadow-cta-glow)',
+      },
+      backgroundImage: {
+        'hero-wash': 'var(--gradient-hero-wash)',
+        'cta-wash': 'var(--gradient-cta-wash)',
+        'mint-lime': 'var(--gradient-mint-lime)',
+        'mint-blue': 'var(--gradient-mint-blue)',
+        'prism-surface': 'var(--gradient-prism-surface)',
+        'text-highlight': 'var(--gradient-text-highlight)',
       },
       keyframes: {
         'accordion-down': {

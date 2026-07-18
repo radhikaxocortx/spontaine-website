@@ -100,7 +100,7 @@ const AllResources = ({
       ref={allResourcesSectionRef}
       className='rounded-[24px] border border-slate-100 bg-white p-10 pb-28 shadow-sm'
     >
-      <h2 className='py-4 font-heading text-[36px] font-bold text-slate-900 sm:text-[44px]'>
+      <h2 className='py-4 font-display text-[36px] font-bold text-slate-900 sm:text-[44px]'>
         All Resources
       </h2>
 

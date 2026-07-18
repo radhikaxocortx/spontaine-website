@@ -134,7 +134,7 @@ const SectionMarqueeSP = ({
             {/* Heading */}
             <div className='mx-auto mb-12 max-w-xl px-6 text-center sm:mb-16 lg:mb-20'>
               <h2
-                className='whitespace-pre-line font-heading text-5xl font-normal leading-tight sm:text-6xl lg:text-7xl xl:text-[88.9px] xl:leading-[90px]'
+                className='whitespace-pre-line font-display text-5xl font-normal leading-tight sm:text-6xl lg:text-7xl xl:text-[88.9px] xl:leading-[90px]'
                 style={{ color: fontColor }}
               >
                 {titleText}

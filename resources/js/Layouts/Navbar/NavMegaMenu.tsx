@@ -128,7 +128,7 @@ const NavMegaMenu = ({ menu, lang = 'en' }: Properties) => {
                 <div className='grid max-h-[calc(80vh-3rem)] min-h-0 gap-6 p-6 lg:grid-cols-2 lg:grid-rows-[auto,1fr,auto]'>
                   {/* Header: Section name (left column, top row) */}
                   <div className='px-0 pt-0 lg:col-start-1 lg:col-end-2 lg:row-start-1 lg:row-end-2'>
-                    <p className='font-heading text-lg tracking-wider text-spontaine-light/60'>
+                    <p className='font-display text-lg tracking-wider text-spontaine-light/60'>
                       <Localization
                         text={
                           menu.items?.items?.[0]?.section ?? {
@@ -166,7 +166,7 @@ const NavMegaMenu = ({ menu, lang = 'en' }: Properties) => {
                                 }
                               },
                               onFocus: () => setActiveLinkId(link.id),
-                              className: `flex w-full items-start justify-between rounded-lg px-3 py-2 text-left font-heading ring-0 ${isActive ? 'text-spontaine-light' : 'text-spontaine-light/60'} hover:text-spontaine-light focus:outline-none focus:ring-0`,
+                              className: `flex w-full items-start justify-between rounded-lg px-3 py-2 text-left font-display ring-0 ${isActive ? 'text-spontaine-light' : 'text-spontaine-light/60'} hover:text-spontaine-light focus:outline-none focus:ring-0`,
                             }
 
                             const content = (

@@ -44,7 +44,7 @@ const ResourceCard = ({ post, onClick }: ResourceCardProps) => {
 
       {/* Content */}
       <div className='flex min-w-0 flex-1 flex-col justify-center'>
-        <h3 className='font-heading text-[16px] font-semibold leading-[1.4] text-spontaine-dark transition-colors group-hover:text-spontaine-accent'>
+        <h3 className='font-display text-[16px] font-semibold leading-[1.4] text-spontaine-dark transition-colors group-hover:text-spontaine-accent'>
           {post.page_title}
         </h3>
 

@@ -66,7 +66,7 @@ const ResourcesBanner = ({ post, onShareClick }: { post: Page; onShareClick: () 
         className='relative z-10 flex w-full flex-col items-center justify-center px-6 pb-12 pt-10'
       >
         <div className='mx-auto max-w-3xl text-center'>
-          <h1 className='mb-6 font-heading text-[32px] font-semibold leading-tight text-spontaine-dark sm:text-[40px]'>
+          <h1 className='mb-6 font-display text-[32px] font-semibold leading-tight text-spontaine-dark sm:text-[40px]'>
             {post.title}
           </h1>
 

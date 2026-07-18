@@ -65,7 +65,7 @@ const FeaturedArticles = ({ featuredPosts, onPostClick }: FeaturedArticlesProps)
       ref={featuredSectionRef}
       className='mb-16'
     >
-      <h2 className='mb-8 font-heading text-4xl font-bold text-spontaine-dark'>
+      <h2 className='mb-8 font-display text-4xl font-bold text-spontaine-dark'>
         Featured Articles
       </h2>
 

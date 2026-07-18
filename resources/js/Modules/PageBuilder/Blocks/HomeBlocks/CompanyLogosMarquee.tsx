@@ -124,7 +124,7 @@ export default function CompanyLogosMarquee() {
 
         {/* Heading */}
         <div className='mx-auto mb-12 max-w-4xl px-6 text-center sm:mb-16 lg:mb-20'>
-          <h2 className='font-heading text-spontaine-dark text-5xl font-normal leading-tight sm:text-6xl lg:text-7xl xl:text-[88.9px] xl:leading-[90px]'>
+          <h2 className='font-display text-spontaine-dark text-5xl font-normal leading-tight sm:text-6xl lg:text-7xl xl:text-[88.9px] xl:leading-[90px]'>
             Trusted by
             <br />
             high-impact organizations

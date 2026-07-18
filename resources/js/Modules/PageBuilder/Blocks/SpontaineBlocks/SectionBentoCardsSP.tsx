@@ -246,7 +246,7 @@ const SectionBentoCardsSP = ({
         <div className='mx-auto max-w-7xl px-6 pb-12 text-center sm:px-8 sm:pb-16 lg:px-12 lg:pb-20'>
           {titleText && (
             <h2
-              className='whitespace-pre-line font-heading text-5xl font-normal leading-tight sm:text-6xl lg:text-7xl xl:text-[88px]'
+              className='whitespace-pre-line font-display text-5xl font-normal leading-tight sm:text-6xl lg:text-7xl xl:text-[88px]'
               style={{ color: titleColor }}
             >
               {titleText}
@@ -386,7 +386,7 @@ function BentoCardComponent({
     >
       <div className='p-8 text-center sm:p-10 lg:p-12'>
         <h3
-          className='mb-4 font-heading text-3xl font-semibold sm:text-4xl lg:text-[38px]'
+          className='mb-4 font-display text-3xl font-semibold sm:text-4xl lg:text-[38px]'
           style={{ color: cardTextColor }}
         >
           {cardTitle}

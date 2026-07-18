@@ -90,7 +90,7 @@ const SectionCTA = ({ className }: SectionCTAProps) => {
           <div className='relative z-10 mx-auto mb-16 flex max-w-4xl flex-col items-center justify-center px-6 text-center'>
             <h2
               ref={headingRef}
-              className='mb-8 font-heading text-5xl font-normal leading-tight text-spontaine-dark-bg sm:mb-12 sm:text-6xl lg:text-7xl xl:text-[88.9px] xl:leading-[120px]'
+              className='mb-8 font-display text-5xl font-normal leading-tight text-spontaine-dark-bg sm:mb-12 sm:text-6xl lg:text-7xl xl:text-[88.9px] xl:leading-[120px]'
             >
               Ready for your PoC?
             </h2>

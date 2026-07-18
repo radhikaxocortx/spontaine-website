@@ -32,7 +32,7 @@ const BlogCard = ({ post, stacked = false, aspectRatio = '', onClick }: BlogCard
           {/* Featured Content */}
           <div className='flex flex-col'>
             {/* Title */}
-            <h3 className='font-heading text-2xl font-bold text-spontaine-dark group-hover:text-spontaine-accent-footer'>
+            <h3 className='font-display text-2xl font-bold text-spontaine-dark group-hover:text-spontaine-accent-footer'>
               {post.page_title}
             </h3>
 
@@ -83,7 +83,7 @@ const BlogCard = ({ post, stacked = false, aspectRatio = '', onClick }: BlogCard
         </div>
 
         {/* Title */}
-        <h3 className='font-heading text-2xl font-bold text-spontaine-dark group-hover:text-spontaine-accent-footer'>
+        <h3 className='font-display text-2xl font-bold text-spontaine-dark group-hover:text-spontaine-accent-footer'>
           {post.page_title}
         </h3>
 

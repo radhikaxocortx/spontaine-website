@@ -82,7 +82,7 @@ const FeaturedResources = ({ featuredPosts, onPostClick }: FeaturedResourcesProp
               className='bg-spontaine-accent/20 text-slate-900'
             />
 
-            <h2 className='font-heading text-4xl font-bold text-spontaine-dark'>
+            <h2 className='font-display text-4xl font-bold text-spontaine-dark'>
               {featuredPost.page_title}
             </h2>
 

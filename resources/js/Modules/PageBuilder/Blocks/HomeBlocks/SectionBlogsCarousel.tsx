@@ -182,7 +182,7 @@ const SectionBlogsCarousel = ({ className, featuredBlogs = [] }: SectionBlogsCar
                     <div className='grid h-[400px] grid-cols-1 items-start gap-6 md:h-[320px] md:grid-cols-2 lg:h-[280px]'>
                       {/* Left - Content */}
                       <div className='group flex h-full flex-col space-y-4'>
-                        <h3 className='line-clamp-3 font-heading text-2xl font-bold leading-tight text-spontaine-dark transition-colors duration-200 group-hover:text-spontaine-accent-footer sm:text-3xl'>
+                        <h3 className='line-clamp-3 font-display text-2xl font-bold leading-tight text-spontaine-dark transition-colors duration-200 group-hover:text-spontaine-accent-footer sm:text-3xl'>
                           {blog.page_title || blog.title}
                         </h3>
                         <div className='flex-1'>

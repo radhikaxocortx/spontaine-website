@@ -117,7 +117,7 @@ export default function SectionBannerClean({
               ref={titleRef}
               className='mb-8'
             >
-              <h1 className='text-spontaine-dark font-heading text-[48px] font-medium leading-[1] sm:text-[64px] lg:text-[80px] xl:text-[96px]'>
+              <h1 className='text-spontaine-dark font-display text-[48px] font-medium leading-[1] sm:text-[64px] lg:text-[80px] xl:text-[96px]'>
                 <Localization
                   text={title}
                   language={language}

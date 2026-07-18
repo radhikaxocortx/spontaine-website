@@ -41,7 +41,7 @@ function BentoCard({ title, titleText, desc, descText, image, bg, gridClasses }:
     >
       <div className='p-8 text-center sm:p-10 lg:p-12'>
         <h3
-          className={`font-heading mb-4 text-3xl font-semibold sm:text-4xl lg:text-[38px] ${titleText}`}
+          className={`font-display mb-4 text-3xl font-semibold sm:text-4xl lg:text-[38px] ${titleText}`}
         >
           {title}
         </h3>
@@ -201,7 +201,7 @@ export default function SectionAlignedAction() {
       >
         {/* HEADING */}
         <div className='mx-auto max-w-7xl px-6 pb-12 text-center sm:px-8 sm:pb-16 lg:px-12 lg:pb-20'>
-          <h2 className='font-heading text-spontaine-dark text-5xl font-normal leading-tight sm:text-6xl lg:text-7xl xl:text-[88px]'>
+          <h2 className='font-display text-spontaine-dark text-5xl font-normal leading-tight sm:text-6xl lg:text-7xl xl:text-[88px]'>
             Strategy-aligned action.
             <br />
             Fast, at scale.

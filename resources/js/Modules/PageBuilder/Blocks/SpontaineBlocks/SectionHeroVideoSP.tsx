@@ -197,7 +197,7 @@ const SectionHeroVideoSP = ({
           {/* Main Title */}
           <div className='mb-8'>
             <h1
-              className='mb-2 font-heading text-[48px] font-medium leading-[1] sm:text-[64px] lg:text-[80px] xl:text-[96px]'
+              className='mb-2 font-display text-[48px] font-medium leading-[1] sm:text-[64px] lg:text-[80px] xl:text-[96px]'
               style={{ color: blockData.titleColor?.english || '#FFFFFF' }}
             >
               <Localization
@@ -221,7 +221,7 @@ const SectionHeroVideoSP = ({
               </div>
             </h1>
             <h2
-              className='font-heading text-[48px] font-medium leading-[1.1] sm:text-[64px] lg:text-[80px] xl:text-[96px]'
+              className='font-display text-[48px] font-medium leading-[1.1] sm:text-[64px] lg:text-[80px] xl:text-[96px]'
               style={{ color: blockData.titleColor?.english || '#FFFFFF' }}
             >
               <em className='font-light italic'>

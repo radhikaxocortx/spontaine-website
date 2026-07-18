@@ -162,7 +162,7 @@ export default function SectionChat() {
         <div className='mx-auto max-w-7xl px-6 sm:px-8 lg:px-12'>
           {/* Headline */}
           <div className='mb-12 text-center sm:mb-16 lg:mb-20'>
-            <h2 className='font-heading text-6xl leading-[1] text-spontaine-gray-soft'>
+            <h2 className='font-display text-6xl leading-[1] text-spontaine-gray-soft'>
               Connect every signal.
               <br />
               Give your people{' '}

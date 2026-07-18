@@ -66,7 +66,7 @@ const AllPosts = ({ posts, currentPage, lastPage, onPostClick }: AllPostsProps) 
 
   return (
     <section ref={allPostsSectionRef}>
-      <h2 className='py-4 font-heading text-4xl font-bold text-spontaine-dark'>All Posts</h2>
+      <h2 className='py-4 font-display text-4xl font-bold text-spontaine-dark'>All Posts</h2>
 
       {/* Posts Grid */}
       <div className='grid gap-8 md:grid-cols-2 lg:grid-cols-3'>

@@ -277,7 +277,7 @@ const SectionImageCarouselSP = ({
             {/* Title */}
             {titleText && (
               <h2
-                className='mx-auto max-w-4xl text-center font-heading text-5xl font-normal leading-tight sm:text-6xl lg:text-7xl xl:text-[88.9px] xl:leading-[90px]'
+                className='mx-auto max-w-4xl text-center font-display text-5xl font-normal leading-tight sm:text-6xl lg:text-7xl xl:text-[88.9px] xl:leading-[90px]'
                 style={{ color: titleColor }}
               >
                 {titleText}

@@ -59,7 +59,7 @@ const ResourcesBanner = () => {
             ref={titleRef}
             className='mb-8'
           >
-            <h1 className='font-heading text-[48px] font-medium leading-[1] text-white sm:text-[64px] lg:text-[80px] xl:text-[96px]'>
+            <h1 className='font-display text-[48px] font-medium leading-[1] text-white sm:text-[64px] lg:text-[80px] xl:text-[96px]'>
               Resources
             </h1>
           </div>

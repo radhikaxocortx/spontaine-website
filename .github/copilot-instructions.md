@@ -20,7 +20,7 @@ Purpose: Enable immediate productive contributions while preserving established 
 
 - PHP: `declare(strict_types=1);`, feature subfolders inside default Laravel folders (e.g. `app/Http/Controllers/Customer/*`). Favor Form Requests (e.g. `NavMenuFormRequest`) for validation. Avoid raw queries; use repositories/services for non-trivial persistence.
 - React: PascalCase components; business logic in hooks; prop types readonly; conditional UI with `&&`; avoid inline styles—prefer Tailwind utilities.
-- Styling: Tailwind-first. Use px-based utilities; extend design tokens in `tailwind.config.js`. Add custom animation only if aligned with existing keyframes (e.g. `reveal`, `shimmer`).
+- Styling: Tailwind-first. Use px-based utilities; extend design tokens in `tailwind.config.js`. - Prefer existing animation patterns where practical, but new animation systems may be introduced when justified by the design.
 - IDs in structured JSON (nav/page blocks) use incremental `lastUUID` patterns—always update `lastUUID` when appending.
 
 ## Copilot Project Rules - Spontaine UI System
@@ -40,12 +40,126 @@ Purpose: Enable immediate productive contributions while preserving established 
 - Avoid inline styles unless there is no practical Tailwind/class alternative.
 - Keep spacing consistent with the existing Tailwind spacing scale.
 
+### Cross-Platform Consistency Rules
+
+- Do not rely on OS-specific font glyphs for UI elements.
+- Prefer SVG icons over Unicode symbols.
+- Avoid using emoji or special-character arrows for production UI.
+- Test layouts against:
+  - macOS Chrome
+  - Windows Chrome
+  - Windows Edge
+
+Design decisions should be based on component dimensions rather than visual appearance on a single operating system.
+
+Use explicit sizing for:
+
+- icons
+- spacing
+- typography
+- containers
+
+Avoid browser-dependent defaults.
+
+### Typography Rules
+
+- Typography must remain visually stable across platforms.
+- Use locally hosted font files.
+- Avoid relying on system fonts.
+- Use clamp() for responsive display typography.
+- Validate hero typography on:
+  - 1440px desktop
+  - 1280px laptop
+  - 1024px laptop
+  - 768px tablet
+  - 390px mobile
+
+### Design Validation Rules
+
+The design must not be optimized for a single viewport.
+
+Validate all major homepage sections at:
+
+- 390px
+- 768px
+- 1024px
+- 1280px
+- 1440px
+- 1920px
+
+Layout quality should be maintained across all breakpoints.
+
+Avoid pixel-perfect implementations that only look correct at one screen width.
+
 ### Component Rules
 
 - Prefer component composition over class composition.
 - Avoid stacking semantic-style classes to simulate components (example to avoid: `hero-card feature-card large-card`).
 - Extract reusable primitives and shared UI to `resources/js/components/`.
 - Keep PageBuilder block-specific UI inside the PageBuilder module unless broadly reusable.
+
+### Primitive Discovery & Extraction
+
+- Do not create React primitives preemptively.
+- Build concrete implementations first.
+- Extract primitives only when repeated patterns emerge.
+
+#### Extraction Rule
+
+A primitive should generally satisfy all of the following:
+
+- Appears at least twice.
+- Removes duplication.
+- Is expected to be reused.
+- Simplifies future implementation.
+
+Do not create abstractions for single-use patterns.
+
+#### Required Primitive Audit
+
+At the end of every homepage section implementation:
+
+1. Review repeated layout patterns.
+2. Review repeated card patterns.
+3. Review repeated typography patterns.
+4. Review repeated CTA patterns.
+5. Review repeated metadata patterns.
+
+Document:
+
+- Pattern
+- Locations found
+- Extract now? (Yes/No)
+- Reasoning
+
+#### Preferred Workflow
+
+1. Implement section.
+2. Complete primitive audit.
+3. Identify reusable patterns.
+4. Extract primitives in a dedicated follow-up PR when justified.
+
+#### Anti-Patterns
+
+Avoid:
+
+- HeroContainer
+- ComparisonCard
+- ArchitectureCard
+- SectionWrapperLarge
+- MarketingCardV2
+
+Prefer:
+
+- Container
+- SectionHeading
+- SurfaceCard
+- CTAButton
+- MetadataLabel
+
+#### Guiding Principle
+
+The design system should emerge from implementation rather than being invented upfront.
 
 ### Page Builder Rules
 
@@ -68,12 +182,50 @@ Purpose: Enable immediate productive contributions while preserving established 
 
 ### Animation Rules
 
-- Use GSAP only where it adds clear interaction value.
-- Do not mix GSAP transforms with native scroll behavior on the same axis/element.
-- Prioritize smooth, mobile-safe performance over animation density.
-- For components rendered in multiple contexts (full page + drawer/modal), gate animation behavior by render mode.
-- Use ScrollTrigger only in page context; in drawer/modal context use mount-based GSAP timelines (no ScrollTrigger dependency).
-- Never leave cross-context content in hidden initial states (`opacity: 0`, translated) when trigger conditions may not fire.
+- Choose the animation library that best fits the interaction.
+
+Preferred use cases:
+
+- Framer Motion:
+
+  - component transitions
+  - layout animations
+  - hover states
+  - enter/exit animations
+  - modal and drawer transitions
+  - state-driven UI animation
+
+- GSAP:
+
+  - scroll-driven storytelling
+  - timeline-based sequences
+  - complex coordinated motion
+  - advanced transforms
+  - performance-critical animation systems
+
+- Native CSS transitions:
+  - simple hover states
+  - opacity changes
+  - small interaction feedback
+
+Animation decisions should prioritize:
+
+- smooth performance
+- accessibility
+- maintainability
+- mobile responsiveness
+
+Do not introduce animation libraries without a clear reason.
+
+Do not mix competing animation systems on the same element.
+
+Avoid animation for its own sake.
+
+For components rendered in multiple contexts (full page, drawer, modal), ensure animation behavior is appropriate for each render context.
+
+Never leave content in hidden initial states when trigger conditions may not fire.
+
+Respect prefers-reduced-motion where practical.
 
 ### Mobile-First Rules
 

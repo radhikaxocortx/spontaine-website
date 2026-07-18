@@ -351,7 +351,7 @@ const LeadCapture = ({ editMode = false, onFieldEdit, blockData, language = 'en'
             <div className='relative z-10 grid grid-cols-1 lg:grid-cols-2'>
               <div className='relative flex flex-col items-center justify-start p-8 text-white md:justify-start md:p-8 lg:justify-center lg:p-12'>
                 <div className='relative z-10 flex flex-col items-center space-y-8 md:items-center lg:items-start lg:space-y-10'>
-                  <h3 className='font-heading text-[34px] font-bold leading-tight text-white md:text-[38px] lg:text-[44px]'>
+                  <h3 className='font-display text-[34px] font-bold leading-tight text-white md:text-[38px] lg:text-[44px]'>
                     <Localization
                       text={blockData?.leftTitle ?? leadCaptureBlock.leftTitle}
                       language={language}

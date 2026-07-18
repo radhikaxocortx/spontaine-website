@@ -477,7 +477,7 @@ function FeatureCard({
         </div>
 
         {/* Title */}
-        <h3 className='text-center font-heading text-4xl font-medium leading-tight text-white lg:text-[40px]'>
+        <h3 className='text-center font-display text-4xl font-medium leading-tight text-white lg:text-[40px]'>
           {titleText}
         </h3>
         {editMode && (
@@ -498,7 +498,7 @@ function FeatureCard({
           </div>
         )}
         {/* Second Title */}
-        <h3 className='mb-8 text-center font-heading text-4xl font-medium leading-tight text-white lg:text-[40px]'>
+        <h3 className='mb-8 text-center font-display text-4xl font-medium leading-tight text-white lg:text-[40px]'>
           {title2Text}
         </h3>
         {editMode && (

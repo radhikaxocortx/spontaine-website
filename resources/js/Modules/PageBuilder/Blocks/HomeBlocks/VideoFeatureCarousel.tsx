@@ -402,7 +402,7 @@ function FeatureCard({ feature, cardsPerView, videoRefs }: FeatureCardProps) {
         </div>
 
         {/* Title */}
-        <h3 className='mb-8 text-center font-heading text-4xl font-medium leading-tight text-white lg:text-[40px]'>
+        <h3 className='mb-8 text-center font-display text-4xl font-medium leading-tight text-white lg:text-[40px]'>
           {feature.title}
         </h3>
 
