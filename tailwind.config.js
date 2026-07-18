@@ -32,7 +32,7 @@ export default {
         // Generic font utilities
         heading: ['var(--font-heading)', ...defaultTheme.fontFamily.sans],
         display: ['Urbanist', ...defaultTheme.fontFamily.sans],
-        body: ['Space Grotesk', ...defaultTheme.fontFamily.sans],
+        body: ['var(--font-body)', ...defaultTheme.fontFamily.sans],
         mono: ['var(--font-mono)', ...defaultTheme.fontFamily.mono],
 
         // Specific font names (kept for backward compatibility)

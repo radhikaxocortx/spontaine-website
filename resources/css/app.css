@@ -209,8 +209,8 @@ body {
 
     /* Spontaine Font Variables - Change these to update fonts globally */
     --font-heading: 'Urbanist', sans-serif;
-    --font-body: 'Urbanist', sans-serif;
-    --font-mono: 'Roboto Mono', monospace;
+    --font-body: 'Geist', sans-serif;
+    --font-mono: 'Geist Mono', monospace;
   }
 
   @font-face {
