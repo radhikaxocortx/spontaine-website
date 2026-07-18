@@ -7,12 +7,12 @@ export default function SpontaineV3Hero() {
     <section
       id='hero'
       aria-labelledby='spontaine-v3-hero-title'
-      className='relative isolate overflow-hidden bg-hero-wash px-[var(--space-shell-sm)] pb-[120px] pt-[132px] md:px-[var(--space-shell)] md:pb-[150px] md:pt-[168px] lg:pt-[120px]'
+      className='relative isolate overflow-hidden bg-hero-wash px-[var(--space-shell-sm)] pb-[150px] pt-[132px] md:px-[var(--space-shell)] md:pb-[150px] md:pt-[168px] lg:pt-[120px]'
     >
       {/* Diagonal ambient band behind the prism */}
       <div
         aria-hidden='true'
-        className='absolute inset-x-[-15%] bottom-[9%] z-0 h-[160px] rotate-[-13deg] bg-hero-band opacity-[0.76] blur-[4px]'
+        className='absolute inset-x-[-15%] bottom-[9%] z-0 hidden h-[160px] rotate-[-13deg] bg-hero-band opacity-[0.76] blur-[4px] lg:block'
       />
 
       {/* Curved paper mask into the next section */}
@@ -21,9 +21,9 @@ export default function SpontaineV3Hero() {
         className='absolute inset-x-[-4%] bottom-[-80px] z-0 h-[180px] rounded-t-[50%] bg-spontaine-light'
       />
 
-      <div className='relative z-10 mx-auto grid w-full max-w-[1180px] gap-10 pl-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-start'>
+      <div className='relative z-10 mx-auto grid w-full max-w-[1180px] pl-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-start lg:gap-10'>
         {/* Hero message and primary actions */}
-        <div className='max-w-[760px] pb-8 pt-12 md:pb-20 md:pt-16 lg:pb-0'>
+        <div className='relative z-10 max-w-[760px] pb-8 pt-12 md:pb-20 md:pt-16 lg:pb-0'>
           <p className='eyebrow mb-6 max-w-[560px] text-spontaine-gray-cool'>
             The owned intelligence layer for professional services firms
           </p>
@@ -78,11 +78,11 @@ export default function SpontaineV3Hero() {
 
         {/* Governed intelligence product visual */}
         <div
-          className='relative mx-auto min-h-[390px] w-full max-w-[560px] lg:min-h-[480px] lg:max-w-none'
-          aria-label='Conceptual governed intelligence visual'
+          className='pointer-events-none absolute inset-x-0 top-12 z-0 h-full min-h-[520px] w-full lg:relative lg:top-auto lg:mx-auto lg:min-h-[480px] lg:max-w-none'
+          aria-hidden='true'
         >
           {/* Organic glass prism */}
-          <div className='absolute right-[8%] top-0 aspect-square w-[285px] rotate-[15deg] overflow-hidden rounded-[42%_58%_63%_37%/41%_44%_56%_59%] bg-prism-surface shadow-prism sm:w-[360px] lg:right-[2%] lg:top-16 lg:w-[382px]'>
+          <div className='absolute right-[-10%] top-[70px] aspect-square w-[330px] rotate-[15deg] overflow-hidden rounded-[42%_58%_63%_37%/41%_44%_56%_59%] bg-prism-surface opacity-60 shadow-prism sm:right-[-2%] sm:w-[410px] md:right-[4%] md:top-[54px] md:w-[460px] lg:right-[2%] lg:top-16 lg:w-[382px] lg:opacity-100'>
             <div className='absolute inset-[12%] rotate-[38deg] skew-x-[-12deg] border border-spontaine-gray/20' />
             <div className='absolute inset-x-[3%] inset-y-[28%] rotate-[-22deg] border border-spontaine-gray/20 bg-gradient-to-r from-transparent via-spontaine-white/70 to-transparent' />
           </div>
