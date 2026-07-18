@@ -2,7 +2,30 @@
 
 These tokens are a foundation layer for future Spontaine V3 work. Consume them through Tailwind utilities and existing Spontaine variables; do not place raw hex colors in React components.
 
-Spontaine V3 CSS variable sources live in `resources/css/tokens/spontainev3.css`. Existing color, typography, gradient, and shadow utility names are preserved for backward compatibility; layout and radius values are consumed through CSS variable-backed arbitrary Tailwind utilities.
+Spontaine V3 CSS variable sources live in `resources/css/tokens/spontainev3.css`. The approved HTML mockup is the source of truth for V3 color, gradient, shadow, and typography values. Existing color, typography, gradient, and shadow utility names are preserved for backward compatibility; layout and radius values are consumed through CSS variable-backed arbitrary Tailwind utilities.
+
+## Color Source Of Truth
+
+Spontaine V3 color utilities such as `text-spontaine-dark`, `bg-spontaine-accent`, and `text-spontaine-gray-muted` resolve through CSS variables in `resources/css/tokens/spontainev3.css`.
+
+| Token | Mockup value | Intended usage |
+| --- | --- | --- |
+| `--spontaine-accent` | `#18d6a1` | Primary CTA fills and mint interaction accents. |
+| `--spontaine-accent-dark` | `#0a9271` | Green display emphasis, links, and stronger accent text. |
+| `--spontaine-accent-ink` | `#103e32` | Text on primary mint CTA fills. |
+| `--spontaine-dark` | `#202630` | Primary dark text on light V3 surfaces. |
+| `--spontaine-dark-bg` | `#282a2a` | Dark navigation, footer, and high-contrast surfaces. |
+| `--spontaine-light` | `#fbfbf7` | Paper surface, section masks, and page background transitions. |
+| `--spontaine-light-blue` | `#d9f1fc` | Pale sky surfaces and calm blue washes. |
+| `--spontaine-gray-cool` | `#71807d` | Eyebrows, labels, and cool secondary text. |
+| `--spontaine-gray-muted` | `#647078` | Paragraph and supporting copy. |
+| `--spontaine-gray-deep` | `#546165` | Mono subnotes and stronger muted labels. |
+
+Example:
+
+```tsx
+<a className='bg-spontaine-accent text-spontaine-accent-ink shadow-cta-glow'>See it in your firm</a>
+```
 
 ## Layout Tokens
 
@@ -50,12 +73,12 @@ Shadow utilities remain semantic Tailwind classes, but their values are sourced 
 
 | Token | Utility | Source | Intended usage |
 | --- | --- | --- | --- |
-| `backgroundImage.hero-wash` | `bg-hero-wash` | `--gradient-hero-wash` | Light hero wash using existing Spontaine pale blue, white, and light tokens. |
-| `backgroundImage.hero-band` | `bg-hero-band` | `--gradient-hero-band` | Diagonal blurred light band for V3 hero and prism compositions. |
+| `backgroundImage.hero-wash` | `bg-hero-wash` | `--gradient-hero-wash` | Approved mockup hero wash: soft blue, paper, warm paper, and blue-gray stops. |
+| `backgroundImage.hero-band` | `bg-hero-band` | `--gradient-hero-band` | Approved mockup diagonal ambient band with periwinkle, white, yellow, and sky-blue stops. |
 | `backgroundImage.cta-wash` | `bg-cta-wash` | `--gradient-cta-wash` | Calm CTA background wash. |
 | `backgroundImage.mint-lime` | `bg-mint-lime` | `--gradient-mint-lime` | Existing mint-to-lime Spontaine gradient. |
 | `backgroundImage.mint-blue` | `bg-mint-blue` | `--gradient-mint-blue` | Existing mint-to-light-blue Spontaine gradient. |
-| `backgroundImage.prism-surface` | `bg-prism-surface` | `--gradient-prism-surface` | Abstract prism/surface treatment for future visual elements. |
+| `backgroundImage.prism-surface` | `bg-prism-surface` | `--gradient-prism-surface` | Approved mockup pale glass prism treatment. |
 | `backgroundImage.text-highlight` | `bg-text-highlight` | `--gradient-text-highlight` | Text highlight gradient for clipped heading treatments. |
 
 Example:
@@ -106,6 +129,10 @@ Use these shared primitives when a complete text style is preferred over composi
 
 Typography primitives live in `resources/css/typography.css`.
 
+Display typography primitives use fluid `clamp()` sizing so they scale smoothly from mobile to desktop without breakpoint-only font-size jumps. Non-display primitives generally use fixed sizes for reading and interface stability.
+
+Use only loaded font weights for V3 typography: `400`, `500`, `600`, and `700`. Avoid interpolated weights because they can render differently across operating systems and browsers.
+
 | Primitive | Font role | Intended usage |
 | --- | --- | --- |
 | `display-hero` | Heading | Primary marketing hero headline. |
@@ -122,7 +149,7 @@ Examples:
 ```tsx
 <h1 className='display-hero text-spontaine-dark'>Decision clarity</h1>
 <p className='body-lg text-spontaine-gray-muted'>Governed intelligence your firm owns.</p>
-<p className='eyebrow text-spontaine-accent-dark'>Spontaine V3</p>
+<p className='eyebrow text-spontaine-gray-cool'>Spontaine V3</p>
 ```
 
 ## Typography Migration Audit
@@ -143,7 +170,7 @@ The active V3 homepage layout is `resources/js/Layouts/StaticHomePageV3.tsx`.
 
 The V3 hero is implemented as a concrete component at `resources/js/components/Home/SpontaineV3Hero.tsx`. It uses the existing V3 token and typography foundation, `ArrowUpRight` from `lucide-react`, and avoids hero-specific CSS, raw hex colors, viewport-height sizing, video, and animation libraries.
 
-The hero visual follows the approved HTML mockup's background and prism system: `bg-hero-wash` for the page wash, `bg-hero-band` for the diagonal ambient band, `bg-prism-surface` for the organic glass prism, and `shadow-prism` for dimensional inset depth.
+The hero visual follows the approved HTML mockup's background and prism system: `bg-hero-wash` for the page wash, `bg-hero-band` for the diagonal ambient band, `bg-prism-surface` for the organic glass prism, and `shadow-prism` for dimensional inset depth. These values are shared V3 tokens, not hero-specific overrides.
 
 ## Smooth Scroll Audit
 

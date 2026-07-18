@@ -1,16 +1,18 @@
 :root {
   /* Use for primary CTA fills, active states, and high-confidence success accents. */
-  --spontaine-accent: #45eda1;
+  --spontaine-accent: #18d6a1;
   /* Use for CTA hover states, stronger green text, and high-contrast accent details. */
-  --spontaine-accent-dark: #00b563;
+  --spontaine-accent-dark: #0a9271;
+  /* Use for primary CTA text on mint fills. */
+  --spontaine-accent-ink: #103e32;
   /* Use sparingly for strategic emphasis, clipped text gradients, and secondary highlights. */
-  --spontaine-highlight: #7776bc;
+  --spontaine-highlight: #6777fb;
   /* Use for soft active indicators, carousel dots, and low-emphasis accent fills. */
   --spontaine-accent-soft: #90f4c7;
   /* Use for bright cards, optimistic emphasis surfaces, and mint-lime gradients. */
   --spontaine-accent-bright: #c3ff6e;
   /* Use for focus rings, gradient starts, and precise interaction accents. */
-  --spontaine-accent-ring: #44eca0;
+  --spontaine-accent-ring: #18d6a1;
   /* Use for footer accents and darker green brand moments. */
   --spontaine-accent-footer: #2fd47d;
   /* Use for legacy mint-to-lavender section backgrounds. Prefer bg-mint-blue for V3 utilities. */
@@ -18,27 +20,27 @@
   /* Use for legacy mint-to-lime section backgrounds. Prefer bg-mint-lime for V3 utilities. */
   --spontaine-gradient-lime: linear-gradient(0deg, #44eca0 0%, #c3ff6e 100%);
   /* Use for primary dark text on light V3 surfaces. */
-  --spontaine-dark: #343434;
+  --spontaine-dark: #202630;
   /* Use for dark section backgrounds, dark cards, and high-contrast panels. */
-  --spontaine-dark-bg: #242424;
+  --spontaine-dark-bg: #282a2a;
   /* Use for neutral borders, disabled controls, and quiet metadata. */
   --spontaine-gray: #a7a7a7;
   /* Use for warm supporting copy where a softer editorial tone is needed. */
   --spontaine-gray-warm: #918d8d;
   /* Use for cool labels, captions, and secondary data text. */
-  --spontaine-gray-cool: #767676;
+  --spontaine-gray-cool: #71807d;
   /* Use for soft teal-gray typography and muted large display accents. */
   --spontaine-gray-soft: #a9bbb8;
   /* Use for default muted paragraph text and descriptions. */
-  --spontaine-gray-muted: #565555;
+  --spontaine-gray-muted: #647078;
   /* Use for saturated dark-gray text or subdued dark UI fills. */
-  --spontaine-gray-deep: #454545;
+  --spontaine-gray-deep: #546165;
   /* Use for calm light section surfaces and non-white page bands. */
-  --spontaine-light: #f7f7f7;
+  --spontaine-light: #fbfbf7;
   /* Use for pale mint pills, chips, and soft accent backgrounds. */
   --spontaine-light-ice: #bffcec;
   /* Use for pale blue washes, diagrams, and mint-blue gradients. */
-  --spontaine-light-blue: #d0d9fb;
+  --spontaine-light-blue: #d9f1fc;
   /* Use for primary white surfaces and text on dark backgrounds. */
   --spontaine-white: #ffffff;
   /* Use for translucent white text or overlays on dark/footer areas. */
@@ -50,7 +52,7 @@
   /* Use for icon tile backgrounds on dark or high-contrast card systems. */
   --spontaine-icon-bg: #676557;
   /* Use for icon foreground text on icon tile backgrounds. */
-  --spontaine-icon-text: #f7f7f7;
+  --spontaine-icon-text: #fbfbf7;
   /* Use for desktop shell gutters and constrained page padding. */
   --space-shell: 24px;
   /* Use for mobile shell gutters. */
@@ -75,21 +77,22 @@
   --radius-control: 10px;
   /* Use for pills, chips, and rounded CTA controls. */
   --radius-pill: 999px;
+
   /* Use via bg-hero-wash for V3 hero or top-of-page wash backgrounds. */
   --gradient-hero-wash: linear-gradient(
     118deg,
-    color-mix(in srgb, var(--spontaine-light-blue) 72%, var(--spontaine-light) 28%) 2%,
-    color-mix(in srgb, var(--spontaine-light) 86%, var(--spontaine-accent-bright) 14%) 40%,
-    color-mix(in srgb, var(--spontaine-white) 72%, var(--spontaine-light) 28%) 68%,
-    color-mix(in srgb, var(--spontaine-light-blue) 74%, var(--spontaine-gray) 26%) 100%
+    #d8e5ef 2%,
+    #f9f8f2 40%,
+    #fafaf6 68%,
+    #d8e0ea 100%
   );
   /* Use via bg-hero-band for the diagonal blurred light band in V3 hero compositions. */
   --gradient-hero-band: linear-gradient(
     100deg,
-    color-mix(in srgb, var(--spontaine-highlight) 46%, transparent) 0%,
-    color-mix(in srgb, var(--spontaine-white) 8%, transparent) 34%,
-    color-mix(in srgb, var(--spontaine-accent-bright) 52%, var(--spontaine-white) 48%) 57%,
-    color-mix(in srgb, var(--spontaine-light-blue) 58%, transparent) 100%
+    rgba(103, 119, 251, 0.46) 0%,
+    rgba(255, 255, 255, 0.08) 34%,
+    rgba(255, 225, 108, 0.52) 57%,
+    rgba(52, 191, 255, 0.22) 100%
   );
   /* Use via bg-cta-wash for calm closing CTA or conversion bands. */
   --gradient-cta-wash: linear-gradient(
@@ -112,10 +115,10 @@
   /* Use via bg-prism-surface for abstract visual objects and dimensional surfaces. */
   --gradient-prism-surface: linear-gradient(
     145deg,
-    color-mix(in srgb, var(--spontaine-white) 93%, transparent) 0%,
-    color-mix(in srgb, var(--spontaine-light-blue) 57%, var(--spontaine-white) 43%) 31%,
-    color-mix(in srgb, var(--spontaine-accent-bright) 44%, var(--spontaine-white) 56%) 61%,
-    color-mix(in srgb, var(--spontaine-highlight) 42%, transparent) 100%
+    rgba(255, 255, 255, 0.93) 0%,
+    rgba(223, 237, 245, 0.57) 31%,
+    rgba(255, 245, 184, 0.48) 61%,
+    rgba(184, 190, 255, 0.42) 100%
   );
   /* Use via bg-text-highlight with bg-clip-text for highlighted display words. */
   --gradient-text-highlight: linear-gradient(
@@ -124,18 +127,18 @@
     var(--spontaine-highlight) 100%
   );
   /* Use via shadow-surface for elevated panels and glass-like V3 surfaces. */
-  --shadow-surface: 0 22px 64px color-mix(in srgb, var(--spontaine-dark-bg) 12%, transparent);
+  --shadow-surface: 0 22px 64px rgba(21, 35, 45, 0.12);
   /* Use via shadow-nav for floating navigation and persistent controls. */
-  --shadow-nav: 0 10px 28px color-mix(in srgb, var(--spontaine-dark-bg) 16%, transparent);
+  --shadow-nav: 0 10px 28px rgba(20, 24, 26, 0.16);
   /* Use via shadow-card-lift for subtle card elevation. */
   --shadow-card-lift: 0 12px 26px color-mix(in srgb, var(--spontaine-dark) 8%, transparent);
   /* Use via shadow-cta-glow for primary mint CTA emphasis. */
-  --shadow-cta-glow: 0 9px 23px color-mix(in srgb, var(--spontaine-accent) 24%, transparent);
+  --shadow-cta-glow: 0 9px 23px rgba(24, 214, 161, 0.24);
   /* Use via shadow-prism for inset dimensional depth on V3 prism visuals. */
   --shadow-prism:
-    inset -30px -28px 50px color-mix(in srgb, var(--spontaine-light-blue) 46%, transparent),
-    inset 24px 22px 42px color-mix(in srgb, var(--spontaine-white) 75%, transparent),
-    0 42px 70px color-mix(in srgb, var(--spontaine-gray-muted) 20%, transparent);
+    inset -30px -28px 50px rgba(100, 132, 170, 0.2),
+    inset 24px 22px 42px rgba(255, 255, 255, 0.75),
+    0 42px 70px rgba(84, 107, 123, 0.2);
   /* Use through font-display for display headlines and headings. */
   --font-display: 'Urbanist', sans-serif;
   /* Use through font-body for body copy and UI text. */

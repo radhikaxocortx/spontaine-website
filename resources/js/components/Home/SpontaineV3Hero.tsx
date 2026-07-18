@@ -7,12 +7,12 @@ export default function SpontaineV3Hero() {
     <section
       id='hero'
       aria-labelledby='spontaine-v3-hero-title'
-      className='bg-hero-wash relative isolate overflow-hidden px-[var(--space-shell-sm)] pb-[120px] pt-[132px] md:px-[var(--space-shell)] md:pb-[150px] md:pt-[168px] lg:pt-[120px]'
+      className='relative isolate overflow-hidden bg-hero-wash px-[var(--space-shell-sm)] pb-[120px] pt-[132px] md:px-[var(--space-shell)] md:pb-[150px] md:pt-[168px] lg:pt-[120px]'
     >
       {/* Diagonal ambient band behind the prism */}
       <div
         aria-hidden='true'
-        className='bg-hero-band absolute inset-x-[-15%] bottom-[9%] z-0 h-[160px] rotate-[-13deg] opacity-[0.76] blur-[4px]'
+        className='absolute inset-x-[-15%] bottom-[9%] z-0 h-[160px] rotate-[-13deg] bg-hero-band opacity-[0.76] blur-[4px]'
       />
 
       {/* Curved paper mask into the next section */}
@@ -48,7 +48,7 @@ export default function SpontaineV3Hero() {
           <div className='mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap'>
             <a
               href='#product'
-              className='shadow-cta-glow inline-flex min-h-[48px] items-center justify-center gap-2 rounded-[var(--radius-pill)] bg-spontaine-accent px-5 py-3 font-body text-sm font-semibold text-spontaine-dark transition-colors hover:bg-spontaine-accent-bright focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-spontaine-accent-dark'
+              className='inline-flex min-h-[48px] items-center justify-center gap-2 rounded-[var(--radius-pill)] bg-spontaine-accent px-5 py-3 font-body text-sm font-semibold text-spontaine-accent-ink shadow-cta-glow transition-colors hover:bg-spontaine-accent-bright focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-spontaine-accent-dark'
             >
               See it in your firm
               <ArrowUpRight
@@ -71,7 +71,7 @@ export default function SpontaineV3Hero() {
             </a>
           </div>
 
-          <p className='mt-5 font-mono text-xs text-spontaine-gray-cool'>
+          <p className='mt-5 font-mono text-xs text-spontaine-gray-deep'>
             A 30-minute working session. No deck. No obligation.
           </p>
         </div>
@@ -82,7 +82,7 @@ export default function SpontaineV3Hero() {
           aria-label='Conceptual governed intelligence visual'
         >
           {/* Organic glass prism */}
-          <div className='bg-prism-surface shadow-prism absolute right-[8%] top-0 aspect-square w-[285px] rotate-[15deg] overflow-hidden rounded-[42%_58%_63%_37%/41%_44%_56%_59%] sm:w-[360px] lg:right-[2%] lg:top-16 lg:w-[382px]'>
+          <div className='absolute right-[8%] top-0 aspect-square w-[285px] rotate-[15deg] overflow-hidden rounded-[42%_58%_63%_37%/41%_44%_56%_59%] bg-prism-surface shadow-prism sm:w-[360px] lg:right-[2%] lg:top-16 lg:w-[382px]'>
             <div className='absolute inset-[12%] rotate-[38deg] skew-x-[-12deg] border border-spontaine-gray/20' />
             <div className='absolute inset-x-[3%] inset-y-[28%] rotate-[-22deg] border border-spontaine-gray/20 bg-gradient-to-r from-transparent via-spontaine-white/70 to-transparent' />
           </div>

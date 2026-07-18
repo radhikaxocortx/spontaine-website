@@ -66,13 +66,23 @@ Avoid browser-dependent defaults.
 - Typography must remain visually stable across platforms.
 - Use locally hosted font files.
 - Avoid relying on system fonts.
-- Use clamp() for responsive display typography.
-- Validate hero typography on:
-  - 1440px desktop
-  - 1280px laptop
-  - 1024px laptop
-  - 768px tablet
-  - 390px mobile
+
+#### Responsive Display Typography
+
+The following typography primitives are considered display typography:
+
+- display-hero
+- display-xl
+- display-lg
+
+Use fluid scaling with `clamp()`.
+
+Example:
+
+````css
+.display-hero {
+  font-size: clamp(3.2rem, 5.4vw, 5.5rem);
+}
 
 ### Design Validation Rules
 
@@ -291,7 +301,7 @@ onFieldEdit({
   fieldType: 'image',
   action: 'UPDATE',
 })
-```
+````
 
 **Why:** PageBuilder's reducer treats top-level fields differently from nested list items. `INSERT` replaces/adds values directly; `UPDATE` with `itemField` modifies specific items within arrays. Always match the pattern used in similar blocks.
 

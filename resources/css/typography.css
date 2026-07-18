@@ -2,28 +2,28 @@
   /* Use for the primary hero headline on V3 marketing pages. */
   .display-hero {
     font-family: var(--font-display);
-    font-size: clamp(52px, 7vw, 72px);
+    font-size: clamp(3.2rem, 5.4vw, 5.5rem);
     font-weight: 700;
-    line-height: 0.92;
-    letter-spacing: 0;
+    line-height: 0.91;
+    letter-spacing: -0.068em;
   }
 
   /* Use for top-level editorial display headings below the hero. */
   .display-xl {
     font-family: var(--font-display);
-    font-size: clamp(42px, 5.4vw, 72px);
+    font-size: clamp(2.25rem, 4.5vw, 4.7rem);
     font-weight: 700;
-    line-height: 0.96;
-    letter-spacing: 0;
+    line-height: 0.95;
+    letter-spacing: -0.06em;
   }
 
   /* Use for standard section display headings and strong marketing statements. */
   .display-lg {
     font-family: var(--font-display);
-    font-size: clamp(34px, 4.4vw, 56px);
-    font-weight: 600;
-    line-height: 1;
-    letter-spacing: 0;
+    font-size: clamp(2rem, 4vw, 4.4rem);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.05em;
   }
 
   /* Use for large section headings, feature panels, and major card titles. */
@@ -38,18 +38,18 @@
   /* Use for compact section headings, card headings, and panel titles. */
   .heading-lg {
     font-family: var(--font-display);
-    font-size: 24px;
+    font-size: 1.03rem;
     font-weight: 600;
     line-height: 1.16;
-    letter-spacing: 0;
+    letter-spacing: -0.025em;
   }
 
   /* Use for prominent supporting copy beneath display or section headings. */
   .body-lg {
     font-family: var(--font-body);
-    font-size: 18px;
+    font-size: 1.01rem;
     font-weight: 400;
-    line-height: 1.56;
+    line-height: 1.52;
     letter-spacing: 0;
   }
 
@@ -65,10 +65,10 @@
   /* Use for section labels, metadata, chips, and small uppercase markers. */
   .eyebrow {
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 9px;
     font-weight: 600;
     line-height: 1.2;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.075em;
     text-transform: uppercase;
   }
 }
