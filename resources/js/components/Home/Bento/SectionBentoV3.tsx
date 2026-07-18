@@ -62,7 +62,7 @@ export default function SectionBentoV3() {
   let cardIndex = 0
 
   return (
-    <section className='bg-spontaine-surface-ice relative w-full overflow-hidden rounded-t-[50%_6%] py-[105px] md:py-[130px] lg:pb-[155px]'>
+    <section className='rounded-t-section-sm bg-spontaine-surface-ice md:rounded-t-section-md lg:rounded-t-section-lg xl:rounded-t-section-xl relative w-full overflow-hidden py-[105px] md:py-[130px] lg:pb-[155px]'>
       <div className='mx-auto w-full max-w-[1180px] px-[var(--space-shell-sm)] md:px-[var(--space-shell)]'>
         <div className='mx-auto max-w-[790px] text-center'>
           <p className='eyebrow mb-5 text-spontaine-gray-cool'>THE OLD CHOICES</p>

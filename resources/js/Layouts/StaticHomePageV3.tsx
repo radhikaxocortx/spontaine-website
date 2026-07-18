@@ -2,11 +2,11 @@ import SectionBentoV3 from '@/components/Home/Bento/SectionBentoV3'
 import SectionChatV3 from '@/components/Home/Chat/SectionChatV3'
 import SpontaineV3Hero from '@/components/Home/SpontaineV3Hero'
 import SectionStackV3 from '@/components/Home/Stack/SectionStackV3'
+import SectionTestBannerV3 from '@/components/Home/SectionTestBannerV3'
 import MetaTags from '@/components/MetaTags'
 import { useSmoothPageScroll } from '@/hooks/useSmoothPageScroll'
 import SectionBlogsCarousel from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionBlogsCarousel'
 import SectionCTA from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionCTA'
-import SectionTestimonial from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionTestimonial'
 import { FooterDataInterface } from '@/Modules/PageBuilder/FooterEditor/FooterEditor'
 import { Page } from '@/Modules/PageBuilder/page_interfaces'
 import { PageProps } from '@/types'
@@ -93,8 +93,11 @@ const StaticHomePageV3 = ({
         {/* <VideoFeatureCarousel /> */}
         <SectionBentoV3 />
         {/* <CompanyLogosMarquee /> */}
-        <SectionStackV3 />
-        <SectionTestimonial />
+        <div className='relative z-20 -mt-8 md:-mt-10 lg:-mt-12 xl:-mt-16'>
+          <SectionStackV3 />
+        </div>
+        <SectionTestBannerV3 />
+        {/* <SectionTestimonial /> */}
 
         <div id='resources'>
           <SectionBlogsCarousel featuredBlogs={featuredBlogs} />

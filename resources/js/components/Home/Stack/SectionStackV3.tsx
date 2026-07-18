@@ -241,7 +241,7 @@ export default function SectionStackV3() {
   return (
     <section
       ref={sectionRef}
-      className='bg-spontaine-surface-paper relative overflow-hidden py-[110px] lg:py-[142px]'
+      className='rounded-t-section-sm bg-spontaine-surface-paper md:rounded-t-section-md lg:rounded-t-section-lg xl:rounded-t-section-xl relative z-20 overflow-hidden pb-[110px] pt-[142px] md:pt-[150px] lg:pb-[142px] lg:pt-[178px] xl:pt-[190px]'
     >
       <div className='mx-auto w-full max-w-[1180px] px-[var(--space-shell-sm)] md:px-[var(--space-shell)]'>
         <div className='mx-auto flex w-full max-w-[1060px] flex-col items-center'>
