@@ -4,9 +4,9 @@ import SpontaineV3Hero from '@/components/Home/SpontaineV3Hero'
 import SectionStackV3 from '@/components/Home/Stack/SectionStackV3'
 import SectionBlogsCarouselV3 from '@/components/Home/SectionBlogsCarouselV3'
 import SectionTestBannerV3 from '@/components/Home/SectionTestBannerV3'
+import SectionCTAV3 from '@/components/Home/SectionCTAV3'
 import MetaTags from '@/components/MetaTags'
 import { useSmoothPageScroll } from '@/hooks/useSmoothPageScroll'
-import SectionCTA from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionCTA'
 import { FooterDataInterface } from '@/Modules/PageBuilder/FooterEditor/FooterEditor'
 import { Page } from '@/Modules/PageBuilder/page_interfaces'
 import { PageProps } from '@/types'
@@ -102,7 +102,7 @@ const StaticHomePageV3 = ({
         <div id='resources'>
           <SectionBlogsCarouselV3 featuredBlogs={featuredBlogs} />
         </div>
-        <SectionCTA />
+        <SectionCTAV3 />
       </div>
       <Footer blockData={footer.items} />
     </div>
