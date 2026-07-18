@@ -1,10 +1,74 @@
+import { useEffect, useRef } from 'react'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowUpRight } from 'lucide-react'
 
 const decisionStates = ['Governed answer', 'Reusable block', 'Secure endpoint', 'Workflow']
 
 export default function SpontaineV3Hero() {
+  const heroRef = useRef<HTMLElement | null>(null)
+  const promptCardRef = useRef<HTMLDivElement | null>(null)
+  const calloutRef = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    const hero = heroRef.current
+    const promptCard = promptCardRef.current
+    const callout = calloutRef.current
+
+    if (!hero || !promptCard || !callout) {
+      return
+    }
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    if (reduceMotion) {
+      gsap.set(promptCard, { autoAlpha: 1, y: 0 })
+      return
+    }
+
+    gsap.registerPlugin(ScrollTrigger)
+
+    const ctx = gsap.context(() => {
+      const showPrompt = () => {
+        gsap.to(promptCard, {
+          autoAlpha: 1,
+          duration: 0.9,
+          ease: 'power3.out',
+          overwrite: 'auto',
+          y: 0,
+        })
+      }
+
+      const resetPrompt = () => {
+        gsap.to(promptCard, {
+          autoAlpha: 0,
+          duration: 0.45,
+          ease: 'power2.out',
+          overwrite: 'auto',
+          y: 140,
+        })
+      }
+
+      gsap.set(promptCard, {
+        autoAlpha: 0,
+        y: 140,
+      })
+
+      ScrollTrigger.create({
+        trigger: callout,
+        start: 'top bottom',
+        onEnter: showPrompt,
+        onEnterBack: showPrompt,
+        onLeaveBack: resetPrompt,
+      })
+    }, hero)
+
+    return () => ctx.revert()
+  }, [])
+
   return (
     <section
+      ref={heroRef}
       id='hero'
       aria-labelledby='spontaine-v3-hero-title'
       className='relative isolate overflow-hidden bg-hero-wash px-[var(--space-shell-sm)] pb-[150px] pt-[132px] md:px-[var(--space-shell)] md:pb-[150px] md:pt-[168px] lg:pt-[120px]'
@@ -12,7 +76,7 @@ export default function SpontaineV3Hero() {
       {/* Diagonal ambient band behind the prism */}
       <div
         aria-hidden='true'
-        className='absolute inset-x-[-15%] bottom-[9%] z-0 hidden h-[160px] rotate-[-13deg] bg-hero-band opacity-[0.76] blur-[4px] lg:block'
+        className='absolute inset-x-[-15%] bottom-[20%] z-0 hidden h-[160px] rotate-[-13deg] bg-hero-band opacity-[0.76] blur-[4px] lg:block'
       />
 
       {/* Curved paper mask into the next section */}
@@ -88,7 +152,10 @@ export default function SpontaineV3Hero() {
           </div>
 
           {/* Answer prompt card */}
-          {/* <div className='shadow-surface absolute bottom-5 left-0 w-full max-w-[470px] rounded-[var(--radius-card)] border border-spontaine-white/90 bg-spontaine-white/85 p-[var(--space-card)] backdrop-blur-md lg:bottom-[15px]'>
+          <div
+            ref={promptCardRef}
+            className='absolute bottom-5 left-0 w-full max-w-[470px] rounded-[var(--radius-card)] border border-spontaine-white/90 bg-spontaine-white/85 p-[var(--space-card)] shadow-surface backdrop-blur-md lg:bottom-[15px]'
+          >
             <p className='font-body text-sm font-semibold text-spontaine-gray-deep'>
               Which engagements are likely to miss target margin this quarter?
             </p>
@@ -103,12 +170,15 @@ export default function SpontaineV3Hero() {
                 </span>
               ))}
             </div>
-          </div> */}
+          </div>
         </div>
       </div>
 
       {/* Portfolio intelligence callout */}
-      <div className='relative left-1/2 z-20 mt-6 w-screen -translate-x-1/2'>
+      <div
+        ref={calloutRef}
+        className='relative left-1/2 z-20 mt-6 w-screen -translate-x-1/2'
+      >
         <div className='border border-spontaine-white/70 bg-spontaine-white/35 backdrop-blur-[6px]'>
           <div className='mx-auto grid min-h-[66px] w-full max-w-[1180px] gap-[7px] px-[var(--space-shell-sm)] py-[17px] font-body text-[0.76rem] md:grid-cols-[1.15fr_2fr_0.75fr] md:items-center md:gap-[18px] md:px-[var(--space-shell)]'>
             <strong className='text-[0.8rem] font-semibold text-spontaine-dark'>
