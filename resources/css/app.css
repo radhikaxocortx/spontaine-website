@@ -174,7 +174,6 @@ body {
     --color-success: #d2ddca;
     --color-fail: #da999a;
     --radius: 0.5rem;
-
   }
 
   @font-face {
@@ -289,9 +288,9 @@ body {
     @apply bg-white;
   }
 
-  span {
+  /* span {
     @apply text-sm;
-  }
+  } */
 
   .link {
     @apply cursor-pointer font-bold text-blue-600 underline hover:text-blue-500;

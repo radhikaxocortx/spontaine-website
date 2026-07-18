@@ -4,29 +4,26 @@ import { ArrowRight, ArrowUpRight } from 'lucide-react'
 import { useEffect, useRef } from 'react'
 
 import { Button } from '@/components/ui/button'
+import { Pill, type PillProps } from '@/components/ui/pill'
 
 const decisionStates = [
   {
     label: 'Governed answer',
-    className:
-      'bg-[var(--spontaine-pill-variant-1-bg)] text-[var(--spontaine-pill-variant-1-text)]',
+    variant: 'variant1',
   },
   {
     label: 'Reusable Block',
-    className:
-      'bg-[var(--spontaine-pill-variant-2-bg)] text-[var(--spontaine-pill-variant-2-text)]',
+    variant: 'variant2',
   },
   {
     label: 'Secure endpoint',
-    className:
-      'bg-[var(--spontaine-pill-variant-3-bg)] text-[var(--spontaine-pill-variant-3-text)]',
+    variant: 'variant3',
   },
   {
     label: 'Workflow',
-    className:
-      'bg-[var(--spontaine-pill-variant-4-bg)] text-[var(--spontaine-pill-variant-4-text)]',
+    variant: 'variant4',
   },
-]
+] satisfies Array<{ label: string; variant: PillProps['variant'] }>
 
 export default function SpontaineV3Hero() {
   const heroRef = useRef<HTMLElement | null>(null)
@@ -103,10 +100,10 @@ export default function SpontaineV3Hero() {
       />
 
       {/* Curved paper mask into the next section */}
-      <div
+      {/* <div
         aria-hidden='true'
         className='absolute inset-x-[-4%] -bottom-20 z-0 h-[180px] rounded-t-[50%] bg-spontaine-light'
-      />
+      /> */}
 
       <div className='relative z-10 mx-auto grid w-full max-w-[1180px] pl-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-start lg:gap-10'>
         {/* Hero message and primary actions */}
@@ -121,7 +118,7 @@ export default function SpontaineV3Hero() {
           >
             Any AI can answer a question.
             <br />
-            <span className='display-hero text-spontaine-accent-dark'>
+            <span className='display-hero text-spontaine-text-accent-dark'>
               The advantage is what your firm can keep.
             </span>
           </h1>
@@ -191,12 +188,13 @@ export default function SpontaineV3Hero() {
 
             <div className='mt-3 flex flex-wrap gap-[7px]'>
               {decisionStates.map((state) => (
-                <span
+                <Pill
                   key={state.label}
-                  className={`rounded-full px-[9px] py-0.5 font-mono text-[0.63rem] font-medium tracking-[-0.035em] ${state.className}`}
+                  variant={state.variant}
+                  size='sm'
                 >
                   {state.label}
-                </span>
+                </Pill>
               ))}
             </div>
           </div>

@@ -8,6 +8,8 @@ Spontaine V3 CSS variable sources live in `resources/css/tokens/spontainev3.css`
 
 Spontaine V3 color utilities such as `text-spontaine-dark`, `bg-spontaine-accent`, and `text-spontaine-gray-muted` resolve through CSS variables in `resources/css/tokens/spontainev3.css`.
 
+Canonical semantic tokens are also exposed as Tailwind utilities under the `spontaine` namespace. New Spontaine V3 work should prefer utilities such as `text-spontaine-text-primary`, `text-spontaine-text-secondary`, `bg-spontaine-surface-paper`, and `border-spontaine-border-subtle`. Compatibility utilities such as `text-spontaine-dark` remain supported for existing components.
+
 Color dependencies move in one direction only:
 
 ```text
@@ -101,13 +103,28 @@ Compatibility aliases such as `--spontaine-accent-dark`, `--spontaine-accent-bri
 | `--spontaine-pill-variant-2-bg` / `text` | `--neutral-100` / `--teal-mid` | Second reusable compact pill variant. |
 | `--spontaine-pill-variant-3-bg` / `text` | `--feedback-warning` at 10% / `--feedback-warning` | Third reusable compact pill variant. |
 | `--spontaine-pill-variant-4-bg` / `text` | `--spontaine-surface-ice` / `--teal-mid` | Fourth reusable compact pill variant. |
+| `--spontaine-pill-variant-neutral-bg` / `text` | `--neutral-100` / `--neutral-500` | Quiet neutral compact pill variant. |
+| `--spontaine-surface-line` | `--spontaine-dark` at 13% | Standard line treatment inside light data surfaces. |
+| `--spontaine-surface-line-soft` | `--spontaine-dark` at 7% | Softer dividers inside compact data surfaces. |
+| `--spontaine-surface-muted` | `--neutral-100` | Muted light fill for quiet controls and panels. |
+| `--spontaine-surface-data-muted` | `--ink` at 46% | Low-emphasis labels and data-display metadata. |
+| `--spontaine-surface-positive` | `--spontaine-success` | Positive data states and accents. |
+| `--spontaine-surface-negative` | `--spontaine-error` | Negative data states and accents. |
 
 Example:
 
 ```tsx
 <a className='bg-spontaine-accent text-spontaine-accent-ink shadow-cta-glow'>See it in your firm</a>
 <span className='bg-[var(--spontaine-pill-variant-1-bg)] text-[var(--spontaine-pill-variant-1-text)]'>Ready</span>
+<p className='text-spontaine-text-primary'>Preferred semantic text utility</p>
+<p className='text-spontaine-dark'>Backward-compatible text utility</p>
 ```
+
+## PR-04 Chat / Answer Section
+
+The V3 chat section is implemented at `resources/js/components/Home/Chat/SectionChatV3.tsx` and follows the approved HTML mockup's answer section: centered display heading, compact query card, two-column answer output, and a restrained opportunity aside.
+
+The section uses concrete React components and Tailwind utilities, not feature CSS classes. It consumes V3 semantic/component tokens for surfaces, borders, text, chips, and data states. Scroll reveal behavior is scoped to `resources/js/components/Home/Chat/useChatStory.ts` and respects reduced motion.
 
 ## Layout Tokens
 
@@ -130,8 +147,12 @@ Example:
 | `--radius-panel` | `24px` | Larger panels, elevated surfaces, and feature containers. | `rounded-[var(--radius-panel)]` |
 | `--radius-control` | `10px` | Inputs, compact controls, and small framed elements. | `rounded-[var(--radius-control)]` |
 | `--radius-pill` | `999px` | Pills, chips, and rounded CTA controls. | `rounded-[var(--radius-pill)]` |
+| `--radius-section-sm` | `32px` | Full-width section transition radius on compact screens. | `rounded-t-section-sm` |
+| `--radius-section-md` | `48px` | Full-width section transition radius on tablet screens. | `md:rounded-t-section-md` |
+| `--radius-section-lg` | `72px` | Full-width section transition radius on desktop screens. | `lg:rounded-t-section-lg` |
+| `--radius-section-xl` | `96px` | Full-width section transition radius on wide desktop screens. | `xl:rounded-t-section-xl` |
 
-Spontaine V3 layout and radius tokens live in CSS variables. Components should consume them through Tailwind arbitrary values rather than custom Tailwind spacing or radius utilities.
+Spontaine V3 layout and radius tokens live in CSS variables. Components should consume standard semantic Tailwind utilities when they exist, such as `rounded-t-section-sm md:rounded-t-section-md lg:rounded-t-section-lg xl:rounded-t-section-xl`; otherwise use CSS variable-backed arbitrary values.
 
 ## Shadow Tokens
 

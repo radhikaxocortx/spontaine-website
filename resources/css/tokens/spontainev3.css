@@ -27,6 +27,8 @@
   --surface-ice: #d4eeff;
   --ink: #4a4a4a;
   --ink-deep: #2e2e2e;
+  --mint-ink: #0a9271;
+  --grey-ink: #b7c9c7;
   --feedback-success: #0fa57e;
   --feedback-warning: #c97b12;
   --feedback-error: #c4453b;
@@ -42,6 +44,8 @@
   --spontaine-surface-ink: var(--ink);
   --spontaine-surface-ink-deep: var(--ink-deep);
   --spontaine-text-primary: var(--ink-deep);
+  --spontaine-text-accent-dark: var(--mint-ink);
+  --spontaine-text-accent-grey: var(--grey-ink);
   --spontaine-text-secondary: rgb(from var(--ink) r g b / 72%);
   --spontaine-text-tertiary: rgb(from var(--ink) r g b / 60%);
   --spontaine-text-on-dark: var(--white);
@@ -103,6 +107,16 @@
   --spontaine-pill-variant-3-text: var(--feedback-warning);
   --spontaine-pill-variant-4-bg: var(--spontaine-surface-ice);
   --spontaine-pill-variant-4-text: var(--teal-mid);
+  /* Use for compact neutral pills and quiet action surfaces. */
+  --spontaine-pill-variant-neutral-bg: var(--neutral-100);
+  --spontaine-pill-variant-neutral-text: var(--neutral-500);
+  /* Use for subtle elevated data surfaces. */
+  --spontaine-surface-line: rgb(from var(--spontaine-dark) r g b / 13%);
+  --spontaine-surface-line-soft: rgb(from var(--spontaine-dark) r g b / 7%);
+  --spontaine-surface-muted: var(--neutral-100);
+  --spontaine-surface-data-muted: rgb(from var(--ink) r g b / 46%);
+  --spontaine-surface-positive: var(--spontaine-success);
+  --spontaine-surface-negative: var(--spontaine-error);
 
   /* Layout */
   /* Use for desktop shell gutters and constrained page padding. */
@@ -129,6 +143,14 @@
   --radius-control: 10px;
   /* Use for pills, chips, and rounded CTA controls. */
   --radius-pill: 999px;
+  /* Use for full-width section transition radii on compact screens. */
+  --radius-section-sm: 32px;
+  /* Use for full-width section transition radii on tablet screens. */
+  --radius-section-md: 48px;
+  /* Use for full-width section transition radii on desktop screens. */
+  --radius-section-lg: 72px;
+  /* Use for full-width section transition radii on wide desktop screens. */
+  --radius-section-xl: 96px;
 
   /* Use via bg-hero-wash for top-of-page wash backgrounds. */
   --gradient-hero-wash: linear-gradient(
@@ -188,8 +210,7 @@
   --shadow-cta-glow: 0 9px 23px rgba(24, 214, 161, 0.24);
   /* Use via shadow-prism for inset dimensional depth on V3 prism visuals. */
   --shadow-prism:
-    inset -30px -28px 50px rgba(100, 132, 170, 0.2),
-    inset 24px 22px 42px rgba(255, 255, 255, 0.75),
+    inset -30px -28px 50px rgba(100, 132, 170, 0.2), inset 24px 22px 42px rgba(255, 255, 255, 0.75),
     0 42px 70px rgba(84, 107, 123, 0.2);
   /* Use through font-display for display headlines and headings. */
   --font-display: 'Urbanist', sans-serif;

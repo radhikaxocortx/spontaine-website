@@ -1,10 +1,10 @@
+import SectionChatV3 from '@/components/Home/Chat/SectionChatV3'
 import SpontaineV3Hero from '@/components/Home/SpontaineV3Hero'
 import MetaTags from '@/components/MetaTags'
 import { useSmoothPageScroll } from '@/hooks/useSmoothPageScroll'
 import CompanyLogosMarquee from '@/Modules/PageBuilder/Blocks/HomeBlocks/CompanyLogosMarquee'
 import SectionAlignedAction from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionAlignedAction'
 import SectionBlogsCarousel from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionBlogsCarousel'
-import SectionChat from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionChat'
 import SectionCTA from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionCTA'
 import SectionTestimonial from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionTestimonial'
 import VideoFeatureCarousel from '@/Modules/PageBuilder/Blocks/HomeBlocks/VideoFeatureCarousel'
@@ -85,10 +85,13 @@ const StaticHomePageV3 = ({
       <div className='relative w-full max-w-full overflow-x-hidden bg-spontaine-white'>
         <SpontaineV3Hero />
 
-        <div id='product'>
-          <SectionChat />
+        <div
+          id='product'
+          className='relative z-30 -mt-8 md:-mt-10 lg:-mt-12 xl:-mt-20'
+        >
+          <SectionChatV3 />
         </div>
-        <VideoFeatureCarousel />
+        {/* <VideoFeatureCarousel /> */}
         <SectionAlignedAction />
         <CompanyLogosMarquee />
         <SectionTestimonial />

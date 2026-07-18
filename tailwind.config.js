@@ -61,6 +61,8 @@ export default {
       colors: {
         spontaine: {
           accent: 'rgb(from var(--spontaine-accent) r g b / <alpha-value>)',
+          'accent-hover': 'rgb(from var(--spontaine-accent-hover) r g b / <alpha-value>)',
+          'accent-pressed': 'rgb(from var(--spontaine-accent-pressed) r g b / <alpha-value>)',
           'accent-dark': 'rgb(from var(--spontaine-accent-dark) r g b / <alpha-value>)',
           'accent-ink': 'rgb(from var(--spontaine-accent-ink) r g b / <alpha-value>)',
           highlight: 'rgb(from var(--spontaine-highlight) r g b / <alpha-value>)',
@@ -68,6 +70,35 @@ export default {
           'accent-bright': 'rgb(from var(--spontaine-accent-bright) r g b / <alpha-value>)',
           'accent-ring': 'rgb(from var(--spontaine-accent-ring) r g b / <alpha-value>)',
           'accent-footer': 'rgb(from var(--spontaine-accent-footer) r g b / <alpha-value>)',
+
+          'surface-cream': 'rgb(from var(--spontaine-surface-cream) r g b / <alpha-value>)',
+          'surface-ice': 'rgb(from var(--spontaine-surface-ice) r g b / <alpha-value>)',
+          'surface-paper': 'rgb(from var(--spontaine-surface-paper) r g b / <alpha-value>)',
+          'surface-ink': 'rgb(from var(--spontaine-surface-ink) r g b / <alpha-value>)',
+          'surface-ink-deep': 'rgb(from var(--spontaine-surface-ink-deep) r g b / <alpha-value>)',
+
+          'text-accent-grey': 'rgb(from var(--spontaine-text-accent-grey) r g b / <alpha-value>)',
+          'text-accent-dark': 'rgb(from var(--spontaine-text-accent-dark) r g b / <alpha-value>)',
+          'text-primary': 'rgb(from var(--spontaine-text-primary) r g b / <alpha-value>)',
+          'text-secondary': 'rgb(from var(--spontaine-text-secondary) r g b / <alpha-value>)',
+          'text-tertiary': 'rgb(from var(--spontaine-text-tertiary) r g b / <alpha-value>)',
+          'text-on-dark': 'rgb(from var(--spontaine-text-on-dark) r g b / <alpha-value>)',
+          'text-on-dark-secondary':
+            'rgb(from var(--spontaine-text-on-dark-secondary) r g b / <alpha-value>)',
+          'text-on-accent': 'rgb(from var(--spontaine-text-on-accent) r g b / <alpha-value>)',
+
+          'border-subtle': 'rgb(from var(--spontaine-border-subtle) r g b / <alpha-value>)',
+          'border-medium': 'rgb(from var(--spontaine-border-medium) r g b / <alpha-value>)',
+          'border-on-dark': 'rgb(from var(--spontaine-border-on-dark) r g b / <alpha-value>)',
+          'border-glass-edge': 'rgb(from var(--spontaine-border-glass-edge) r g b / <alpha-value>)',
+          'border-glass-edge-top':
+            'rgb(from var(--spontaine-border-glass-edge-top) r g b / <alpha-value>)',
+
+          success: 'rgb(from var(--spontaine-success) r g b / <alpha-value>)',
+          warning: 'rgb(from var(--spontaine-warning) r g b / <alpha-value>)',
+          error: 'rgb(from var(--spontaine-error) r g b / <alpha-value>)',
+          'error-soft': 'rgb(from var(--spontaine-error-soft) r g b / <alpha-value>)',
+          'overlay-scrim': 'rgb(from var(--spontaine-overlay-scrim) r g b / <alpha-value>)',
 
           dark: 'rgb(from var(--spontaine-dark) r g b / <alpha-value>)',
           'dark-bg': 'rgb(from var(--spontaine-dark-bg) r g b / <alpha-value>)',
@@ -264,6 +295,12 @@ export default {
         3: '3px',
         5: '5px',
         10: '10px',
+      },
+      borderRadius: {
+        'section-sm': 'var(--radius-section-sm)',
+        'section-md': 'var(--radius-section-md)',
+        'section-lg': 'var(--radius-section-lg)',
+        'section-xl': 'var(--radius-section-xl)',
       },
       boxShadow: {
         'spontaine-dpa': '0 4px 15px rgba(0, 0, 0, 0.05)',
