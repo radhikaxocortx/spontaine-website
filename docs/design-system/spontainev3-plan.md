@@ -4,27 +4,66 @@ These tokens are a foundation layer for future Spontaine V3 work. Consume them t
 
 Spontaine V3 CSS variable sources live in `resources/css/tokens/spontainev3.css`. The approved HTML mockup is the source of truth for V3 color, gradient, shadow, and typography values. Existing color, typography, gradient, and shadow utility names are preserved for backward compatibility; layout and radius values are consumed through CSS variable-backed arbitrary Tailwind utilities.
 
-## Color Source Of Truth
+## Color Architecture
 
 Spontaine V3 color utilities such as `text-spontaine-dark`, `bg-spontaine-accent`, and `text-spontaine-gray-muted` resolve through CSS variables in `resources/css/tokens/spontainev3.css`.
 
-| Token | Mockup value | Intended usage |
+Color dependencies move in one direction only:
+
+```text
+Color Primitives
+    ↓
+Semantic Tokens
+    ↓
+Component Tokens
+```
+
+Primitives contain raw color values and never reference semantic or component tokens. Semantic tokens may reference primitives. Component tokens may reference primitives or semantic tokens. New React components should consume semantic tokens or component tokens, not primitives, unless they are implementing a design-system primitive or token-facing abstraction.
+
+Complex gradients and glass shadows should derive from primitives or semantic tokens where practical. Explicit RGBA stops are acceptable for complex visual effects when variable composition would make the token harder to read.
+
+### Color Primitives
+
+| Token family | Intended usage |
+| --- | --- |
+| `--mint-*` | Mint and teal primitives used by primary actions, chip variants, and accent states. |
+| `--lime-*` | Lime primitives used by bright accent surfaces and gradients. |
+| `--green-*` | Green primitives used by footer or secondary brand accents. |
+| `--blue-*` | Blue and periwinkle primitives used by highlights, washes, and cool variants. |
+| `--lavender-*` | Lavender primitives used by soft pill variants. |
+| `--amber-*` | Amber primitives used by warm pill variants. |
+| `--neutral-*` | White, paper, gray, slate, and dark primitives used across text and surfaces. |
+
+### Semantic Tokens
+
+| Token | Source | Intended usage |
 | --- | --- | --- |
-| `--spontaine-accent` | `#18d6a1` | Primary CTA fills and mint interaction accents. |
-| `--spontaine-accent-dark` | `#0a9271` | Green display emphasis, links, and stronger accent text. |
-| `--spontaine-accent-ink` | `#103e32` | Text on primary mint CTA fills. |
-| `--spontaine-dark` | `#202630` | Primary dark text on light V3 surfaces. |
-| `--spontaine-dark-bg` | `#282a2a` | Dark navigation, footer, and high-contrast surfaces. |
-| `--spontaine-light` | `#fbfbf7` | Paper surface, section masks, and page background transitions. |
-| `--spontaine-light-blue` | `#d9f1fc` | Pale sky surfaces and calm blue washes. |
-| `--spontaine-gray-cool` | `#71807d` | Eyebrows, labels, and cool secondary text. |
-| `--spontaine-gray-muted` | `#647078` | Paragraph and supporting copy. |
-| `--spontaine-gray-deep` | `#546165` | Mono subnotes and stronger muted labels. |
+| `--spontaine-accent` | `--mint-500` | Primary CTA fills and mint interaction accents. |
+| `--spontaine-accent-dark` | `--mint-600` | Green display emphasis, links, and stronger accent text. |
+| `--spontaine-accent-ink` | `--mint-900` | Text on primary mint CTA fills. |
+| `--spontaine-dark` | `--neutral-850` | Primary dark text on light V3 surfaces. |
+| `--spontaine-dark-bg` | `--neutral-800` | Dark navigation, footer, and high-contrast surfaces. |
+| `--spontaine-light` | `--neutral-100` | Paper surface, masks, and page background transitions. |
+| `--spontaine-light-blue` | `--blue-200` | Pale sky surfaces and calm blue washes. |
+| `--spontaine-gray-cool` | `--neutral-600` | Eyebrows, labels, and cool secondary text. |
+| `--spontaine-gray-muted` | `--neutral-650` | Paragraph and supporting copy. |
+| `--spontaine-gray-deep` | `--neutral-700` | Mono subnotes and stronger muted labels. |
+| `--spontaine-text-slate` | `--neutral-750` | Compact card text and dense product UI copy. |
+
+### Component Tokens
+
+| Token | Source | Intended usage |
+| --- | --- | --- |
+| `--spontaine-pill-variant-1-bg` / `text` | `--mint-100` / `--mint-700` | First reusable compact pill variant. |
+| `--spontaine-pill-variant-2-bg` / `text` | `--lavender-100` / `--lavender-600` | Second reusable compact pill variant. |
+| `--spontaine-pill-variant-3-bg` / `text` | `--amber-100` / `--amber-600` | Third reusable compact pill variant. |
+| `--spontaine-pill-variant-4-bg` / `text` | `--blue-100` / `--blue-500` | Fourth reusable compact pill variant. |
 
 Example:
 
 ```tsx
 <a className='bg-spontaine-accent text-spontaine-accent-ink shadow-cta-glow'>See it in your firm</a>
+<span className='bg-[var(--spontaine-pill-variant-1-bg)] text-[var(--spontaine-pill-variant-1-text)]'>Ready</span>
 ```
 
 ## Layout Tokens

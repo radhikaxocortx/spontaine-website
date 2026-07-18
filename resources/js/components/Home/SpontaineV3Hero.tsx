@@ -1,6 +1,6 @@
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowRight, ArrowUpRight } from 'lucide-react'
 import { useEffect, useRef } from 'react'
 
 const decisionStates = [
@@ -177,7 +177,7 @@ export default function SpontaineV3Hero() {
             ref={promptCardRef}
             className='absolute bottom-5 left-0 w-[min(470px,100%)] rounded-[18px] border border-spontaine-white/90 bg-spontaine-white/[0.84] px-[17px] py-[15px] shadow-surface backdrop-blur-[16px] lg:bottom-[15px]'
           >
-            <p className='font-body text-[0.78rem] font-semibold text-[var(--spontaine-prompt-text)]'>
+            <p className='font-body text-[0.78rem] font-semibold text-[var(--spontaine-text-slate)]'>
               Which engagements are likely to miss target margin this quarter?
             </p>
 
@@ -214,7 +214,7 @@ export default function SpontaineV3Hero() {
               className='inline-flex items-center gap-2 font-body text-[0.76rem] font-bold text-spontaine-accent-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-spontaine-accent-dark md:justify-self-end md:text-right'
             >
               Explore portfolio intelligence
-              <ArrowUpRight
+              <ArrowRight
                 aria-hidden='true'
                 className='h-4 w-4'
                 strokeWidth={2}

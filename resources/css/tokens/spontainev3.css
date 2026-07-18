@@ -1,72 +1,83 @@
 :root {
-  /* Use for primary CTA fills, active states, and high-confidence success accents. */
-  --spontaine-accent: #18d6a1;
-  /* Use for CTA hover states, stronger green text, and high-contrast accent details. */
-  --spontaine-accent-dark: #0a9271;
-  /* Use for primary CTA text on mint fills. */
-  --spontaine-accent-ink: #103e32;
-  /* Use sparingly for strategic emphasis, clipped text gradients, and secondary highlights. */
-  --spontaine-highlight: #6777fb;
-  /* Use for soft active indicators, carousel dots, and low-emphasis accent fills. */
-  --spontaine-accent-soft: #90f4c7;
-  /* Use for bright cards, optimistic emphasis surfaces, and mint-lime gradients. */
-  --spontaine-accent-bright: #c3ff6e;
-  /* Use for focus rings, gradient starts, and precise interaction accents. */
-  --spontaine-accent-ring: #18d6a1;
-  /* Use for footer accents and darker green brand moments. */
-  --spontaine-accent-footer: #2fd47d;
-  /* Use for legacy mint-to-lavender section backgrounds. Prefer bg-mint-blue for V3 utilities. */
-  --spontaine-gradient-lavender-teal: linear-gradient(0deg, #44eca0 0%, #d0d9fb 100%);
-  /* Use for legacy mint-to-lime section backgrounds. Prefer bg-mint-lime for V3 utilities. */
-  --spontaine-gradient-lime: linear-gradient(0deg, #44eca0 0%, #c3ff6e 100%);
-  /* Use for primary dark text on light V3 surfaces. */
-  --spontaine-dark: #202630;
-  /* Use for dark section backgrounds, dark cards, and high-contrast panels. */
-  --spontaine-dark-bg: #282a2a;
-  /* Use for neutral borders, disabled controls, and quiet metadata. */
-  --spontaine-gray: #a7a7a7;
-  /* Use for warm supporting copy where a softer editorial tone is needed. */
-  --spontaine-gray-warm: #918d8d;
-  /* Use for cool labels, captions, and secondary data text. */
-  --spontaine-gray-cool: #71807d;
-  /* Use for soft teal-gray typography and muted large display accents. */
-  --spontaine-gray-soft: #a9bbb8;
-  /* Use for default muted paragraph text and descriptions. */
-  --spontaine-gray-muted: #647078;
-  /* Use for saturated dark-gray text or subdued dark UI fills. */
-  --spontaine-gray-deep: #546165;
-  /* Use for calm light section surfaces and non-white page bands. */
-  --spontaine-light: #fbfbf7;
-  /* Use for pale mint pills, chips, and soft accent backgrounds. */
-  --spontaine-light-ice: #bffcec;
-  /* Use for pale blue washes, diagrams, and mint-blue gradients. */
-  --spontaine-light-blue: #d9f1fc;
-  /* Use for primary white surfaces and text on dark backgrounds. */
-  --spontaine-white: #ffffff;
-  /* Use for translucent white text or overlays on dark/footer areas. */
-  --spontaine-white-soft: #ffffffa6;
-  /* Use for faint white compliance text and low-emphasis dark-surface labels. */
-  --spontaine-white-faint: #ffffff8f;
-  /* Use for resources/listing section backgrounds that need a neutral green cast. */
-  --spontaine-resources-bg: #f6f8f7;
-  /* Use for icon tile backgrounds on dark or high-contrast card systems. */
-  --spontaine-icon-bg: #676557;
-  /* Use for icon foreground text on icon tile backgrounds. */
-  --spontaine-icon-text: #fbfbf7;
-  /* Use for answer prompt card body text in V3 product visuals. */
-  --spontaine-prompt-text: #455258;
-  /* Use for the first reusable V3 pill or compact status variant. */
-  --spontaine-pill-variant-1-bg: #edf8f4;
-  --spontaine-pill-variant-1-text: #438675;
-  /* Use for the second reusable V3 pill or compact status variant. */
-  --spontaine-pill-variant-2-bg: #f0eff9;
-  --spontaine-pill-variant-2-text: #6860a2;
-  /* Use for the third reusable V3 pill or compact status variant. */
-  --spontaine-pill-variant-3-bg: #fff5df;
-  --spontaine-pill-variant-3-text: #98712e;
-  /* Use for the fourth reusable V3 pill or compact status variant. */
-  --spontaine-pill-variant-4-bg: #e7f5fb;
-  --spontaine-pill-variant-4-text: #34708b;
+  /* Color Primitives: raw values live here only. */
+  --mint-100: #edf8f4;
+  --mint-200: #bffcec;
+  --mint-300: #90f4c7;
+  --mint-400: #44eca0;
+  --mint-500: #18d6a1;
+  --mint-600: #0a9271;
+  --mint-700: #438675;
+  --mint-900: #103e32;
+  --lime-400: #c3ff6e;
+  --green-500: #2fd47d;
+  --blue-100: #e7f5fb;
+  --blue-200: #d9f1fc;
+  --blue-300: #d0d9fb;
+  --blue-500: #34708b;
+  --blue-600: #6777fb;
+  --lavender-100: #f0eff9;
+  --lavender-600: #6860a2;
+  --amber-100: #fff5df;
+  --amber-600: #98712e;
+  --neutral-50: #ffffff;
+  --neutral-100: #fbfbf7;
+  --neutral-150: #f6f8f7;
+  --neutral-300: #a9bbb8;
+  --neutral-400: #a7a7a7;
+  --neutral-500: #918d8d;
+  --neutral-600: #71807d;
+  --neutral-650: #647078;
+  --neutral-700: #546165;
+  --neutral-750: #455258;
+  --neutral-800: #282a2a;
+  --neutral-850: #202630;
+  --neutral-olive: #676557;
+
+  /* Semantic Tokens: public Spontaine names alias primitives for compatibility. */
+  --spontaine-accent: var(--mint-500);
+  --spontaine-accent-dark: var(--mint-600);
+  --spontaine-accent-ink: var(--mint-900);
+  --spontaine-highlight: var(--blue-600);
+  --spontaine-accent-soft: var(--mint-300);
+  --spontaine-accent-bright: var(--lime-400);
+  --spontaine-accent-ring: var(--mint-500);
+  --spontaine-accent-footer: var(--green-500);
+  --spontaine-gradient-lavender-teal: linear-gradient(
+    0deg,
+    var(--mint-400) 0%,
+    var(--blue-300) 100%
+  );
+  --spontaine-gradient-lime: linear-gradient(0deg, var(--mint-400) 0%, var(--lime-400) 100%);
+  --spontaine-dark: var(--neutral-850);
+  --spontaine-dark-bg: var(--neutral-800);
+  --spontaine-gray: var(--neutral-400);
+  --spontaine-gray-warm: var(--neutral-500);
+  --spontaine-gray-cool: var(--neutral-600);
+  --spontaine-gray-soft: var(--neutral-300);
+  --spontaine-gray-muted: var(--neutral-650);
+  --spontaine-gray-deep: var(--neutral-700);
+  --spontaine-text-slate: var(--neutral-750);
+  --spontaine-light: var(--neutral-100);
+  --spontaine-light-ice: var(--mint-200);
+  --spontaine-light-blue: var(--blue-200);
+  --spontaine-white: var(--neutral-50);
+  --spontaine-white-soft: rgb(from var(--neutral-50) r g b / 65%);
+  --spontaine-white-faint: rgb(from var(--neutral-50) r g b / 56%);
+  --spontaine-resources-bg: var(--neutral-150);
+  --spontaine-icon-bg: var(--neutral-olive);
+  --spontaine-icon-text: var(--neutral-100);
+
+  /* Component Tokens: reusable visual roles may reference semantic tokens or primitives. */
+  --spontaine-pill-variant-1-bg: var(--mint-100);
+  --spontaine-pill-variant-1-text: var(--mint-700);
+  --spontaine-pill-variant-2-bg: var(--lavender-100);
+  --spontaine-pill-variant-2-text: var(--lavender-600);
+  --spontaine-pill-variant-3-bg: var(--amber-100);
+  --spontaine-pill-variant-3-text: var(--amber-600);
+  --spontaine-pill-variant-4-bg: var(--blue-100);
+  --spontaine-pill-variant-4-text: var(--blue-500);
+
+  /* Layout */
   /* Use for desktop shell gutters and constrained page padding. */
   --space-shell: 24px;
   /* Use for mobile shell gutters. */
@@ -92,15 +103,15 @@
   /* Use for pills, chips, and rounded CTA controls. */
   --radius-pill: 999px;
 
-  /* Use via bg-hero-wash for V3 hero or top-of-page wash backgrounds. */
+  /* Use via bg-hero-wash for top-of-page wash backgrounds. */
   --gradient-hero-wash: linear-gradient(
     118deg,
-    #d8e5ef 2%,
-    #f9f8f2 40%,
-    #fafaf6 68%,
-    #d8e0ea 100%
+    color-mix(in srgb, var(--spontaine-light-blue) 72%, var(--spontaine-gray-muted) 28%) 2%,
+    color-mix(in srgb, var(--spontaine-light) 82%, var(--spontaine-white) 18%) 40%,
+    color-mix(in srgb, var(--spontaine-light) 70%, var(--spontaine-white) 30%) 68%,
+    color-mix(in srgb, var(--spontaine-light-blue) 58%, var(--spontaine-gray-muted) 42%) 100%
   );
-  /* Use via bg-hero-band for the diagonal blurred light band in V3 hero compositions. */
+  /* Use via bg-hero-band for complex diagonal ambient bands. */
   --gradient-hero-band: linear-gradient(
     100deg,
     rgba(103, 119, 251, 0.46) 0%,
@@ -120,13 +131,13 @@
     var(--spontaine-accent-ring) 0%,
     var(--spontaine-accent-bright) 100%
   );
-  /* Use via bg-mint-blue for governed-intelligence, diagram, or calm accent panels. */
+  /* Use via bg-mint-blue for diagram or calm accent panels. */
   --gradient-mint-blue: linear-gradient(
     0deg,
     var(--spontaine-accent-ring) 0%,
     var(--spontaine-light-blue) 100%
   );
-  /* Use via bg-prism-surface for abstract visual objects and dimensional surfaces. */
+  /* Use via bg-prism-surface for complex abstract dimensional surfaces. */
   --gradient-prism-surface: linear-gradient(
     145deg,
     rgba(255, 255, 255, 0.93) 0%,
