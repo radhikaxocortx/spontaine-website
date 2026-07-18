@@ -1,13 +1,12 @@
+import SectionBentoV3 from '@/components/Home/Bento/SectionBentoV3'
 import SectionChatV3 from '@/components/Home/Chat/SectionChatV3'
 import SpontaineV3Hero from '@/components/Home/SpontaineV3Hero'
 import MetaTags from '@/components/MetaTags'
 import { useSmoothPageScroll } from '@/hooks/useSmoothPageScroll'
 import CompanyLogosMarquee from '@/Modules/PageBuilder/Blocks/HomeBlocks/CompanyLogosMarquee'
-import SectionAlignedAction from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionAlignedAction'
 import SectionBlogsCarousel from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionBlogsCarousel'
 import SectionCTA from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionCTA'
 import SectionTestimonial from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionTestimonial'
-import VideoFeatureCarousel from '@/Modules/PageBuilder/Blocks/HomeBlocks/VideoFeatureCarousel'
 import { FooterDataInterface } from '@/Modules/PageBuilder/FooterEditor/FooterEditor'
 import { Page } from '@/Modules/PageBuilder/page_interfaces'
 import { PageProps } from '@/types'
@@ -92,7 +91,7 @@ const StaticHomePageV3 = ({
           <SectionChatV3 />
         </div>
         {/* <VideoFeatureCarousel /> */}
-        <SectionAlignedAction />
+        <SectionBentoV3 />
         <CompanyLogosMarquee />
         <SectionTestimonial />
 
