@@ -2,10 +2,10 @@ import SectionBentoV3 from '@/components/Home/Bento/SectionBentoV3'
 import SectionChatV3 from '@/components/Home/Chat/SectionChatV3'
 import SpontaineV3Hero from '@/components/Home/SpontaineV3Hero'
 import SectionStackV3 from '@/components/Home/Stack/SectionStackV3'
+import SectionBlogsCarouselV3 from '@/components/Home/SectionBlogsCarouselV3'
 import SectionTestBannerV3 from '@/components/Home/SectionTestBannerV3'
 import MetaTags from '@/components/MetaTags'
 import { useSmoothPageScroll } from '@/hooks/useSmoothPageScroll'
-import SectionBlogsCarousel from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionBlogsCarousel'
 import SectionCTA from '@/Modules/PageBuilder/Blocks/HomeBlocks/SectionCTA'
 import { FooterDataInterface } from '@/Modules/PageBuilder/FooterEditor/FooterEditor'
 import { Page } from '@/Modules/PageBuilder/page_interfaces'
@@ -100,7 +100,7 @@ const StaticHomePageV3 = ({
         {/* <SectionTestimonial /> */}
 
         <div id='resources'>
-          <SectionBlogsCarousel featuredBlogs={featuredBlogs} />
+          <SectionBlogsCarouselV3 featuredBlogs={featuredBlogs} />
         </div>
         <SectionCTA />
       </div>
