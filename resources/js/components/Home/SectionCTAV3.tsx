@@ -12,7 +12,7 @@ export default function SectionCTAV3({ className }: SectionCTAV3Props) {
     <section
       id='contact'
       className={cn(
-        'bg-cta-wash py-[96px] text-center md:py-[120px] lg:pb-[120px] lg:pt-[135px]',
+        'relative w-full overflow-hidden rounded-t-section-sm bg-cta-wash py-[96px] text-center md:rounded-t-section-md md:py-[120px] lg:rounded-t-section-lg lg:pb-[120px] lg:pt-[135px] xl:rounded-t-section-xl',
         className
       )}
     >

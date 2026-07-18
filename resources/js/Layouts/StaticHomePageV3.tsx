@@ -1,10 +1,10 @@
 import SectionBentoV3 from '@/components/Home/Bento/SectionBentoV3'
 import SectionChatV3 from '@/components/Home/Chat/SectionChatV3'
+import SectionBlogsCarouselV3 from '@/components/Home/SectionBlogsCarouselV3'
+import SectionCTAV3 from '@/components/Home/SectionCTAV3'
+import SectionTestBannerV3 from '@/components/Home/SectionTestBannerV3'
 import SpontaineV3Hero from '@/components/Home/SpontaineV3Hero'
 import SectionStackV3 from '@/components/Home/Stack/SectionStackV3'
-import SectionBlogsCarouselV3 from '@/components/Home/SectionBlogsCarouselV3'
-import SectionTestBannerV3 from '@/components/Home/SectionTestBannerV3'
-import SectionCTAV3 from '@/components/Home/SectionCTAV3'
 import MetaTags from '@/components/MetaTags'
 import { useSmoothPageScroll } from '@/hooks/useSmoothPageScroll'
 import { FooterDataInterface } from '@/Modules/PageBuilder/FooterEditor/FooterEditor'
@@ -102,7 +102,9 @@ const StaticHomePageV3 = ({
         <div id='resources'>
           <SectionBlogsCarouselV3 featuredBlogs={featuredBlogs} />
         </div>
-        <SectionCTAV3 />
+        <div className='relative z-20 -mt-8 md:-mt-10 lg:-mt-12 xl:-mt-20'>
+          <SectionCTAV3 />
+        </div>
       </div>
       <Footer blockData={footer.items} />
     </div>
