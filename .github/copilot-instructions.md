@@ -40,6 +40,10 @@ Purpose: Enable immediate productive contributions while preserving established 
 - Avoid inline styles unless there is no practical Tailwind/class alternative.
 - Keep spacing consistent with the existing Tailwind spacing scale.
 
+### Tailwind Utility Normalization
+
+Prefer standard Tailwind utilities when an exact utility exists.
+
 ### Cross-Platform Consistency Rules
 
 - Do not rely on OS-specific font glyphs for UI elements.

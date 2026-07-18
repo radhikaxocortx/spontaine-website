@@ -1,81 +1,108 @@
 :root {
   /* Color Primitives: raw values live here only. */
-  --mint-100: #edf8f4;
-  --mint-200: #bffcec;
-  --mint-300: #90f4c7;
-  --mint-400: #44eca0;
-  --mint-500: #18d6a1;
-  --mint-600: #0a9271;
-  --mint-700: #438675;
-  --mint-900: #103e32;
-  --lime-400: #c3ff6e;
-  --green-500: #2fd47d;
-  --blue-100: #e7f5fb;
-  --blue-200: #d9f1fc;
-  --blue-300: #d0d9fb;
-  --blue-500: #34708b;
-  --blue-600: #6777fb;
-  --lavender-100: #f0eff9;
-  --lavender-600: #6860a2;
-  --amber-100: #fff5df;
-  --amber-600: #98712e;
-  --neutral-50: #ffffff;
-  --neutral-100: #fbfbf7;
-  --neutral-150: #f6f8f7;
-  --neutral-300: #a9bbb8;
-  --neutral-400: #a7a7a7;
-  --neutral-500: #918d8d;
-  --neutral-600: #71807d;
-  --neutral-650: #647078;
-  --neutral-700: #546165;
-  --neutral-750: #455258;
-  --neutral-800: #282a2a;
-  --neutral-850: #202630;
-  --neutral-olive: #676557;
+  --mint-50: #f0fcf5;
+  --mint-100: #d6f7e8;
+  --mint-200: #baf2d9;
+  --mint-300: #8ce3c2;
+  --mint-400: #61cca8;
+  --mint-500: #3db28f;
+  --mint-600: #298f73;
+  --neutral-50: #fafafa;
+  --neutral-100: #f5f5f5;
+  --neutral-200: #e5e5e8;
+  --neutral-300: #c7c7cc;
+  --neutral-400: #9999a1;
+  --neutral-500: #6b6b73;
+  --neutral-600: #45454d;
+  --neutral-700: #26262e;
+  --neutral-800: #17171f;
+  --neutral-900: #0d0d14;
+  --teal-dark: #0f3338;
+  --teal-mid: #1a4d52;
+  --white: #ffffff;
+  --brand-accent: #0fe5a8;
+  --brand-accent-hover: #2befb6;
+  --brand-accent-pressed: #0cce97;
+  --surface-cream: #ebe9d9;
+  --surface-ice: #d4eeff;
+  --ink: #4a4a4a;
+  --ink-deep: #2e2e2e;
+  --feedback-success: #0fa57e;
+  --feedback-warning: #c97b12;
+  --feedback-error: #c4453b;
 
   /* Semantic Tokens: public Spontaine names alias primitives for compatibility. */
-  --spontaine-accent: var(--mint-500);
-  --spontaine-accent-dark: var(--mint-600);
-  --spontaine-accent-ink: var(--mint-900);
-  --spontaine-highlight: var(--blue-600);
-  --spontaine-accent-soft: var(--mint-300);
-  --spontaine-accent-bright: var(--lime-400);
-  --spontaine-accent-ring: var(--mint-500);
-  --spontaine-accent-footer: var(--green-500);
+  --spontaine-accent: var(--brand-accent);
+  --spontaine-accent-hover: var(--brand-accent-hover);
+  --spontaine-accent-pressed: var(--brand-accent-pressed);
+  --spontaine-accent-soft: rgb(from var(--brand-accent) r g b / 12%);
+  --spontaine-surface-cream: var(--surface-cream);
+  --spontaine-surface-ice: var(--surface-ice);
+  --spontaine-surface-paper: var(--white);
+  --spontaine-surface-ink: var(--ink);
+  --spontaine-surface-ink-deep: var(--ink-deep);
+  --spontaine-text-primary: var(--ink-deep);
+  --spontaine-text-secondary: rgb(from var(--ink) r g b / 72%);
+  --spontaine-text-tertiary: rgb(from var(--ink) r g b / 60%);
+  --spontaine-text-on-dark: var(--white);
+  --spontaine-text-on-dark-secondary: rgb(from var(--white) r g b / 85%);
+  --spontaine-text-on-accent: var(--ink-deep);
+  --spontaine-border-subtle: rgb(from var(--ink) r g b / 8%);
+  --spontaine-border-medium: rgb(from var(--ink) r g b / 16%);
+  --spontaine-border-on-dark: rgb(from var(--white) r g b / 12%);
+  --spontaine-border-glass-edge: rgb(from var(--white) r g b / 14%);
+  --spontaine-border-glass-edge-top: rgb(from var(--white) r g b / 28%);
+  --spontaine-success: var(--feedback-success);
+  --spontaine-warning: var(--feedback-warning);
+  --spontaine-error: var(--feedback-error);
+  --spontaine-error-soft: rgb(from var(--feedback-error) r g b / 8%);
+  --spontaine-overlay-scrim: rgb(from var(--ink) r g b / 40%);
+
+  /* Compatibility Tokens: preserve existing public names and Tailwind utility wiring. */
+  --spontaine-accent-dark: var(--spontaine-accent-pressed);
+  --spontaine-accent-ink: var(--spontaine-text-on-accent);
+  --spontaine-highlight: var(--teal-mid);
+  --spontaine-accent-bright: var(--spontaine-accent-hover);
+  --spontaine-accent-ring: var(--spontaine-accent);
+  --spontaine-accent-footer: var(--spontaine-success);
   --spontaine-gradient-lavender-teal: linear-gradient(
     0deg,
-    var(--mint-400) 0%,
-    var(--blue-300) 100%
+    var(--spontaine-accent) 0%,
+    var(--spontaine-surface-ice) 100%
   );
-  --spontaine-gradient-lime: linear-gradient(0deg, var(--mint-400) 0%, var(--lime-400) 100%);
-  --spontaine-dark: var(--neutral-850);
-  --spontaine-dark-bg: var(--neutral-800);
+  --spontaine-gradient-lime: linear-gradient(
+    0deg,
+    var(--spontaine-accent) 0%,
+    var(--spontaine-accent-hover) 100%
+  );
+  --spontaine-dark: var(--spontaine-text-primary);
+  --spontaine-dark-bg: var(--neutral-900);
   --spontaine-gray: var(--neutral-400);
   --spontaine-gray-warm: var(--neutral-500);
-  --spontaine-gray-cool: var(--neutral-600);
+  --spontaine-gray-cool: var(--neutral-500);
   --spontaine-gray-soft: var(--neutral-300);
-  --spontaine-gray-muted: var(--neutral-650);
-  --spontaine-gray-deep: var(--neutral-700);
-  --spontaine-text-slate: var(--neutral-750);
-  --spontaine-light: var(--neutral-100);
-  --spontaine-light-ice: var(--mint-200);
-  --spontaine-light-blue: var(--blue-200);
-  --spontaine-white: var(--neutral-50);
-  --spontaine-white-soft: rgb(from var(--neutral-50) r g b / 65%);
-  --spontaine-white-faint: rgb(from var(--neutral-50) r g b / 56%);
-  --spontaine-resources-bg: var(--neutral-150);
-  --spontaine-icon-bg: var(--neutral-olive);
-  --spontaine-icon-text: var(--neutral-100);
+  --spontaine-gray-muted: var(--spontaine-text-secondary);
+  --spontaine-gray-deep: var(--spontaine-text-primary);
+  --spontaine-text-slate: var(--spontaine-text-secondary);
+  --spontaine-light: var(--spontaine-surface-paper);
+  --spontaine-light-ice: var(--mint-50);
+  --spontaine-light-blue: var(--spontaine-surface-ice);
+  --spontaine-white: var(--white);
+  --spontaine-white-soft: rgb(from var(--white) r g b / 65%);
+  --spontaine-white-faint: rgb(from var(--white) r g b / 56%);
+  --spontaine-resources-bg: var(--spontaine-surface-cream);
+  --spontaine-icon-bg: var(--teal-mid);
+  --spontaine-icon-text: var(--spontaine-text-on-dark);
 
   /* Component Tokens: reusable visual roles may reference semantic tokens or primitives. */
-  --spontaine-pill-variant-1-bg: var(--mint-100);
-  --spontaine-pill-variant-1-text: var(--mint-700);
-  --spontaine-pill-variant-2-bg: var(--lavender-100);
-  --spontaine-pill-variant-2-text: var(--lavender-600);
-  --spontaine-pill-variant-3-bg: var(--amber-100);
-  --spontaine-pill-variant-3-text: var(--amber-600);
-  --spontaine-pill-variant-4-bg: var(--blue-100);
-  --spontaine-pill-variant-4-text: var(--blue-500);
+  --spontaine-pill-variant-1-bg: var(--mint-50);
+  --spontaine-pill-variant-1-text: var(--mint-600);
+  --spontaine-pill-variant-2-bg: var(--neutral-100);
+  --spontaine-pill-variant-2-text: var(--teal-mid);
+  --spontaine-pill-variant-3-bg: rgb(from var(--feedback-warning) r g b / 10%);
+  --spontaine-pill-variant-3-text: var(--feedback-warning);
+  --spontaine-pill-variant-4-bg: var(--spontaine-surface-ice);
+  --spontaine-pill-variant-4-text: var(--teal-mid);
 
   /* Layout */
   /* Use for desktop shell gutters and constrained page padding. */

@@ -21,6 +21,10 @@ const buttonVariants = cva(
           'border border-black-tertiary-950 bg-white text-primary-500 shadow-sm relative overflow-hidden dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-50',
         ghost: 'relative overflow-hidden',
         link: 'text-primary-500 underline-offset-4 hover:text-primary-800 underline dark:text-neutral-50',
+        v3Primary:
+          'relative overflow-hidden rounded-[var(--radius-pill)] bg-spontaine-accent font-body font-semibold text-spontaine-accent-ink shadow-cta-glow hover:bg-spontaine-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-spontaine-accent-dark focus-visible:ring-0',
+        v3Secondary:
+          'relative overflow-hidden rounded-[var(--radius-pill)] border border-spontaine-gray/30 bg-spontaine-white font-body font-semibold text-spontaine-dark hover:border-spontaine-accent-dark hover:text-spontaine-accent-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-spontaine-accent-dark focus-visible:ring-0',
       },
       size: {
         default: 'h-9 px-4 py-2',
@@ -29,6 +33,7 @@ const buttonVariants = cva(
         lg: 'h-10 rounded-xl px-8',
         xl: 'h-10 rounded-xl px-10',
         xxl: 'h-10 rounded-xl px-12',
+        v3Hero: 'min-h-12 px-5 py-3 text-sm',
         icon: 'h-9 w-9',
       },
     },
@@ -53,6 +58,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       switch (variant) {
         case 'outline':
         case 'secondary':
+        case 'v3Primary':
+        case 'v3Secondary':
           return 'rgba(0, 0, 0, 0.2)' // Dark ripple on light backgrounds
         case 'default':
         case 'destructive':

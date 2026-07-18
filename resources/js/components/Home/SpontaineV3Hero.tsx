@@ -3,6 +3,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowRight, ArrowUpRight } from 'lucide-react'
 import { useEffect, useRef } from 'react'
 
+import { Button } from '@/components/ui/button'
+
 const decisionStates = [
   {
     label: 'Governed answer',
@@ -97,13 +99,13 @@ export default function SpontaineV3Hero() {
       {/* Diagonal ambient band behind the prism */}
       <div
         aria-hidden='true'
-        className='absolute inset-x-[-15%] bottom-[20%] z-0 hidden h-[160px] rotate-[-13deg] bg-hero-band opacity-[0.76] blur-[4px] lg:block'
+        className='absolute inset-x-[-15%] bottom-[20%] z-0 hidden h-40 rotate-[-13deg] bg-hero-band opacity-[0.76] blur-sm lg:block'
       />
 
       {/* Curved paper mask into the next section */}
       <div
         aria-hidden='true'
-        className='absolute inset-x-[-4%] bottom-[-80px] z-0 h-[180px] rounded-t-[50%] bg-spontaine-light'
+        className='absolute inset-x-[-4%] -bottom-20 z-0 h-[180px] rounded-t-[50%] bg-spontaine-light'
       />
 
       <div className='relative z-10 mx-auto grid w-full max-w-[1180px] pl-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-start lg:gap-10'>
@@ -131,29 +133,35 @@ export default function SpontaineV3Hero() {
           </p>
 
           <div className='mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap'>
-            <a
-              href='#product'
-              className='inline-flex min-h-[48px] items-center justify-center gap-2 rounded-[var(--radius-pill)] bg-spontaine-accent px-5 py-3 font-body text-sm font-semibold text-spontaine-accent-ink shadow-cta-glow transition-colors hover:bg-spontaine-accent-bright focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-spontaine-accent-dark'
+            <Button
+              asChild
+              variant='v3Primary'
+              size='v3Hero'
             >
-              See it in your firm
-              <ArrowUpRight
-                aria-hidden='true'
-                className='h-4 w-4'
-                strokeWidth={2}
-              />
-            </a>
+              <a href='#product'>
+                See it in your firm
+                <ArrowUpRight
+                  aria-hidden='true'
+                  className='h-4 w-4'
+                  strokeWidth={2}
+                />
+              </a>
+            </Button>
 
-            <a
-              href='#resources'
-              className='inline-flex min-h-[48px] items-center justify-center gap-2 rounded-[var(--radius-pill)] border border-spontaine-gray/30 bg-spontaine-white px-5 py-3 font-body text-sm font-semibold text-spontaine-dark transition-colors hover:border-spontaine-accent-dark hover:text-spontaine-accent-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-spontaine-accent-dark'
+            <Button
+              asChild
+              variant='v3Secondary'
+              size='v3Hero'
             >
-              Watch the 90-second overview
-              <ArrowUpRight
-                aria-hidden='true'
-                className='h-4 w-4'
-                strokeWidth={2}
-              />
-            </a>
+              <a href='#resources'>
+                Watch the 90-second overview
+                <ArrowUpRight
+                  aria-hidden='true'
+                  className='h-4 w-4'
+                  strokeWidth={2}
+                />
+              </a>
+            </Button>
           </div>
 
           <p className='mt-5 font-mono text-xs text-spontaine-gray-deep'>
@@ -175,7 +183,7 @@ export default function SpontaineV3Hero() {
           {/* Answer prompt card */}
           <div
             ref={promptCardRef}
-            className='absolute bottom-5 left-0 w-[min(470px,100%)] rounded-[18px] border border-spontaine-white/90 bg-spontaine-white/[0.84] px-[17px] py-[15px] shadow-surface backdrop-blur-[16px] lg:bottom-[15px]'
+            className='absolute bottom-5 left-0 w-[min(470px,100%)] rounded-[18px] border border-spontaine-white/90 bg-spontaine-white/[0.84] px-[17px] py-[15px] shadow-surface backdrop-blur-lg lg:bottom-[15px]'
           >
             <p className='font-body text-[0.78rem] font-semibold text-[var(--spontaine-text-slate)]'>
               Which engagements are likely to miss target margin this quarter?
@@ -185,7 +193,7 @@ export default function SpontaineV3Hero() {
               {decisionStates.map((state) => (
                 <span
                   key={state.label}
-                  className={`rounded-full px-[9px] py-[2px] font-mono text-[0.63rem] font-medium tracking-[-0.035em] ${state.className}`}
+                  className={`rounded-full px-[9px] py-0.5 font-mono text-[0.63rem] font-medium tracking-[-0.035em] ${state.className}`}
                 >
                   {state.label}
                 </span>

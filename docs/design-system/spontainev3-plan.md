@@ -24,40 +24,83 @@ Complex gradients and glass shadows should derive from primitives or semantic to
 
 ### Color Primitives
 
-| Token family | Intended usage |
+Raw color values live only in the primitive section of `resources/css/tokens/spontainev3.css`.
+
+| Token | Value |
 | --- | --- |
-| `--mint-*` | Mint and teal primitives used by primary actions, chip variants, and accent states. |
-| `--lime-*` | Lime primitives used by bright accent surfaces and gradients. |
-| `--green-*` | Green primitives used by footer or secondary brand accents. |
-| `--blue-*` | Blue and periwinkle primitives used by highlights, washes, and cool variants. |
-| `--lavender-*` | Lavender primitives used by soft pill variants. |
-| `--amber-*` | Amber primitives used by warm pill variants. |
-| `--neutral-*` | White, paper, gray, slate, and dark primitives used across text and surfaces. |
+| `--mint-50` | `#F0FCF5` |
+| `--mint-100` | `#D6F7E8` |
+| `--mint-200` | `#BAF2D9` |
+| `--mint-300` | `#8CE3C2` |
+| `--mint-400` | `#61CCA8` |
+| `--mint-500` | `#3DB28F` |
+| `--mint-600` | `#298F73` |
+| `--neutral-50` | `#FAFAFA` |
+| `--neutral-100` | `#F5F5F5` |
+| `--neutral-200` | `#E5E5E8` |
+| `--neutral-300` | `#C7C7CC` |
+| `--neutral-400` | `#9999A1` |
+| `--neutral-500` | `#6B6B73` |
+| `--neutral-600` | `#45454D` |
+| `--neutral-700` | `#26262E` |
+| `--neutral-800` | `#17171F` |
+| `--neutral-900` | `#0D0D14` |
+| `--teal-dark` | `#0F3338` |
+| `--teal-mid` | `#1A4D52` |
+| `--white` | `#FFFFFF` |
+| `--brand-accent` | `#0FE5A8` |
+| `--brand-accent-hover` | `#2BEFB6` |
+| `--brand-accent-pressed` | `#0CCE97` |
+| `--surface-cream` | `#EBE9D9` |
+| `--surface-ice` | `#D4EEFF` |
+| `--ink` | `#4A4A4A` |
+| `--ink-deep` | `#2E2E2E` |
+| `--feedback-success` | `#0FA57E` |
+| `--feedback-warning` | `#C97B12` |
+| `--feedback-error` | `#C4453B` |
 
 ### Semantic Tokens
 
 | Token | Source | Intended usage |
 | --- | --- | --- |
-| `--spontaine-accent` | `--mint-500` | Primary CTA fills and mint interaction accents. |
-| `--spontaine-accent-dark` | `--mint-600` | Green display emphasis, links, and stronger accent text. |
-| `--spontaine-accent-ink` | `--mint-900` | Text on primary mint CTA fills. |
-| `--spontaine-dark` | `--neutral-850` | Primary dark text on light V3 surfaces. |
-| `--spontaine-dark-bg` | `--neutral-800` | Dark navigation, footer, and high-contrast surfaces. |
-| `--spontaine-light` | `--neutral-100` | Paper surface, masks, and page background transitions. |
-| `--spontaine-light-blue` | `--blue-200` | Pale sky surfaces and calm blue washes. |
-| `--spontaine-gray-cool` | `--neutral-600` | Eyebrows, labels, and cool secondary text. |
-| `--spontaine-gray-muted` | `--neutral-650` | Paragraph and supporting copy. |
-| `--spontaine-gray-deep` | `--neutral-700` | Mono subnotes and stronger muted labels. |
-| `--spontaine-text-slate` | `--neutral-750` | Compact card text and dense product UI copy. |
+| `--spontaine-accent` | `--brand-accent` | Primary CTA fills and active accent states. |
+| `--spontaine-accent-hover` | `--brand-accent-hover` | Hover state for accent fills. |
+| `--spontaine-accent-pressed` | `--brand-accent-pressed` | Pressed or stronger accent state. |
+| `--spontaine-accent-soft` | `--brand-accent` at 12% | Soft accent fills and subtle active surfaces. |
+| `--spontaine-surface-cream` | `--surface-cream` | Warm off-white surfaces. |
+| `--spontaine-surface-ice` | `--surface-ice` | Cool pale-blue surfaces. |
+| `--spontaine-surface-paper` | `--white` | Paper and white surface backgrounds. |
+| `--spontaine-surface-ink` | `--ink` | Dark neutral surface or text base. |
+| `--spontaine-surface-ink-deep` | `--ink-deep` | Strong dark neutral surface or text base. |
+| `--spontaine-text-primary` | `--ink-deep` | Primary text. |
+| `--spontaine-text-secondary` | `--ink` at 72% | Secondary text. |
+| `--spontaine-text-tertiary` | `--ink` at 60% | Tertiary text and low-emphasis metadata. |
+| `--spontaine-text-on-dark` | `--white` | Text on dark surfaces. |
+| `--spontaine-text-on-dark-secondary` | `--white` at 85% | Secondary text on dark surfaces. |
+| `--spontaine-text-on-accent` | `--ink-deep` | Text on accent fills. |
+| `--spontaine-border-subtle` | `--ink` at 8% | Subtle borders on light surfaces. |
+| `--spontaine-border-medium` | `--ink` at 16% | Medium borders on light surfaces. |
+| `--spontaine-border-on-dark` | `--white` at 12% | Borders on dark surfaces. |
+| `--spontaine-border-glass-edge` | `--white` at 14% | Glass edge borders. |
+| `--spontaine-border-glass-edge-top` | `--white` at 28% | Stronger top edge for glass treatments. |
+| `--spontaine-success` | `--feedback-success` | Success states. |
+| `--spontaine-warning` | `--feedback-warning` | Warning states. |
+| `--spontaine-error` | `--feedback-error` | Error states. |
+| `--spontaine-error-soft` | `--feedback-error` at 8% | Soft error backgrounds. |
+| `--spontaine-overlay-scrim` | `--ink` at 40% | Modal, menu, or overlay scrims. |
+
+Opacity-based semantic tokens use `rgb(from var(...) r g b / <opacity>)` so alpha values are derived from primitives instead of duplicated as hex values.
+
+Compatibility aliases such as `--spontaine-accent-dark`, `--spontaine-accent-bright`, `--spontaine-dark`, `--spontaine-light`, `--spontaine-gray-muted`, `--spontaine-white`, and `--spontaine-light-blue` remain available so existing Tailwind utilities and components continue to resolve.
 
 ### Component Tokens
 
 | Token | Source | Intended usage |
 | --- | --- | --- |
-| `--spontaine-pill-variant-1-bg` / `text` | `--mint-100` / `--mint-700` | First reusable compact pill variant. |
-| `--spontaine-pill-variant-2-bg` / `text` | `--lavender-100` / `--lavender-600` | Second reusable compact pill variant. |
-| `--spontaine-pill-variant-3-bg` / `text` | `--amber-100` / `--amber-600` | Third reusable compact pill variant. |
-| `--spontaine-pill-variant-4-bg` / `text` | `--blue-100` / `--blue-500` | Fourth reusable compact pill variant. |
+| `--spontaine-pill-variant-1-bg` / `text` | `--mint-50` / `--mint-600` | First reusable compact pill variant. |
+| `--spontaine-pill-variant-2-bg` / `text` | `--neutral-100` / `--teal-mid` | Second reusable compact pill variant. |
+| `--spontaine-pill-variant-3-bg` / `text` | `--feedback-warning` at 10% / `--feedback-warning` | Third reusable compact pill variant. |
+| `--spontaine-pill-variant-4-bg` / `text` | `--spontaine-surface-ice` / `--teal-mid` | Fourth reusable compact pill variant. |
 
 Example:
 
