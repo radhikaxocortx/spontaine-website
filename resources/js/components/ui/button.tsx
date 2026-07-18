@@ -23,6 +23,8 @@ const buttonVariants = cva(
         link: 'text-primary-500 underline-offset-4 hover:text-primary-800 underline dark:text-neutral-50',
         v3Primary:
           'relative overflow-hidden rounded-[var(--radius-pill)] bg-spontaine-accent font-body font-semibold text-spontaine-accent-ink shadow-cta-glow hover:bg-spontaine-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-spontaine-accent-dark focus-visible:ring-0',
+        v3NavPrimary:
+          'relative overflow-hidden rounded-[var(--radius-pill)] bg-spontaine-accent font-body font-medium text-spontaine-accent-ink shadow-cta-glow hover:bg-spontaine-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-spontaine-accent-dark focus-visible:ring-0',
         v3Secondary:
           'relative overflow-hidden rounded-[var(--radius-pill)] border border-spontaine-gray/30 bg-spontaine-white font-body font-semibold text-spontaine-dark hover:border-spontaine-accent-dark hover:text-spontaine-accent-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-spontaine-accent-dark focus-visible:ring-0',
       },
@@ -59,6 +61,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         case 'outline':
         case 'secondary':
         case 'v3Primary':
+        case 'v3NavPrimary':
         case 'v3Secondary':
           return 'rgba(0, 0, 0, 0.2)' // Dark ripple on light backgrounds
         case 'default':

@@ -5,14 +5,11 @@ import { Link } from '@inertiajs/react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useEffect, useState } from 'react'
-import AppLayoutPadding from '../AppLayoutPadding'
 import { MobileNav } from './MobileNav/MobileNav'
 import NavbarLinks from './NavbarLinks'
 
 const Navbar = () => {
   const [isHeroVisible, setIsHeroVisible] = useState(true)
-  const [isCollapsed, setIsCollapsed] = useState(false)
-  const [isHoveringPill, setIsHoveringPill] = useState(false)
   const [hideNavbar, setHideNavbar] = useState(false)
 
   useEffect(() => {
@@ -25,12 +22,9 @@ const Navbar = () => {
     ScrollTrigger.refresh()
 
     const onScroll = () => {
-      const y = window.scrollY || document.documentElement.scrollTop
-      setIsCollapsed(y > 24)
-
       // Check if SectionCTA or Footer is in viewport
       const footer = document.querySelector('footer')
-      const sectionCTA = document.querySelector('[data-section-cta]')
+      const sectionCTA = document.querySelector('[data-section-cta], #contact')
 
       let shouldHide = false
 
@@ -67,82 +61,51 @@ const Navbar = () => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.6, ease: [0.4, 0.0, 0.2, 1] }}
-          className='fixed left-0 top-0 z-50 w-full'
+          className='bg-spontaine-surface-paper/50 fixed left-0 top-0 z-50 w-full backdrop-blur-md'
         >
-          <AppLayoutPadding>
-            <div
-              className='flex items-center justify-center py-6'
-              onMouseEnter={() => setIsHoveringPill(true)}
-              onMouseLeave={() => setIsHoveringPill(false)}
+          <div className='mx-auto flex h-16 w-full max-w-[1120px] items-center justify-between px-[var(--space-shell-sm)] md:px-[var(--space-shell)]'>
+            <Link
+              href='/'
+              className='flex items-center'
             >
-              <div className='hidden items-center gap-4 lg:flex'>
-                <div
-                  className={`font-accent flex items-center gap-8 rounded-full border border-transparent bg-spontaine-dark px-6 py-2 text-sm tracking-wide shadow-white transition-all duration-200 ${isCollapsed && !isHoveringPill ? 'px-4 py-2' : 'px-6 py-2'}`}
-                >
-                  {/* Logo (switches to icon when collapsed) */}
-                  <div className='flex items-center'>
-                    <Link href='/'>
-                      {isCollapsed && !isHoveringPill ? (
-                        <img
-                          src='/logo-icon.svg'
-                          alt='Spontaine'
-                          className='h-8 w-8'
-                        />
-                      ) : (
-                        //
-                        <ApplicationLogo2 className='h-10 w-auto' />
-                      )}
-                    </Link>
-                  </div>
+              <ApplicationLogo2 className='h-9 w-auto' />
+            </Link>
 
-                  {/* Navigation Links (hidden when collapsed, shown on hover) */}
-                  {(!isCollapsed || isHoveringPill) && <NavbarLinks />}
+            <div className='hidden items-center gap-8 lg:flex'>
+              <NavbarLinks />
 
-                  {/* CTA Button (always visible) */}
-                  <div className='hidden lg:block'>
-                    <CalendarBooking>
-                      {({ openCalendar }) => (
-                        <Button
-                          onClick={openCalendar}
-                          size='lg'
-                          className='relative overflow-hidden rounded-full bg-spontaine-accent-bright py-6 text-black shadow-2xl'
-                        >
-                          <span className='nav-cta-text'>Book Demo</span>
-                        </Button>
-                      )}
-                    </CalendarBooking>
-                  </div>
-                </div>
-              </div>
-              {/* Mobile layout: curved pill with logo left, CTA + hamburger right */}
-              <div className='w-full lg:hidden'>
-                <div className='font-accent flex items-center justify-between gap-4 rounded-full border border-transparent bg-spontaine-dark px-4 py-2 text-sm tracking-wide'>
-                  {/* Logo */}
-                  <Link
-                    href='/'
-                    className='flex gap-2'
+              <CalendarBooking>
+                {({ openCalendar }) => (
+                  <Button
+                    type='button'
+                    onClick={openCalendar}
+                    variant='v3NavPrimary'
+                    size='v3Hero'
+                    className='min-h-10 px-5 py-2 text-[15px]'
                   >
-                    <ApplicationLogo2 className='h-8 w-auto' />
-                  </Link>
-                  {/* Right: CTA + Hamburger */}
-                  <div className='flex items-center gap-3'>
-                    <CalendarBooking>
-                      {({ openCalendar }) => (
-                        <Button
-                          onClick={openCalendar}
-                          size='lg'
-                          className='relative overflow-hidden rounded-full bg-spontaine-accent-bright px-4 py-2 text-black shadow-2xl'
-                        >
-                          <span className='nav-cta-text'>Book Demo</span>
-                        </Button>
-                      )}
-                    </CalendarBooking>
-                    <MobileNav />
-                  </div>
-                </div>
-              </div>
+                    Work out your number
+                  </Button>
+                )}
+              </CalendarBooking>
             </div>
-          </AppLayoutPadding>
+
+            <div className='flex items-center gap-3 lg:hidden'>
+              <CalendarBooking>
+                {({ openCalendar }) => (
+                  <Button
+                    type='button'
+                    onClick={openCalendar}
+                    variant='v3NavPrimary'
+                    size='v3Hero'
+                    className='min-h-10 px-4 py-2 text-sm'
+                  >
+                    Book Demo
+                  </Button>
+                )}
+              </CalendarBooking>
+              <MobileNav />
+            </div>
+          </div>
         </motion.nav>
       )}
     </AnimatePresence>

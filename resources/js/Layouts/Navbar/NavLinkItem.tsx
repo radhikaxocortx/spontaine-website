@@ -10,6 +10,7 @@ import { cleanupRipples, createRippleEffect } from '@/lib/ripple-utils'
 import Localization from '@/Modules/PageBuilder/Components/Localization'
 import { NavMenu } from '@/Modules/PageBuilder/page_interfaces'
 import { Link } from '@inertiajs/react'
+import { ArrowRight } from 'lucide-react'
 
 interface Properties {
   item: NavMenu
@@ -51,7 +52,10 @@ const NavLinkItem = ({ item, lang = 'en' }: Properties) => {
           rel={linkInfo?.external ? 'noopener noreferrer' : undefined}
         >
           <span className='nav-cta-text'>{renderContent()}</span>
-          <i className='fas fa-arrow-right-long hero-cta-icon ml-2' />
+          <ArrowRight
+            aria-hidden='true'
+            className='ml-2 h-4 w-4'
+          />
         </Link>
       </Button>
     )

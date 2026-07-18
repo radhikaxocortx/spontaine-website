@@ -4,13 +4,7 @@ import EditLabel from '@/Modules/PageBuilder/Components/EditLabel'
 import InertiaLink from '@/Modules/PageBuilder/Components/InertiaLink'
 import Localization from '@/Modules/PageBuilder/Components/Localization'
 import { FooterDataInterface } from '@/Modules/PageBuilder/FooterEditor/FooterEditor'
-import { gsap } from 'gsap'
-import { MorphSVGPlugin } from 'gsap/MorphSVGPlugin'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useEffect, useRef } from 'react'
 import AppLayoutPadding from '../AppLayoutPadding'
-
-gsap.registerPlugin(ScrollTrigger, MorphSVGPlugin)
 
 interface Properties {
   editMode?: boolean
@@ -20,54 +14,10 @@ interface Properties {
 }
 
 const Footer = ({ editMode, onFieldEdit, language, blockData }: Properties) => {
-  const arcRef = useRef(null)
   const currentYear = new Date().getFullYear()
-
-  useEffect(() => {
-    const arc = arcRef.current
-
-    const normalArc = 'm1440 96c-213.6-61.2-459-96-720-96s-506.4 34.8-720 96v41.3h1440z'
-    const inwardArc = 'm1440 96c-213.6-51.2-459-86-720-86s-506.4 24.8-720 86v41.3h1440z'
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: arcRef.current,
-        start: 'top 80%',
-        end: 'top 20%',
-        toggleActions: 'play none none reverse',
-      },
-    })
-
-    tl.to(arc, {
-      morphSVG: inwardArc,
-      duration: 1.2,
-      ease: 'power2.inOut',
-    }).to(arc, {
-      morphSVG: normalArc,
-      duration: 1.2,
-      ease: 'power2.inOut',
-    })
-
-    return () => ScrollTrigger.getAll().forEach((t) => t.kill())
-  }, [])
 
   return (
     <footer className='relative bg-spontaine-dark pt-16 text-white sm:pt-20'>
-      {/* TOP ARC - matches SectionAlignedAction bottom arc pattern */}
-      <div className='absolute left-0 top-0 w-full -translate-y-[calc(100%-1px)]'>
-        <svg
-          viewBox='0 0 1440 96'
-          preserveAspectRatio='none'
-          className='w-full'
-        >
-          <path
-            ref={arcRef}
-            fill='#343434'
-            d='m1440 96c-213.6-61.2-459-96-720-96s-506.4 34.8-720 96v41.3h1440z'
-          />
-        </svg>
-      </div>
-
       <AppLayoutPadding>
         <div className='space-y-4 sm:space-y-5'>
           {/* Top Section: Logo + Navigation Columns */}
