@@ -2,29 +2,31 @@
 
 These tokens are a foundation layer for future Spontaine V3 work. Consume them through Tailwind utilities and existing Spontaine variables; do not place raw hex colors in React components.
 
-Spontaine V3 CSS variable sources live in `resources/css/tokens/spontainev3.css`. Existing variable names and Tailwind utility names are preserved for backward compatibility.
+Spontaine V3 CSS variable sources live in `resources/css/tokens/spontainev3.css`. Existing color, typography, gradient, and shadow utility names are preserved for backward compatibility; layout and radius values are consumed through CSS variable-backed arbitrary Tailwind utilities.
 
-## Spacing Tokens
+## Layout Tokens
 
 | Token | Value | Intended usage | Example |
 | --- | ---: | --- | --- |
-| `spacing.shell` | `28px` | Desktop shell gutters and constrained page padding. | `px-shell` |
-| `spacing.shell-sm` | `19px` | Mobile shell gutters. | `px-shell-sm` |
-| `spacing.section` | `120px` | Default Spontaine V3 section vertical rhythm. | `py-section` |
-| `spacing.section-lg` | `150px` | Expanded editorial or high-emphasis vertical rhythm. | `py-section-lg` |
-| `spacing.card-sm` | `16px` | Compact card and control group padding. | `p-card-sm` |
-| `spacing.card` | `22px` | Standard Spontaine V3 card padding. | `p-card` |
-| `spacing.card-lg` | `29px` | Large card or layer padding. | `p-card-lg` |
-| `spacing.stack` | `14px` | Architecture stack and repeated layer spacing. | `gap-stack` |
+| `--space-shell` | `28px` | Desktop shell gutters and constrained page padding. | `px-[var(--space-shell)]` |
+| `--space-shell-sm` | `19px` | Mobile shell gutters. | `px-[var(--space-shell-sm)]` |
+| `--space-section` | `120px` | Default Spontaine V3 section vertical rhythm. | `py-[var(--space-section)]` |
+| `--space-section-lg` | `150px` | Expanded editorial or high-emphasis vertical rhythm. | `py-[var(--space-section-lg)]` |
+| `--space-card-sm` | `16px` | Compact card and control group padding. | `p-[var(--space-card-sm)]` |
+| `--space-card` | `22px` | Standard Spontaine V3 card padding. | `p-[var(--space-card)]` |
+| `--space-card-lg` | `29px` | Large card or layer padding. | `p-[var(--space-card-lg)]` |
+| `--space-stack` | `14px` | Architecture stack and repeated layer spacing. | `gap-[var(--space-stack)]` |
 
 ## Radius Tokens
 
 | Token | Value | Intended usage | Example |
 | --- | ---: | --- | --- |
-| `borderRadius.card` | `20px` | Individual cards and repeated content surfaces. | `rounded-card` |
-| `borderRadius.panel` | `24px` | Larger panels, elevated surfaces, and feature containers. | `rounded-panel` |
-| `borderRadius.control` | `10px` | Inputs, compact controls, and small framed elements. | `rounded-control` |
-| `borderRadius.pill` | `999px` | Pills, chips, and rounded CTA controls. | `rounded-pill` |
+| `--radius-card` | `20px` | Individual cards and repeated content surfaces. | `rounded-[var(--radius-card)]` |
+| `--radius-panel` | `24px` | Larger panels, elevated surfaces, and feature containers. | `rounded-[var(--radius-panel)]` |
+| `--radius-control` | `10px` | Inputs, compact controls, and small framed elements. | `rounded-[var(--radius-control)]` |
+| `--radius-pill` | `999px` | Pills, chips, and rounded CTA controls. | `rounded-[var(--radius-pill)]` |
+
+Spontaine V3 layout and radius tokens live in CSS variables. Components should consume them through Tailwind arbitrary values rather than custom Tailwind spacing or radius utilities.
 
 ## Shadow Tokens
 
@@ -39,8 +41,10 @@ Spontaine V3 CSS variable sources live in `resources/css/tokens/spontainev3.css`
 Example:
 
 ```tsx
-<div className='rounded-panel bg-spontaine-white p-card shadow-surface' />
+<div className='rounded-[var(--radius-panel)] bg-spontaine-white p-[var(--space-card)] shadow-surface' />
 ```
+
+Shadow utilities remain semantic Tailwind classes, but their values are sourced from CSS variables in `resources/css/tokens/spontainev3.css`.
 
 ## Gradient Tokens
 
@@ -57,7 +61,7 @@ Example:
 Example:
 
 ```tsx
-<section className='bg-hero-wash px-shell-sm py-section md:px-shell' />
+<section className='bg-hero-wash px-[var(--space-shell-sm)] py-[var(--space-section)] md:px-[var(--space-shell)]' />
 ```
 
 For gradient text, pair the token with Tailwind clipping utilities:

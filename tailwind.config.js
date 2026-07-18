@@ -11,10 +11,6 @@ export default {
     './resources/js/**/*.tsx',
   ],
   safelist: [
-    'rounded-card',
-    'rounded-panel',
-    'rounded-control',
-    'rounded-pill',
     'shadow-surface',
     'shadow-nav',
     'shadow-card-lift',
@@ -267,22 +263,6 @@ export default {
         3: '3px',
         5: '5px',
         10: '10px',
-      },
-      spacing: {
-        shell: '28px',
-        'shell-sm': '19px',
-        section: '120px',
-        'section-lg': '150px',
-        'card-sm': '16px',
-        card: '22px',
-        'card-lg': '29px',
-        stack: '14px',
-      },
-      borderRadius: {
-        card: '20px',
-        panel: '24px',
-        control: '10px',
-        pill: '999px',
       },
       boxShadow: {
         'spontaine-dpa': '0 4px 15px rgba(0, 0, 0, 0.05)',

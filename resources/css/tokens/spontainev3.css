@@ -51,6 +51,30 @@
   --spontaine-icon-bg: #676557;
   /* Use for icon foreground text on icon tile backgrounds. */
   --spontaine-icon-text: #f7f7f7;
+  /* Use for desktop shell gutters and constrained page padding. */
+  --space-shell: 24px;
+  /* Use for mobile shell gutters. */
+  --space-shell-sm: 19px;
+  /* Use for default Spontaine V3 section vertical rhythm. */
+  --space-section: 120px;
+  /* Use for expanded editorial or high-emphasis vertical rhythm. */
+  --space-section-lg: 150px;
+  /* Use for compact card and control group padding. */
+  --space-card-sm: 16px;
+  /* Use for standard Spontaine V3 card padding. */
+  --space-card: 22px;
+  /* Use for large card or layer padding. */
+  --space-card-lg: 29px;
+  /* Use for architecture stack and repeated layer spacing. */
+  --space-stack: 14px;
+  /* Use for individual cards and repeated content surfaces. */
+  --radius-card: 20px;
+  /* Use for larger panels, elevated surfaces, and feature containers. */
+  --radius-panel: 24px;
+  /* Use for inputs, compact controls, and small framed elements. */
+  --radius-control: 10px;
+  /* Use for pills, chips, and rounded CTA controls. */
+  --radius-pill: 999px;
   /* Use via bg-hero-wash for V3 hero or top-of-page wash backgrounds. */
   --gradient-hero-wash: linear-gradient(
     118deg,
