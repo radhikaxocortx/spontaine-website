@@ -1,4 +1,4 @@
-import StaticHomePage2 from '@/Layouts/StaticHomePage2'
+import StaticHomePageV3 from '@/Layouts/StaticHomePageV3'
 import { Page } from '@/Modules/PageBuilder/page_interfaces'
 
 interface HomePageProps {
@@ -8,7 +8,7 @@ interface HomePageProps {
 
 export default function HomePage({ featuredVideoPosts = [], featuredBlogs = [] }: HomePageProps) {
   return (
-    <StaticHomePage2
+    <StaticHomePageV3
       featuredVideoPosts={featuredVideoPosts}
       featuredBlogs={featuredBlogs}
     />

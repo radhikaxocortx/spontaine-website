@@ -34,6 +34,7 @@ Spontaine V3 CSS variable sources live in `resources/css/tokens/spontainev3.css`
 | `boxShadow.nav` | `shadow-nav` | `--shadow-nav` | Floating navigation and compact persistent controls. |
 | `boxShadow.card-lift` | `shadow-card-lift` | `--shadow-card-lift` | Subtle card elevation without strong contrast. |
 | `boxShadow.cta-glow` | `shadow-cta-glow` | `--shadow-cta-glow` | Mint CTA emphasis and primary action glow. |
+| `boxShadow.prism` | `shadow-prism` | `--shadow-prism` | Inset dimensional depth and exterior glow for V3 prism visuals. |
 
 Example:
 
@@ -46,6 +47,7 @@ Example:
 | Token | Utility | Source | Intended usage |
 | --- | --- | --- | --- |
 | `backgroundImage.hero-wash` | `bg-hero-wash` | `--gradient-hero-wash` | Light hero wash using existing Spontaine pale blue, white, and light tokens. |
+| `backgroundImage.hero-band` | `bg-hero-band` | `--gradient-hero-band` | Diagonal blurred light band for V3 hero and prism compositions. |
 | `backgroundImage.cta-wash` | `bg-cta-wash` | `--gradient-cta-wash` | Calm CTA background wash. |
 | `backgroundImage.mint-lime` | `bg-mint-lime` | `--gradient-mint-lime` | Existing mint-to-lime Spontaine gradient. |
 | `backgroundImage.mint-blue` | `bg-mint-blue` | `--gradient-mint-blue` | Existing mint-to-light-blue Spontaine gradient. |
@@ -130,3 +132,27 @@ Existing React usage of legacy font utilities was audited but not migrated in PR
 | `font-roboto-mono` | `resources/js/Modules/PageBuilder/Blocks/HomeBlocks/CompanyLogosMarquee.tsx`, `resources/js/Modules/PageBuilder/Blocks/HomeBlocks/SectionBlogsCarousel.tsx`, `resources/js/Modules/PageBuilder/Blocks/HomeBlocks/VideoFeatureCarousel.tsx`, `resources/js/Modules/PageBuilder/Blocks/SpontaineBlocks/SectionFeatureCarouselSP.tsx`, `resources/js/Modules/PageBuilder/Blocks/SpontaineBlocks/SectionImageCarouselSP.tsx`, `resources/js/Modules/PageBuilder/Blocks/SpontaineBlocks/SectionMarqueeSP.tsx` |
 
 Future migration should replace those usages with `font-display`, `font-body`, `font-mono`, or the shared typography primitives, depending on the surrounding text role.
+
+## PR-03 Hero
+
+The active V3 homepage layout is `resources/js/Layouts/StaticHomePageV3.tsx`.
+
+The V3 hero is implemented as a concrete component at `resources/js/components/Home/SpontaineV3Hero.tsx`. It uses the existing V3 token and typography foundation, `ArrowUpRight` from `lucide-react`, and avoids hero-specific CSS, raw hex colors, viewport-height sizing, video, and animation libraries.
+
+The hero visual follows the approved HTML mockup's background and prism system: `bg-hero-wash` for the page wash, `bg-hero-band` for the diagonal ambient band, `bg-prism-surface` for the organic glass prism, and `shadow-prism` for dimensional inset depth.
+
+## Smooth Scroll Audit
+
+Existing smooth-scroll behavior is duplicated in `resources/js/Layouts/StaticHomePage.tsx`, `resources/js/Layouts/StaticHomePage2.tsx`, and `resources/js/Layouts/AppLayout.tsx`.
+
+`StaticHomePageV3` uses `resources/js/hooks/useSmoothPageScroll.ts` instead of copying those inline effects. The hook centralizes anchor scrolling, initial hash scrolling, PageUp/PageDown behavior, scroll direction state, reduced-motion handling, and cleanup. The older duplicated layouts are left unchanged for this PR.
+
+## Primitive Audit
+
+| Pattern | Locations found | Extract now? | Reasoning |
+| --- | --- | --- | --- |
+| Page shell / content width | `SpontaineV3Hero`, existing `AppLayoutPadding` usage | No | The V3 hero uses a concrete layout once; a shared container should wait until more V3 sections confirm the same width and gutter pattern. |
+| Display heading composition | `SpontaineV3Hero`, typography primitives | No | The shared typography primitives already cover the text scale; no React heading primitive is needed for one section. |
+| Pill CTA with `ArrowUpRight` | Primary and secondary hero CTAs | No | The two CTAs are similar but local to one hero; extract only if V3 CTA styling repeats in later sections. |
+| Elevated surface card | Hero answer card and metric card | No | The cards share V3 tokens but have different content structures; a generic surface card would be premature. |
+| Metadata labels / chips | Hero eyebrow, state chips, opportunity label | No | `eyebrow` and `font-mono` already cover the typography role; no new metadata component is justified yet. |
