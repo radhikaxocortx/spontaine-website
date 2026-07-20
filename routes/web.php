@@ -15,6 +15,7 @@ use App\Http\Controllers\EntityTemplate\workflowAPIController;
 use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\LeadsCaptureController;
 use App\Http\Controllers\BlogsListController;
+use App\Http\Controllers\ProductPageController;
 use App\Http\Controllers\ResourcesListController;
 use App\Http\Controllers\PricePlan\PricePlanController;
 use App\Http\Controllers\ProfileController;
@@ -37,6 +38,7 @@ use Modules\PageBuilder\Controllers\UIBuilder\FooterController as UIBuilderFoote
 use Modules\PageBuilder\Models\Page;
 
 Route::get('/', HomePageController::class)->name('home');
+Route::get('/product', ProductPageController::class)->name('product');
 Route::get('/blogs-list', BlogsListController::class)->name('blogs-list');
 Route::get('/blog/{slug}', [BlogsListController::class, 'showBlog'])->name('blog.show');
 Route::get('/resources', ResourcesListController::class)->name('resources.list');
