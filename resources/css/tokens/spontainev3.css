@@ -25,6 +25,8 @@
   --brand-accent-pressed: #0cce97;
   --surface-cream: #ebe9d9;
   --surface-ice: #d4eeff;
+  --surface-sky-soft: #e4f1f6;
+  --surface-paper-soft: #fbfaf5;
   --surface-lavender-soft: #f5f3ff;
   --surface-blue-soft: #eef9ff;
   --surface-amber-soft: #fff9e7;
@@ -53,7 +55,9 @@
   --spontaine-accent-soft: rgb(from var(--brand-accent) r g b / 12%);
   --spontaine-surface-cream: var(--surface-cream);
   --spontaine-surface-ice: var(--surface-ice);
+  --spontaine-surface-sky-soft: var(--surface-sky-soft);
   --spontaine-surface-paper: var(--white);
+  --spontaine-surface-paper-soft: var(--surface-paper-soft);
   --spontaine-surface-ink: var(--ink);
   --spontaine-surface-ink-deep: var(--ink-deep);
   --spontaine-surface-lavender-soft: var(--surface-lavender-soft);

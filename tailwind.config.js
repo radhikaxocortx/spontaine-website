@@ -78,7 +78,9 @@ export default {
 
           'surface-cream': 'rgb(from var(--spontaine-surface-cream) r g b / <alpha-value>)',
           'surface-ice': 'rgb(from var(--spontaine-surface-ice) r g b / <alpha-value>)',
+          'surface-sky-soft': 'var(--spontaine-surface-sky-soft)',
           'surface-paper': 'rgb(from var(--spontaine-surface-paper) r g b / <alpha-value>)',
+          'surface-paper-soft': 'var(--spontaine-surface-paper-soft)',
           'surface-ink': 'rgb(from var(--spontaine-surface-ink) r g b / <alpha-value>)',
           'surface-ink-deep': 'rgb(from var(--spontaine-surface-ink-deep) r g b / <alpha-value>)',
           'surface-warm-wash': 'var(--spontaine-surface-warm-wash)',
