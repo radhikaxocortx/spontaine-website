@@ -1,5 +1,6 @@
 import MetaTags from '@/components/MetaTags'
 import SectionProductCompoundV3 from '@/components/Product/SectionProductCompoundV3'
+import SectionProductCTAV3 from '@/components/Product/SectionProductCTAV3'
 import SectionProductExpertV3 from '@/components/Product/SectionProductExpertV3'
 import SectionProductGalleryV3 from '@/components/Product/SectionProductGalleryV3'
 import SectionProductHeroV3 from '@/components/Product/SectionProductHeroV3'
@@ -92,6 +93,9 @@ const StaticProductPageV3 = ({
         </div>
         <div className='relative z-20 -mt-8 md:-mt-10 lg:-mt-12 xl:-mt-16'>
           <SectionProductGalleryV3 />
+        </div>
+        <div className='relative z-20 -mt-8 md:-mt-10 lg:-mt-12 xl:-mt-16'>
+          <SectionProductCTAV3 />
         </div>
       </div>
       <Footer blockData={footer.items} />

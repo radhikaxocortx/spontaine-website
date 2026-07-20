@@ -8,11 +8,11 @@ import { useEffect, useRef } from 'react'
 
 gsap.registerPlugin(ScrollTrigger)
 
-interface SectionCTAV3Props {
+interface SectionProductCTAV3Props {
   className?: string
 }
 
-export default function SectionCTAV3({ className }: SectionCTAV3Props) {
+export default function SectionProductCTAV3({ className }: SectionProductCTAV3Props) {
   const sectionRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
@@ -25,11 +25,10 @@ export default function SectionCTAV3({ className }: SectionCTAV3Props) {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
     const context = gsap.context(() => {
-      const title = section.querySelector<HTMLElement>('[data-home-cta-title]')
-      const description = section.querySelector<HTMLElement>('[data-home-cta-description]')
-      const action = section.querySelector<HTMLElement>('[data-home-cta-action]')
-      const note = section.querySelector<HTMLElement>('[data-home-cta-note]')
-      const revealTargets = [title, description, action, note].filter(Boolean) as HTMLElement[]
+      const title = section.querySelector<HTMLElement>('[data-product-cta-title]')
+      const description = section.querySelector<HTMLElement>('[data-product-cta-description]')
+      const action = section.querySelector<HTMLElement>('[data-product-cta-action]')
+      const revealTargets = [title, description, action].filter(Boolean) as HTMLElement[]
 
       if (prefersReducedMotion) {
         gsap.set(revealTargets, { autoAlpha: 1, y: 0 })
@@ -80,19 +79,6 @@ export default function SectionCTAV3({ className }: SectionCTAV3Props) {
           '>-0.1'
         )
       }
-
-      if (note) {
-        timeline.to(
-          note,
-          {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.4,
-            ease: 'power2.out',
-          },
-          '>-0.08'
-        )
-      }
     }, section)
 
     return () => context.revert()
@@ -103,30 +89,30 @@ export default function SectionCTAV3({ className }: SectionCTAV3Props) {
       ref={sectionRef}
       id='contact'
       className={cn(
-        'relative w-full overflow-hidden rounded-t-section-sm bg-cta-wash py-[96px] text-center md:rounded-t-section-md md:py-[120px] lg:rounded-t-section-lg lg:pb-[120px] lg:pt-[135px] xl:rounded-t-section-xl',
+        'relative w-full overflow-hidden rounded-t-section-sm bg-cta-wash pb-[96px] pt-[128px] text-center md:rounded-t-section-md md:pb-[104px] md:pt-[140px] lg:rounded-t-section-lg lg:pb-[110px] lg:pt-[150px] xl:rounded-t-section-xl',
         className
       )}
     >
       <div className='mx-auto w-full max-w-[1180px] px-[var(--space-shell-sm)] md:px-[var(--space-shell)]'>
         <h2
-          data-home-cta-title
-          className='display-xl text-spontaine-text-primary mx-auto max-w-[880px] font-display'
+          data-product-cta-title
+          className='display-xl mx-auto max-w-[820px] font-display text-spontaine-text-primary'
         >
-          Bring the question your firm cannot answer with confidence.
+          Build the firm your competitors can&apos;t hire.
         </h2>
 
         <p
-          data-home-cta-description
-          className='body-lg text-spontaine-text-secondary mx-auto mt-[23px] max-w-[650px] font-body'
+          data-product-cta-description
+          className='body-lg mx-auto mb-[28px] mt-[23px] max-w-[600px] font-body text-spontaine-text-secondary'
         >
-          Thirty minutes. No discovery-call script. Bring the decision, the spreadsheet, or the
-          system that sits behind it. We will show you what a governed answer - and the capability
-          it can become - could look like in your firm.
+          Thirty minutes with the people who built it. No deck, nothing to buy. Tell us what
+          you&apos;d build - we&apos;ll tell you what&apos;s four weeks away, what&apos;s
+          twenty-eight, and what we can&apos;t do.
         </p>
 
         <div
-          data-home-cta-action
-          className='mt-[23px] flex justify-center'
+          data-product-cta-action
+          className='flex justify-center'
         >
           <CalendarBooking>
             {({ openCalendar }) => (
@@ -136,7 +122,7 @@ export default function SectionCTAV3({ className }: SectionCTAV3Props) {
                 variant='v3Primary'
                 size='v3Hero'
               >
-                Book a working session
+                Book the working session
                 <ArrowUpRight
                   aria-hidden='true'
                   className='h-4 w-4'
@@ -145,13 +131,6 @@ export default function SectionCTAV3({ className }: SectionCTAV3Props) {
             )}
           </CalendarBooking>
         </div>
-
-        <p
-          data-home-cta-note
-          className='mt-[19px] font-mono text-[0.72rem] text-spontaine-gray-deep'
-        >
-          Start with the decision. Build from there.
-        </p>
       </div>
     </section>
   )
