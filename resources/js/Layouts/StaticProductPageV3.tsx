@@ -1,4 +1,5 @@
 import MetaTags from '@/components/MetaTags'
+import SectionProductCompoundV3 from '@/components/Product/SectionProductCompoundV3'
 import SectionProductHeroV3 from '@/components/Product/SectionProductHeroV3'
 import { useSmoothPageScroll } from '@/hooks/useSmoothPageScroll'
 import { FooterDataInterface } from '@/Modules/PageBuilder/FooterEditor/FooterEditor'
@@ -73,6 +74,9 @@ const StaticProductPageV3 = ({
       />
       <div className='relative w-full max-w-full overflow-x-hidden bg-spontaine-white'>
         <SectionProductHeroV3 />
+        <div className='relative z-20 -mt-8 md:-mt-10 lg:-mt-12 xl:-mt-16'>
+          <SectionProductCompoundV3 />
+        </div>
       </div>
       <Footer blockData={footer.items} />
     </div>

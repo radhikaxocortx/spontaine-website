@@ -25,6 +25,11 @@
   --brand-accent-pressed: #0cce97;
   --surface-cream: #ebe9d9;
   --surface-ice: #d4eeff;
+  --surface-lavender-soft: #f5f3ff;
+  --surface-blue-soft: #eef9ff;
+  --surface-amber-soft: #fff9e7;
+  --surface-mint-soft: #ecfaf5;
+  --surface-mint-strong: #dff8ef;
   --wash-soft-blue: #d9e6f0;
   --wash-soft-paper: #f8f7f0;
   --wash-soft-cream: #fafaf5;
@@ -49,6 +54,11 @@
   --spontaine-surface-paper: var(--white);
   --spontaine-surface-ink: var(--ink);
   --spontaine-surface-ink-deep: var(--ink-deep);
+  --spontaine-surface-lavender-soft: var(--surface-lavender-soft);
+  --spontaine-surface-blue-soft: var(--surface-blue-soft);
+  --spontaine-surface-amber-soft: var(--surface-amber-soft);
+  --spontaine-surface-mint-soft: var(--surface-mint-soft);
+  --spontaine-surface-mint-strong: var(--surface-mint-strong);
   --spontaine-text-primary: var(--ink-deep);
   --spontaine-text-accent-dark: var(--mint-ink);
   --spontaine-text-accent-grey: var(--grey-ink);
