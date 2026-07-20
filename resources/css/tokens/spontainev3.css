@@ -30,6 +30,8 @@
   --surface-amber-soft: #fff9e7;
   --surface-mint-soft: #ecfaf5;
   --surface-mint-strong: #dff8ef;
+  --cream-soft: #f6f3eb;
+  --warm-hero-wash: #efece3;
   --wash-soft-blue: #d9e6f0;
   --wash-soft-paper: #f8f7f0;
   --wash-soft-cream: #fafaf5;
@@ -59,6 +61,7 @@
   --spontaine-surface-amber-soft: var(--surface-amber-soft);
   --spontaine-surface-mint-soft: var(--surface-mint-soft);
   --spontaine-surface-mint-strong: var(--surface-mint-strong);
+  --spontaine-surface-warm-wash: var(--warm-hero-wash);
   --spontaine-text-primary: var(--ink-deep);
   --spontaine-text-accent-dark: var(--mint-ink);
   --spontaine-text-accent-grey: var(--grey-ink);
@@ -185,6 +188,13 @@
     var(--wash-soft-paper) 39%,
     var(--wash-soft-cream) 67%,
     var(--wash-soft-slate) 100%
+  );
+  /* Use via bg-cream-fade-right for soft image overlays on warm surfaces. */
+  --gradient-cream-fade-right: linear-gradient(
+    90deg,
+    rgb(from var(--cream-soft) r g b / 55%) 0%,
+    rgb(from var(--cream-soft) r g b / 15%) 40%,
+    rgb(from var(--cream-soft) r g b / 0%) 70%
   );
   /* Use via bg-hero-band for complex diagonal ambient bands. */
   --gradient-hero-band: linear-gradient(

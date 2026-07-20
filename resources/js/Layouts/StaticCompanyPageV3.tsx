@@ -1,4 +1,5 @@
 import MetaTags from '@/components/MetaTags'
+import SectionCompanyBeliefsV3 from '@/components/Company/SectionCompanyBeliefsV3'
 import SectionCompanyHeroV3 from '@/components/Company/SectionCompanyHeroV3'
 import { useSmoothPageScroll } from '@/hooks/useSmoothPageScroll'
 import { FooterDataInterface } from '@/Modules/PageBuilder/FooterEditor/FooterEditor'
@@ -73,6 +74,9 @@ const StaticCompanyPageV3 = ({
       />
       <div className='relative w-full max-w-full overflow-x-hidden bg-spontaine-white'>
         <SectionCompanyHeroV3 />
+        <div className='relative z-20 -mt-8 md:-mt-10 lg:-mt-12 xl:-mt-16'>
+          <SectionCompanyBeliefsV3 />
+        </div>
       </div>
       <Footer blockData={footer.items} />
     </div>

@@ -6,7 +6,7 @@ export default function SectionCompanyHeroV3() {
     <section
       id='hero'
       aria-labelledby='company-v3-hero-title'
-      className='relative isolate overflow-hidden bg-spontaine-surface-cream pb-[84px] pt-[132px] md:pb-[104px] md:pt-[168px] lg:pt-[120px]'
+      className='bg-spontaine-surface-warm-wash relative isolate overflow-hidden pb-[84px] pt-[132px] md:pb-[104px] md:pt-[168px] lg:pt-[120px]'
     >
       <img
         src='/images/company-hero-v3.jpg'
@@ -17,7 +17,7 @@ export default function SectionCompanyHeroV3() {
 
       <div
         aria-hidden='true'
-        className='absolute inset-0 z-10 bg-[linear-gradient(90deg,var(--spontaine-surface-cream)_0%,var(--spontaine-surface-cream)_42%,transparent_72%)]'
+        className='bg-cream-fade-right absolute inset-0 z-10'
       />
 
       <div className='relative z-20 mx-auto w-full max-w-[1180px] px-[var(--space-shell-sm)] md:px-[var(--space-shell)]'>

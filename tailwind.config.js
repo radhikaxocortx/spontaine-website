@@ -19,6 +19,7 @@ export default {
     'shadow-prism-glass',
     'bg-hero-wash',
     'bg-hero-wash-soft',
+    'bg-cream-fade-right',
     'bg-hero-band',
     'bg-ambient-band-mint-amber',
     'bg-cta-wash',
@@ -80,6 +81,7 @@ export default {
           'surface-paper': 'rgb(from var(--spontaine-surface-paper) r g b / <alpha-value>)',
           'surface-ink': 'rgb(from var(--spontaine-surface-ink) r g b / <alpha-value>)',
           'surface-ink-deep': 'rgb(from var(--spontaine-surface-ink-deep) r g b / <alpha-value>)',
+          'surface-warm-wash': 'var(--spontaine-surface-warm-wash)',
           'teal-dark': 'var(--spontaine-teal-dark)',
           'teal-mid': 'var(--spontaine-teal-mid)',
           'text-accent-grey': 'rgb(from var(--spontaine-text-accent-grey) r g b / <alpha-value>)',
@@ -319,6 +321,7 @@ export default {
       backgroundImage: {
         'hero-wash': 'var(--gradient-hero-wash)',
         'hero-wash-soft': 'var(--gradient-hero-wash-soft)',
+        'cream-fade-right': 'var(--gradient-cream-fade-right)',
         'hero-band': 'var(--gradient-hero-band)',
         'ambient-band-mint-amber': 'var(--gradient-ambient-band-mint-amber)',
         'cta-wash': 'var(--gradient-cta-wash)',
