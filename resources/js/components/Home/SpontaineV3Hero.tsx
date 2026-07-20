@@ -96,8 +96,10 @@ export default function SpontaineV3Hero() {
       {/* Diagonal ambient band behind the prism */}
       <div
         aria-hidden='true'
-        className='absolute inset-x-[-15%] bottom-[20%] z-0 hidden h-40 rotate-[-13deg] bg-hero-band opacity-[0.76] blur-sm lg:block'
-      />
+        className='animate-v3-ken-burns-slow absolute inset-x-[-15%] bottom-[20%] z-0 hidden h-40 opacity-[0.76] blur-sm lg:block'
+      >
+        <div className='h-full w-full rotate-[-13deg] bg-hero-band' />
+      </div>
 
       {/* Curved paper mask into the next section */}
       {/* <div
@@ -172,9 +174,11 @@ export default function SpontaineV3Hero() {
           aria-hidden='true'
         >
           {/* Organic glass prism */}
-          <div className='absolute right-[-10%] top-[70px] aspect-square w-[330px] rotate-[15deg] overflow-hidden rounded-[42%_58%_63%_37%/41%_44%_56%_59%] bg-prism-surface opacity-60 shadow-prism sm:right-[-2%] sm:w-[410px] md:right-[4%] md:top-[54px] md:w-[460px] lg:right-[2%] lg:top-16 lg:w-[382px] lg:opacity-100'>
-            <div className='absolute inset-[12%] rotate-[38deg] skew-x-[-12deg] border border-spontaine-gray/20' />
-            <div className='absolute inset-x-[3%] inset-y-[28%] rotate-[-22deg] border border-spontaine-gray/20 bg-gradient-to-r from-transparent via-spontaine-white/70 to-transparent' />
+          <div className='animate-v3-ken-burns absolute right-[-10%] top-[70px] aspect-square w-[330px] opacity-60 sm:right-[-2%] sm:w-[410px] md:right-[4%] md:top-[54px] md:w-[460px] lg:right-[2%] lg:top-16 lg:w-[382px] lg:opacity-100'>
+            <div className='relative h-full w-full rotate-[15deg] overflow-hidden rounded-[42%_58%_63%_37%/41%_44%_56%_59%] bg-prism-surface shadow-prism'>
+              <div className='absolute inset-[12%] rotate-[38deg] skew-x-[-12deg] border border-spontaine-gray/20' />
+              <div className='absolute inset-x-[3%] inset-y-[28%] rotate-[-22deg] border border-spontaine-gray/20 bg-gradient-to-r from-transparent via-spontaine-white/70 to-transparent' />
+            </div>
           </div>
 
           {/* Answer prompt card */}

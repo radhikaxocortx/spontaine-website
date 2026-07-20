@@ -74,6 +74,40 @@ body {
   animation: ripple 1s linear;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes v3-ken-burns-drift {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    100% {
+      transform: translate3d(10px, -12px, 0) scale(1.045);
+    }
+  }
+
+  @keyframes v3-ken-burns-drift-slow {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    100% {
+      transform: translate3d(-14px, 9px, 0) scale(1.03);
+    }
+  }
+
+  .animate-v3-ken-burns {
+    animation: v3-ken-burns-drift 22s ease-in-out infinite alternate;
+    transform-origin: center;
+    will-change: transform;
+  }
+
+  .animate-v3-ken-burns-slow {
+    animation: v3-ken-burns-drift-slow 30s ease-in-out infinite alternate;
+    transform-origin: center;
+    will-change: transform;
+  }
+}
+
 /* Universal hover ripple effect utility */
 .hover-ripple {
   position: relative;
