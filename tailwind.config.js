@@ -80,7 +80,8 @@ export default {
           'surface-paper': 'rgb(from var(--spontaine-surface-paper) r g b / <alpha-value>)',
           'surface-ink': 'rgb(from var(--spontaine-surface-ink) r g b / <alpha-value>)',
           'surface-ink-deep': 'rgb(from var(--spontaine-surface-ink-deep) r g b / <alpha-value>)',
-
+          'teal-dark': 'var(--spontaine-teal-dark)',
+          'teal-mid': 'var(--spontaine-teal-mid)',
           'text-accent-grey': 'rgb(from var(--spontaine-text-accent-grey) r g b / <alpha-value>)',
           'text-accent-dark': 'rgb(from var(--spontaine-text-accent-dark) r g b / <alpha-value>)',
           'text-primary': 'rgb(from var(--spontaine-text-primary) r g b / <alpha-value>)',

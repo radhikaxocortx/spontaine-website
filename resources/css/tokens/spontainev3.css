@@ -30,10 +30,6 @@
   --surface-amber-soft: #fff9e7;
   --surface-mint-soft: #ecfaf5;
   --surface-mint-strong: #dff8ef;
-  --flow-muted: #9db8af;
-  --flow-node-blue: #88b6f2;
-  --flow-node-dark: #26383f;
-  --orbit-stroke: #93baa9;
   --wash-soft-blue: #d9e6f0;
   --wash-soft-paper: #f8f7f0;
   --wash-soft-cream: #fafaf5;
@@ -81,6 +77,8 @@
   --spontaine-error: var(--feedback-error);
   --spontaine-error-soft: rgb(from var(--feedback-error) r g b / 8%);
   --spontaine-overlay-scrim: rgb(from var(--ink) r g b / 40%);
+  --spontaine-teal-dark: var(--teal-dark);
+  --spontaine-teal-mid: var(--teal-mid);
 
   /* Compatibility Tokens: preserve existing public names and Tailwind utility wiring. */
   --spontaine-accent-dark: var(--spontaine-accent-pressed);
@@ -137,12 +135,6 @@
   --spontaine-surface-data-muted: rgb(from var(--ink) r g b / 46%);
   --spontaine-surface-positive: var(--spontaine-success);
   --spontaine-surface-negative: var(--spontaine-error);
-  /* Use for compact connection diagrams and tool access illustrations. */
-  --spontaine-flow-muted: var(--flow-muted);
-  --spontaine-flow-node-blue: var(--flow-node-blue);
-  --spontaine-flow-node-dark: var(--flow-node-dark);
-  --spontaine-orbit-stroke: var(--orbit-stroke);
-  --shadow-tool-chip: 0 8px 15px color-mix(in srgb, var(--teal-dark) 7%, transparent);
 
   /* Layout */
   /* Use for desktop shell gutters and constrained page padding. */
@@ -211,11 +203,7 @@
     rgba(53, 190, 255, 0.24) 100%
   );
   /* Use via bg-cta-wash for calm closing CTA or conversion bands. */
-  --gradient-cta-wash: linear-gradient(
-    120deg,
-    var(--wash-blue) 0%,
-    var(--wash-cream) 100%
-  );
+  --gradient-cta-wash: linear-gradient(120deg, var(--wash-blue) 0%, var(--wash-cream) 100%);
   /* Use via bg-mint-lime for primary optimistic accent panels. */
   --gradient-mint-lime: linear-gradient(
     0deg,

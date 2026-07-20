@@ -26,14 +26,14 @@ function RouteArt({ kind }: { readonly kind: string }) {
         aria-hidden='true'
         className='relative mt-8 h-24'
       >
-        <div className='absolute left-1/2 top-1/2 h-[88px] w-[200px] -translate-x-1/2 -translate-y-1/2 rounded-[50%] border-2 border-dashed border-[var(--spontaine-orbit-stroke)]' />
-        <div className='absolute left-[6%] top-1.5 rounded-[9px] border border-[var(--spontaine-surface-line)] bg-spontaine-surface-paper px-[9px] py-1.5 font-mono text-[0.58rem] font-medium text-spontaine-gray-deep shadow-[var(--shadow-tool-chip)]'>
+        <div className='absolute left-1/2 top-1/2 h-[88px] w-[200px] -translate-x-1/2 -translate-y-1/2 rounded-[50%] border-2 border-dashed border-spontaine-gray-soft' />
+        <div className='absolute left-[6%] top-1.5 rounded-[9px] border border-[var(--spontaine-surface-line)] bg-spontaine-surface-paper px-[9px] py-1.5 font-mono text-[0.58rem] font-medium text-spontaine-gray-deep shadow-card-lift'>
           CRM
         </div>
-        <div className='absolute right-[7%] top-[34px] rounded-[9px] border border-[var(--spontaine-surface-line)] bg-spontaine-surface-paper px-[9px] py-1.5 font-mono text-[0.58rem] font-medium text-spontaine-gray-deep shadow-[var(--shadow-tool-chip)]'>
+        <div className='absolute right-[7%] top-[34px] rounded-[9px] border border-[var(--spontaine-surface-line)] bg-spontaine-surface-paper px-[9px] py-1.5 font-mono text-[0.58rem] font-medium text-spontaine-gray-deep shadow-card-lift'>
           Secure tool
         </div>
-        <div className='absolute bottom-0 left-[34%] rounded-[9px] border border-[var(--spontaine-surface-line)] bg-spontaine-surface-paper px-[9px] py-1.5 font-mono text-[0.58rem] font-medium text-spontaine-gray-deep shadow-[var(--shadow-tool-chip)]'>
+        <div className='absolute bottom-0 left-[34%] rounded-[9px] border border-[var(--spontaine-surface-line)] bg-spontaine-surface-paper px-[9px] py-1.5 font-mono text-[0.58rem] font-medium text-spontaine-gray-deep shadow-card-lift'>
           ERP
         </div>
       </figure>
@@ -45,10 +45,10 @@ function RouteArt({ kind }: { readonly kind: string }) {
       aria-hidden='true'
       className='relative mt-8 h-24'
     >
-      <div className='absolute left-[4%] right-[4%] top-1/2 h-0.5 -translate-y-1/2 bg-[linear-gradient(90deg,var(--spontaine-flow-muted),var(--spontaine-accent),var(--spontaine-flow-muted))]'>
+      <div className='absolute left-[4%] right-[4%] top-1/2 h-0.5 -translate-y-1/2 bg-[linear-gradient(90deg,var(--spontaine-gray-soft),var(--spontaine-accent),var(--spontaine-gray-soft))]'>
         <i className='absolute left-[4%] top-[-6px] h-[14px] w-[14px] rounded-[var(--radius-pill)] bg-spontaine-accent shadow-[0_0_0_7px_var(--spontaine-accent-soft)]' />
-        <i className='absolute left-[46%] top-[-6px] h-[14px] w-[14px] rounded-[var(--radius-pill)] bg-[var(--spontaine-flow-node-blue)] shadow-[0_0_0_7px_var(--spontaine-accent-soft)]' />
-        <i className='absolute right-[3%] top-[-6px] h-[14px] w-[14px] rounded-[var(--radius-pill)] bg-[var(--spontaine-flow-node-dark)] shadow-[0_0_0_7px_var(--spontaine-accent-soft)]' />
+        <i className='absolute left-[46%] top-[-6px] h-[14px] w-[14px] rounded-[var(--radius-pill)] bg-spontaine-surface-ice shadow-[0_0_0_7px_var(--spontaine-accent-soft)]' />
+        <i className='absolute right-[3%] top-[-6px] h-[14px] w-[14px] rounded-[var(--radius-pill)] bg-spontaine-dark shadow-[0_0_0_7px_var(--spontaine-accent-soft)]' />
       </div>
     </figure>
   )
