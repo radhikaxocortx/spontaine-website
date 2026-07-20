@@ -30,6 +30,10 @@
   --surface-amber-soft: #fff9e7;
   --surface-mint-soft: #ecfaf5;
   --surface-mint-strong: #dff8ef;
+  --flow-muted: #9db8af;
+  --flow-node-blue: #88b6f2;
+  --flow-node-dark: #26383f;
+  --orbit-stroke: #93baa9;
   --wash-soft-blue: #d9e6f0;
   --wash-soft-paper: #f8f7f0;
   --wash-soft-cream: #fafaf5;
@@ -133,6 +137,12 @@
   --spontaine-surface-data-muted: rgb(from var(--ink) r g b / 46%);
   --spontaine-surface-positive: var(--spontaine-success);
   --spontaine-surface-negative: var(--spontaine-error);
+  /* Use for compact connection diagrams and tool access illustrations. */
+  --spontaine-flow-muted: var(--flow-muted);
+  --spontaine-flow-node-blue: var(--flow-node-blue);
+  --spontaine-flow-node-dark: var(--flow-node-dark);
+  --spontaine-orbit-stroke: var(--orbit-stroke);
+  --shadow-tool-chip: 0 8px 15px color-mix(in srgb, var(--teal-dark) 7%, transparent);
 
   /* Layout */
   /* Use for desktop shell gutters and constrained page padding. */
