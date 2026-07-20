@@ -6,14 +6,14 @@ export default function SectionProductHeroV3() {
     <section
       id='top'
       aria-labelledby='spontaine-product-hero-title'
-      className='relative isolate overflow-hidden bg-hero-wash px-[var(--space-shell-sm)] pb-[150px] pt-[132px] md:px-[var(--space-shell)] md:pb-[150px] md:pt-[168px] lg:pt-[120px]'
+      className='relative isolate overflow-hidden bg-hero-wash-soft px-[var(--space-shell-sm)] pb-[150px] pt-[132px] md:px-[var(--space-shell)] md:pb-[150px] md:pt-[168px] lg:pt-[120px]'
     >
       {/* Diagonal ambient band behind the product visual */}
       <div
         aria-hidden='true'
-        className='animate-v3-ken-burns-slow absolute inset-x-[-15%] bottom-[20%] z-0 hidden h-40 opacity-[0.76] blur-sm lg:block'
+        className='animate-v3-ken-burns-slow absolute bottom-[22%] left-[-16%] right-[-14%] z-0 h-[150px] opacity-70 blur-[5px]'
       >
-        <div className='h-full w-full rotate-[-13deg] bg-hero-band' />
+        <div className='h-full w-full rotate-[-13deg] bg-ambient-band-mint-amber' />
       </div>
 
       <div className='relative z-10 mx-auto grid w-full max-w-[1180px] pl-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-start lg:gap-10'>
@@ -76,13 +76,13 @@ export default function SectionProductHeroV3() {
 
         {/* Abstract product visual */}
         <div
-          className='pointer-events-none absolute inset-x-0 top-12 z-0 h-full min-h-[440px] w-full lg:relative lg:top-auto lg:mx-auto lg:min-h-[440px] lg:max-w-none'
+          className='pointer-events-none absolute inset-x-0 top-12 z-0 h-full min-h-[380px] w-full lg:relative lg:top-auto lg:mx-auto lg:min-h-[440px] lg:max-w-none'
           aria-hidden='true'
         >
-          <div className='animate-v3-ken-burns absolute right-[-10%] top-[70px] aspect-square w-[330px] opacity-60 sm:right-[-2%] sm:w-[410px] md:right-[4%] md:top-[54px] md:w-[460px] lg:right-[4%] lg:top-6 lg:w-[380px] lg:opacity-100'>
-            <div className='relative h-full w-full rotate-[15deg] overflow-hidden rounded-[42%_58%_63%_37%/41%_44%_56%_59%] bg-prism-surface shadow-prism'>
-              <div className='absolute inset-[12%] rotate-[38deg] skew-x-[-12deg] border border-spontaine-gray/20' />
-              <div className='absolute inset-x-[3%] inset-y-[28%] rotate-[-22deg] border border-spontaine-gray/20 bg-gradient-to-r from-transparent via-spontaine-white/70 to-transparent' />
+          <div className='animate-v3-ken-burns absolute right-[6%] top-0 aspect-square w-[280px] opacity-60 md:w-[340px] lg:right-[4%] lg:top-6 lg:w-[380px] lg:opacity-100'>
+            <div className='relative h-full w-full rotate-[15deg]'>
+              <div className='absolute inset-0 overflow-hidden rounded-[42%_58%_63%_37%/41%_44%_56%_59%] bg-prism-glass-mint shadow-prism-glass' />
+              <div className='absolute inset-[12%] z-10 rotate-[30deg] skew-x-[-12deg] border border-spontaine-gray/20' />
             </div>
           </div>
         </div>

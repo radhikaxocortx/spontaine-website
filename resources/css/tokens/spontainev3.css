@@ -25,6 +25,10 @@
   --brand-accent-pressed: #0cce97;
   --surface-cream: #ebe9d9;
   --surface-ice: #d4eeff;
+  --wash-soft-blue: #d9e6f0;
+  --wash-soft-paper: #f8f7f0;
+  --wash-soft-cream: #fafaf5;
+  --wash-soft-slate: #dae2ec;
   --wash-blue: #d9f0fb;
   --wash-cream: #f1eddb;
   --ink: #4a4a4a;
@@ -162,6 +166,14 @@
     color-mix(in srgb, var(--spontaine-light) 70%, var(--spontaine-white) 30%) 68%,
     color-mix(in srgb, var(--spontaine-light-blue) 58%, var(--spontaine-gray-muted) 42%) 100%
   );
+  /* Use via bg-hero-wash-soft for alternate soft top-of-page wash backgrounds. */
+  --gradient-hero-wash-soft: linear-gradient(
+    118deg,
+    var(--wash-soft-blue) 2%,
+    var(--wash-soft-paper) 39%,
+    var(--wash-soft-cream) 67%,
+    var(--wash-soft-slate) 100%
+  );
   /* Use via bg-hero-band for complex diagonal ambient bands. */
   --gradient-hero-band: linear-gradient(
     100deg,
@@ -169,6 +181,14 @@
     rgba(255, 255, 255, 0.08) 34%,
     rgba(255, 225, 108, 0.52) 57%,
     rgba(52, 191, 255, 0.22) 100%
+  );
+  /* Use via bg-ambient-band-mint-amber for mint-to-amber ambient light bands. */
+  --gradient-ambient-band-mint-amber: linear-gradient(
+    100deg,
+    rgba(15, 229, 168, 0.4) 0%,
+    rgba(255, 255, 255, 0.06) 35%,
+    rgba(255, 224, 112, 0.42) 58%,
+    rgba(53, 190, 255, 0.24) 100%
   );
   /* Use via bg-cta-wash for calm closing CTA or conversion bands. */
   --gradient-cta-wash: linear-gradient(
@@ -196,6 +216,14 @@
     rgba(255, 245, 184, 0.48) 61%,
     rgba(184, 190, 255, 0.42) 100%
   );
+  /* Use via bg-prism-glass-mint for mint-tinted dimensional prism surfaces. */
+  --gradient-prism-glass-mint: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.92) 0%,
+    rgba(217, 238, 251, 0.6) 32%,
+    rgba(15, 229, 168, 0.16) 61%,
+    rgba(184, 190, 255, 0.36) 100%
+  );
   /* Use via bg-text-highlight with bg-clip-text for highlighted display words. */
   --gradient-text-highlight: linear-gradient(
     135deg,
@@ -213,6 +241,10 @@
   /* Use via shadow-prism for inset dimensional depth on V3 prism visuals. */
   --shadow-prism:
     inset -30px -28px 50px rgba(100, 132, 170, 0.2), inset 24px 22px 42px rgba(255, 255, 255, 0.75),
+    0 42px 70px rgba(84, 107, 123, 0.2);
+  /* Use via shadow-prism-glass for softer inset dimensional prism depth. */
+  --shadow-prism-glass:
+    inset -30px -28px 50px rgba(100, 132, 170, 0.2), inset 24px 22px 42px rgba(255, 255, 255, 0.78),
     0 42px 70px rgba(84, 107, 123, 0.2);
   /* Use through font-display for display headlines and headings. */
   --font-display: 'Urbanist', sans-serif;
