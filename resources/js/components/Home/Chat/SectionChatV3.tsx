@@ -78,13 +78,13 @@ export default function SectionChatV3() {
 
   return (
     <section
-      className='rounded-t-section-sm bg-spontaine-surface-paper md:rounded-t-section-md lg:rounded-t-section-lg xl:rounded-t-section-xl relative z-30 w-full overflow-hidden pb-[110px] pt-[104px] md:pb-[130px] md:pt-[130px] lg:pb-[150px] lg:pt-[136px] xl:pt-[144px]'
+      className='relative z-30 w-full overflow-hidden rounded-t-section-sm bg-spontaine-surface-paper pb-[110px] pt-[104px] md:rounded-t-section-md md:pb-[130px] md:pt-[130px] lg:rounded-t-section-lg lg:pb-[150px] lg:pt-[136px] xl:rounded-t-section-xl xl:pt-[144px]'
       data-story-state={storyState}
     >
       <div className='mx-auto w-full max-w-[1180px] px-[var(--space-shell-sm)] md:px-[var(--space-shell)]'>
         <div className='mx-auto max-w-[760px] text-center'>
           <h2 className='font-display text-[clamp(2.5rem,4.4vw,4.45rem)] font-bold leading-[0.95] tracking-[-0.06em]'>
-            <p className='text-spontaine-text-accent-grey m-0 block font-display font-bold leading-[inherit] tracking-[inherit]'>
+            <p className='m-0 block font-display font-bold leading-[inherit] tracking-[inherit] text-spontaine-text-accent-grey'>
               An answer is useful once.
             </p>
             <p className='m-0 block font-display font-bold leading-[inherit] tracking-[inherit] text-spontaine-dark'>
@@ -99,7 +99,7 @@ export default function SectionChatV3() {
 
         <div
           ref={stageRef}
-          className='mx-auto mt-[50px] w-full'
+          className='mx-auto mt-[50px] w-full min-w-0'
         >
           <div className='mx-auto max-w-[690px]'>
             <ChatSurface
@@ -107,10 +107,10 @@ export default function SectionChatV3() {
               size='none'
               className='px-[18px] py-4'
             >
-              <div className='flex items-center gap-3'>
+              <div className='flex items-center gap-2 sm:gap-3'>
                 <button
                   type='button'
-                  className='flex h-[42px] w-[42px] flex-shrink-0 items-center justify-center rounded-[var(--radius-pill)] text-spontaine-gray-muted transition-colors hover:text-spontaine-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-spontaine-accent-dark focus-visible:ring-offset-2'
+                  className='flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-[var(--radius-pill)] text-spontaine-gray-muted transition-colors hover:text-spontaine-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-spontaine-accent-dark focus-visible:ring-offset-2 sm:h-[42px] sm:w-[42px]'
                   aria-label='Attach file'
                 >
                   <Paperclip
@@ -119,14 +119,14 @@ export default function SectionChatV3() {
                   />
                 </button>
 
-                <p className='min-w-0 flex-1 font-body text-[0.88rem] leading-relaxed text-spontaine-gray-muted'>
+                <p className='min-w-0 flex-1 break-words font-body text-[0.88rem] leading-relaxed text-spontaine-gray-muted'>
                   {typewriterText}
                   <span className='ml-0.5 inline-block h-4 w-0.5 animate-pulse bg-spontaine-accent align-middle' />
                 </p>
 
                 <button
                   type='button'
-                  className='hover:bg-spontaine-accent-hover grid h-[42px] w-[42px] flex-shrink-0 place-items-center rounded-[var(--radius-pill)] bg-spontaine-accent text-spontaine-white shadow-cta-glow transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-spontaine-accent-dark focus-visible:ring-offset-2'
+                  className='grid h-10 w-10 flex-shrink-0 place-items-center rounded-[var(--radius-pill)] bg-spontaine-accent text-spontaine-white shadow-cta-glow transition-colors hover:bg-spontaine-accent-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-spontaine-accent-dark focus-visible:ring-offset-2 sm:h-[42px] sm:w-[42px]'
                   aria-label='Send message'
                 >
                   <SendHorizontal
@@ -161,14 +161,17 @@ export default function SectionChatV3() {
             </ChatSurface>
           </div>
 
-          <div className='mx-auto mt-[39px] grid w-full max-w-[908px] gap-[26px] lg:grid-cols-[1.65fr_0.82fr]'>
-            <div ref={tableRef}>
+          <div className='mx-auto mt-8 grid w-full max-w-[908px] min-w-0 gap-4 md:mt-[39px] md:gap-[22px] lg:grid-cols-[1.65fr_0.82fr] lg:gap-[26px]'>
+            <div
+              ref={tableRef}
+              className='min-w-0'
+            >
               <ResultsTable />
             </div>
 
             <div
               ref={approvalRef}
-              className='self-end'
+              className='min-w-0 self-stretch lg:self-end'
             >
               <ApprovalCard />
             </div>

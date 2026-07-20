@@ -21,9 +21,47 @@ export default function ResultsTable() {
     <ChatSurface
       variant='card'
       size='none'
-      className='p-[var(--space-card)]'
+      className='max-w-full overflow-hidden p-[var(--space-card)]'
     >
-      <div className='overflow-x-auto'>
+      <div className='space-y-2 sm:hidden'>
+        {rows.map((row) => (
+          <div
+            key={row.engagement}
+            className='rounded-[var(--radius-control)] bg-spontaine-light p-3 font-body'
+          >
+            <p className='font-body text-[0.75rem] font-semibold leading-snug text-spontaine-gray-deep'>
+              {row.engagement}
+            </p>
+
+            <div className='mt-3 grid grid-cols-3 gap-2 text-[0.64rem] text-spontaine-gray-muted'>
+              <div className='min-w-0'>
+                <p className='font-body text-[0.52rem] font-medium uppercase text-[var(--spontaine-surface-data-muted)]'>
+                  Margin
+                </p>
+                <p className='mt-1 font-body text-spontaine-gray-muted'>{row.margin}</p>
+              </div>
+
+              <div className='min-w-0'>
+                <p className='font-body text-[0.52rem] font-medium uppercase text-[var(--spontaine-surface-data-muted)]'>
+                  vs target
+                </p>
+                <p className='mt-1 font-body font-bold text-[var(--spontaine-surface-negative)]'>
+                  {row.target}
+                </p>
+              </div>
+
+              <div className='min-w-0'>
+                <p className='font-body text-[0.52rem] font-medium uppercase text-[var(--spontaine-surface-data-muted)]'>
+                  Partner
+                </p>
+                <p className='mt-1 font-body text-spontaine-gray-muted'>{row.partner}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className='hidden overflow-x-auto sm:block'>
         <div className='min-w-[520px]'>
           <div className='grid grid-cols-[2.5fr_0.8fr_0.8fr_0.9fr] gap-[9px] border-b border-[var(--spontaine-surface-line)] pb-2.5 font-body text-[0.55rem] font-semibold uppercase text-[var(--spontaine-surface-data-muted)]'>
             <span>Engagement</span>
@@ -88,18 +126,18 @@ export default function ResultsTable() {
           </p>
           <button
             type='button'
-            className='hover:bg-spontaine-accent-hover font-semiboldtext-spontaine-accent-ink mt-[13px] flex w-full items-center justify-between rounded-[var(--radius-control)] bg-spontaine-accent px-3 py-2 font-body text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-spontaine-accent-dark focus-visible:ring-offset-2'
+            className='mt-[13px] flex w-full items-center justify-between gap-3 rounded-[var(--radius-control)] bg-spontaine-accent px-3 py-2 font-body text-xs font-semibold text-spontaine-accent-ink transition-colors hover:bg-spontaine-accent-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-spontaine-accent-dark focus-visible:ring-offset-2'
           >
-            <span className='flex items-center gap-2'>
+            <span className='flex min-w-0 items-center gap-2'>
               <Sparkles
                 aria-hidden='true'
-                className='h-3.5 w-3.5'
+                className='h-3.5 w-3.5 flex-shrink-0'
               />
-              <span>Save as a reusable Block</span>
+              <span className='min-w-0 text-left leading-tight'>Save as a reusable Block</span>
             </span>
             <ArrowRight
               aria-hidden='true'
-              className='h-3.5 w-3.5'
+              className='h-3.5 w-3.5 flex-shrink-0'
             />
           </button>
         </div>

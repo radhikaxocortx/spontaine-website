@@ -6,15 +6,17 @@ export default function ApprovalCard() {
     <ChatSurface
       variant='card'
       size='none'
-      className='w-full p-[var(--space-card)]'
+      className='w-full max-w-full overflow-hidden p-[var(--space-card)]'
     >
-      <p className='text-spontaine-success flex items-center gap-2 font-mono text-[0.62rem] font-bold uppercase tracking-[0.07em]'>
+      <div className='flex items-start gap-2 text-spontaine-success'>
         <Sparkles
           aria-hidden='true'
-          className='h-3 w-3'
+          className='mt-0.5 h-3 w-3 flex-shrink-0'
         />
-        <span>Opportunity found &middot; 05:47</span>
-      </p>
+        <p className='m-0 min-w-0 break-words font-mono text-[0.62rem] font-bold uppercase leading-snug tracking-[0.07em]'>
+          Opportunity found &middot; 05:47
+        </p>
+      </div>
 
       <h3 className='mt-3 font-display text-[0.94rem] font-semibold leading-[1.3] tracking-[-0.025em] text-spontaine-dark'>
         One client may qualify for an energy-tax deduction.
@@ -27,13 +29,13 @@ export default function ApprovalCard() {
       <div className='mt-[18px] flex flex-wrap gap-[7px]'>
         <button
           type='button'
-          className='hover:bg-spontaine-accent-hover rounded-[var(--radius-pill)] bg-spontaine-accent px-2.5 py-2 font-mono text-[0.63rem] font-semibold text-spontaine-accent-ink transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-spontaine-accent-dark focus-visible:ring-offset-2'
+          className='w-full max-w-full rounded-[var(--radius-pill)] bg-spontaine-accent px-2.5 py-2 text-center font-mono text-[0.63rem] font-semibold leading-tight text-spontaine-accent-ink transition-colors hover:bg-spontaine-accent-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-spontaine-accent-dark focus-visible:ring-offset-2 sm:w-auto'
         >
           Review evidence
         </button>
         <button
           type='button'
-          className='rounded-[var(--radius-pill)] bg-[var(--spontaine-pill-variant-neutral-bg)] px-2.5 py-2 font-mono text-[0.63rem] font-semibold text-[var(--spontaine-pill-variant-neutral-text)] transition-colors hover:bg-spontaine-gray-soft/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-spontaine-accent-dark focus-visible:ring-offset-2'
+          className='w-full max-w-full rounded-[var(--radius-pill)] bg-[var(--spontaine-pill-variant-neutral-bg)] px-2.5 py-2 text-center font-mono text-[0.63rem] font-semibold leading-tight text-[var(--spontaine-pill-variant-neutral-text)] transition-colors hover:bg-spontaine-gray-soft/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-spontaine-accent-dark focus-visible:ring-offset-2 sm:w-auto'
         >
           Not now
         </button>
