@@ -30,7 +30,7 @@ const SectionFeatureSplitV3Content = ({
   onOpenCTAModal,
 }: SectionFeatureSplitV3ContentProps) => (
   <div
-    className={model.hasEyebrow ? 'flex flex-col items-start' : 'flex flex-col items-start'}
+    className='flex flex-col items-start'
     style={model.textColumnStyle}
   >
     {(model.hasEyebrow || editMode) && (
@@ -137,7 +137,12 @@ const SectionFeatureSplitV3Content = ({
                 onClick={openCalendar}
               >
                 <Localization
-                  text={blockData?.cta?.name ?? { english: 'Book Demo', malayalam: null }}
+                  text={
+                    blockData?.cta?.name ?? {
+                      english: 'Book Demo',
+                      malayalam: null,
+                    }
+                  }
                   language={language}
                 />
                 <ArrowUpRight className='h-4 w-4' />
