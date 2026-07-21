@@ -203,6 +203,11 @@ const blockFolders: readonly PageBlockFolder[] = [
         badge: 'C3',
       },
       {
+        name: 'Spontaine V3 - Feature Split',
+        description: 'V3 split section with editable text, CTA, image, and media side',
+        badge: 'FS',
+      },
+      {
         name: 'Content Section - Contact Us',
         description: 'V3 contact form with founding-team copy and enquiry pills',
         badge: 'CU',

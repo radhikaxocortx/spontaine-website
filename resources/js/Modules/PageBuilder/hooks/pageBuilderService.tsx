@@ -32,6 +32,7 @@ import { heroVideoBlock } from '../Blocks/SpontaineBlocks/SectionHeroVideoSP'
 import { imageCarouselSPBlock } from '../Blocks/SpontaineBlocks/SectionImageCarouselSP'
 import { marqueeSPBlock } from '../Blocks/SpontaineBlocks/SectionMarqueeSP'
 import { sectionCtaV3Block } from '../Blocks/SpontaineV3/SectionCtaV3'
+import { sectionFeatureSplitV3Block } from '../Blocks/SpontaineV3/SectionFeatureSplitV3'
 import { sectionHeroV3Block } from '../Blocks/SpontaineV3/SectionHeroV3'
 
 export interface PageBuilderAction {
@@ -231,6 +232,11 @@ const getBlockDefaultData = (blockName: string) => {
     case 'Spontaine V3 - CTA': {
       return {
         ...sectionCtaV3Block,
+      }
+    }
+    case 'Spontaine V3 - Feature Split': {
+      return {
+        ...sectionFeatureSplitV3Block,
       }
     }
 

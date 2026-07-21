@@ -62,6 +62,9 @@ import SectionImageCarouselSP, {
 import SectionMarqueeSP, { MarqueeSPData } from '../Blocks/SpontaineBlocks/SectionMarqueeSP'
 import ContactUS, { ContactUsBlockInterface } from '../Blocks/SpontaineV3/ContactUS'
 import SectionCtaV3, { SectionCtaV3Block } from '../Blocks/SpontaineV3/SectionCtaV3'
+import SectionFeatureSplitV3, {
+  SectionFeatureSplitV3Block,
+} from '../Blocks/SpontaineV3/SectionFeatureSplitV3'
 import SectionHeroV3, {
   SectionHeroV3Block,
 } from '../Blocks/SpontaineV3/SectionHeroV3'
@@ -382,6 +385,15 @@ const ResolveComponent = ({
       {blockName === 'Spontaine V3 - CTA' && (
         <SectionCtaV3
           blockData={block as unknown as SectionCtaV3Block}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+          dispatch={dispatch}
+        />
+      )}
+      {blockName === 'Spontaine V3 - Feature Split' && (
+        <SectionFeatureSplitV3
+          blockData={block as unknown as SectionFeatureSplitV3Block}
           editMode={editMode}
           onFieldEdit={onFieldEdit}
           language={language}
