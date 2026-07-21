@@ -198,6 +198,11 @@ const blockFolders: readonly PageBlockFolder[] = [
         badge: 'H3',
       },
       {
+        name: 'Spontaine V3 - CTA',
+        description: 'V3 CTA section with optional description, buttons, microcopy, and colors',
+        badge: 'C3',
+      },
+      {
         name: 'Content Section - Contact Us',
         description: 'V3 contact form with founding-team copy and enquiry pills',
         badge: 'CU',

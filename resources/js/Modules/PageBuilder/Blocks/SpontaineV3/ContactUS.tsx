@@ -227,19 +227,21 @@ const ContactUS = ({
 
       gsap.set(revealTargets, { autoAlpha: 0, y: 16 })
 
-      gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: 'top 80%',
-          once: true,
-        },
-      }).to(revealTargets, {
-        autoAlpha: 1,
-        y: 0,
-        duration: 0.5,
-        stagger: 0.1,
-        ease: 'power2.out',
-      })
+      gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 80%',
+            once: true,
+          },
+        })
+        .to(revealTargets, {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.5,
+          stagger: 0.1,
+          ease: 'power2.out',
+        })
     }, section)
 
     return () => context.revert()

@@ -193,6 +193,14 @@
     ),
     radial-gradient(900px 500px at 88% 85%, rgba(212, 238, 255, 0.85), transparent 60%),
     linear-gradient(135deg, #f7f8f6 0%, #f3f4f6 55%, #edf6ff 100%);
+  /* Use via bg-pagebuilder-cta-wash for Spontaine V3 PageBuilder CTA defaults. */
+  --gradient-pagebuilder-cta-wash: radial-gradient(
+      900px 460px at 20% 15%,
+      rgba(15, 229, 168, 0.1),
+      transparent 60%
+    ),
+    radial-gradient(800px 420px at 85% 90%, rgba(212, 238, 255, 0.75), transparent 60%),
+    linear-gradient(160deg, #f7f8f6 0%, #edf6ff 100%);
   /* Use via bg-hero-wash-soft for alternate soft top-of-page wash backgrounds. */
   --gradient-hero-wash-soft: linear-gradient(
     118deg,

@@ -298,7 +298,12 @@ const SectionHeroImageSP = ({
                       size='lg'
                       className='relative overflow-hidden rounded-full bg-spontaine-highlight py-6 text-white shadow-2xl'
                     >
-                      <span className='nav-cta-text'>Book Demo</span>
+                      <span className='nav-cta-text'>
+                        <Localization
+                          text={blockData.cta?.name || { english: 'Book Demo', malayalam: null }}
+                          language={language}
+                        />
+                      </span>
                     </Button>
                   )}
                 </CalendarBooking>

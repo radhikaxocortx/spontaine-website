@@ -26,8 +26,8 @@ export const CTAEditModal = ({
   useEffect(() => {
     if (show) {
       if (currentCalendarUrl) {
-        setCtaEnglishName('Book Demo')
-        setCtaMalayalamName('')
+        setCtaEnglishName(currentCTA?.name?.english || 'Book Demo')
+        setCtaMalayalamName(currentCTA?.name?.malayalam || '')
         setCtaLink(currentCalendarUrl)
         setCtaExternal(false)
         setCtaIsCalendar(true)
@@ -51,7 +51,14 @@ export const CTAEditModal = ({
     if (ctaIsCalendar) {
       onSave({
         calendarUrl: ctaLink || null,
-        cta: null,
+        cta: {
+          name: {
+            english: ctaEnglishName || 'Book Demo',
+            malayalam: ctaMalayalamName || null,
+          },
+          link: ctaLink || '',
+          external: false,
+        },
       })
     } else {
       onSave({
@@ -109,8 +116,7 @@ export const CTAEditModal = ({
               value={ctaEnglishName}
               onChange={(e) => setCtaEnglishName(e.target.value)}
               placeholder='Get Started'
-              disabled={ctaIsCalendar}
-              className='w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:text-gray-500'
+              className='w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500'
             />
           </div>
 
@@ -124,8 +130,7 @@ export const CTAEditModal = ({
               value={ctaMalayalamName}
               onChange={(e) => setCtaMalayalamName(e.target.value)}
               placeholder='ആരംഭിക്കുക'
-              disabled={ctaIsCalendar}
-              className='w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:text-gray-500'
+              className='w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500'
             />
           </div>
 
@@ -152,8 +157,6 @@ export const CTAEditModal = ({
               onChange={(e) => {
                 setCtaIsCalendar(e.target.checked)
                 if (e.target.checked) {
-                  setCtaEnglishName('Book Demo')
-                  setCtaMalayalamName('')
                   setCtaExternal(false)
                 }
               }}

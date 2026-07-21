@@ -38,6 +38,9 @@ interface V3ColorControlsProps {
   descriptionColor?: TextData
   eyebrowColor?: TextData
   onFieldEdit?: (field: BlocKFieldInfo) => void
+  showEyebrowColor?: boolean
+  showTitleOneColor?: boolean
+  showTitleTwoColor?: boolean
   textColor?: TextData
   titleOneColor?: TextData
   titleTwoColor?: TextData
@@ -53,6 +56,9 @@ const V3ColorControls = ({
   descriptionColor,
   eyebrowColor,
   onFieldEdit,
+  showEyebrowColor = true,
+  showTitleOneColor = true,
+  showTitleTwoColor = true,
   textColor,
   titleOneColor,
   titleTwoColor,
@@ -66,31 +72,37 @@ const V3ColorControls = ({
       field: 'backgroundColor',
       label: 'Edit Background Color',
       value: backgroundColor,
+      show: true,
     },
     {
       field: 'textColor',
       label: 'Edit Text Color',
       value: textColor,
+      show: true,
     },
     {
       field: 'eyebrowColor',
       label: 'Edit Eyebrow Color',
       value: eyebrowColor,
+      show: showEyebrowColor,
     },
     {
       field: 'titleOneColor',
       label: 'Edit Title 1 Color',
       value: titleOneColor,
+      show: showTitleOneColor,
     },
     {
       field: 'titleTwoColor',
       label: 'Edit Title 2 Color',
       value: titleTwoColor,
+      show: showTitleTwoColor,
     },
     {
       field: 'descriptionColor',
       label: 'Edit Description Color',
       value: descriptionColor,
+      show: true,
     },
   ] as const
 
@@ -98,7 +110,7 @@ const V3ColorControls = ({
     <div className='flex flex-col gap-2'>
       <div className='flex flex-wrap items-center gap-2'>
         <p className='m-0 text-sm font-medium text-spontaine-text-primary'>Section Colors:</p>
-        {colorControls.map((control) => (
+        {colorControls.filter((control) => control.show).map((control) => (
           <EditLabel
             key={control.field}
             label={control.label}

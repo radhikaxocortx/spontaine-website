@@ -249,7 +249,9 @@ const SectionCTASP = ({
                         size='lg'
                         className='relative overflow-hidden rounded-full bg-spontaine-highlight py-6 text-white shadow-2xl'
                       >
-                        <span className='nav-cta-text'>Book Demo</span>
+                        <span className='nav-cta-text'>
+                          {displayText(blockData.cta?.name, language) || 'Book Demo'}
+                        </span>
                       </Button>
                     )}
                   </CalendarBooking>
