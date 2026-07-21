@@ -160,6 +160,7 @@ const BlockEditor = ({ block, dispatch, language, dependencies }: Properties) =>
             }
             setData={onHtmlInput}
             setShowModal={() => setSelectedField(null)}
+            variant={block.blockName === 'Spontaine V3 - Rich Text' ? 'v3' : 'default'}
           />
         </div>
       )}

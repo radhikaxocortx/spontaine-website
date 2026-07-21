@@ -68,6 +68,7 @@ import SectionFeatureSplitV3, {
 import SectionHeroV3, {
   SectionHeroV3Block,
 } from '../Blocks/SpontaineV3/SectionHeroV3'
+import SectionRichTextV3, { SectionRichTextV3Block } from '../Blocks/SpontaineV3/SectionRichTextV3'
 
 interface Properties {
   block?: Block
@@ -394,6 +395,15 @@ const ResolveComponent = ({
       {blockName === 'Spontaine V3 - Feature Split' && (
         <SectionFeatureSplitV3
           blockData={block as unknown as SectionFeatureSplitV3Block}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+          dispatch={dispatch}
+        />
+      )}
+      {blockName === 'Spontaine V3 - Rich Text' && (
+        <SectionRichTextV3
+          blockData={block as unknown as SectionRichTextV3Block}
           editMode={editMode}
           onFieldEdit={onFieldEdit}
           language={language}

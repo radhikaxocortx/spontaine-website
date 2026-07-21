@@ -34,6 +34,7 @@ import { marqueeSPBlock } from '../Blocks/SpontaineBlocks/SectionMarqueeSP'
 import { sectionCtaV3Block } from '../Blocks/SpontaineV3/SectionCtaV3'
 import { sectionFeatureSplitV3Block } from '../Blocks/SpontaineV3/SectionFeatureSplitV3'
 import { sectionHeroV3Block } from '../Blocks/SpontaineV3/SectionHeroV3'
+import { sectionRichTextV3Block } from '../Blocks/SpontaineV3/SectionRichTextV3'
 
 export interface PageBuilderAction {
   action:
@@ -237,6 +238,11 @@ const getBlockDefaultData = (blockName: string) => {
     case 'Spontaine V3 - Feature Split': {
       return {
         ...sectionFeatureSplitV3Block,
+      }
+    }
+    case 'Spontaine V3 - Rich Text': {
+      return {
+        ...sectionRichTextV3Block,
       }
     }
 

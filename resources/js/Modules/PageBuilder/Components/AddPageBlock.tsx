@@ -208,6 +208,11 @@ const blockFolders: readonly PageBlockFolder[] = [
         badge: 'FS',
       },
       {
+        name: 'Spontaine V3 - Rich Text',
+        description: 'V3 rich text section with optional header and one/two-column layout',
+        badge: 'RT3',
+      },
+      {
         name: 'Content Section - Contact Us',
         description: 'V3 contact form with founding-team copy and enquiry pills',
         badge: 'CU',
