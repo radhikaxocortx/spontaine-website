@@ -3,8 +3,8 @@ import AddLabel from '../../../Components/AddLabel'
 import type { BlocKFieldInfo } from '../../../Components/BlockEditor/BlockEditor'
 import EditLabel from '../../../Components/EditLabel'
 import Localization from '../../../Components/Localization'
-import type { ContactSectionModel } from './useContactSectionModel'
 import type { ContactUsBlockInterface } from './types'
+import type { ContactSectionModel } from './useContactSectionModel'
 
 interface ContactContentProps {
   blockData?: ContactUsBlockInterface

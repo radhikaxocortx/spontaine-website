@@ -1,11 +1,11 @@
 import type { Language } from '@/components/ui/ui_interfaces'
 import type { CSSProperties } from 'react'
 import { getV3ColorValue } from '../../../Components/V3ColorControls'
+import { v3RoundedSectionTopPaddingClassName } from '../../../Components/V3RoundedSectionBlockFrame'
 import {
   isV3RoundedTopEnabled,
   isV3TopOverlapEnabled,
 } from '../../../Components/V3RoundedTopToggle'
-import { v3RoundedSectionTopPaddingClassName } from '../../../Components/V3RoundedSectionBlockFrame'
 import type { ContactUsBlockInterface } from './types'
 
 export const useContactSectionModel = (
