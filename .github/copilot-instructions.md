@@ -59,7 +59,7 @@ Prefer standard Tailwind utilities when an exact utility exists.
 
 Design decisions should be based on component dimensions rather than visual appearance on a single operating system.
 
-Apple/Safari compatibility is mandatory for UI and animation code. Validate mobile Safari behavior for scroll-triggered animation, fixed/sticky UI, viewport sizing, and transformed elements. Avoid browser-fragile animation shortcuts where Safari support is uncertain; for example, do not use compound GSAP optimized setters like `quickSetter(..., 'autoAlpha')`. Use explicit `opacity` setters plus direct `visibility` handling instead. Prefer standards-safe CSS and DOM APIs over browser-specific behavior.
+Apple/Safari compatibility is mandatory for UI and animation code. Validate mobile Safari behavior for scroll-triggered animation, fixed/sticky UI, viewport sizing, and transformed elements. Avoid browser-fragile animation shortcuts where Safari support is uncertain. Do not use compound GSAP optimized setters such as `quickSetter(..., 'autoAlpha')`, `quickSetter(..., 'scale')`, or aliases that expand to compound names like `opacity,visibility` or `scaleX,scaleY`. Use explicit `opacity` setters plus direct `visibility` handling instead. For high-frequency transform loops, prefer direct `element.style.transform = 'translate3d(...) scale(...)'` updates over compound GSAP quick setters. Normal GSAP tweens are acceptable when they do not rely on fragile optimized compound setters. Prefer standards-safe CSS and DOM APIs over browser-specific behavior.
 
 Use explicit sizing for:
 
@@ -245,6 +245,13 @@ For components rendered in multiple contexts (full page, drawer, modal), ensure 
 Never leave content in hidden initial states when trigger conditions may not fire.
 
 Respect prefers-reduced-motion where practical.
+
+#### Safari/WebKit Animation Gotchas
+
+- Avoid GSAP optimized compound setters that can generate invalid qualified names in iPhone/iPad WebKit.
+- Do not use `quickSetter(..., 'autoAlpha')`; set `opacity` and `visibility` explicitly.
+- Do not use `quickSetter(..., 'scale')`; use an explicit transform string such as `translate3d(...) scale(...)` when a fast manual transform loop is needed.
+- Keep content visible by default or provide a reduced-motion/fallback state so failed scroll triggers never leave UI hidden.
 
 ### Mobile-First Rules
 

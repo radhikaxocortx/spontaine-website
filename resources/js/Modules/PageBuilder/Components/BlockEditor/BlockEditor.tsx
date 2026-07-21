@@ -134,6 +134,11 @@ const BlockEditor = ({ block, dispatch, language, dependencies }: Properties) =>
           <XIcon className='h-4 w-4' />
         </ButtonBorderIcon>
       </div>
+      <div className='relative z-10 flex min-h-11 items-center border-b border-gray-200 bg-gray-50 px-4 py-2 pr-40'>
+        <p className='m-0 font-mono text-xs font-semibold uppercase tracking-wide text-gray-600'>
+          {block.blockName}
+        </p>
+      </div>
       {selectedField?.fieldType !== 'html' && (
         <ResolveComponent
           blockName={block.blockName}
