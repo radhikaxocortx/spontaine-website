@@ -21,19 +21,28 @@ export function useBentoReveal<TElement extends HTMLElement = HTMLDivElement>() 
     const shouldReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
     if (shouldReduceMotion) {
-      gsap.set(cardElements, { autoAlpha: 1, y: 0 })
+      cardElements.forEach((card) => {
+        card.style.visibility = 'visible'
+      })
+      gsap.set(cardElements, { opacity: 1, y: 0 })
       return
     }
 
-    gsap.set(cardElements, { autoAlpha: 0, y: 32 })
+    gsap.set(cardElements, { opacity: 0, y: 32 })
+    cardElements.forEach((card) => {
+      card.style.visibility = 'hidden'
+    })
 
     const triggers = cardElements.map((card) => {
       const revealCard = () => {
         gsap.to(card, {
-          autoAlpha: 1,
-          y: 0,
           duration: 0.75,
           ease: 'power3.out',
+          onStart: () => {
+            card.style.visibility = 'visible'
+          },
+          opacity: 1,
+          y: 0,
         })
       }
 

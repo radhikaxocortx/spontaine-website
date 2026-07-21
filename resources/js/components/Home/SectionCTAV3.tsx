@@ -32,11 +32,17 @@ export default function SectionCTAV3({ className }: SectionCTAV3Props) {
       const revealTargets = [title, description, action, note].filter(Boolean) as HTMLElement[]
 
       if (prefersReducedMotion) {
-        gsap.set(revealTargets, { autoAlpha: 1, y: 0 })
+        revealTargets.forEach((target) => {
+          target.style.visibility = 'visible'
+        })
+        gsap.set(revealTargets, { opacity: 1, y: 0 })
         return
       }
 
-      gsap.set(revealTargets, { autoAlpha: 0, y: 16 })
+      gsap.set(revealTargets, { opacity: 0, y: 16 })
+      revealTargets.forEach((target) => {
+        target.style.visibility = 'hidden'
+      })
 
       const timeline = gsap.timeline({
         scrollTrigger: {
@@ -48,10 +54,13 @@ export default function SectionCTAV3({ className }: SectionCTAV3Props) {
 
       if (title) {
         timeline.to(title, {
-          autoAlpha: 1,
-          y: 0,
           duration: 0.52,
           ease: 'power2.out',
+          onStart: () => {
+            title.style.visibility = 'visible'
+          },
+          opacity: 1,
+          y: 0,
         })
       }
 
@@ -59,10 +68,13 @@ export default function SectionCTAV3({ className }: SectionCTAV3Props) {
         timeline.to(
           description,
           {
-            autoAlpha: 1,
-            y: 0,
             duration: 0.5,
             ease: 'power2.out',
+            onStart: () => {
+              description.style.visibility = 'visible'
+            },
+            opacity: 1,
+            y: 0,
           },
           '>-0.12'
         )
@@ -72,10 +84,13 @@ export default function SectionCTAV3({ className }: SectionCTAV3Props) {
         timeline.to(
           action,
           {
-            autoAlpha: 1,
-            y: 0,
             duration: 0.45,
             ease: 'power2.out',
+            onStart: () => {
+              action.style.visibility = 'visible'
+            },
+            opacity: 1,
+            y: 0,
           },
           '>-0.1'
         )
@@ -85,10 +100,13 @@ export default function SectionCTAV3({ className }: SectionCTAV3Props) {
         timeline.to(
           note,
           {
-            autoAlpha: 1,
-            y: 0,
             duration: 0.4,
             ease: 'power2.out',
+            onStart: () => {
+              note.style.visibility = 'visible'
+            },
+            opacity: 1,
+            y: 0,
           },
           '>-0.08'
         )

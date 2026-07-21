@@ -42,7 +42,9 @@ export function useChatStory({ stageRef, tableRef, approvalRef }: UseChatStoryPr
     const shouldReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
     if (shouldReduceMotion) {
-      gsap.set([table, approval], { autoAlpha: 1, y: 0 })
+      table.style.visibility = 'visible'
+      approval.style.visibility = 'visible'
+      gsap.set([table, approval], { opacity: 1, y: 0 })
       setStoryState('approval')
       return
     }
@@ -63,20 +65,26 @@ export function useChatStory({ stageRef, tableRef, approvalRef }: UseChatStoryPr
       timeline
         .fromTo(
           table,
-          { autoAlpha: 0, y: 46 },
+          { opacity: 0, y: 46 },
           {
-            autoAlpha: 1,
-            y: 0,
             duration: 0.82,
+            onStart: () => {
+              table.style.visibility = 'visible'
+            },
+            opacity: 1,
+            y: 0,
           }
         )
         .fromTo(
           approval,
-          { autoAlpha: 0, y: 54 },
+          { opacity: 0, y: 54 },
           {
-            autoAlpha: 1,
-            y: 0,
             duration: 0.72,
+            onStart: () => {
+              approval.style.visibility = 'visible'
+            },
+            opacity: 1,
+            y: 0,
           },
           '-=0.38'
         )
@@ -89,8 +97,10 @@ export function useChatStory({ stageRef, tableRef, approvalRef }: UseChatStoryPr
         }
 
         timeline.pause(0)
-        gsap.set(table, { autoAlpha: 0, y: 46 })
-        gsap.set(approval, { autoAlpha: 0, y: 54 })
+        gsap.set(table, { opacity: 0, y: 46 })
+        gsap.set(approval, { opacity: 0, y: 54 })
+        table.style.visibility = 'hidden'
+        approval.style.visibility = 'hidden'
         stageReadyRef.current = false
         setStoryState('typing')
       }

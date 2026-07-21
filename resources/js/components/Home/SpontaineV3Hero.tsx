@@ -42,7 +42,8 @@ export default function SpontaineV3Hero() {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
     if (reduceMotion) {
-      gsap.set(promptCard, { autoAlpha: 1, y: 0 })
+      promptCard.style.visibility = 'visible'
+      gsap.set(promptCard, { opacity: 1, y: 0 })
       return
     }
 
@@ -51,9 +52,12 @@ export default function SpontaineV3Hero() {
     const ctx = gsap.context(() => {
       const showPrompt = () => {
         gsap.to(promptCard, {
-          autoAlpha: 1,
           duration: 0.9,
           ease: 'power3.out',
+          onStart: () => {
+            promptCard.style.visibility = 'visible'
+          },
+          opacity: 1,
           overwrite: 'auto',
           y: 0,
         })
@@ -61,18 +65,22 @@ export default function SpontaineV3Hero() {
 
       const resetPrompt = () => {
         gsap.to(promptCard, {
-          autoAlpha: 0,
           duration: 0.45,
           ease: 'power2.out',
+          onComplete: () => {
+            promptCard.style.visibility = 'hidden'
+          },
+          opacity: 0,
           overwrite: 'auto',
           y: 140,
         })
       }
 
       gsap.set(promptCard, {
-        autoAlpha: 0,
+        opacity: 0,
         y: 140,
       })
+      promptCard.style.visibility = 'hidden'
 
       ScrollTrigger.create({
         trigger: callout,

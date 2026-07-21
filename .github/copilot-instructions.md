@@ -51,10 +51,15 @@ Prefer standard Tailwind utilities when an exact utility exists.
 - Avoid using emoji or special-character arrows for production UI.
 - Test layouts against:
   - macOS Chrome
+  - macOS Safari
+  - iPhone Safari
+  - iPad Safari
   - Windows Chrome
   - Windows Edge
 
 Design decisions should be based on component dimensions rather than visual appearance on a single operating system.
+
+Apple/Safari compatibility is mandatory for UI and animation code. Validate mobile Safari behavior for scroll-triggered animation, fixed/sticky UI, viewport sizing, and transformed elements. Avoid browser-fragile animation shortcuts where Safari support is uncertain; for example, do not use compound GSAP optimized setters like `quickSetter(..., 'autoAlpha')`. Use explicit `opacity` setters plus direct `visibility` handling instead. Prefer standards-safe CSS and DOM APIs over browser-specific behavior.
 
 Use explicit sizing for:
 
