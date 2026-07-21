@@ -1,0 +1,37 @@
+name: Build Pregame Spontaine
+
+on:
+  push:
+
+jobs:
+  run-on-server:
+    if: github.ref_name == vars.BRANCH
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Start SSH agent and add key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.DO_SSH_KEY }}
+
+      - name: Add server to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p ${{ secrets.DO_PORT }} -H ${{ secrets.DO_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Run commands on server
+        run: |
+          ssh -p ${{ secrets.DO_PORT }} ${{ secrets.DO_USER }}@${{ secrets.DO_HOST }} << EOF
+            set -e
+
+            cd ${{ secrets.APP_DIR }}
+
+            echo "Pull latest code"
+            git fetch origin
+            git pull --ff-only origin ${{ vars.BRANCH }}
+
+            echo "Building frontend"
+            npm run build
+
+            echo "Done"
+          EO
