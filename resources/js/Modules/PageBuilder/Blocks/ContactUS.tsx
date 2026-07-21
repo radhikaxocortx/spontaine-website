@@ -12,6 +12,7 @@ import AddLabel from '../Components/AddLabel'
 import type { BlocKFieldInfo } from '../Components/BlockEditor/BlockEditor'
 import EditLabel from '../Components/EditLabel'
 import Localization from '../Components/Localization'
+import V3ColorControls, { getV3ColorValue } from '../Components/V3ColorControls'
 import V3RoundedSectionBlockFrame, {
   v3RoundedSectionTopPaddingClassName,
 } from '../Components/V3RoundedSectionBlockFrame'
@@ -20,7 +21,13 @@ import V3RoundedTopToggle, {
   isV3TopOverlapEnabled,
 } from '../Components/V3RoundedTopToggle'
 import type { PageBuilderAction } from '../hooks/pageBuilderService'
-import type { Block, BlockConfiguration, ItemListField, LinkData, TextData } from '../page_interfaces'
+import type {
+  Block,
+  BlockConfiguration,
+  ItemListField,
+  LinkData,
+  TextData,
+} from '../page_interfaces'
 
 type EnquiryKey =
   | 'general_enquiries'
@@ -56,11 +63,17 @@ export interface ContactUsBlockInterface extends Block, BlockConfiguration {
   iframe?: TextData
   phone?: TextData
   email?: TextData
+  backgroundColor?: TextData
+  descriptionColor?: TextData
   eyebrow?: TextData
+  eyebrowColor?: TextData
   overlapTop?: TextData
   roundedTop?: TextData
+  textColor?: TextData
   title?: TextData
+  titleOneColor?: TextData
   titleOne?: TextData
+  titleTwoColor?: TextData
   titleTwo?: TextData
   mailSubject?: TextData
   receiverMail?: TextData
@@ -108,6 +121,32 @@ const ContactUS = ({
   const sectionPaddingClass = hasRoundedTop
     ? `${v3RoundedSectionTopPaddingClassName} pb-16 md:pb-20 lg:pb-24`
     : `py-16 md:py-20 lg:py-24 ${blockData?.paddingTop}`
+  const backgroundColor = getV3ColorValue(blockData?.backgroundColor, language)
+  const textColor = getV3ColorValue(blockData?.textColor, language)
+  const eyebrowColor = getV3ColorValue(blockData?.eyebrowColor, language) ?? textColor
+  const titleOneColor = getV3ColorValue(blockData?.titleOneColor, language) ?? textColor
+  const titleTwoColor = getV3ColorValue(blockData?.titleTwoColor, language) ?? textColor
+  const descriptionColor = getV3ColorValue(blockData?.descriptionColor, language) ?? textColor
+  const sectionStyle = {
+    '--PhoneInputCountryFlag-display': 'none',
+    '--PhoneInputCountryIcon-display': 'none',
+    background: backgroundColor,
+  } as React.CSSProperties
+  const contentTextStyle = {
+    color: textColor,
+  } as React.CSSProperties
+  const eyebrowStyle = {
+    color: eyebrowColor,
+  } as React.CSSProperties
+  const titleOneStyle = {
+    color: titleOneColor,
+  } as React.CSSProperties
+  const titleTwoStyle = {
+    color: titleTwoColor,
+  } as React.CSSProperties
+  const descriptionStyle = {
+    color: descriptionColor,
+  } as React.CSSProperties
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -169,12 +208,7 @@ const ContactUS = ({
       roundedTop={hasRoundedTop}
       overlapTop={hasTopOverlap}
       className={`relative w-full overflow-hidden bg-hero-wash ${sectionPaddingClass} ${blockData?.marginTop} ${blockData?.marginBottom} ${blockData?.paddingBottom}`}
-      style={
-        {
-          '--PhoneInputCountryFlag-display': 'none',
-          '--PhoneInputCountryIcon-display': 'none',
-        } as React.CSSProperties
-      }
+      style={sectionStyle}
     >
       {loading && (
         <div className='fixed inset-0 z-[9999] flex items-center justify-center backdrop-blur-sm'>
@@ -184,9 +218,15 @@ const ContactUS = ({
       )}
 
       <div className='relative z-10 mx-auto grid w-full max-w-[1180px] items-start gap-10 px-[var(--space-shell-sm)] md:px-[var(--space-shell)] lg:grid-cols-[0.9fr_1.1fr] lg:gap-16'>
-        <div className='flex flex-col items-start'>
+        <div
+          className='flex flex-col items-start'
+          style={contentTextStyle}
+        >
           <div className='mb-5'>
-            <p className='eyebrow text-spontaine-gray-cool'>
+            <p
+              className={`eyebrow ${eyebrowColor ? 'text-[inherit]' : 'text-spontaine-gray-cool'}`}
+              style={eyebrowStyle}
+            >
               <Localization
                 language={language}
                 text={
@@ -213,11 +253,17 @@ const ContactUS = ({
           </div>
 
           <div className='space-y-3'>
-            <h2 className='font-display text-4xl font-bold leading-[0.95] tracking-[-0.06em] text-spontaine-text-primary md:text-5xl'>
-              <strong className='block font-bold leading-[inherit] tracking-[inherit] text-[inherit]'>
+            <h2
+              className={`font-display text-4xl font-bold leading-[0.95] tracking-[-0.06em] md:text-5xl ${textColor ? 'text-[inherit]' : 'text-spontaine-text-primary'}`}
+            >
+              <strong
+                className='block font-bold leading-[inherit] tracking-[inherit] text-[inherit]'
+                style={titleOneStyle}
+              >
                 <Localization
                   language={language}
                   text={
+                    blockData?.titleOne ||
                     blockData?.title || {
                       english: 'Send a message.',
                       malayalam: 'Send a message.',
@@ -225,27 +271,61 @@ const ContactUS = ({
                   }
                 />
               </strong>
-              <strong className='block font-bold leading-[inherit] tracking-[inherit] text-[inherit] text-spontaine-text-accent-dark'>
-                A person reads every one.
+              <strong
+                className={`block font-bold leading-[inherit] tracking-[inherit] ${titleTwoColor ? 'text-[inherit]' : 'text-spontaine-text-accent-dark'}`}
+                style={titleTwoStyle}
+              >
+                <Localization
+                  language={language}
+                  text={
+                    blockData?.titleTwo || {
+                      english: 'A person reads every one.',
+                      malayalam: 'A person reads every one.',
+                    }
+                  }
+                />
               </strong>
             </h2>
 
             {editMode && onFieldEdit && (
-              <EditLabel
-                label='Edit Title'
-                onClick={() =>
-                  onFieldEdit({
-                    action: 'INSERT',
-                    field: 'title',
-                    fieldType: 'text',
-                    oldValue: blockData?.title,
-                  })
-                }
-              />
+              <div className='flex flex-wrap gap-2'>
+                <EditLabel
+                  label='Edit Title Line 1'
+                  onClick={() =>
+                    onFieldEdit({
+                      action: 'UPDATE',
+                      field: 'titleOne',
+                      fieldType: 'text',
+                      oldValue: blockData?.titleOne ??
+                        blockData?.title ?? {
+                          english: 'Send a message.',
+                          malayalam: 'Send a message.',
+                        },
+                    })
+                  }
+                />
+                <EditLabel
+                  label='Edit Title Line 2'
+                  onClick={() =>
+                    onFieldEdit({
+                      action: 'UPDATE',
+                      field: 'titleTwo',
+                      fieldType: 'text',
+                      oldValue: blockData?.titleTwo ?? {
+                        english: 'A person reads every one.',
+                        malayalam: 'A person reads every one.',
+                      },
+                    })
+                  }
+                />
+              </div>
             )}
           </div>
 
-          <div className='mt-6 max-w-[420px] space-y-2 font-body text-base leading-[1.52] text-spontaine-text-secondary'>
+          <div
+            className={`mt-6 max-w-[420px] space-y-2 font-body text-base leading-[1.52] ${descriptionColor ? 'text-[inherit]' : 'text-spontaine-text-secondary'}`}
+            style={descriptionStyle}
+          >
             {blockData?.description?.items.map((item) => (
               <p
                 key={item.id.toString()}
@@ -499,6 +579,15 @@ const ContactUS = ({
                   />
                 </div>
               )}
+              <V3ColorControls
+                backgroundColor={blockData?.backgroundColor}
+                descriptionColor={blockData?.descriptionColor}
+                eyebrowColor={blockData?.eyebrowColor}
+                onFieldEdit={onFieldEdit}
+                textColor={blockData?.textColor}
+                titleOneColor={blockData?.titleOneColor}
+                titleTwoColor={blockData?.titleTwoColor}
+              />
             </div>
           </div>
         )}

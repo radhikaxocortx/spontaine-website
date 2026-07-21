@@ -321,6 +321,54 @@ onFieldEdit({
 
 **Why:** PageBuilder's reducer treats top-level fields differently from nested list items. `INSERT` replaces/adds values directly; `UPDATE` with `itemField` modifies specific items within arrays. Always match the pattern used in similar blocks.
 
+## V3 PageBuilder Section Styling
+
+Use the shared V3 section helpers for builder blocks that opt into homepage/product/company section styling.
+
+### Rounded Top + Overlap
+
+- Persist rounded section state with top-level multilingual fields:
+  - `roundedTop?: TextData`
+  - `overlapTop?: TextData`
+- Enabled state is string-based:
+  - `displayText(field, language) === 'true'`
+  - Missing fields default to off.
+- Use `RoundedSection` from `resources/js/components/ui/rounded-section.tsx` for the radius behavior.
+- Use `V3RoundedSectionBlockFrame` from `resources/js/Modules/PageBuilder/Components/V3RoundedSectionBlockFrame.tsx` for PageBuilder blocks that need the full builder convention:
+  - responsive rounded top classes
+  - optional standard overlap wrapper
+  - standard rounded-top content padding
+- Apply overlap only when both `roundedTop` and `overlapTop` are enabled.
+- Do not implement V3 overlap through generic `marginTop`; overlap uses the standard wrapper classes:
+  - `relative z-20 -mt-8 md:-mt-10 lg:-mt-12 xl:-mt-16`
+- When rounded top is enabled, keep the standard top padding rhythm:
+  - `pt-[128px] md:pt-[150px] lg:pt-[172px] xl:pt-[188px]`
+- Keep bottom padding and normal PageBuilder spacing flexible unless a block has its own documented rule.
+
+### V3 Builder Colors
+
+- Persist editable builder colors as top-level multilingual text fields.
+- Standard fields:
+  - `backgroundColor?: TextData`
+  - `textColor?: TextData`
+- Common per-content color fields:
+  - `eyebrowColor?: TextData`
+  - `titleOneColor?: TextData`
+  - `titleTwoColor?: TextData`
+  - `descriptionColor?: TextData`
+- Use `V3ColorControls` from `resources/js/Modules/PageBuilder/Components/V3ColorControls.tsx` for edit-mode color controls and helper text.
+- Use `getV3ColorValue` to read persisted color strings safely.
+- Runtime editor-entered colors may be applied with inline `style` because Tailwind cannot generate classes from CMS strings.
+- Background values may support hex, CSS gradients, or CSS variables; apply them with `style={{ background: value }}` only on the section/root surface.
+- Text values should apply only to the intended content wrapper or text element, not form controls or unrelated UI chrome.
+- Preserve semantic Tailwind classes as fallback when color fields are empty.
+- Prefer V3 semantic CSS variables in helper copy, for example:
+  - `var(--spontaine-surface-paper)`
+  - `var(--spontaine-surface-cream)`
+  - `var(--spontaine-text-primary)`
+  - `var(--spontaine-accent)`
+- Do not add tokens or Tailwind utilities for one-off builder color choices.
+
 ## Integration Points
 
 - Inertia shared props consumed in layout/components—avoid duplicate fetches.
