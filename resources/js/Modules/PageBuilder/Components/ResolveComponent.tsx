@@ -61,6 +61,9 @@ import SectionImageCarouselSP, {
   ImageCarouselSPData,
 } from '../Blocks/SpontaineBlocks/SectionImageCarouselSP'
 import SectionMarqueeSP, { MarqueeSPData } from '../Blocks/SpontaineBlocks/SectionMarqueeSP'
+import SectionHeroV3, {
+  SectionHeroV3Block,
+} from '../Blocks/SpontaineV3/SectionHeroV3'
 
 interface Properties {
   block?: Block
@@ -360,6 +363,15 @@ const ResolveComponent = ({
       {blockName === 'Spontaine - Bento Cards' && (
         <SectionBentoCardsSP
           blockData={block as unknown as BentoCardsSPData}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+          dispatch={dispatch}
+        />
+      )}
+      {blockName === 'Spontaine V3 - Hero' && (
+        <SectionHeroV3
+          blockData={block as unknown as SectionHeroV3Block}
           editMode={editMode}
           onFieldEdit={onFieldEdit}
           language={language}

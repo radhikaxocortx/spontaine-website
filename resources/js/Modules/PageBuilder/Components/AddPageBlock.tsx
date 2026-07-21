@@ -193,6 +193,11 @@ const blockFolders: readonly PageBlockFolder[] = [
     description: 'V3-styled PageBuilder blocks',
     blocks: [
       {
+        name: 'Spontaine V3 - Hero',
+        description: 'V3 hero section with optional eyebrow, image overlay, CTA, and colors',
+        badge: 'H3',
+      },
+      {
         name: 'Content Section - Contact Us',
         description: 'V3 contact form with founding-team copy and enquiry pills',
         badge: 'CU',

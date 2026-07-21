@@ -31,6 +31,7 @@ import { heroImageBlock as heroImageSPBlock } from '../Blocks/SpontaineBlocks/Se
 import { heroVideoBlock } from '../Blocks/SpontaineBlocks/SectionHeroVideoSP'
 import { imageCarouselSPBlock } from '../Blocks/SpontaineBlocks/SectionImageCarouselSP'
 import { marqueeSPBlock } from '../Blocks/SpontaineBlocks/SectionMarqueeSP'
+import { sectionHeroV3Block } from '../Blocks/SpontaineV3/SectionHeroV3'
 
 export interface PageBuilderAction {
   action:
@@ -219,6 +220,11 @@ const getBlockDefaultData = (blockName: string) => {
     case 'Spontaine - Bento Cards': {
       return {
         ...bentoCardsSPBlock,
+      }
+    }
+    case 'Spontaine V3 - Hero': {
+      return {
+        ...sectionHeroV3Block,
       }
     }
 
