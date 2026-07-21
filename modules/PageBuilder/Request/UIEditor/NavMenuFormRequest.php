@@ -3,6 +3,7 @@
 namespace Modules\PageBuilder\Request\UIEditor;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 /**
  * Class NavMenuFormRequest
@@ -41,7 +42,12 @@ class NavMenuFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max:255', 'unique:nav_menu_items,title'],
+            'title' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('nav_menu_items', 'title')->whereNull('deleted_at'),
+            ],
             'title_malayalam' => ['nullable', 'string', 'max:255'],
             'position' => ['required', 'integer', 'min:0'],
             'is_link' => ['required', 'boolean'],

@@ -21,7 +21,9 @@ final class UpdateNavMenuFormRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('nav_menu_items', 'title')->ignore($this->route('nav_editor')),
+                Rule::unique('nav_menu_items', 'title')
+                    ->ignore($this->route('nav_editor'))
+                    ->whereNull('deleted_at'),
             ],
             'title_malayalam' => ['nullable', 'string', 'max:255'],
             'position' => ['required', 'integer'],
