@@ -1,13 +1,21 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import PhoneInput from 'react-phone-number-input'
+import PhoneInput, { getCountryCallingCode, type Country } from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
 import { enquiryOptions } from './types'
 import type { ContactFormState } from './useContactFormState'
 
 interface ContactFormProps {
   formState: ContactFormState
+}
+
+const getCountryOptionLabel = (value: string, label: string) => {
+  try {
+    return value ? `${value} +${getCountryCallingCode(value as Country)}` : label
+  } catch {
+    return label
+  }
 }
 
 const ContactForm = ({ formState }: ContactFormProps) => {
@@ -20,6 +28,7 @@ const ContactForm = ({ formState }: ContactFormProps) => {
     setFormValue,
     setRequiredFieldValue,
   } = formState
+  const phoneFieldClass = getFieldClass('phone')
 
   return (
     <form
@@ -71,28 +80,27 @@ const ContactForm = ({ formState }: ContactFormProps) => {
             value={formData.phone}
             onChange={(value) => setRequiredFieldValue('phone')(value || '')}
             defaultCountry='IN'
-            international
-            countryCallingCodeEditable={false}
             countrySelectComponent={({ value, onChange, options }) => (
               <select
+                aria-label='Country'
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
-                className={`${getFieldClass('phone')} h-12 w-[92px] flex-none px-2`}
+                className={`${phoneFieldClass} h-12 !w-[92px] flex-none px-2`}
               >
                 {options.map(({ value, label }: { value: string; label: string }) => (
                   <option
                     key={value}
                     value={value}
                   >
-                    {label}
+                    {getCountryOptionLabel(value, label)}
                   </option>
                 ))}
               </select>
             )}
             numberInputProps={{
-              className: getFieldClass('phone'),
+              className: `${phoneFieldClass} h-12 min-w-0 flex-1 basis-0`,
             }}
-            className='flex w-full gap-2'
+            className='flex w-full items-stretch gap-2'
           />
         </div>
 
@@ -158,7 +166,7 @@ const ContactForm = ({ formState }: ContactFormProps) => {
           className='w-full sm:w-auto'
           disabled={loading}
         >
-          Send to the founders
+          Send Message
         </Button>
       </div>
       <p className='mt-4 font-mono text-[11.5px] text-spontaine-gray-cool'>

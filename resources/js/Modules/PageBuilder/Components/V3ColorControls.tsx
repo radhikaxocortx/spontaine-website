@@ -25,7 +25,7 @@ export const v3TextColorSuggestions = [
 ] as const
 
 export const v3ColorHelperText =
-  'Use hex, CSS gradients, or V3 tokens such as var(--spontaine-surface-paper), var(--spontaine-surface-cream), var(--spontaine-text-primary), var(--spontaine-accent).'
+  'For background color, enter any valid CSS background value: hex (#f7f8f6), CSS variable (var(--spontaine-surface-paper)), linear-gradient(135deg, var(--spontaine-surface-paper), var(--spontaine-surface-ice)), radial-gradient(...), or comma-separated layered gradients. Do not use Tailwind class names. For text colors, use hex or V3 tokens such as var(--spontaine-text-primary) or var(--spontaine-accent).'
 
 export const getV3ColorValue = (value?: TextData, language: Language = 'en') => {
   const colorValue = displayText(value, language).trim()
