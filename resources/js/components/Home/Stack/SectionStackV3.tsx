@@ -148,10 +148,13 @@ export default function SectionStackV3() {
       })
 
       return {
-        opacity: gsap.quickSetter(card, 'autoAlpha') as (value: number) => void,
+        opacity: gsap.quickSetter(card, 'opacity') as (value: number) => void,
         scale: gsap.quickSetter(card, 'scale') as (value: number) => void,
         x: gsap.quickSetter(card, 'x', 'px') as (value: number) => void,
         y: gsap.quickSetter(card, 'y', 'px') as (value: number) => void,
+        setVisibility: (value: 'visible' | 'hidden') => {
+          card.style.visibility = value
+        },
         setPointerEvents: (value: 'auto' | 'none') => {
           card.style.pointerEvents = value
         },
@@ -180,6 +183,7 @@ export default function SectionStackV3() {
           setter.x(stackOffset.x)
           setter.y(stackOffset.y)
           setter.scale(1)
+          setter.setVisibility('visible')
           setter.setPointerEvents(index === nextCurrentCard ? 'auto' : 'none')
           return
         }
@@ -188,6 +192,7 @@ export default function SectionStackV3() {
         setter.x(0)
         setter.y(hiddenCardOffset)
         setter.scale(0.98)
+        setter.setVisibility('hidden')
         setter.setPointerEvents('none')
       })
 
