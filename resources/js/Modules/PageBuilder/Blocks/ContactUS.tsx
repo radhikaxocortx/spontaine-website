@@ -1,38 +1,64 @@
-import FullSpinnerWrapper from '@/components/CustomUI/FullSpinnerWrapper'
+import FullSpinner from '@/components/CustomUI/FullSpinner'
 import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Language } from '@/components/ui/ui_interfaces'
-import AppLayoutPadding from '@/Layouts/AppLayoutPadding'
-import SectionBody from '@/typography/SectionBody'
-import SectionDescription from '@/typography/SectionDescription'
-import SectionSubheading from '@/typography/SectionSubheading'
 import React from 'react'
 import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
 import useCustomForm from '../../../hooks/useCustomForm'
 import useInertiaPost from '../../../hooks/useInertiaPost'
 import AddLabel from '../Components/AddLabel'
-import { BlocKFieldInfo } from '../Components/BlockEditor/BlockEditor'
+import type { BlocKFieldInfo } from '../Components/BlockEditor/BlockEditor'
 import EditLabel from '../Components/EditLabel'
 import Localization from '../Components/Localization'
-import { BlockConfiguration, ItemListField, LinkData, TextData } from '../page_interfaces'
+import V3RoundedSectionBlockFrame, {
+  v3RoundedSectionTopPaddingClassName,
+} from '../Components/V3RoundedSectionBlockFrame'
+import V3RoundedTopToggle, {
+  isV3RoundedTopEnabled,
+  isV3TopOverlapEnabled,
+} from '../Components/V3RoundedTopToggle'
+import type { PageBuilderAction } from '../hooks/pageBuilderService'
+import type { Block, BlockConfiguration, ItemListField, LinkData, TextData } from '../page_interfaces'
+
+type EnquiryKey =
+  | 'general_enquiries'
+  | 'partner_enquiries'
+  | 'investor_enquiries'
+  | 'career_enquiries'
+  | 'support'
+  | 'other'
+
+type RequiredFieldKey = 'name' | 'email' | 'phone' | 'message'
+
+const enquiryOptions: readonly { key: EnquiryKey; label: string }[] = [
+  { key: 'general_enquiries', label: 'General' },
+  { key: 'partner_enquiries', label: 'Partnership' },
+  { key: 'investor_enquiries', label: 'Investment' },
+  { key: 'career_enquiries', label: 'Careers' },
+  { key: 'support', label: 'Support' },
+  { key: 'other', label: 'Other' },
+]
 
 interface Properties {
   editMode?: boolean
   onFieldEdit?: (field: BlocKFieldInfo) => void
   blockData?: ContactUsBlockInterface
   language?: Language
+  dispatch?: React.Dispatch<PageBuilderAction>
 }
 
-export interface ContactUsBlockInterface extends BlockConfiguration {
+export interface ContactUsBlockInterface extends Block, BlockConfiguration {
   lineOne?: TextData
   lineTwo?: TextData
   lineThree?: TextData
   iframe?: TextData
   phone?: TextData
   email?: TextData
+  eyebrow?: TextData
+  overlapTop?: TextData
+  roundedTop?: TextData
   title?: TextData
   titleOne?: TextData
   titleTwo?: TextData
@@ -44,7 +70,20 @@ export interface ContactUsBlockInterface extends BlockConfiguration {
   instagram?: LinkData
 }
 
-const ContactUS = ({ editMode = false, onFieldEdit, blockData, language = 'en' }: Properties) => {
+const fieldClass =
+  'w-full rounded-xl border border-neutral-200 bg-spontaine-surface-paper px-4 py-3 font-body text-[15px] text-spontaine-text-primary shadow-sm transition-colors placeholder:text-spontaine-gray-cool focus:border-spontaine-accent focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0'
+
+const ContactUS = ({
+  editMode = false,
+  onFieldEdit,
+  blockData,
+  language = 'en',
+  dispatch,
+}: Properties) => {
+  const [formError, setFormError] = React.useState<string | null>(null)
+  const [missingFields, setMissingFields] = React.useState<
+    Partial<Record<RequiredFieldKey, boolean>>
+  >({})
   const { formData, setFormValue } = useCustomForm({
     name: '',
     email: '',
@@ -64,16 +103,38 @@ const ContactUS = ({ editMode = false, onFieldEdit, blockData, language = 'en' }
     preserveState: false,
     preserveScroll: true,
   })
+  const hasRoundedTop = isV3RoundedTopEnabled(blockData?.roundedTop, language)
+  const hasTopOverlap = isV3TopOverlapEnabled(blockData?.overlapTop, language)
+  const sectionPaddingClass = hasRoundedTop
+    ? `${v3RoundedSectionTopPaddingClassName} pb-16 md:pb-20 lg:pb-24`
+    : `py-16 md:py-20 lg:py-24 ${blockData?.paddingTop}`
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    const nextMissingFields: Partial<Record<RequiredFieldKey, boolean>> = {
+      name: !formData.name.trim(),
+      email: !formData.email.trim(),
+      phone: !formData.phone.trim(),
+      message: !formData.message.trim(),
+    }
+    const hasMissingFields = Object.values(nextMissingFields).some(Boolean)
+
+    if (hasMissingFields) {
+      setMissingFields(nextMissingFields)
+      setFormError('Please fill in all fields before submitting.')
+      return
+    }
+
+    setMissingFields({})
+    setFormError(null)
 
     post({
       name: formData.name,
       email: formData.email,
       phone: formData.phone,
       message: formData.message,
-      privacy_policy: true, // Auto-accept since no checkbox in UI
+      privacy_policy: true,
       subject: blockData?.mailSubject?.english || 'Contact Form Submission',
       receiver_mail: blockData?.receiverMail?.english || 'desk@inboxfx.com',
       general_enquiries: formData.general_enquiries,
@@ -85,510 +146,364 @@ const ContactUS = ({ editMode = false, onFieldEdit, blockData, language = 'en' }
     })
   }
 
+  const setRequiredFieldValue = (field: RequiredFieldKey) => (value: string) => {
+    if (formError) {
+      setFormError(null)
+    }
+    if (missingFields[field]) {
+      setMissingFields((previous) => ({
+        ...previous,
+        [field]: false,
+      }))
+    }
+    setFormValue(field)(value)
+  }
+
+  const getFieldClass = (field: RequiredFieldKey) =>
+    missingFields[field]
+      ? `${fieldClass} border-spontaine-error focus:border-spontaine-error`
+      : fieldClass
+
   return (
-    <div
-      className={`pb-48 ${blockData?.marginTop} ${blockData?.marginBottom} ${blockData?.paddingTop} ${blockData?.paddingBottom}`}
+    <V3RoundedSectionBlockFrame
+      roundedTop={hasRoundedTop}
+      overlapTop={hasTopOverlap}
+      className={`relative w-full overflow-hidden bg-hero-wash ${sectionPaddingClass} ${blockData?.marginTop} ${blockData?.marginBottom} ${blockData?.paddingBottom}`}
       style={
         {
-          // Hide phone input flags
           '--PhoneInputCountryFlag-display': 'none',
           '--PhoneInputCountryIcon-display': 'none',
         } as React.CSSProperties
       }
     >
-      <AppLayoutPadding>
-        <div className='grid grid-cols-1 gap-12 lg:grid-cols-2'>
-          {/* Left Column - Contact Form */}
-          <div className='space-y-8'>
-            {/* Title and Description */}
-            <div className='space-y-4'>
-              <SectionSubheading
-                theme='light'
-                size='2xl'
-              >
+      {loading && (
+        <div className='fixed inset-0 z-[9999] flex items-center justify-center backdrop-blur-sm'>
+          <span className='sr-only'>Submitting contact form</span>
+          <FullSpinner />
+        </div>
+      )}
+
+      <div className='relative z-10 mx-auto grid w-full max-w-[1180px] items-start gap-10 px-[var(--space-shell-sm)] md:px-[var(--space-shell)] lg:grid-cols-[0.9fr_1.1fr] lg:gap-16'>
+        <div className='flex flex-col items-start'>
+          <div className='mb-5'>
+            <p className='eyebrow text-spontaine-gray-cool'>
+              <Localization
+                language={language}
+                text={
+                  blockData?.eyebrow || {
+                    english: 'Talk to the founding team',
+                    malayalam: 'Talk to the founding team',
+                  }
+                }
+              />
+            </p>
+            {editMode && onFieldEdit && (
+              <EditLabel
+                label='Edit Eyebrow'
+                onClick={() =>
+                  onFieldEdit({
+                    action: 'INSERT',
+                    field: 'eyebrow',
+                    fieldType: 'text',
+                    oldValue: blockData?.eyebrow,
+                  })
+                }
+              />
+            )}
+          </div>
+
+          <div className='space-y-3'>
+            <h2 className='font-display text-4xl font-bold leading-[0.95] tracking-[-0.06em] text-spontaine-text-primary md:text-5xl'>
+              <strong className='block font-bold leading-[inherit] tracking-[inherit] text-[inherit]'>
                 <Localization
                   language={language}
                   text={
                     blockData?.title || {
-                      english: "Let's level up together.",
-                      malayalam: "Let's level up together.",
+                      english: 'Send a message.',
+                      malayalam: 'Send a message.',
                     }
                   }
                 />
-              </SectionSubheading>
-              {editMode && onFieldEdit && (
-                <EditLabel
-                  label='Edit Title'
-                  onClick={() =>
-                    onFieldEdit({
-                      action: 'INSERT',
-                      field: 'title',
-                      fieldType: 'text',
-                      oldValue: blockData?.title,
-                    })
-                  }
+              </strong>
+              <strong className='block font-bold leading-[inherit] tracking-[inherit] text-[inherit] text-spontaine-text-accent-dark'>
+                A person reads every one.
+              </strong>
+            </h2>
+
+            {editMode && onFieldEdit && (
+              <EditLabel
+                label='Edit Title'
+                onClick={() =>
+                  onFieldEdit({
+                    action: 'INSERT',
+                    field: 'title',
+                    fieldType: 'text',
+                    oldValue: blockData?.title,
+                  })
+                }
+              />
+            )}
+          </div>
+
+          <div className='mt-6 max-w-[420px] space-y-2 font-body text-base leading-[1.52] text-spontaine-text-secondary'>
+            {blockData?.description?.items.map((item) => (
+              <p
+                key={item.id.toString()}
+                className='m-0'
+              >
+                <Localization
+                  text={item.item}
+                  language={language}
                 />
-              )}
-
-              <div className='h-1 w-16 bg-lime-400'></div>
-
-              <div className='space-y-2'>
-                {blockData?.description?.items.map((item) => (
-                  <SectionDescription
-                    key={item.id.toString()}
-                    theme='muted'
-                    size='medium'
-                    maxWidth='4xl'
-                    centered={false}
-                  >
-                    <Localization
-                      text={item.item}
-                      language={language}
-                    />
-                    {editMode && onFieldEdit && (
-                      <EditLabel
-                        onClick={() => {
-                          onFieldEdit({
-                            field: 'description',
-                            fieldType: 'textItems',
-                            oldValue: item.item,
-                            action: 'UPDATE',
-                            itemIndex: item.id,
-                          })
-                        }}
-                      />
-                    )}
-                  </SectionDescription>
-                )) || (
-                  <SectionDescription
-                    theme='light'
-                    size='medium'
-                    maxWidth='4xl'
-                    centered={false}
-                  >
-                    A senior member of of our staff reads every message sent from this interface. We
-                    would love to hear from you.
-                  </SectionDescription>
-                )}
                 {editMode && onFieldEdit && (
-                  <AddLabel
+                  <EditLabel
                     onClick={() => {
                       onFieldEdit({
                         field: 'description',
                         fieldType: 'textItems',
-                        oldValue: null,
-                        action: 'INSERT',
+                        oldValue: item.item,
+                        action: 'UPDATE',
+                        itemIndex: item.id,
                       })
                     }}
-                    label='Add Description Line'
                   />
                 )}
-              </div>
-            </div>
-
-            {/* Contact Form */}
-            <form
-              onSubmit={onSubmit}
-              className='space-y-6'
-            >
-              {/* Name Field */}
-              <div className='space-y-2'>
-                <SectionBody
-                  theme='light'
-                  size='xs'
-                  weight='bold'
-                  centered={false}
-                  className=''
-                >
-                  Name
-                </SectionBody>
-                <Input
-                  type='text'
-                  placeholder='Your name'
-                  value={formData.name}
-                  onChange={(e) => setFormValue('name')(e.target.value)}
-                  className='w-full rounded-md border border-gray-300 bg-white px-4 py-3 text-sm focus:border-gray-400 focus:outline-none focus:ring-0'
-                  required
-                />
-              </div>
-
-              {/* Email Field */}
-              <div className='space-y-2'>
-                <SectionBody
-                  theme='light'
-                  size='xs'
-                  weight='bold'
-                  centered={false}
-                  className=''
-                >
-                  Email
-                </SectionBody>
-                <Input
-                  type='email'
-                  placeholder='you@company.com'
-                  value={formData.email}
-                  onChange={(e) => setFormValue('email')(e.target.value)}
-                  className='w-full rounded-md border border-gray-300 bg-white px-4 py-3 text-sm focus:border-gray-400 focus:outline-none focus:ring-0'
-                  required
-                />
-              </div>
-
-              {/* Phone Field with Country Code */}
-              <div className='space-y-2'>
-                <SectionBody
-                  theme='light'
-                  size='xs'
-                  weight='bold'
-                  centered={false}
-                  className=''
-                >
-                  Phone number
-                </SectionBody>
-                <PhoneInput
-                  placeholder='Enter phone number'
-                  value={formData.phone}
-                  onChange={(value) => setFormValue('phone')(value || '')}
-                  defaultCountry='IN'
-                  international
-                  countryCallingCodeEditable={false}
-                  countrySelectComponent={({ value, onChange, options }) => (
-                    <select
-                      value={value}
-                      onChange={(e) => onChange(e.target.value)}
-                      className='flex h-10 w-20 items-center justify-between rounded-l-md border border-gray-300 bg-white px-3 py-3 text-sm focus:border-gray-400 focus:outline-none focus:ring-0'
-                    >
-                      {options.map(({ value }: { value: string; label: string }) => (
-                        <option
-                          key={value}
-                          value={value}
-                        >
-                          {value} {/* Shows country code like +1, +91, etc */}
-                        </option>
-                      ))}
-                    </select>
-                  )}
-                  numberInputProps={{
-                    className:
-                      'flex h-10 w-full rounded-r-md border border-gray-300 border-l-0 bg-white px-4 py-3 text-sm focus:border-gray-400 focus:outline-none focus:ring-0',
-                  }}
-                  className='flex w-full'
-                />
-              </div>
-
-              {/* How can we help field */}
-              <div className='space-y-2'>
-                <SectionBody
-                  theme='light'
-                  size='xs'
-                  weight='bold'
-                  centered={false}
-                  className=''
-                >
-                  How can we help?
-                </SectionBody>
-                <Textarea
-                  placeholder='Tell us how we can help you...'
-                  value={formData.message}
-                  onChange={(e) => setFormValue('message')(e.target.value)}
-                  className='min-h-[100px] w-full rounded-md border border-gray-300 bg-white px-4 py-3 text-sm focus:border-gray-400 focus:outline-none focus:ring-0'
-                  required
-                />
-              </div>
-
-              {/* Enquiries Checkboxes */}
-              <div className='space-y-4'>
-                <SectionBody
-                  theme='light'
-                  size='xs'
-                  weight='bold'
-                  centered={false}
-                  className=''
-                >
-                  Enquiries
-                </SectionBody>
-                <div className='grid grid-cols-2 gap-4'>
-                  <div className='flex items-center space-x-2'>
-                    <Checkbox
-                      id='general'
-                      checked={formData.general_enquiries}
-                      onCheckedChange={(checked) => setFormValue('general_enquiries')(!!checked)}
-                    />
-                    <SectionBody
-                      theme='light'
-                      size='xs'
-                      weight='bold'
-                      centered={false}
-                      className=''
-                    >
-                      <label htmlFor='general'>General Enquiries</label>
-                    </SectionBody>
-                  </div>
-                  <div className='flex items-center space-x-2'>
-                    <Checkbox
-                      id='partner'
-                      checked={formData.partner_enquiries}
-                      onCheckedChange={(checked) => setFormValue('partner_enquiries')(!!checked)}
-                    />
-                    <SectionBody
-                      theme='light'
-                      size='xs'
-                      weight='bold'
-                      centered={false}
-                      className=''
-                    >
-                      <label htmlFor='partner'>Partner Enquiries</label>
-                    </SectionBody>
-                  </div>
-                  <div className='flex items-center space-x-2'>
-                    <Checkbox
-                      id='investor'
-                      checked={formData.investor_enquiries}
-                      onCheckedChange={(checked) => setFormValue('investor_enquiries')(!!checked)}
-                    />
-                    <SectionBody
-                      theme='light'
-                      size='xs'
-                      weight='bold'
-                      centered={false}
-                      className=''
-                    >
-                      <label htmlFor='investor'>Investor Enquiries</label>
-                    </SectionBody>
-                  </div>
-                  <div className='flex items-center space-x-2'>
-                    <Checkbox
-                      id='career'
-                      checked={formData.career_enquiries}
-                      onCheckedChange={(checked) => setFormValue('career_enquiries')(!!checked)}
-                    />
-                    <SectionBody
-                      theme='light'
-                      size='xs'
-                      weight='bold'
-                      centered={false}
-                      className=''
-                    >
-                      <label htmlFor='career'>Career Enquiries</label>
-                    </SectionBody>
-                  </div>
-                  <div className='flex items-center space-x-2'>
-                    <Checkbox
-                      id='support'
-                      checked={formData.support}
-                      onCheckedChange={(checked) => setFormValue('support')(!!checked)}
-                    />
-                    <SectionBody
-                      theme='light'
-                      size='xs'
-                      weight='bold'
-                      centered={false}
-                      className=''
-                    >
-                      <label htmlFor='support'>Support</label>
-                    </SectionBody>
-                  </div>
-                  <div className='flex items-center space-x-2'>
-                    <Checkbox
-                      id='other'
-                      checked={formData.other}
-                      onCheckedChange={(checked) => setFormValue('other')(!!checked)}
-                    />
-                    <SectionBody
-                      theme='light'
-                      size='xs'
-                      weight='bold'
-                      centered={false}
-                      className=''
-                    >
-                      <label htmlFor='other'>Other</label>
-                    </SectionBody>
-                  </div>
-                </div>
-              </div>
-
-              {/* Submit Button */}
-              <div className='pt-4 md:pt-20'>
-                <FullSpinnerWrapper processing={loading}>
-                  <Button
-                    type='submit'
-                    className='w-full bg-lime-400 text-black hover:bg-lime-500'
-                    disabled={
-                      !formData.name || !formData.email || !formData.phone || !formData.message
-                    }
-                  >
-                    Send Message
-                  </Button>
-                </FullSpinnerWrapper>
-              </div>
-            </form>
-          </div>
-
-          {/* Right Column - Content Sections */}
-          <div className='space-y-8'>
-            {/* Hero Image */}
-            <div className='overflow-hidden rounded-lg'>
-              <img
-                src='/imge/home/contact.png'
-                alt='Office meeting'
-                className='h-48 w-full object-cover'
+              </p>
+            )) || (
+              <p className='m-0'>
+                No ticket queue, no auto-reply. Tell us what you&apos;re working on and someone from
+                the team gets back to you directly.
+              </p>
+            )}
+            {editMode && onFieldEdit && (
+              <AddLabel
+                onClick={() => {
+                  onFieldEdit({
+                    field: 'description',
+                    fieldType: 'textItems',
+                    oldValue: null,
+                    action: 'INSERT',
+                  })
+                }}
+                label='Add Description Line'
               />
-            </div>
-
-            {/* For Partners Section */}
-            <div className='space-y-4'>
-              <SectionSubheading
-                theme='light'
-                size='large'
-                weight='semibold'
-                centered={false}
-              >
-                For Partners
-              </SectionSubheading>
-              <SectionBody
-                theme='gray'
-                size='sm'
-                weight='normal'
-                lineHeight='relaxed'
-                centered={false}
-              >
-                We work closely with system integrators, consultants, and technology partners to
-                deliver break-through data-driven transformation to Organizations. Reach out to
-                explore partnership opportunities.
-              </SectionBody>
-            </div>
-
-            {/* For Investors Section */}
-            <div className='space-y-4'>
-              <SectionSubheading
-                theme='light'
-                size='large'
-                weight='semibold'
-                centered={false}
-              >
-                For Investors
-              </SectionSubheading>
-              <SectionBody
-                theme='gray'
-                size='sm'
-                weight='normal'
-                lineHeight='relaxed'
-                centered={false}
-              >
-                We’re building a platform for a grossly under-served area with exploding demand, and
-                strong global potential.
-              </SectionBody>
-              <SectionBody
-                theme='gray'
-                size='sm'
-                weight='normal'
-                lineHeight='relaxed'
-                centered={false}
-              >
-                Connect with us to learn about our vision, traction, and future plans.
-              </SectionBody>
-            </div>
-
-            {/* Careers Section */}
-            <div className='space-y-4'>
-              <SectionSubheading
-                theme='light'
-                size='large'
-                weight='semibold'
-                centered={false}
-              >
-                Careers
-              </SectionSubheading>
-              <SectionBody
-                theme='gray'
-                size='sm'
-                weight='normal'
-                lineHeight='relaxed'
-                centered={false}
-              >
-                We’re looking for talented, passionate, self-driven individuals who thrive in
-                fast-moving environments. Send us your details - we’d love to hear from you.
-              </SectionBody>
-            </div>
-
-            {/* Contact Information */}
-            <div className='space-y-4 border-t border-gray-200 pt-8'>
-              <div className='space-y-2'>
-                <p className='text-sm text-gray-600'>Visit us:</p>
-                <div className='text-sm text-gray-900'>
-                  <SectionBody
-                    theme='gray'
-                    size='xs'
-                    weight='normal'
-                    lineHeight='relaxed'
-                    centered={false}
-                  >
-                    9th Floor, Jomer Symphony,
-                    <br />
-                    Ponnurunni East, Vyttila,
-                    <br />
-                    Kochi, Kerala 682028
-                  </SectionBody>
-                </div>
-              </div>
-              <div className='font-space-grotesk text-sm'>
-                <a
-                  href='mailto:desk@inboxfx.com'
-                  className='text-gray-900 underline hover:text-lime-600'
-                >
-                  desk@intuonfx.com
-                </a>
-              </div>
-            </div>
+            )}
           </div>
         </div>
 
-        {/* Edit Mode Controls */}
-        {editMode && onFieldEdit && (
-          <div className='mt-8 flex w-full flex-wrap gap-4 rounded-lg bg-gray-100 p-4'>
-            <div className='flex items-center gap-2'>
-              <span className='text-sm font-medium'>Mail Subject:</span>
-              <span className='text-sm'>
-                <Localization
-                  language={language}
-                  text={blockData?.mailSubject}
-                />
-              </span>
-              <EditLabel
-                label='Edit Mail Subject'
-                onClick={() =>
-                  onFieldEdit({
-                    action: 'INSERT',
-                    field: 'mailSubject',
-                    fieldType: 'text',
-                    oldValue: blockData?.mailSubject,
-                  })
-                }
+        <form
+          onSubmit={onSubmit}
+          className='w-full rounded-3xl bg-spontaine-surface-paper/70 p-6 shadow-card-lift backdrop-blur-md md:p-8'
+        >
+          <div className='grid gap-5 sm:grid-cols-2'>
+            <div>
+              <label
+                htmlFor='contact-name'
+                className='mb-2 block font-body text-[13px] font-semibold text-spontaine-text-primary'
+              >
+                Name
+              </label>
+              <Input
+                id='contact-name'
+                type='text'
+                placeholder='Your name'
+                value={formData.name}
+                onChange={(e) => setRequiredFieldValue('name')(e.target.value)}
+                className={getFieldClass('name')}
               />
             </div>
-            <div className='flex items-center gap-2'>
-              <span className='text-sm font-medium'>Receiver Email:</span>
-              <span className='text-sm'>
-                <Localization
-                  language={language}
-                  text={blockData?.receiverMail}
-                />
-              </span>
-              <EditLabel
-                label='Edit Mail Address'
-                onClick={() =>
-                  onFieldEdit({
-                    action: 'INSERT',
-                    field: 'receiverMail',
-                    fieldType: 'text',
-                    oldValue: blockData?.receiverMail,
-                  })
-                }
+
+            <div>
+              <label
+                htmlFor='contact-email'
+                className='mb-2 block font-body text-[13px] font-semibold text-spontaine-text-primary'
+              >
+                Email
+              </label>
+              <Input
+                id='contact-email'
+                type='email'
+                placeholder='you@company.com'
+                value={formData.email}
+                onChange={(e) => setRequiredFieldValue('email')(e.target.value)}
+                className={getFieldClass('email')}
               />
+            </div>
+
+            <div className='sm:col-span-2'>
+              <label className='mb-2 block font-body text-[13px] font-semibold text-spontaine-text-primary'>
+                Phone number
+              </label>
+              <PhoneInput
+                placeholder='Phone number'
+                value={formData.phone}
+                onChange={(value) => setRequiredFieldValue('phone')(value || '')}
+                defaultCountry='IN'
+                international
+                countryCallingCodeEditable={false}
+                countrySelectComponent={({ value, onChange, options }) => (
+                  <select
+                    value={value}
+                    onChange={(e) => onChange(e.target.value)}
+                    className={`${getFieldClass('phone')} h-12 w-[92px] flex-none px-2`}
+                  >
+                    {options.map(({ value, label }: { value: string; label: string }) => (
+                      <option
+                        key={value}
+                        value={value}
+                      >
+                        {label}
+                      </option>
+                    ))}
+                  </select>
+                )}
+                numberInputProps={{
+                  className: getFieldClass('phone'),
+                }}
+                className='flex w-full gap-2'
+              />
+            </div>
+
+            <div className='sm:col-span-2'>
+              <label
+                htmlFor='contact-message'
+                className='mb-2 block font-body text-[13px] font-semibold text-spontaine-text-primary'
+              >
+                How can we help?
+              </label>
+              <Textarea
+                id='contact-message'
+                rows={4}
+                placeholder="Tell us what you're working on..."
+                value={formData.message}
+                onChange={(e) => setRequiredFieldValue('message')(e.target.value)}
+                className={`${getFieldClass('message')} resize-none`}
+              />
+            </div>
+
+            <div className='sm:col-span-2'>
+              <p className='mb-3 font-body text-[13px] font-semibold text-spontaine-text-primary'>
+                What&apos;s this about?
+              </p>
+              <div className='flex flex-wrap gap-2'>
+                {enquiryOptions.map((option) => {
+                  const isActive = Boolean(formData[option.key])
+
+                  return (
+                    <button
+                      key={option.key}
+                      type='button'
+                      aria-pressed={isActive}
+                      onClick={() => setFormValue(option.key)(!isActive)}
+                      className={
+                        isActive
+                          ? 'rounded-[var(--radius-pill)] bg-spontaine-accent-soft/30 px-4 py-2 font-body text-[13px] font-medium text-spontaine-accent-dark transition-colors'
+                          : 'rounded-[var(--radius-pill)] border border-spontaine-border-subtle bg-spontaine-surface-paper px-4 py-2 font-body text-[13px] font-medium text-spontaine-text-primary transition-colors hover:border-spontaine-accent hover:text-spontaine-accent-dark'
+                      }
+                    >
+                      {option.label}
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
+
+          {formError && (
+            <p
+              role='alert'
+              className='mt-5 rounded-xl px-4 py-3 font-body text-sm font-medium text-spontaine-error'
+            >
+              {formError}
+            </p>
+          )}
+
+          <div className='mt-7'>
+            <Button
+              type='submit'
+              variant='v3Primary'
+              size='v3Hero'
+              className='w-full sm:w-auto'
+              disabled={loading}
+            >
+              Send to the founders
+            </Button>
+          </div>
+          <p className='mt-4 font-mono text-[11.5px] text-spontaine-gray-cool'>
+            We reply within one business day.
+          </p>
+        </form>
+
+        {editMode && (onFieldEdit || dispatch) && (
+          <div className='rounded-lg bg-spontaine-surface-paper p-4 shadow-surface lg:col-span-2'>
+            <div className='flex flex-wrap gap-4'>
+              {onFieldEdit && (
+                <>
+                  <div className='flex items-center gap-2'>
+                    <p className='m-0 text-sm font-medium text-spontaine-text-primary'>
+                      Mail Subject:
+                    </p>
+                    <p className='m-0 text-sm text-spontaine-text-secondary'>
+                      <Localization
+                        language={language}
+                        text={blockData?.mailSubject}
+                      />
+                    </p>
+                    <EditLabel
+                      label='Edit Mail Subject'
+                      onClick={() =>
+                        onFieldEdit({
+                          action: 'INSERT',
+                          field: 'mailSubject',
+                          fieldType: 'text',
+                          oldValue: blockData?.mailSubject,
+                        })
+                      }
+                    />
+                  </div>
+                  <div className='flex items-center gap-2'>
+                    <p className='m-0 text-sm font-medium text-spontaine-text-primary'>
+                      Receiver Email:
+                    </p>
+                    <p className='m-0 text-sm text-spontaine-text-secondary'>
+                      <Localization
+                        language={language}
+                        text={blockData?.receiverMail}
+                      />
+                    </p>
+                    <EditLabel
+                      label='Edit Mail Address'
+                      onClick={() =>
+                        onFieldEdit({
+                          action: 'INSERT',
+                          field: 'receiverMail',
+                          fieldType: 'text',
+                          oldValue: blockData?.receiverMail,
+                        })
+                      }
+                    />
+                  </div>
+                </>
+              )}
+              {dispatch && blockData?.id != null && (
+                <div className='flex items-center gap-2'>
+                  <p className='m-0 text-sm font-medium text-spontaine-text-primary'>
+                    Section Shape:
+                  </p>
+                  <V3RoundedTopToggle
+                    blockId={blockData.id}
+                    dispatch={dispatch}
+                    language={language}
+                    overlapTop={blockData.overlapTop}
+                    roundedTop={blockData.roundedTop}
+                  />
+                </div>
+              )}
             </div>
           </div>
         )}
-      </AppLayoutPadding>
-    </div>
+      </div>
+    </V3RoundedSectionBlockFrame>
   )
 }
 

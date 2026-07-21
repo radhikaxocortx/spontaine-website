@@ -90,11 +90,6 @@ const blockFolders: readonly PageBlockFolder[] = [
     description: 'Current Spontaine-branded PageBuilder blocks',
     blocks: [
       {
-        name: 'Content Section - Contact Us',
-        description: 'Contact form and information section',
-        badge: 'CU',
-      },
-      {
         name: 'Content Section - Lead Capture',
         description: 'Lead capture modal-style section with configurable download CTA',
         badge: 'LC',
@@ -195,8 +190,14 @@ const blockFolders: readonly PageBlockFolder[] = [
   },
   {
     name: 'Spontaine V3',
-    description: 'Future V3 PageBuilder blocks',
-    blocks: [],
+    description: 'V3-styled PageBuilder blocks',
+    blocks: [
+      {
+        name: 'Content Section - Contact Us',
+        description: 'V3 contact form with founding-team copy and enquiry pills',
+        badge: 'CU',
+      },
+    ],
   },
 ]
 

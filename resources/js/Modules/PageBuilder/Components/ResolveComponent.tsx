@@ -9,7 +9,7 @@ import { PageBuilderAction } from '@/Modules/PageBuilder/hooks/pageBuilderServic
 import { Block, PageDataDependencies } from '@/Modules/PageBuilder/page_interfaces'
 import { Language } from '@/Modules/PageBuilder/Pages/PageBuilder'
 import React from 'react'
-import ContactUS from '../Blocks/ContactUS'
+import ContactUS, { ContactUsBlockInterface } from '../Blocks/ContactUS'
 import DPAAccordion, { DPAAccordionBlockData } from '../Blocks/DPAAccordion/DPAAccordion'
 import LeadCapture, { LeadCaptureBlockInterface } from '../Blocks/LeadCapture'
 
@@ -193,8 +193,9 @@ const ResolveComponent = ({
         <ContactUS
           editMode={editMode}
           onFieldEdit={onFieldEdit}
-          blockData={block as unknown as RichTextBlockData}
+          blockData={block as unknown as ContactUsBlockInterface}
           language={language}
+          dispatch={dispatch}
         />
       )}
       {blockName === 'Content Section - Lead Capture' && (
