@@ -18,6 +18,7 @@ export default {
     'shadow-prism',
     'shadow-prism-glass',
     'bg-hero-wash',
+    'bg-pagebuilder-hero-wash',
     'bg-hero-wash-soft',
     'bg-cream-fade-right',
     'bg-hero-band',
@@ -322,6 +323,7 @@ export default {
       },
       backgroundImage: {
         'hero-wash': 'var(--gradient-hero-wash)',
+        'pagebuilder-hero-wash': 'var(--gradient-pagebuilder-hero-wash)',
         'hero-wash-soft': 'var(--gradient-hero-wash-soft)',
         'cream-fade-right': 'var(--gradient-cream-fade-right)',
         'hero-band': 'var(--gradient-hero-band)',

@@ -1,6 +1,9 @@
 import { CalendarBooking } from '@/components/CalendarBooking'
 import { Button } from '@/components/ui/button'
 import { Language } from '@/components/ui/ui_interfaces'
+import { cn } from '@/lib/utils'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowUpRight } from 'lucide-react'
 import React from 'react'
 import type { BlocKFieldInfo, BlockFieldValues } from '../../Components/BlockEditor/BlockEditor'
@@ -14,6 +17,7 @@ import V3RoundedTopToggle, {
   isV3RoundedTopEnabled,
   isV3TopOverlapEnabled,
 } from '../../Components/V3RoundedTopToggle'
+import { usePageBuilderContext } from '../../contexts/PageBuilderContext'
 import type { PageBuilderAction } from '../../hooks/pageBuilderService'
 import type {
   Block,
@@ -24,6 +28,8 @@ import type {
 } from '../../page_interfaces'
 
 export const SPONTAINE_V3_HERO_BLOCK_NAME = 'Spontaine V3 - Hero'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const emptyTextData: TextData = {
   english: '',
@@ -115,6 +121,8 @@ const SectionHeroV3 = ({
   language = 'en',
   onFieldEdit,
 }: Properties) => {
+  const { renderMode } = usePageBuilderContext()
+  const sectionRef = React.useRef<HTMLElement>(null)
   const [showOverlayModal, setShowOverlayModal] = React.useState(false)
   const [showCTAModal, setShowCTAModal] = React.useState(false)
 
@@ -129,6 +137,13 @@ const SectionHeroV3 = ({
   const hasCTA = Boolean(calendarUrl || blockData?.cta?.link)
   const hasRoundedTop = isV3RoundedTopEnabled(blockData?.roundedTop, language)
   const hasTopOverlap = isV3TopOverlapEnabled(blockData?.overlapTop, language)
+  const isFirstPublicPageHero = renderMode === 'page' && !editMode && blockData?.position === 1
+  const heroHeightClassName = isFirstPublicPageHero
+    ? 'min-h-[calc(55vh+4rem)] md:min-h-[calc(60vh+4rem)] lg:min-h-[calc(64vh+4rem)]'
+    : 'min-h-[55vh] md:min-h-[60vh] lg:min-h-[64vh]'
+  const heroPaddingClassName = isFirstPublicPageHero
+    ? 'pb-16 pt-32 md:pb-20 md:pt-36'
+    : 'py-16 md:py-20'
 
   const backgroundColor = getV3ColorValue(blockData?.backgroundColor, language)
   const textColor = getV3ColorValue(blockData?.textColor, language)
@@ -185,11 +200,59 @@ const SectionHeroV3 = ({
     })
   }
 
+  React.useEffect(() => {
+    const section = sectionRef.current
+
+    if (!section) {
+      return
+    }
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    const context = gsap.context(() => {
+      const revealTargets = gsap.utils.toArray<HTMLElement>('[data-v3-hero-reveal]')
+
+      if (editMode || prefersReducedMotion) {
+        gsap.set(revealTargets, { autoAlpha: 1, y: 0 })
+        return
+      }
+
+      gsap.set(revealTargets, { autoAlpha: 0, y: 16 })
+
+      gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 80%',
+            once: true,
+          },
+        })
+        .to(revealTargets, {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.5,
+          stagger: 0.1,
+          ease: 'power2.out',
+        })
+    }, section)
+
+    return () => context.revert()
+  }, [editMode])
+
   return (
     <V3RoundedSectionBlockFrame
+      ref={sectionRef}
       roundedTop={hasRoundedTop}
       overlapTop={hasTopOverlap}
-      className={`relative isolate flex min-h-[55vh] w-full items-center overflow-hidden py-16 md:min-h-[60vh] md:py-20 lg:min-h-[64vh] ${blockData?.marginTop} ${blockData?.marginBottom} ${blockData?.paddingBottom}`}
+      className={cn(
+        'relative left-1/2 right-1/2 isolate ml-[-50vw] mr-[-50vw] flex w-screen flex-col items-center justify-center overflow-hidden',
+        heroHeightClassName,
+        heroPaddingClassName,
+        blockData?.marginTop,
+        blockData?.marginBottom,
+        blockData?.paddingTop,
+        blockData?.paddingBottom
+      )}
       style={sectionStyle}
     >
       <div className='absolute inset-0 z-0'>
@@ -198,7 +261,7 @@ const SectionHeroV3 = ({
             <img
               src={backgroundImage?.url}
               alt={backgroundImage?.caption || 'Hero background'}
-              className='animate-v3-ken-burns absolute inset-[-6%] h-[112%] w-[112%] object-cover'
+              className='animate-v3-ken-burns absolute inset-0 h-full w-full object-cover'
             />
             <div
               className='pointer-events-none absolute inset-0'
@@ -211,7 +274,7 @@ const SectionHeroV3 = ({
         ) : (
           !backgroundColor && (
             <div
-              className='animate-v3-ken-burns-slow absolute inset-0 bg-hero-wash'
+              className='animate-v3-ken-burns-slow bg-pagebuilder-hero-wash absolute inset-0'
               aria-hidden='true'
             />
           )
@@ -223,7 +286,10 @@ const SectionHeroV3 = ({
         style={contentStyle}
       >
         {(hasEyebrow || editMode) && (
-          <div className={hasEyebrow ? 'mb-6' : 'mb-3'}>
+          <div
+            data-v3-hero-reveal
+            className={hasEyebrow ? 'mb-6' : 'mb-3'}
+          >
             {hasEyebrow && (
               <p
                 className={`m-0 font-mono text-[9px] font-semibold uppercase tracking-[0.075em] ${eyebrowColor ? 'text-[inherit]' : 'text-spontaine-gray-cool'}`}
@@ -244,7 +310,10 @@ const SectionHeroV3 = ({
           </div>
         )}
 
-        <h1 className='m-0 font-display text-4xl font-bold leading-[0.91] tracking-[-0.068em] md:text-5xl lg:text-6xl'>
+        <h1
+          data-v3-hero-reveal
+          className='m-0 font-display text-4xl font-bold leading-[0.91] tracking-[-0.068em] md:text-5xl lg:text-6xl'
+        >
           <strong
             className={`block font-bold leading-[inherit] tracking-[inherit] ${titleOneColor ? 'text-[inherit]' : 'text-spontaine-text-primary'}`}
             style={{ color: titleOneColor }}
@@ -281,7 +350,10 @@ const SectionHeroV3 = ({
         )}
 
         {(hasDescription || editMode) && (
-          <div className={hasDescription ? 'mt-7' : 'mt-3'}>
+          <div
+            data-v3-hero-reveal
+            className={hasDescription ? 'mt-7' : 'mt-3'}
+          >
             {hasDescription && (
               <p
                 className={`m-0 max-w-[570px] font-body text-base leading-[1.52] ${descriptionColor ? 'text-[inherit]' : 'text-spontaine-text-secondary'}`}
@@ -303,7 +375,10 @@ const SectionHeroV3 = ({
         )}
 
         {(hasCTA || editMode) && (
-          <div className={hasCTA ? 'mt-7' : 'mt-3'}>
+          <div
+            data-v3-hero-reveal
+            className={hasCTA ? 'mt-7' : 'mt-3'}
+          >
             {calendarUrl ? (
               <CalendarBooking calLink={calendarUrl}>
                 {({ openCalendar }) => (
@@ -347,58 +422,60 @@ const SectionHeroV3 = ({
       </div>
 
       {editMode && (
-        <div className='absolute bottom-4 left-4 right-4 z-20 rounded-lg bg-spontaine-surface-paper p-4 shadow-surface md:right-auto md:max-w-[760px]'>
-          <div className='flex flex-wrap gap-4'>
-            {onFieldEdit != null && (
-              <div className='flex flex-wrap items-center gap-2'>
-                <p className='m-0 text-sm font-medium text-spontaine-text-primary'>Media:</p>
-                <EditLabel
-                  label='Edit Background Image'
-                  onClick={() =>
-                    onFieldEdit({
-                      action: 'INSERT',
-                      field: 'backgroundImage',
-                      fieldType: 'image',
-                      oldValue: blockData?.backgroundImage,
-                    })
-                  }
-                />
-                {dispatch != null && (
+        <div className='relative z-20 mx-auto mt-8 w-full max-w-[760px] px-[var(--space-shell-sm)] md:px-[var(--space-shell)]'>
+          <div className='rounded-lg bg-spontaine-surface-paper p-4 shadow-surface'>
+            <div className='flex flex-wrap gap-4'>
+              {onFieldEdit != null && (
+                <div className='flex flex-wrap items-center gap-2'>
+                  <p className='m-0 text-sm font-medium text-spontaine-text-primary'>Media:</p>
                   <EditLabel
-                    label='Edit Overlay'
-                    onClick={() => setShowOverlayModal(true)}
+                    label='Edit Background Image'
+                    onClick={() =>
+                      onFieldEdit({
+                        action: 'INSERT',
+                        field: 'backgroundImage',
+                        fieldType: 'image',
+                        oldValue: blockData?.backgroundImage,
+                      })
+                    }
                   />
-                )}
-              </div>
-            )}
-            {dispatch != null && blockData?.id != null && (
-              <div className='flex flex-wrap items-center gap-2'>
-                <p className='m-0 text-sm font-medium text-spontaine-text-primary'>
-                  Section Shape:
-                </p>
-                <V3RoundedTopToggle
-                  blockId={blockData.id}
-                  dispatch={dispatch}
-                  language={language}
-                  overlapTop={blockData.overlapTop}
-                  roundedTop={blockData.roundedTop}
-                />
-              </div>
-            )}
-            <V3ColorControls
-              backgroundColor={blockData?.backgroundColor}
-              descriptionColor={blockData?.descriptionColor}
-              eyebrowColor={blockData?.eyebrowColor}
-              onFieldEdit={onFieldEdit}
-              textColor={blockData?.textColor}
-              titleOneColor={blockData?.titleOneColor}
-              titleTwoColor={blockData?.titleTwoColor}
-            />
+                  {dispatch != null && (
+                    <EditLabel
+                      label='Edit Overlay'
+                      onClick={() => setShowOverlayModal(true)}
+                    />
+                  )}
+                </div>
+              )}
+              {dispatch != null && blockData?.id != null && (
+                <div className='flex flex-wrap items-center gap-2'>
+                  <p className='m-0 text-sm font-medium text-spontaine-text-primary'>
+                    Section Shape:
+                  </p>
+                  <V3RoundedTopToggle
+                    blockId={blockData.id}
+                    dispatch={dispatch}
+                    language={language}
+                    overlapTop={blockData.overlapTop}
+                    roundedTop={blockData.roundedTop}
+                  />
+                </div>
+              )}
+              <V3ColorControls
+                backgroundColor={blockData?.backgroundColor}
+                descriptionColor={blockData?.descriptionColor}
+                eyebrowColor={blockData?.eyebrowColor}
+                onFieldEdit={onFieldEdit}
+                textColor={blockData?.textColor}
+                titleOneColor={blockData?.titleOneColor}
+                titleTwoColor={blockData?.titleTwoColor}
+              />
+            </div>
+            <p className='m-0 mt-3 max-w-[760px] font-body text-xs leading-relaxed text-spontaine-text-secondary'>
+              Overlay opacity controls how strongly the image is dimmed so text remains readable.
+              Use 0 for no overlay, 35-55 for most image backgrounds, and 70+ for very busy images.
+            </p>
           </div>
-          <p className='m-0 mt-3 max-w-[760px] font-body text-xs leading-relaxed text-spontaine-text-secondary'>
-            Overlay opacity controls how strongly the image is dimmed so text remains readable. Use
-            0 for no overlay, 35-55 for most image backgrounds, and 70+ for very busy images.
-          </p>
         </div>
       )}
 

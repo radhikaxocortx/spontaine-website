@@ -9,7 +9,6 @@ import { PageBuilderAction } from '@/Modules/PageBuilder/hooks/pageBuilderServic
 import { Block, PageDataDependencies } from '@/Modules/PageBuilder/page_interfaces'
 import { Language } from '@/Modules/PageBuilder/Pages/PageBuilder'
 import React from 'react'
-import ContactUS, { ContactUsBlockInterface } from '../Blocks/ContactUS'
 import DPAAccordion, { DPAAccordionBlockData } from '../Blocks/DPAAccordion/DPAAccordion'
 import LeadCapture, { LeadCaptureBlockInterface } from '../Blocks/LeadCapture'
 
@@ -61,6 +60,7 @@ import SectionImageCarouselSP, {
   ImageCarouselSPData,
 } from '../Blocks/SpontaineBlocks/SectionImageCarouselSP'
 import SectionMarqueeSP, { MarqueeSPData } from '../Blocks/SpontaineBlocks/SectionMarqueeSP'
+import ContactUS, { ContactUsBlockInterface } from '../Blocks/SpontaineV3/ContactUS'
 import SectionHeroV3, {
   SectionHeroV3Block,
 } from '../Blocks/SpontaineV3/SectionHeroV3'

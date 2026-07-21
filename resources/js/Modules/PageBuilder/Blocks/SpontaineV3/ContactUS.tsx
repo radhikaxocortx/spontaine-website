@@ -3,31 +3,33 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Language } from '@/components/ui/ui_interfaces'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import React from 'react'
 import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
-import useCustomForm from '../../../hooks/useCustomForm'
-import useInertiaPost from '../../../hooks/useInertiaPost'
-import AddLabel from '../Components/AddLabel'
-import type { BlocKFieldInfo } from '../Components/BlockEditor/BlockEditor'
-import EditLabel from '../Components/EditLabel'
-import Localization from '../Components/Localization'
-import V3ColorControls, { getV3ColorValue } from '../Components/V3ColorControls'
+import useCustomForm from '../../../../hooks/useCustomForm'
+import useInertiaPost from '../../../../hooks/useInertiaPost'
+import AddLabel from '../../Components/AddLabel'
+import type { BlocKFieldInfo } from '../../Components/BlockEditor/BlockEditor'
+import EditLabel from '../../Components/EditLabel'
+import Localization from '../../Components/Localization'
+import V3ColorControls, { getV3ColorValue } from '../../Components/V3ColorControls'
 import V3RoundedSectionBlockFrame, {
   v3RoundedSectionTopPaddingClassName,
-} from '../Components/V3RoundedSectionBlockFrame'
+} from '../../Components/V3RoundedSectionBlockFrame'
 import V3RoundedTopToggle, {
   isV3RoundedTopEnabled,
   isV3TopOverlapEnabled,
-} from '../Components/V3RoundedTopToggle'
-import type { PageBuilderAction } from '../hooks/pageBuilderService'
+} from '../../Components/V3RoundedTopToggle'
+import type { PageBuilderAction } from '../../hooks/pageBuilderService'
 import type {
   Block,
   BlockConfiguration,
   ItemListField,
   LinkData,
   TextData,
-} from '../page_interfaces'
+} from '../../page_interfaces'
 
 type EnquiryKey =
   | 'general_enquiries'
@@ -38,6 +40,8 @@ type EnquiryKey =
   | 'other'
 
 type RequiredFieldKey = 'name' | 'email' | 'phone' | 'message'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const enquiryOptions: readonly { key: EnquiryKey; label: string }[] = [
   { key: 'general_enquiries', label: 'General' },
@@ -93,6 +97,7 @@ const ContactUS = ({
   language = 'en',
   dispatch,
 }: Properties) => {
+  const sectionRef = React.useRef<HTMLElement>(null)
   const [formError, setFormError] = React.useState<string | null>(null)
   const [missingFields, setMissingFields] = React.useState<
     Partial<Record<RequiredFieldKey, boolean>>
@@ -203,8 +208,46 @@ const ContactUS = ({
       ? `${fieldClass} border-spontaine-error focus:border-spontaine-error`
       : fieldClass
 
+  React.useEffect(() => {
+    const section = sectionRef.current
+
+    if (!section) {
+      return
+    }
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    const context = gsap.context(() => {
+      const revealTargets = gsap.utils.toArray<HTMLElement>('[data-v3-contact-reveal]')
+
+      if (editMode || prefersReducedMotion) {
+        gsap.set(revealTargets, { autoAlpha: 1, y: 0 })
+        return
+      }
+
+      gsap.set(revealTargets, { autoAlpha: 0, y: 16 })
+
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 80%',
+          once: true,
+        },
+      }).to(revealTargets, {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.5,
+        stagger: 0.1,
+        ease: 'power2.out',
+      })
+    }, section)
+
+    return () => context.revert()
+  }, [editMode])
+
   return (
     <V3RoundedSectionBlockFrame
+      ref={sectionRef}
       roundedTop={hasRoundedTop}
       overlapTop={hasTopOverlap}
       className={`relative w-full overflow-hidden bg-hero-wash ${sectionPaddingClass} ${blockData?.marginTop} ${blockData?.marginBottom} ${blockData?.paddingBottom}`}
@@ -222,7 +265,10 @@ const ContactUS = ({
           className='flex flex-col items-start'
           style={contentTextStyle}
         >
-          <div className='mb-5'>
+          <div
+            data-v3-contact-reveal
+            className='mb-5'
+          >
             <p
               className={`eyebrow ${eyebrowColor ? 'text-[inherit]' : 'text-spontaine-gray-cool'}`}
               style={eyebrowStyle}
@@ -252,7 +298,10 @@ const ContactUS = ({
             )}
           </div>
 
-          <div className='space-y-3'>
+          <div
+            data-v3-contact-reveal
+            className='space-y-3'
+          >
             <h2
               className={`font-display text-4xl font-bold leading-[0.95] tracking-[-0.06em] md:text-5xl ${textColor ? 'text-[inherit]' : 'text-spontaine-text-primary'}`}
             >
@@ -323,6 +372,7 @@ const ContactUS = ({
           </div>
 
           <div
+            data-v3-contact-reveal
             className={`mt-6 max-w-[420px] space-y-2 font-body text-base leading-[1.52] ${descriptionColor ? 'text-[inherit]' : 'text-spontaine-text-secondary'}`}
             style={descriptionStyle}
           >
@@ -372,6 +422,7 @@ const ContactUS = ({
         </div>
 
         <form
+          data-v3-contact-reveal
           onSubmit={onSubmit}
           className='w-full rounded-3xl bg-spontaine-surface-paper/70 p-6 shadow-card-lift backdrop-blur-md md:p-8'
         >

@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { LinkData } from '../page_interfaces'
 
 interface CTAEditModalProps {
@@ -23,8 +23,7 @@ export const CTAEditModal = ({
   const [ctaExternal, setCtaExternal] = useState(false)
   const [ctaIsCalendar, setCtaIsCalendar] = useState(false)
 
-  // Initialize form when modal opens
-  useState(() => {
+  useEffect(() => {
     if (show) {
       if (currentCalendarUrl) {
         setCtaEnglishName('Book Demo')
@@ -46,7 +45,7 @@ export const CTAEditModal = ({
         setCtaIsCalendar(false)
       }
     }
-  })
+  }, [currentCTA, currentCalendarUrl, show])
 
   const handleSave = () => {
     if (ctaIsCalendar) {
@@ -67,6 +66,14 @@ export const CTAEditModal = ({
         calendarUrl: null,
       })
     }
+    onClose()
+  }
+
+  const handleRemove = () => {
+    onSave({
+      cta: null,
+      calendarUrl: null,
+    })
     onClose()
   }
 
@@ -181,7 +188,7 @@ export const CTAEditModal = ({
         </div>
 
         {/* Save Button */}
-        <div className='mt-6 flex gap-2'>
+        <div className='mt-6 flex flex-col gap-2 sm:flex-row'>
           <Button
             onClick={handleSave}
             className='flex-1'
@@ -194,6 +201,13 @@ export const CTAEditModal = ({
             className='flex-1'
           >
             Cancel
+          </Button>
+          <Button
+            onClick={handleRemove}
+            variant='destructive'
+            className='flex-1'
+          >
+            Remove CTA
           </Button>
         </div>
       </div>
