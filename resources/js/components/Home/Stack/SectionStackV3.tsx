@@ -110,9 +110,19 @@ export default function SectionStackV3() {
     const updatePreference = () => setPrefersReducedMotion(mediaQuery.matches)
 
     updatePreference()
-    mediaQuery.addEventListener('change', updatePreference)
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener('change', updatePreference)
+    } else {
+      mediaQuery.addListener(updatePreference)
+    }
 
-    return () => mediaQuery.removeEventListener('change', updatePreference)
+    return () => {
+      if (mediaQuery.removeEventListener) {
+        mediaQuery.removeEventListener('change', updatePreference)
+      } else {
+        mediaQuery.removeListener(updatePreference)
+      }
+    }
   }, [])
 
   useLayoutEffect(() => {
@@ -130,7 +140,9 @@ export default function SectionStackV3() {
     }
 
     const hiddenCardOffset = Math.max(stackStage.offsetHeight + 120, window.innerHeight * 0.72)
-    const setProgress = gsap.quickSetter(progressBar, 'scaleX') as (value: number) => void
+    const setProgress = (value: number) => {
+      progressBar.style.transform = `scaleX(${value})`
+    }
     const getStackOffset = (index: number) => {
       const offset = figmaStackOffsets[index] ?? figmaStackOffsets[figmaStackOffsets.length - 1]
       const isNarrow = window.matchMedia('(max-width: 767px)').matches
@@ -142,16 +154,27 @@ export default function SectionStackV3() {
     }
 
     const setters = cards.map((card, index) => {
-      gsap.set(card, {
-        transformOrigin: '50% 50%',
-        zIndex: index + 1,
-      })
+      const transformState = {
+        scale: 1,
+        x: 0,
+        y: 0,
+      }
+
+      const applyTransform = () => {
+        card.style.transform = `translate3d(${transformState.x}px, ${transformState.y}px, 0) scale(${transformState.scale})`
+      }
+
+      card.style.transformOrigin = '50% 50%'
+      card.style.zIndex = String(index + 1)
 
       return {
         opacity: gsap.quickSetter(card, 'opacity') as (value: number) => void,
-        scale: gsap.quickSetter(card, 'scale') as (value: number) => void,
-        x: gsap.quickSetter(card, 'x', 'px') as (value: number) => void,
-        y: gsap.quickSetter(card, 'y', 'px') as (value: number) => void,
+        setTransform: (x: number, y: number, scale: number) => {
+          transformState.x = x
+          transformState.y = y
+          transformState.scale = scale
+          applyTransform()
+        },
         setVisibility: (value: 'visible' | 'hidden') => {
           card.style.visibility = value
         },
@@ -180,18 +203,14 @@ export default function SectionStackV3() {
           const stackOffset = getStackOffset(index)
 
           setter.opacity(index === nextCurrentCard ? 1 : clamp(0.78 - depth * 0.04, 0.65, 0.78))
-          setter.x(stackOffset.x)
-          setter.y(stackOffset.y)
-          setter.scale(1)
+          setter.setTransform(stackOffset.x, stackOffset.y, 1)
           setter.setVisibility('visible')
           setter.setPointerEvents(index === nextCurrentCard ? 'auto' : 'none')
           return
         }
 
         setter.opacity(0)
-        setter.x(0)
-        setter.y(hiddenCardOffset)
-        setter.scale(0.98)
+        setter.setTransform(0, hiddenCardOffset, 0.98)
         setter.setVisibility('hidden')
         setter.setPointerEvents('none')
       })
