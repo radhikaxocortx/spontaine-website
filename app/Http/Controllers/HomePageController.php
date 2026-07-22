@@ -36,9 +36,9 @@ final class HomePageController extends Controller
             'featuredBlogs' => $featuredBlogs,
         ])->withViewData([
             'seo' => [
-                'title' => 'No-Code Data Integration & AI Platform for Enterprise',
-                'description' => "Transform your disconnected systems into an AI-driven command center with Spontaine's no-code data integration platform. Get real-time insights, eliminate data silos, and enable AI adoption across your organization - all in weeks, not quarters.",
-                'image' => rtrim((string) config('app.url'), '/') . '/storage/images/16.png',
+                'title' => 'Governed AI Data Infrastructure for Professional Services',
+                'description' => "Spontaine turns your firm's data and judgment into governed intelligence you own - one system orchestrating client delivery, workflows, dashboards, and outputs.",
+                'image' => rtrim((string) config('app.url'), '/') . '/storage/images/8205df31-7880-4c23-902d-6b222d8174b5.png',
                 'url' => $request->fullUrl(),
                 'type' => 'website',
                 'noIndex' => false,

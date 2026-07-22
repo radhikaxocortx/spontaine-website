@@ -84,7 +84,7 @@ final class BlogsListController extends Controller
 
     private function toAbsoluteImage(?string $image): string
     {
-        $fallback = rtrim((string) config('app.url'), '/') . '/storage/images/16.png';
+        $fallback = rtrim((string) config('app.url'), '/') . '/storage/images/8205df31-7880-4c23-902d-6b222d8174b5.png';
 
         if ($image === null || trim($image) === '') {
             return $fallback;

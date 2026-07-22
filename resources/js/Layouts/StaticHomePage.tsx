@@ -27,8 +27,8 @@ interface StaticHomePageProps {
 const StaticHomePage = ({
   featuredVideoPosts = [],
   title = 'No-Code Data Integration & AI Platform for Enterprise',
-  description = `Transform your disconnected systems into an AI-driven command center with Spontaine’s no-code data integration platform. Get real-time insights, eliminate data silos, and enable AI adoption across your organization - all in weeks, not quarters.`,
-  image = 'https://spontaine.com/storage/images/16.png',
+  description = `Transform your disconnected systems into an AI-driven command center with Spontaine's no-code data integration platform. Get real-time insights, eliminate data silos, and enable AI adoption across your organization - all in weeks, not quarters.`,
+  image = 'https://spontaine.com/storage/images/8205df31-7880-4c23-902d-6b222d8174b5.png',
   noIndex = false,
 }: StaticHomePageProps) => {
   // Get footer data from Inertia shared props

@@ -21,7 +21,7 @@ interface StaticCompanyPageV3Props {
 const StaticCompanyPageV3 = ({
   title = 'Our Mission: Governed AI for Professional Services',
   description = 'We built Spontaine because professional services firms deserve AI that strengthens their judgment, not replaces it - governed, transparent, and owned by the firms that use it.',
-  image = 'https://spontaine.com/storage/images/16.png',
+  image = 'https://spontaine.com/storage/images/8205df31-7880-4c23-902d-6b222d8174b5.png',
   noIndex = false,
 }: StaticCompanyPageV3Props) => {
   const { footer } = usePage<PageProps & { footer: { items: FooterDataInterface } }>().props

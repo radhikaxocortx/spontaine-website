@@ -14,6 +14,8 @@ interface Props {
 
 export default function ViewBuilder({ page }: Props) {
   const { flash } = usePage().props as unknown as { flash?: LaravelFlash }
+  const seoImage = page.cover_image || page.preview_image
+
   useEffect(() => {
     if (flash?.error != null) {
       showError(flash.error)
@@ -45,7 +47,7 @@ export default function ViewBuilder({ page }: Props) {
         <MetaTags
           title={page.page_title}
           description={page.description}
-          image={page.preview_image}
+          image={seoImage}
           noIndex={false}
         />
         <ToastContainer

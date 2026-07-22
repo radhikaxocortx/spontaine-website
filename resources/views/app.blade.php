@@ -7,7 +7,7 @@
         $defaultTitle = config('app.name', 'Spontaine');
         $defaultDescription =
             "Transform your disconnected systems into an AI-driven command center with Spontaine's no-code data integration platform.";
-        $defaultImage = rtrim(config('app.url', 'https://spontaine.com'), '/') . '/storage/images/16.png';
+        $defaultImage = rtrim(config('app.url', 'https://spontaine.com'), '/') . '/storage/images/8205df31-7880-4c23-902d-6b222d8174b5.png';
         $seoTitle = $seo['title'] ?? $defaultTitle;
         $seoDescription = $seo['description'] ?? $defaultDescription;
         $seoImage = $seo['image'] ?? $defaultImage;

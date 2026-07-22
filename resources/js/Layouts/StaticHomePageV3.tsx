@@ -27,8 +27,8 @@ interface StaticHomePageV3Props {
 const StaticHomePageV3 = ({
   featuredBlogs = [],
   title = 'Governed AI Data Infrastructure for Professional Services',
-  description = `Spontaine turns your firm's data and judgment into governed intelligence you own — one system orchestrating client delivery, workflows, dashboards, and outputs.`,
-  image = 'https://spontaine.com/storage/images/16.png',
+  description = `Spontaine turns your firm's data and judgment into governed intelligence you own - one system orchestrating client delivery, workflows, dashboards, and outputs.`,
+  image = 'https://spontaine.com/storage/images/8205df31-7880-4c23-902d-6b222d8174b5.png',
   noIndex = false,
 }: StaticHomePageV3Props) => {
   const { footer } = usePage<PageProps & { footer: { items: FooterDataInterface } }>().props

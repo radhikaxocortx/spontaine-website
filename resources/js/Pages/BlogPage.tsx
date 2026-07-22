@@ -201,7 +201,7 @@ const BlogPage = ({ post }: BlogPageProps) => {
       image={
         coverImage
           ? `https://spontaine.com${coverImage}`
-          : 'https://spontaine.com/storage/images/16.png'
+          : 'https://spontaine.com/storage/images/8205df31-7880-4c23-902d-6b222d8174b5.png'
       }
       url={
         typeof window !== 'undefined'

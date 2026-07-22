@@ -23,8 +23,8 @@ interface StaticProductPageV3Props {
 
 const StaticProductPageV3 = ({
   title = 'Governed AI Data Infrastructure Your Firm Owns',
-  description = 'Spontaine ingests your data into a governed, client-exclusive environment — nothing migrates out. Your firm keeps full ownership of every workflow, dashboard, and output.',
-  image = 'https://spontaine.com/storage/images/16.png',
+  description = 'Spontaine ingests your data into a governed, client-exclusive environment - nothing migrates out. Your firm keeps full ownership of every workflow, dashboard, and output.',
+  image = 'https://spontaine.com/storage/images/8205df31-7880-4c23-902d-6b222d8174b5.png',
   noIndex = false,
 }: StaticProductPageV3Props) => {
   const { footer } = usePage<PageProps & { footer: { items: FooterDataInterface } }>().props

@@ -8,27 +8,50 @@ export interface MetaTagsFields {
   noIndex?: boolean
 }
 
+const fallbackUrl = 'https://spontaine.com/'
+const fallbackImage =
+  'https://spontaine.com/storage/images/8205df31-7880-4c23-902d-6b222d8174b5.png'
+
+const resolveAbsoluteUrl = (value?: string, fallback = fallbackUrl): string => {
+  const trimmedValue = value?.trim()
+
+  if (!trimmedValue) {
+    return fallback
+  }
+
+  if (trimmedValue.startsWith('http://') || trimmedValue.startsWith('https://')) {
+    return trimmedValue
+  }
+
+  const baseUrl = typeof window !== 'undefined' ? window.location.origin : fallbackUrl
+
+  return new URL(trimmedValue, baseUrl).toString()
+}
+
 const MetaTags = ({
-  title = 'No-Code Data Integration & AI Platform for Enterprise',
-  description = `Transform your disconnected systems into an AI-driven command center with Spontaine’s no-code data integration platform. Get real-time insights, eliminate data silos, and enable AI adoption across your organization - all in weeks, not quarters.`,
-  image = 'https://spontaine.com/storage/images/16.png',
-  url = 'https://spontaine.com/',
+  title = 'Spontaine',
+  description = 'Governed AI data infrastructure for professional services firms.',
+  image = fallbackImage,
+  url,
   noIndex = false,
 }: MetaTagsFields) => {
   const domain = 'spontaine.com'
+  const resolvedUrl = url ?? (typeof window !== 'undefined' ? window.location.href : fallbackUrl)
+  const absoluteUrl = resolveAbsoluteUrl(resolvedUrl)
+  const absoluteImage = resolveAbsoluteUrl(image, fallbackImage)
 
   return (
     <Head title={title}>
       {/* Robots */}
       <meta
         name='robots'
-        content={noIndex ? 'noindex' : 'index'}
+        content={noIndex ? 'noindex' : 'index,follow'}
       />
 
       {/* Canonical */}
       <link
         rel='canonical'
-        href={url}
+        href={absoluteUrl}
       />
 
       {/* Open Graph */}
@@ -46,7 +69,7 @@ const MetaTags = ({
       />
       <meta
         property='og:image'
-        content={image}
+        content={absoluteImage}
       />
       <meta
         property='og:image:width'
@@ -58,7 +81,7 @@ const MetaTags = ({
       />
       <meta
         property='og:url'
-        content={url}
+        content={absoluteUrl}
       />
       <meta
         property='og:type'
@@ -81,11 +104,11 @@ const MetaTags = ({
       />
       <meta
         name='twitter:url'
-        content={url}
+        content={absoluteUrl}
       />
       <meta
         name='twitter:image'
-        content={image}
+        content={absoluteImage}
       />
       <meta
         name='twitter:domain'
@@ -100,7 +123,7 @@ const MetaTags = ({
 
       <meta
         name='keywords'
-        content='no-code data integration, AI data platform, business intelligence, data unification, semantic layer, automated data sourcing, enterprise data integration, real-time insights, data silos elimination, AI adoption'
+        content='governed AI, professional services AI, enterprise intelligence, AI data infrastructure, data governance, firm-owned AI, workflow automation'
       ></meta>
 
       <meta
