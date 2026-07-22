@@ -107,7 +107,9 @@ export default function SectionProductCTAV3({ className }: SectionProductCTAV3Pr
         >
           Thirty minutes with the people who built it. No deck, nothing to buy. Tell us what
           you&apos;d build - we&apos;ll tell you what&apos;s four weeks away, what&apos;s
-          twenty-eight, and what we can&apos;t do.
+          twenty-eight, and what we can&apos;t do.Thirty minutes, no deck- about the lowest-risk way
+          to evaluate software there is. Walk through the architecture, the safety model, and the
+          real economics with the people who built it, then decide.
         </p>
 
         <div

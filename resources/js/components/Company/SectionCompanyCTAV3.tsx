@@ -144,7 +144,7 @@ export default function SectionCompanyCTAV3({ className }: SectionCompanyCTAV3Pr
             size='v3Hero'
             className='border-spontaine-dark bg-spontaine-dark text-spontaine-text-on-dark hover:border-spontaine-surface-ink hover:bg-spontaine-surface-ink hover:text-spontaine-text-on-dark'
           >
-            <a href='/architecture'>Provably Safer</a>
+            <a href='/how-it-works'>How It Works</a>
           </Button>
         </div>
 
