@@ -3,7 +3,7 @@ import { type Page } from '@/Modules/PageBuilder/page_interfaces'
 import { router } from '@inertiajs/react'
 import { gsap } from 'gsap'
 import { ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react'
-import { type KeyboardEvent, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 interface SectionBlogsCarouselV3Props {
   className?: string
@@ -113,13 +113,6 @@ export default function SectionBlogsCarouselV3({
     setCurrentIndex(index)
   }
 
-  const handleCardKeyDown = (event: KeyboardEvent<HTMLElement>, blog: Page) => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault()
-      goToBlog(blog)
-    }
-  }
-
   useEffect(() => {
     if (!trackRef.current) {
       return
@@ -136,13 +129,35 @@ export default function SectionBlogsCarouselV3({
   }, [currentIndex])
 
   return (
-    <section className={cn('bg-spontaine-surface-cream pb-[140px] pt-[105px]', className)}>
+    <section className={cn('bg-spontaine-surface-cream pb-[140px] pt-4', className)}>
       <div className='mx-auto w-full max-w-[1180px] px-[var(--space-shell-sm)] md:px-[var(--space-shell)]'>
-        <div className='text-center'>
-          <p className='eyebrow mb-5 text-spontaine-gray-cool'>FROM THE FIELD</p>
-          <h2 className='display-xl text-spontaine-text-primary mx-auto font-display'>
-            The AI-native firm is built, not bought.
+        <div className='mx-auto flex min-h-[170px] w-full flex-col items-center justify-center text-center md:min-h-[190px]'>
+          <h2 className='heading-xl text-spontaine-text-primary'>
+            &ldquo;No BI system can offer this type of Q&A&rdquo;
           </h2>
+          <p className='mt-5 font-body text-sm font-medium text-spontaine-gray-muted'>
+            &ndash;Senior Stakeholder
+          </p>
+
+          {/* <div
+            aria-hidden='true'
+            className='mt-7 flex items-center justify-center gap-2'
+          >
+            <span className='flex h-5 w-5 items-center justify-center rounded-[var(--radius-control)] bg-spontaine-surface-paper text-[0.58rem] font-semibold text-spontaine-gray-muted'>
+              &lsaquo;
+            </span>
+            <span className='h-1.5 w-1.5 rounded-[var(--radius-pill)] bg-spontaine-accent' />
+            <span className='flex h-5 w-5 items-center justify-center rounded-[var(--radius-control)] bg-spontaine-surface-paper text-[0.58rem] font-semibold text-spontaine-gray-muted'>
+              &rsaquo;
+            </span>
+          </div> */}
+        </div>
+
+        <div className='text-center'>
+          <p className='eyebrow mb-5 text-spontaine-gray-cool'>STRATEGIES AND PERSPECTIVES</p>
+          {/* <h2 className='display-xl mx-auto font-display text-spontaine-text-primary'>
+            The AI-native firm is built, not bought.
+          </h2> */}
         </div>
 
         <div className='mx-auto mt-[42px] w-full max-w-[810px] overflow-hidden'>
@@ -151,24 +166,22 @@ export default function SectionBlogsCarouselV3({
             className='flex gap-8'
           >
             {blogPosts.map((blog) => (
-              <article
+              <button
                 key={blog.id}
-                role='button'
-                tabIndex={0}
+                type='button'
                 onClick={() => goToBlog(blog)}
-                onKeyDown={(event) => handleCardKeyDown(event, blog)}
-                className='bg-spontaine-surface-paper grid w-full flex-shrink-0 cursor-pointer grid-cols-1 gap-[25px] rounded-[19px] p-[22px] shadow-card-lift transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-spontaine-accent-dark md:grid-cols-[1.05fr_0.95fr] md:p-6'
+                className='grid w-full flex-shrink-0 cursor-pointer grid-cols-1 gap-[25px] rounded-[19px] bg-spontaine-surface-paper p-[22px] text-left shadow-card-lift transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-spontaine-accent-dark md:grid-cols-[1.05fr_0.95fr] md:p-6'
               >
                 <div className='flex min-h-[190px] flex-col justify-center'>
-                  <h3 className='text-spontaine-text-primary line-clamp-3 font-display text-[1.4rem] font-bold leading-[1.08] tracking-[-0.035em]'>
+                  <h3 className='line-clamp-3 font-display text-[1.4rem] font-bold leading-[1.08] tracking-[-0.035em] text-spontaine-text-primary'>
                     {blog.page_title || blog.title}
                   </h3>
 
-                  <p className='text-spontaine-text-secondary mt-[13px] line-clamp-5 font-body text-[0.82rem] leading-[1.55]'>
+                  <p className='mt-[13px] line-clamp-5 font-body text-[0.82rem] leading-[1.55] text-spontaine-text-secondary'>
                     {blog.description}
                   </p>
 
-                  <span className='text-spontaine-text-accent-dark mt-[18px] inline-flex items-center gap-2 font-body text-[0.74rem] font-bold'>
+                  <span className='mt-[18px] inline-flex items-center gap-2 font-body text-[0.74rem] font-bold text-spontaine-text-accent-dark'>
                     Read the perspective
                     <ArrowUpRight
                       aria-hidden='true'
@@ -177,7 +190,7 @@ export default function SectionBlogsCarouselV3({
                   </span>
                 </div>
 
-                <div className='bg-spontaine-surface-ice/45 min-h-[190px] overflow-hidden rounded-[13px]'>
+                <div className='min-h-[190px] overflow-hidden rounded-[13px] bg-spontaine-surface-ice/45'>
                   {blog.preview_image ? (
                     <img
                       src={blog.preview_image}
@@ -190,7 +203,7 @@ export default function SectionBlogsCarouselV3({
                     </div>
                   )}
                 </div>
-              </article>
+              </button>
             ))}
           </div>
         </div>
@@ -205,7 +218,7 @@ export default function SectionBlogsCarouselV3({
                 'flex h-8 w-8 items-center justify-center rounded-[var(--radius-control)] transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-spontaine-accent-dark',
                 canGoPrev
                   ? 'text-spontaine-text-accent-dark hover:bg-spontaine-surface-paper/70'
-                  : 'text-spontaine-text-tertiary cursor-not-allowed'
+                  : 'cursor-not-allowed text-spontaine-text-tertiary'
               )}
               aria-label='Previous blog'
             >
@@ -241,7 +254,7 @@ export default function SectionBlogsCarouselV3({
                 'flex h-8 w-8 items-center justify-center rounded-[var(--radius-control)] transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-spontaine-accent-dark',
                 canGoNext
                   ? 'text-spontaine-text-accent-dark hover:bg-spontaine-surface-paper/70'
-                  : 'text-spontaine-text-tertiary cursor-not-allowed'
+                  : 'cursor-not-allowed text-spontaine-text-tertiary'
               )}
               aria-label='Next blog'
             >
@@ -255,7 +268,7 @@ export default function SectionBlogsCarouselV3({
           <div className='flex w-full justify-end'>
             <a
               href='/blogs-list'
-              className='hover:text-spontaine-text-accent-dark inline-flex items-center justify-center gap-2 font-body text-[0.68rem] font-bold text-spontaine-gray-muted transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-spontaine-accent-dark'
+              className='inline-flex items-center justify-center gap-2 font-body text-[0.68rem] font-bold text-spontaine-gray-muted transition-colors duration-200 hover:text-spontaine-text-accent-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-spontaine-accent-dark'
             >
               Explore all resources
               <ArrowUpRight
