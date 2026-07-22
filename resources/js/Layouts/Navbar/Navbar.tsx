@@ -35,19 +35,6 @@ const Navbar = () => {
         </div>
 
         <div className='flex items-center gap-3 lg:hidden'>
-          <CalendarBooking>
-            {({ openCalendar }) => (
-              <Button
-                type='button'
-                onClick={openCalendar}
-                variant='v3NavPrimary'
-                size='v3Hero'
-                className='min-h-10 px-5 py-2 text-[15px]'
-              >
-                Book a session
-              </Button>
-            )}
-          </CalendarBooking>
           <MobileNav />
         </div>
       </div>

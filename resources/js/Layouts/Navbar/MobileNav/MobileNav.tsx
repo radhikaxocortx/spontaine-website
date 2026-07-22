@@ -102,12 +102,11 @@ export function MobileNav() {
     lang?: Language
   }
   const [isSheetOpen, setIsSheetOpen] = useState(false)
-  const [shouldOpenCalendar, setShouldOpenCalendar] = useState(false)
   const [openMenuId, setOpenMenuId] = useState<string | null>(null)
 
-  const handleBookDemoClick = () => {
+  const handleBookDemoClick = (openCalendar: () => void) => {
     setIsSheetOpen(false)
-    setShouldOpenCalendar(true)
+    setTimeout(openCalendar, 100)
   }
 
   return (
@@ -135,15 +134,15 @@ export function MobileNav() {
           </button>
         </SheetTrigger>
 
-        <SheetContent className='!fixed !inset-0 z-[100] !flex !h-screen !w-screen !max-w-none !flex-col !justify-between !space-y-0 !overflow-hidden !rounded-none !border-0 bg-spontaine-surface-paper !p-0 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 [&>button]:hidden'>
-          <div className='flex h-full w-full flex-1 flex-col overflow-hidden px-[var(--space-shell-sm)] py-5'>
+        <SheetContent className='!fixed !inset-0 z-[100] !flex !h-screen !w-screen !max-w-none !flex-col !space-y-0 !overflow-hidden !rounded-none !border-0 bg-spontaine-surface-paper !p-0 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 [&>button]:hidden'>
+          <div className='flex min-h-0 w-full flex-1 flex-col overflow-hidden px-[var(--space-shell-sm)] py-5'>
             <MobileNavHeader />
 
             <p className='mb-5 font-mono text-[0.72rem] font-medium uppercase tracking-[0.14em] text-spontaine-text-tertiary'>
               Navigation
             </p>
 
-            <nav className='flex flex-col overflow-y-auto'>
+            <nav className='flex min-h-0 flex-1 flex-col overflow-y-auto'>
               {nav?.map((menuItem) => (
                 <MobileNavItem
                   key={menuItem.id.toString()}
@@ -163,30 +162,23 @@ export function MobileNav() {
             </nav>
           </div>
 
-          <div className='bg-spontaine-surface-cream/45 p-[var(--space-shell-sm)]'>
-            <Button
-              type='button'
-              onClick={handleBookDemoClick}
-              variant='v3NavPrimary'
-              size='v3Hero'
-              className='min-h-10 w-full px-5 py-2 text-[15px]'
-            >
-              Book a session
-            </Button>
+          <div className='flex-none bg-spontaine-surface-cream/45 p-[var(--space-shell-sm)]'>
+            <CalendarBooking>
+              {({ openCalendar }) => (
+                <Button
+                  type='button'
+                  onClick={() => handleBookDemoClick(openCalendar)}
+                  variant='v3NavPrimary'
+                  size='v3Hero'
+                  className='min-h-10 w-full px-5 py-2 text-[15px]'
+                >
+                  Book a session
+                </Button>
+              )}
+            </CalendarBooking>
           </div>
         </SheetContent>
       </Sheet>
-
-      <CalendarBooking>
-        {({ openCalendar }) => {
-          if (shouldOpenCalendar) {
-            setShouldOpenCalendar(false)
-            setTimeout(openCalendar, 100)
-          }
-
-          return null
-        }}
-      </CalendarBooking>
     </>
   )
 }

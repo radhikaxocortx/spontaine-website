@@ -12,7 +12,7 @@ export default function SectionCompanyHeroV3() {
         src='/images/company-hero-v3.jpg'
         alt=''
         aria-hidden='true'
-        className='animate-v3-ken-burns absolute inset-[-4%] z-0 h-[108%] w-[108%] object-cover opacity-70'
+        className='animate-v3-ken-burns absolute inset-0 z-0 h-full w-full object-cover opacity-70'
       />
 
       <div
