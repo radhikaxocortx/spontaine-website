@@ -2,6 +2,8 @@ import { Button } from '@/components/ui/button'
 import { useEffect, useState } from 'react'
 import { LinkData } from '../page_interfaces'
 
+const defaultCalendarPath = 'intuonfx/30min'
+
 interface CTAEditModalProps {
   show: boolean
   onClose: () => void
@@ -50,13 +52,13 @@ export const CTAEditModal = ({
   const handleSave = () => {
     if (ctaIsCalendar) {
       onSave({
-        calendarUrl: ctaLink || null,
+        calendarUrl: ctaLink.trim() || defaultCalendarPath,
         cta: {
           name: {
             english: ctaEnglishName || 'Book Demo',
             malayalam: ctaMalayalamName || null,
           },
-          link: ctaLink || '',
+          link: ctaLink.trim() || defaultCalendarPath,
           external: false,
         },
       })
@@ -137,15 +139,21 @@ export const CTAEditModal = ({
           {/* Link */}
           <div>
             <label className='mb-2 block text-sm font-medium text-gray-700'>
-              {ctaIsCalendar ? 'Cal.com Link' : 'Link URL'}
+              {ctaIsCalendar ? 'Cal.com Event Path' : 'Link URL'}
             </label>
             <input
               type='text'
               value={ctaLink}
               onChange={(e) => setCtaLink(e.target.value)}
-              placeholder={ctaIsCalendar ? 'spontaine/demo' : 'https://example.com or /about'}
+              placeholder={ctaIsCalendar ? defaultCalendarPath : 'https://example.com or /about'}
               className='w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500'
             />
+            {ctaIsCalendar && (
+              <p className='mt-2 text-sm text-gray-500'>
+                Enter the Cal.com path only, for example {defaultCalendarPath}. Do not include
+                https://cal.com/.
+              </p>
+            )}
           </div>
 
           {/* Is Calendar Link Checkbox */}
@@ -158,6 +166,7 @@ export const CTAEditModal = ({
                 setCtaIsCalendar(e.target.checked)
                 if (e.target.checked) {
                   setCtaExternal(false)
+                  setCtaLink((currentLink) => currentLink.trim() || defaultCalendarPath)
                 }
               }}
               className='h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-2 focus:ring-blue-500'

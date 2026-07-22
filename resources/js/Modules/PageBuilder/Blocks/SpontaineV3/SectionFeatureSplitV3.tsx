@@ -52,7 +52,7 @@ const SectionFeatureSplitV3 = ({
       roundedTop={model.hasRoundedTop}
       overlapTop={model.hasTopOverlap}
       className={cn(
-        'relative w-full overflow-hidden px-6 py-16 md:px-10 md:py-20 lg:py-24',
+        'relative w-full overflow-hidden py-16 md:py-20 lg:py-24',
         !model.backgroundColor && 'bg-pagebuilder-hero-wash',
         blockData?.marginTop,
         blockData?.marginBottom,
@@ -63,7 +63,7 @@ const SectionFeatureSplitV3 = ({
     >
       <div
         className={cn(
-          'relative z-10 mx-auto grid w-full max-w-[1180px] grid-cols-1 items-center gap-10 lg:gap-16',
+          'relative z-10 mx-auto grid w-full max-w-[1180px] grid-cols-1 items-center gap-10 px-[var(--space-shell-sm)] md:px-[var(--space-shell)] lg:gap-16',
           model.shouldRenderMedia ? 'lg:grid-cols-2' : 'lg:max-w-[760px]'
         )}
       >

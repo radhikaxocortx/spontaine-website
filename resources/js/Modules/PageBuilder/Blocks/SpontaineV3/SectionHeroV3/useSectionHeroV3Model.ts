@@ -8,12 +8,7 @@ import {
 } from '../../../Components/V3RoundedTopToggle'
 import type { PageBuilderAction } from '../../../hooks/pageBuilderService'
 import type { TextData } from '../../../page_interfaces'
-import {
-  defaultOverlayColor,
-  emptyTextData,
-  requiredTitleFallback,
-  type SectionHeroV3Block,
-} from './types'
+import { defaultOverlayColor, emptyTextData, type SectionHeroV3Block } from './types'
 import {
   getBlockFieldValue,
   getOverlayOpacity,
@@ -39,22 +34,25 @@ export const useSectionHeroV3Model = ({
   onFieldEdit,
   renderMode,
 }: UseSectionHeroV3ModelProps) => {
-  const titleOne = blockData?.titleOne ?? requiredTitleFallback
+  const titleOne = blockData?.titleOne
   const titleTwo = blockData?.titleTwo
   const backgroundImage = blockData?.backgroundImage
   const hasImage = Boolean(backgroundImage?.url)
   const hasEyebrow = hasTextValue(blockData?.eyebrow, language)
+  const hasTitleOne = hasTextValue(titleOne, language)
   const hasTitleTwo = hasTextValue(titleTwo, language)
   const hasDescription = hasTextValue(blockData?.description, language)
   const calendarUrl = getV3ColorValue(blockData?.calendarUrl ?? undefined, language)
   const hasCTA = Boolean(calendarUrl || blockData?.cta?.link)
+  const hasContent = hasEyebrow || hasTitleOne || hasTitleTwo || hasDescription || hasCTA
   const hasRoundedTop = isV3RoundedTopEnabled(blockData?.roundedTop, language)
   const hasTopOverlap = isV3TopOverlapEnabled(blockData?.overlapTop, language)
   const isFirstPublicPageHero = renderMode === 'page' && !editMode && blockData?.position === 1
 
   const heroHeightClassName = isFirstPublicPageHero
-    ? 'min-0-[calc(55vh+4rem)] md:min-h-[calc(60vh+4rem)] lg:min-h-[calc(64vh+4rem)]'
+    ? 'min-h-[calc(55vh+4rem)] md:min-h-[calc(60vh+4rem)] lg:min-h-[calc(64vh+4rem)]'
     : 'min-h-[55vh] md:min-h-[60vh] lg:min-h-[64vh]'
+  const heroMinHeightStyle = isFirstPublicPageHero ? 'calc(55vh + 4rem)' : '55vh'
   const heroPaddingClassName = isFirstPublicPageHero
     ? 'pb-20 pt-32 md:pb-20 md:pt-36'
     : 'py-16 md:py-20'
@@ -72,6 +70,7 @@ export const useSectionHeroV3Model = ({
 
   const sectionStyle = {
     background: backgroundColor,
+    minHeight: heroMinHeightStyle,
   } as CSSProperties
   const contentStyle = {
     color: textColor,
@@ -114,10 +113,13 @@ export const useSectionHeroV3Model = ({
     hasDescription,
     hasEyebrow,
     hasImage,
+    hasContent,
     hasRoundedTop,
+    hasTitleOne,
     hasTitleTwo,
     hasTopOverlap,
     heroHeightClassName,
+    heroMinHeightStyle,
     heroPaddingClassName,
     openCTA: () => openHeroCtaLink(blockData),
     overlayColor,

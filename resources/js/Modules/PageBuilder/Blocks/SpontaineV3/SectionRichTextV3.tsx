@@ -107,7 +107,7 @@ const SectionRichTextV3 = ({
       roundedTop={hasRoundedTop}
       overlapTop={hasTopOverlap}
       className={cn(
-        'relative w-full overflow-hidden px-6 py-16 md:px-10 md:py-20 lg:py-24',
+        'relative w-full overflow-hidden py-16 md:py-20 lg:py-24',
         !backgroundColor && 'bg-pagebuilder-hero-wash',
         blockData?.marginTop,
         blockData?.marginBottom,
@@ -116,7 +116,7 @@ const SectionRichTextV3 = ({
       )}
       style={sectionStyle}
     >
-      <div className='relative z-10 mx-auto w-full max-w-[1180px]'>
+      <div className='relative z-10 mx-auto w-full max-w-[1180px] px-[var(--space-shell-sm)] md:px-[var(--space-shell)]'>
         {(hasHeader || editMode) && (
           <div
             data-v3-rich-text-reveal

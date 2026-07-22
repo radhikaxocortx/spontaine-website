@@ -8,7 +8,7 @@ import NavbarLinks from './NavbarLinks'
 const Navbar = () => {
   return (
     <nav className='fixed left-0 top-0 z-50 w-full bg-spontaine-surface-paper/50 backdrop-blur-md'>
-      <div className='mx-auto flex h-16 w-full max-w-[1120px] items-center justify-between px-[var(--space-shell-sm)] md:px-[var(--space-shell)]'>
+      <div className='mx-auto flex h-16 w-full max-w-[1180px] items-center justify-between px-[var(--space-shell-sm)] md:px-[var(--space-shell)]'>
         <Link
           href='/'
           className='flex items-center'
