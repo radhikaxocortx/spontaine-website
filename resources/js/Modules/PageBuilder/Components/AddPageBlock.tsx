@@ -173,7 +173,8 @@ const blockFolders: readonly PageBlockFolder[] = [
       },
       {
         name: 'Spontaine - Call To Action',
-        description: 'Customizable CTA section with gradient background and optional booking button',
+        description:
+          'Customizable CTA section with gradient background and optional booking button',
         badge: 'CT',
       },
       {
@@ -183,7 +184,8 @@ const blockFolders: readonly PageBlockFolder[] = [
       },
       {
         name: 'Spontaine - Bento Cards',
-        description: 'Bento grid layout with 4 cards, gradient background, and animated arc transition',
+        description:
+          'Bento grid layout with 4 cards, gradient background, and animated arc transition',
         badge: 'BT',
       },
     ],
@@ -196,6 +198,11 @@ const blockFolders: readonly PageBlockFolder[] = [
         name: 'Spontaine V3 - Hero',
         description: 'V3 hero section with optional eyebrow, image overlay, CTA, and colors',
         badge: 'H3',
+      },
+      {
+        name: 'Spontaine V3 - Hero Large',
+        description: 'Large V3 hero with background media, split title, two CTAs, and prism visual',
+        badge: 'HL3',
       },
       {
         name: 'Spontaine V3 - CTA',

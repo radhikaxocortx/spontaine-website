@@ -5,24 +5,24 @@ import EditLabel from '../../../Components/EditLabel'
 import V3ColorControls from '../../../Components/V3ColorControls'
 import V3RoundedTopToggle from '../../../Components/V3RoundedTopToggle'
 import type { PageBuilderAction } from '../../../hooks/pageBuilderService'
-import type { SectionHeroV3Block } from './types'
+import { emptyTextData, type SectionLargeHeroV3Block } from './types'
 
-interface SectionHeroV3EditPanelProps {
-  blockData?: SectionHeroV3Block
+interface SectionLargeHeroV3EditPanelProps {
+  blockData?: SectionLargeHeroV3Block
   dispatch?: Dispatch<PageBuilderAction>
   language: Language
   onFieldEdit?: (field: BlocKFieldInfo) => void
   onOpenOverlayModal: () => void
 }
 
-const SectionHeroV3EditPanel = ({
+const SectionLargeHeroV3EditPanel = ({
   blockData,
   dispatch,
   language,
   onFieldEdit,
   onOpenOverlayModal,
-}: SectionHeroV3EditPanelProps) => (
-  <div className='relative z-20 mx-auto mt-8 w-full max-w-[760px] px-[var(--space-shell-sm)] md:px-[var(--space-shell)]'>
+}: SectionLargeHeroV3EditPanelProps) => (
+  <div className='relative z-20 mx-auto mt-8 w-full max-w-[1180px] px-[var(--space-shell-sm)] md:px-[var(--space-shell)]'>
     <div className='rounded-lg bg-spontaine-surface-paper p-4 shadow-surface'>
       <div className='flex flex-wrap gap-4'>
         {onFieldEdit != null && (
@@ -81,6 +81,22 @@ const SectionHeroV3EditPanel = ({
           titleOneColor={blockData?.titleOneColor}
           titleTwoColor={blockData?.titleTwoColor}
         />
+        {onFieldEdit != null && (
+          <div className='flex flex-wrap items-center gap-2'>
+            <p className='m-0 text-sm font-medium text-spontaine-text-primary'>Microcopy:</p>
+            <EditLabel
+              label='Edit Microcopy Color'
+              onClick={() =>
+                onFieldEdit({
+                  action: 'UPDATE',
+                  field: 'microcopyColor',
+                  fieldType: 'text',
+                  oldValue: blockData?.microcopyColor ?? emptyTextData,
+                })
+              }
+            />
+          </div>
+        )}
       </div>
       <p className='m-0 mt-3 max-w-[760px] font-body text-xs leading-relaxed text-spontaine-text-secondary'>
         Overlay opacity controls how strongly the image is dimmed so text remains readable. Use 0
@@ -90,4 +106,4 @@ const SectionHeroV3EditPanel = ({
   </div>
 )
 
-export default SectionHeroV3EditPanel
+export default SectionLargeHeroV3EditPanel

@@ -65,9 +65,10 @@ import SectionCtaV3, { SectionCtaV3Block } from '../Blocks/SpontaineV3/SectionCt
 import SectionFeatureSplitV3, {
   SectionFeatureSplitV3Block,
 } from '../Blocks/SpontaineV3/SectionFeatureSplitV3'
-import SectionHeroV3, {
-  SectionHeroV3Block,
-} from '../Blocks/SpontaineV3/SectionHeroV3'
+import SectionHeroV3, { SectionHeroV3Block } from '../Blocks/SpontaineV3/SectionHeroV3'
+import SectionLargeHeroV3, {
+  SectionLargeHeroV3Block,
+} from '../Blocks/SpontaineV3/SectionLargeHeroV3'
 import SectionRichTextV3, { SectionRichTextV3Block } from '../Blocks/SpontaineV3/SectionRichTextV3'
 
 interface Properties {
@@ -377,6 +378,15 @@ const ResolveComponent = ({
       {blockName === 'Spontaine V3 - Hero' && (
         <SectionHeroV3
           blockData={block as unknown as SectionHeroV3Block}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+          dispatch={dispatch}
+        />
+      )}
+      {blockName === 'Spontaine V3 - Hero Large' && (
+        <SectionLargeHeroV3
+          blockData={block as unknown as SectionLargeHeroV3Block}
           editMode={editMode}
           onFieldEdit={onFieldEdit}
           language={language}
