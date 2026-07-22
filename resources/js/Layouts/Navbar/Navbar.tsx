@@ -42,9 +42,9 @@ const Navbar = () => {
                 onClick={openCalendar}
                 variant='v3NavPrimary'
                 size='v3Hero'
-                className='min-h-10 px-4 py-2 text-sm'
+                className='min-h-10 px-5 py-2 text-[15px]'
               >
-                Book Demo
+                Book a session
               </Button>
             )}
           </CalendarBooking>

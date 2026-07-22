@@ -99,7 +99,7 @@ export default function SpontaineV3Hero() {
       ref={heroRef}
       id='hero'
       aria-labelledby='spontaine-v3-hero-title'
-      className='relative isolate overflow-hidden bg-hero-wash px-[var(--space-shell-sm)] pb-[150px] pt-[132px] md:px-[var(--space-shell)] md:pb-[150px] md:pt-[168px] lg:pt-[120px]'
+      className='relative isolate overflow-hidden bg-hero-wash px-[var(--space-shell-sm)] pb-[150px] pt-20 md:px-[var(--space-shell)] md:pb-[150px] md:pt-[168px] lg:pt-[120px]'
     >
       {/* Diagonal ambient band behind the prism */}
       <div
@@ -115,7 +115,7 @@ export default function SpontaineV3Hero() {
         className='absolute inset-x-[-4%] -bottom-20 z-0 h-[180px] rounded-t-[50%] bg-spontaine-light'
       /> */}
 
-      <div className='relative z-10 mx-auto grid w-full max-w-[1180px] pl-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-start lg:gap-10'>
+      <div className='relative z-10 mx-auto grid w-full max-w-[1180px] pl-2 md:pl-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-start lg:gap-10'>
         {/* Hero message and primary actions */}
         <div className='relative z-10 max-w-[760px] pb-8 pt-12 md:pb-20 md:pt-16 lg:pb-0'>
           <p className='eyebrow mb-6 max-w-[560px] text-spontaine-gray-cool'>
@@ -145,8 +145,8 @@ export default function SpontaineV3Hero() {
               variant='v3Primary'
               size='v3Hero'
             >
-              <a href='#product'>
-                See it in your firm
+              <a href='/product'>
+                The Product
                 <ArrowUpRight
                   aria-hidden='true'
                   className='h-4 w-4'
@@ -161,7 +161,7 @@ export default function SpontaineV3Hero() {
               size='v3Hero'
             >
               <a href='/spontaine-video'>
-                Watch the video
+                View video
                 <ArrowUpRight
                   aria-hidden='true'
                   className='h-4 w-4'
@@ -192,7 +192,7 @@ export default function SpontaineV3Hero() {
           {/* Answer prompt card */}
           <div
             ref={promptCardRef}
-            className='absolute bottom-5 left-0 w-[min(470px,100%)] rounded-[18px] border border-spontaine-white/90 bg-spontaine-white/[0.84] px-[17px] py-[15px] shadow-surface backdrop-blur-lg lg:bottom-[15px]'
+            className='absolute bottom-5 left-0 hidden w-[min(470px,100%)] rounded-[18px] border border-spontaine-white/90 bg-spontaine-white/[0.84] px-[17px] py-[15px] shadow-surface backdrop-blur-lg lg:bottom-[15px] lg:block'
           >
             <p className='font-body text-[0.78rem] font-semibold text-[var(--spontaine-text-slate)]'>
               Which engagements are likely to miss target margin this quarter?

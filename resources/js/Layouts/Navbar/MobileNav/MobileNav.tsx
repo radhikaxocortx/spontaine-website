@@ -2,10 +2,11 @@ import { CalendarBooking } from '@/components/CalendarBooking'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { Language } from '@/components/ui/ui_interfaces'
+import InertiaLink from '@/Modules/PageBuilder/Components/InertiaLink'
 import Localization from '@/Modules/PageBuilder/Components/Localization'
 import { NavMenu } from '@/Modules/PageBuilder/page_interfaces'
 import { Link, usePage } from '@inertiajs/react'
-import { Menu } from 'lucide-react'
+import { ChevronDown, Menu } from 'lucide-react'
 import { useState } from 'react'
 import { MobileNavHeader } from './MobileNavHeader'
 
@@ -13,27 +14,85 @@ function MobileNavItem({
   item,
   lang = 'en',
   onNavigate,
+  isOpen,
+  onToggle,
 }: {
   item: NavMenu
   lang?: Language
   onNavigate: () => void
+  isOpen: boolean
+  onToggle: () => void
 }) {
+  const sectionGroups = item.items?.items?.filter((section) => section.links.length > 0) ?? []
+  const hasSubMenuItems = sectionGroups.length > 0
+
   return (
-    <Link
-      href={item.link_info?.link ?? '#'}
-      target={item.link_info?.external ? '_blank' : undefined}
-      rel={item.link_info?.external ? 'noopener noreferrer' : undefined}
-      onClick={onNavigate}
-      className='border-b border-spontaine-border-subtle py-4 font-display text-[28px] font-semibold leading-[1.1] tracking-[-0.03em] text-spontaine-text-primary transition-colors duration-200 hover:text-spontaine-text-accent-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-spontaine-accent-dark'
-    >
-      <Localization
-        text={{
-          english: item.title,
-          malayalam: item.title_malayalam ?? '',
-        }}
-        language={lang}
-      />
-    </Link>
+    <div className='py-3'>
+      <div className='flex items-center justify-between gap-3'>
+        <Link
+          href={item.link_info?.link ?? '#'}
+          target={item.link_info?.external ? '_blank' : undefined}
+          rel={item.link_info?.external ? 'noopener noreferrer' : undefined}
+          onClick={onNavigate}
+          className='block min-w-0 flex-1 font-body text-[15px] font-medium text-spontaine-text-primary transition-colors duration-200 hover:text-spontaine-text-accent-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-spontaine-accent-dark'
+        >
+          <Localization
+            text={{
+              english: item.title,
+              malayalam: item.title_malayalam ?? '',
+            }}
+            language={lang}
+          />
+        </Link>
+
+        {hasSubMenuItems && (
+          <button
+            type='button'
+            aria-label={`Toggle ${item.title} submenu`}
+            aria-expanded={isOpen}
+            onClick={onToggle}
+            className='flex h-7 w-7 flex-none items-center justify-center rounded-[var(--radius-pill)] text-spontaine-text-primary transition-colors duration-200 hover:bg-spontaine-surface-cream hover:text-spontaine-text-accent-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-spontaine-accent-dark'
+          >
+            <ChevronDown
+              aria-hidden='true'
+              className={`h-4 w-4 transition-transform duration-200 ${
+                isOpen ? 'rotate-180 text-spontaine-text-accent-dark' : ''
+              }`}
+            />
+          </button>
+        )}
+      </div>
+
+      {hasSubMenuItems && isOpen && (
+        <div className='mt-4 space-y-3 rounded-[18px] bg-spontaine-surface-cream/45 p-3'>
+          {sectionGroups.map((section) => (
+            <div
+              key={section.id}
+              className='space-y-1.5'
+            >
+              <p className='px-2 font-mono text-[0.66rem] font-medium uppercase tracking-[0.12em] text-spontaine-text-tertiary'>
+                <Localization
+                  text={section.section}
+                  language={lang}
+                />
+              </p>
+
+              <div className='space-y-1'>
+                {section.links.map((link) => (
+                  <InertiaLink
+                    key={link.id}
+                    link={link}
+                    language={lang}
+                    onClick={onNavigate}
+                    className='block rounded-[12px] px-2.5 py-2 font-body text-sm font-medium text-spontaine-text-primary transition-colors duration-200 hover:bg-spontaine-surface-paper hover:text-spontaine-text-accent-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-spontaine-accent-dark'
+                  />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
   )
 }
 
@@ -44,6 +103,7 @@ export function MobileNav() {
   }
   const [isSheetOpen, setIsSheetOpen] = useState(false)
   const [shouldOpenCalendar, setShouldOpenCalendar] = useState(false)
+  const [openMenuId, setOpenMenuId] = useState<string | null>(null)
 
   const handleBookDemoClick = () => {
     setIsSheetOpen(false)
@@ -54,7 +114,13 @@ export function MobileNav() {
     <>
       <Sheet
         open={isSheetOpen}
-        onOpenChange={setIsSheetOpen}
+        onOpenChange={(nextOpen) => {
+          setIsSheetOpen(nextOpen)
+
+          if (!nextOpen) {
+            setOpenMenuId(null)
+          }
+        }}
       >
         <SheetTrigger asChild>
           <button
@@ -83,21 +149,29 @@ export function MobileNav() {
                   key={menuItem.id.toString()}
                   item={menuItem}
                   lang={lang}
-                  onNavigate={() => setIsSheetOpen(false)}
+                  isOpen={openMenuId === menuItem.id.toString()}
+                  onToggle={() => {
+                    const menuId = menuItem.id.toString()
+                    setOpenMenuId((currentMenuId) => (currentMenuId === menuId ? null : menuId))
+                  }}
+                  onNavigate={() => {
+                    setIsSheetOpen(false)
+                    setOpenMenuId(null)
+                  }}
                 />
               ))}
             </nav>
           </div>
 
-          <div className='border-t border-spontaine-border-subtle bg-spontaine-surface-cream/45 p-[var(--space-shell-sm)]'>
+          <div className='bg-spontaine-surface-cream/45 p-[var(--space-shell-sm)]'>
             <Button
               type='button'
               onClick={handleBookDemoClick}
               variant='v3NavPrimary'
               size='v3Hero'
-              className='w-full'
+              className='min-h-10 w-full px-5 py-2 text-[15px]'
             >
-              Book Demo
+              Book a session
             </Button>
           </div>
         </SheetContent>

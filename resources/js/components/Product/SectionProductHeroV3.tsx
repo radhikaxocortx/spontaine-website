@@ -6,7 +6,7 @@ export default function SectionProductHeroV3() {
     <section
       id='top'
       aria-labelledby='spontaine-product-hero-title'
-      className='relative isolate overflow-hidden bg-hero-wash-soft px-[var(--space-shell-sm)] pb-[150px] pt-[132px] md:px-[var(--space-shell)] md:pb-[150px] md:pt-[168px] lg:pt-[120px]'
+      className='relative isolate overflow-hidden bg-hero-wash-soft px-[var(--space-shell-sm)] pb-[150px] pt-20 md:px-[var(--space-shell)] md:pb-[150px] md:pt-[168px] lg:pt-[120px]'
     >
       {/* Diagonal ambient band behind the product visual */}
       <div
@@ -16,7 +16,7 @@ export default function SectionProductHeroV3() {
         <div className='h-full w-full rotate-[-13deg] bg-ambient-band-mint-amber' />
       </div>
 
-      <div className='relative z-10 mx-auto grid w-full max-w-[1180px] pl-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-start lg:gap-10'>
+      <div className='relative z-10 mx-auto grid w-full max-w-[1180px] pl-2 md:pl-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-start lg:gap-10'>
         {/* Product message and primary actions */}
         <div className='relative z-10 max-w-[760px] pb-8 pt-12 md:pb-20 md:pt-16 lg:pb-[130px]'>
           <p className='eyebrow mb-6 max-w-[560px] text-spontaine-gray-cool'>
