@@ -22,8 +22,8 @@ interface StaticProductPageV3Props {
 }
 
 const StaticProductPageV3 = ({
-  title = 'Product | Spontaine',
-  description = 'Build the AI-native professional services firm with governed answers, reusable capabilities, and workflows your firm owns.',
+  title = 'Governed AI Data Infrastructure Your Firm Owns',
+  description = 'Spontaine ingests your data into a governed, client-exclusive environment — nothing migrates out. Your firm keeps full ownership of every workflow, dashboard, and output.',
   image = 'https://spontaine.com/storage/images/16.png',
   noIndex = false,
 }: StaticProductPageV3Props) => {

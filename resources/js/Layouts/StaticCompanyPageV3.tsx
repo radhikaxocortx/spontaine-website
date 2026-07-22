@@ -19,8 +19,8 @@ interface StaticCompanyPageV3Props {
 }
 
 const StaticCompanyPageV3 = ({
-  title = 'Company | Spontaine',
-  description = 'Spontaine is governed intelligence for professional-services firms, built from seven years of doing the hard work inside enterprise and government environments.',
+  title = 'Our Mission: Governed AI for Professional Services',
+  description = 'We built Spontaine because professional services firms deserve AI that strengthens their judgment, not replaces it - governed, transparent, and owned by the firms that use it.',
   image = 'https://spontaine.com/storage/images/16.png',
   noIndex = false,
 }: StaticCompanyPageV3Props) => {

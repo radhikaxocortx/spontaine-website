@@ -274,7 +274,7 @@ export default function SectionStackV3() {
             <p className='eyebrow mb-5 text-spontaine-gray-cool'>ARCHITECTURE</p>
 
             <h2 className='display-xl text-spontaine-dark'>
-              You don't need six tools.
+              Not six tools stitched together.
               <br />
               <span className='display-xl text-spontaine-text-accent-dark'>
                 You need one system.

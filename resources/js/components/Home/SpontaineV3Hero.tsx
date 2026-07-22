@@ -119,17 +119,17 @@ export default function SpontaineV3Hero() {
         {/* Hero message and primary actions */}
         <div className='relative z-10 max-w-[760px] pb-8 pt-12 md:pb-20 md:pt-16 lg:pb-0'>
           <p className='eyebrow mb-6 max-w-[560px] text-spontaine-gray-cool'>
-            The owned intelligence layer for professional services firms
+            The owned intelligence layer for professional services and private equity
           </p>
 
           <h1
             id='spontaine-v3-hero-title'
             className='display-hero text-spontaine-dark'
           >
-            Any AI can answer a question.
+            Turn your firm’s data and judgment
             <br />
             <span className='display-hero text-spontaine-text-accent-dark'>
-              The advantage is what your firm can keep.
+              into an intelligence system you own.
             </span>
           </h1>
 
