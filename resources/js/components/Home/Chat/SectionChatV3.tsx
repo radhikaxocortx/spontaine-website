@@ -60,7 +60,6 @@ const useTypewriter = (
 const questions = [
   'Which engagements are likely to miss target margin this quarter?',
   'Where did delayed billing change expected realization?',
-  'Which client work should become a reusable Block?',
 ]
 
 export default function SectionChatV3() {
@@ -161,7 +160,7 @@ export default function SectionChatV3() {
             </ChatSurface>
           </div>
 
-          <div className='mx-auto mt-8 grid w-full max-w-[908px] min-w-0 gap-4 md:mt-[39px] md:gap-[22px] lg:grid-cols-[1.65fr_0.82fr] lg:gap-[26px]'>
+          <div className='mx-auto mt-8 grid w-full min-w-0 max-w-[908px] gap-4 md:mt-[39px] md:gap-[22px] lg:grid-cols-[1.65fr_0.82fr] lg:gap-[26px]'>
             <div
               ref={tableRef}
               className='min-w-0'

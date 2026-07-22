@@ -109,7 +109,9 @@ export default function SectionCardStackV3() {
                       aria-hidden='true'
                       className={[
                         'h-2.5 w-2.5 rounded-full transition-colors',
-                        index === activeIndex ? 'bg-spontaine-accent' : 'bg-spontaine-surface-muted',
+                        index === activeIndex
+                          ? 'bg-spontaine-accent'
+                          : 'bg-spontaine-surface-muted',
                       ].join(' ')}
                     />
                     <span>{card.label}</span>
@@ -183,7 +185,7 @@ export default function SectionCardStackV3() {
                   </div>
 
                   <motion.div
-                    className='absolute bottom-4 left-1/2 z-50 h-[5px] w-[min(310px,calc(100%_-_48px))] -translate-x-1/2 overflow-hidden rounded-[var(--radius-pill)] bg-spontaine-surface-muted shadow-sm backdrop-blur sm:bottom-5 sm:w-[min(360px,calc(100%_-_64px))]'
+                    className='bg-spontaine-surface-muted absolute bottom-4 left-1/2 z-50 h-[5px] w-[min(310px,calc(100%_-_48px))] -translate-x-1/2 overflow-hidden rounded-[var(--radius-pill)] shadow-sm backdrop-blur sm:bottom-5 sm:w-[min(360px,calc(100%_-_64px))]'
                     aria-hidden='true'
                   >
                     <motion.div

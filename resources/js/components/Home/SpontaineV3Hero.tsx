@@ -160,8 +160,8 @@ export default function SpontaineV3Hero() {
               variant='v3Secondary'
               size='v3Hero'
             >
-              <a href='#resources'>
-                Watch the 90-second overview
+              <a href='/spontaine-video'>
+                Watch the video
                 <ArrowUpRight
                   aria-hidden='true'
                   className='h-4 w-4'
@@ -228,7 +228,7 @@ export default function SpontaineV3Hero() {
               company&apos;s systems.
             </span>
             <a
-              href='#product'
+              href='/private-equity'
               className='inline-flex items-center gap-2 font-body text-[0.76rem] font-bold text-spontaine-accent-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-spontaine-accent-dark md:justify-self-end md:text-right'
             >
               Explore portfolio intelligence

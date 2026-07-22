@@ -264,26 +264,29 @@ export default function SectionStackV3() {
 
   return (
     <section
+      id='architecure'
       ref={sectionRef}
-      className='rounded-t-section-sm bg-spontaine-surface-paper md:rounded-t-section-md lg:rounded-t-section-lg xl:rounded-t-section-xl relative z-20 overflow-hidden pb-[110px] pt-[142px] md:pt-[150px] lg:pb-[142px] lg:pt-[178px] xl:pt-[190px]'
+      className='relative z-20 overflow-hidden rounded-t-section-sm bg-spontaine-surface-paper pb-[110px] pt-[142px] md:rounded-t-section-md md:pt-[150px] lg:rounded-t-section-lg lg:pb-[142px] lg:pt-[178px] xl:rounded-t-section-xl xl:pt-[190px]'
     >
       <div className='mx-auto w-full max-w-[1180px] px-[var(--space-shell-sm)] md:px-[var(--space-shell)]'>
         <div className='mx-auto flex w-full max-w-[1060px] flex-col items-center'>
           <div className='mx-auto max-w-[820px] text-center'>
-            <p className='eyebrow mb-5 text-spontaine-gray-cool'>THE SHAPE OF GOVERNANCE</p>
+            <p className='eyebrow mb-5 text-spontaine-gray-cool'>ARCHITECTURE</p>
 
             <h2 className='display-xl text-spontaine-dark'>
-              Governance is not a policy.
+              You don't need six tools.
               <br />
               <span className='display-xl text-spontaine-text-accent-dark'>
-                It is the shape of the system.
+                You need one system.
               </span>
             </h2>
 
             <p className='body-lg mx-auto mt-5 max-w-[690px] font-body text-spontaine-gray-muted'>
-              A Lens defines a business concept once: the data it can use, the measures it exposes,
-              the context it needs, and the limits that protect it. Every dashboard, Block,
-              endpoint, workflow, and AI interaction works from that same contract.
+              Most AI pilots are third-party tools stitched together connectors, models, workflows,
+              none of them built to work with each other. The stitching breaks: someone has to
+              manage every integration, patch every failure. Spontaine is a single core powering
+              everything else, including the platforms you already run. No engineering required. One
+              system, built for your teams to actually use.
             </p>
           </div>
 
@@ -297,10 +300,10 @@ export default function SectionStackV3() {
                   aria-label={`Show ${card.label}`}
                   onClick={() => goToCard(index)}
                   className={[
-                    'hover:bg-spontaine-surface-ice/55 group -mx-2 flex items-center gap-3 rounded-[var(--radius-pill)] border-0 bg-transparent px-2 py-1 text-left font-mono text-xs transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-spontaine-accent-dark',
+                    'group -mx-2 flex items-center gap-3 rounded-[var(--radius-pill)] border-0 bg-transparent px-2 py-1 text-left font-mono text-xs transition-colors duration-200 hover:bg-spontaine-surface-ice/55 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-spontaine-accent-dark',
                     index === currentCard
-                      ? 'text-spontaine-text-primary font-semibold'
-                      : 'hover:text-spontaine-text-primary font-normal text-spontaine-gray-muted',
+                      ? 'font-semibold text-spontaine-text-primary'
+                      : 'font-normal text-spontaine-gray-muted hover:text-spontaine-text-primary',
                   ].join(' ')}
                 >
                   <span
@@ -385,7 +388,7 @@ function StackCard({
   return (
     <article
       className={[
-        'border-spontaine-border-glass-edge relative flex flex-row gap-7 overflow-hidden rounded-[var(--radius-panel)] border px-6 py-5 shadow-surface sm:px-8 md:flex-row md:items-center md:gap-8',
+        'relative flex flex-row gap-7 overflow-hidden rounded-[var(--radius-panel)] border border-spontaine-border-glass-edge px-6 py-5 shadow-surface sm:px-8 md:flex-row md:items-center md:gap-8',
         isActive ? 'bg-spontaine-surface-ice/90' : 'bg-spontaine-surface-ice/35 shadow-none',
         card.compactRightPadding ? 'md:pr-8' : 'md:pr-12',
       ].join(' ')}
@@ -405,7 +408,7 @@ function StackCard({
         </h3>
         <div
           className={[
-            'text-spontaine-text-primary mt-4 space-y-4 font-body text-[0.82rem] leading-[1.58] transition-opacity duration-300',
+            'mt-4 space-y-4 font-body text-[0.82rem] leading-[1.58] text-spontaine-text-primary transition-opacity duration-300',
             isActive ? 'opacity-100' : 'hidden',
           ].join(' ')}
         >
