@@ -7,7 +7,9 @@
         $defaultTitle = config('app.name', 'Spontaine');
         $defaultDescription =
             "Transform your disconnected systems into an AI-driven command center with Spontaine's no-code data integration platform.";
-        $defaultImage = rtrim(config('app.url', 'https://spontaine.com'), '/') . '/storage/images/8205df31-7880-4c23-902d-6b222d8174b5.png';
+        $defaultImage =
+            rtrim(config('app.url', 'https://spontaine.com'), '/') .
+            '/storage/images/8205df31-7880-4c23-902d-6b222d8174b5.png';
         $seoTitle = $seo['title'] ?? $defaultTitle;
         $seoDescription = $seo['description'] ?? $defaultDescription;
         $seoImage = $seo['image'] ?? $defaultImage;
@@ -20,13 +22,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title inertia>{{ config('app.name', 'Spontaine') }}</title>
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-    <!-- Calendly widget styles -->
-    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}" />
@@ -57,8 +52,6 @@
     @vite(['resources/js/app.tsx'])
     @inertiaHead
 
-    <!-- Calendly widget script -->
-    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EL0GPXQZX4"></script>
     <script>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { createPortal } from 'react-dom'
 
 interface CalendarBookingProps {
@@ -6,6 +6,10 @@ interface CalendarBookingProps {
   layout?: 'month_view' | 'week_view' | 'column_view'
   brandColor?: string
   children: (props: { openCalendar: () => void; isLoading: boolean }) => React.ReactNode
+}
+
+interface CalWindow extends Window {
+  Cal?: (action: string, config?: unknown) => void
 }
 
 // Detect iOS devices
@@ -17,6 +21,45 @@ const isIOS = () => {
   )
 }
 
+let calScriptPromise: Promise<void> | null = null
+
+const loadCalScript = () => {
+  if (typeof window === 'undefined') {
+    return Promise.resolve()
+  }
+
+  if ((window as CalWindow).Cal) {
+    return Promise.resolve()
+  }
+
+  if (calScriptPromise) {
+    return calScriptPromise
+  }
+
+  calScriptPromise = new Promise((resolve, reject) => {
+    const existingScript = document.querySelector<HTMLScriptElement>(
+      'script[src="https://app.cal.com/embed/embed.js"]'
+    )
+
+    if (existingScript) {
+      existingScript.addEventListener('load', () => resolve(), { once: true })
+      existingScript.addEventListener('error', () => reject(new Error('Cal.com failed to load')), {
+        once: true,
+      })
+      return
+    }
+
+    const script = document.createElement('script')
+    script.src = 'https://app.cal.com/embed/embed.js'
+    script.async = true
+    script.onload = () => resolve()
+    script.onerror = () => reject(new Error('Cal.com failed to load'))
+    document.body.appendChild(script)
+  })
+
+  return calScriptPromise
+}
+
 export const CalendarBooking = ({
   calLink = 'intuonfx/30min',
   layout = 'month_view',
@@ -24,50 +67,39 @@ export const CalendarBooking = ({
   children,
 }: CalendarBookingProps) => {
   const [showModal, setShowModal] = useState(false)
-  const [calLoaded, setCalLoaded] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
-  // Load Cal.com embed script (only once globally)
-  useEffect(() => {
-    if (typeof window === 'undefined') return
-
-    // Check if script is already loaded
-    const existingScript = document.querySelector(
-      'script[src="https://app.cal.com/embed/embed.js"]'
-    )
-
-    if (existingScript) {
-      // Script already exists, just set loaded state
-      setCalLoaded(true)
+  const openCalendar = async () => {
+    // On iOS, use Cal.com's native modal
+    if (!isIOS()) {
+      setShowModal(true)
       return
     }
 
-    // Load the script for the first time
-    const script = document.createElement('script')
-    script.src = 'https://app.cal.com/embed/embed.js'
-    script.async = true
-    script.onload = () => setCalLoaded(true)
-    document.body.appendChild(script)
+    setIsLoading(true)
 
-    // Don't remove the script on cleanup - keep it for other instances
-  }, [])
+    try {
+      await loadCalScript()
 
-  const openCalendar = () => {
-    // On iOS, use Cal.com's native modal
-    if (isIOS() && calLoaded && typeof window !== 'undefined' && (window as any).Cal) {
-      const Cal = (window as any).Cal
-      Cal('init', { origin: 'https://cal.com' })
-      Cal('ui', {
-        styles: { branding: { brandColor } },
-        hideEventTypeDetails: false,
-        layout,
-      })
-      Cal('openModal', {
-        calLink,
-        config: { layout },
-      })
-    } else {
-      // Desktop/Android: show iframe modal
+      const Cal = typeof window !== 'undefined' ? (window as CalWindow).Cal : undefined
+
+      if (Cal) {
+        Cal('init', { origin: 'https://cal.com' })
+        Cal('ui', {
+          styles: { branding: { brandColor } },
+          hideEventTypeDetails: false,
+          layout,
+        })
+        Cal('openModal', {
+          calLink,
+          config: { layout },
+        })
+        return
+      }
+
       setShowModal(true)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -77,7 +109,7 @@ export const CalendarBooking = ({
 
   return (
     <>
-      {children({ openCalendar, isLoading: !calLoaded })}
+      {children({ openCalendar, isLoading })}
 
       {/* MODAL WITH IFRAME (Desktop/Android only) */}
       {showModal &&
