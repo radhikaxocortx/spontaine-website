@@ -11,9 +11,14 @@ const Navbar = () => {
       <div className='mx-auto flex h-16 w-full max-w-[1180px] items-center justify-between px-[var(--space-shell-sm)] md:px-[var(--space-shell)]'>
         <Link
           href='/'
+          aria-label='Go to Spontaine home page'
           className='flex items-center'
         >
-          <ApplicationLogo2 className='h-9 w-auto' />
+          <ApplicationLogo2
+            aria-hidden='true'
+            focusable='false'
+            className='h-9 w-auto'
+          />
         </Link>
 
         <div className='hidden items-center gap-8 lg:flex'>

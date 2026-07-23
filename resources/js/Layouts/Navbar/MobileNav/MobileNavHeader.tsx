@@ -5,8 +5,15 @@ import { X } from 'lucide-react'
 
 export const MobileNavHeader = () => (
   <div className='mb-8 flex items-center justify-between'>
-    <Link href='/'>
-      <ApplicationLogo2 className='h-8 w-auto' />
+    <Link
+      href='/'
+      aria-label='Go to Spontaine home page'
+    >
+      <ApplicationLogo2
+        aria-hidden='true'
+        focusable='false'
+        className='h-8 w-auto'
+      />
     </Link>
     <SheetClose asChild>
       <button
