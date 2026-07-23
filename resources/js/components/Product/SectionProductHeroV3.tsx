@@ -43,8 +43,8 @@ export default function SectionProductHeroV3() {
               variant='v3Primary'
               size='v3Hero'
             >
-              <a href='#contact'>
-                Book the working session
+              <a href='/buyers-guide'>
+                Compare Capability
                 <ArrowUpRight
                   aria-hidden='true'
                   className='h-4 w-4'

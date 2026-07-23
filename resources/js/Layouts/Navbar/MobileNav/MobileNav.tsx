@@ -26,15 +26,53 @@ function MobileNavItem({
   const sectionGroups = item.items?.items?.filter((section) => section.links.length > 0) ?? []
   const hasSubMenuItems = sectionGroups.length > 0
 
-  return (
-    <div className='py-3'>
-      <div className='flex items-center justify-between gap-3'>
+  if (!hasSubMenuItems) {
+    return (
+      <div className='py-3'>
         <Link
           href={item.link_info?.link ?? '#'}
           target={item.link_info?.external ? '_blank' : undefined}
           rel={item.link_info?.external ? 'noopener noreferrer' : undefined}
           onClick={onNavigate}
-          className='block min-w-0 flex-1 font-body text-[15px] font-medium text-spontaine-text-primary transition-colors duration-200 hover:text-spontaine-text-accent-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-spontaine-accent-dark'
+          className='block min-w-0 font-body text-[15px] font-medium text-spontaine-text-primary transition-colors duration-200 hover:text-spontaine-text-accent-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-spontaine-accent-dark'
+        >
+          <Localization
+            text={{
+              english: item.title,
+              malayalam: item.title_malayalam ?? '',
+            }}
+            language={lang}
+          />
+        </Link>
+      </div>
+    )
+  }
+
+  return (
+    <div className='py-3'>
+      <div
+        role='button'
+        tabIndex={0}
+        aria-label={`Toggle ${item.title} submenu`}
+        aria-expanded={isOpen}
+        onClick={onToggle}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault()
+            onToggle()
+          }
+        }}
+        className='flex cursor-pointer items-center justify-between gap-3 rounded-[14px] transition-colors duration-200 hover:text-spontaine-text-accent-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-spontaine-accent-dark'
+      >
+        <Link
+          href={item.link_info?.link ?? '#'}
+          target={item.link_info?.external ? '_blank' : undefined}
+          rel={item.link_info?.external ? 'noopener noreferrer' : undefined}
+          onClick={(event) => {
+            event.stopPropagation()
+            onNavigate()
+          }}
+          className='block min-w-0 max-w-full flex-none truncate font-body text-[15px] font-medium text-spontaine-text-primary transition-colors duration-200 hover:text-spontaine-text-accent-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-spontaine-accent-dark'
         >
           <Localization
             text={{
@@ -45,25 +83,22 @@ function MobileNavItem({
           />
         </Link>
 
-        {hasSubMenuItems && (
-          <button
-            type='button'
-            aria-label={`Toggle ${item.title} submenu`}
-            aria-expanded={isOpen}
-            onClick={onToggle}
-            className='flex h-7 w-7 flex-none items-center justify-center rounded-[var(--radius-pill)] text-spontaine-text-primary transition-colors duration-200 hover:bg-spontaine-surface-cream hover:text-spontaine-text-accent-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-spontaine-accent-dark'
-          >
-            <ChevronDown
-              aria-hidden='true'
-              className={`h-4 w-4 transition-transform duration-200 ${
-                isOpen ? 'rotate-180 text-spontaine-text-accent-dark' : ''
-              }`}
-            />
-          </button>
-        )}
+        <span
+          aria-hidden='true'
+          className='min-w-4 flex-1 self-stretch'
+        />
+
+        <span className='flex h-7 w-7 flex-none items-center justify-center rounded-[var(--radius-pill)] text-spontaine-text-primary transition-colors duration-200 hover:bg-spontaine-surface-cream hover:text-spontaine-text-accent-dark'>
+          <ChevronDown
+            aria-hidden='true'
+            className={`h-4 w-4 transition-transform duration-200 ${
+              isOpen ? 'rotate-180 text-spontaine-text-accent-dark' : ''
+            }`}
+          />
+        </span>
       </div>
 
-      {hasSubMenuItems && isOpen && (
+      {isOpen && (
         <div className='mt-4 space-y-3 rounded-[18px] bg-spontaine-surface-cream/45 p-3'>
           {sectionGroups.map((section) => (
             <div
