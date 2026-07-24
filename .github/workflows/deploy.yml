@@ -34,4 +34,4 @@ jobs:
             npm run build
 
             echo "Done"
-          EO
+          EOF
