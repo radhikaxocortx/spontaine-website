@@ -17,22 +17,32 @@ interface Properties {
   data: string
   setData: (value: string) => unknown
   setShowModal: (value: boolean) => unknown
-  variant?: 'default' | 'v3'
+  variant?: 'default' | 'v3' | 'scriptEmbed'
 }
 
 const TinyMCE = ({ setData, data, setShowModal, variant = 'default' }: Properties) => {
-  const editorRef = useRef<any>(null)
+  const editorRef = useRef<{ getContent: () => string } | null>(null)
   const isV3 = variant === 'v3'
-  const toolbar = isV3
-    ? 'undo redo | blocks | formatselect | fontfamily | lineheight |' +
+  const isScriptEmbed = variant === 'scriptEmbed'
+  const isV3Like = isV3 || isScriptEmbed
+  const toolbar = isScriptEmbed
+    ? 'undo redo | code | blocks | formatselect | fontfamily | lineheight |' +
       'styles v3style | bold italic forecolor backcolor | alignleft aligncenter ' +
       'alignright alignjustify | bullist numlist outdent indent | ' +
       'removeformat | help'
-    : 'undo redo | blocks | formatselect | fontfamily | lineheight |' +
-      'bold italic backcolor | alignleft aligncenter ' +
-      'alignright alignjustify | bullist numlist outdent indent | ' +
-      'removeformat | help'
-  const fontFamilyFormats = isV3 ? v3FontFamilyFormats : defaultFontFamilyFormats
+    : isV3Like
+      ? 'undo redo | blocks | formatselect | fontfamily | lineheight |' +
+        'styles v3style | bold italic forecolor backcolor | alignleft aligncenter ' +
+        'alignright alignjustify | bullist numlist outdent indent | ' +
+        'removeformat | help'
+      : 'undo redo | blocks | formatselect | fontfamily | lineheight |' +
+        'bold italic backcolor | alignleft aligncenter ' +
+        'alignright alignjustify | bullist numlist outdent indent | ' +
+        'removeformat | help'
+  const fontFamilyFormats = isV3Like ? v3FontFamilyFormats : defaultFontFamilyFormats
+  const extendedValidElements = isScriptEmbed
+    ? 'iframe[src|srcdoc|width|height|name|align|frameborder|allowfullscreen|style|title|allow|loading],script[src|async|defer|type|charset|crossorigin|integrity|referrerpolicy],style[type|media|scoped]'
+    : 'iframe[src|srcdoc|width|height|name|align|frameborder|allowfullscreen|style|title|allow|loading]'
 
   const updateData = () => {
     if (editorRef.current) {
@@ -92,15 +102,17 @@ const TinyMCE = ({ setData, data, setShowModal, variant = 'default' }: Propertie
               'searchreplace visualblocks code' +
               'media table  code help wordcount pagebreak',
             toolbar,
-            style_formats: isV3 ? v3StyleFormats : defaultStyleFormats,
+            style_formats: isV3Like ? v3StyleFormats : defaultStyleFormats,
             style_formats_merge: true,
-            content_style: isV3 ? v3ContentStyle : defaultContentStyle,
-            color_map: isV3 ? v3ColorMap : undefined,
-            setup: isV3 ? setupV3Editor : undefined,
+            content_style: isV3Like ? v3ContentStyle : defaultContentStyle,
+            color_map: isV3Like ? v3ColorMap : undefined,
+            setup: isV3Like ? setupV3Editor : undefined,
 
             font_family_formats: fontFamilyFormats,
-            extended_valid_elements:
-              'iframe[src|srcdoc|width|height|name|align|frameborder|allowfullscreen|style|title|allow|loading]',
+            extended_valid_elements: extendedValidElements,
+            custom_elements: isScriptEmbed ? 'script,style' : undefined,
+            valid_children: isScriptEmbed ? '+body[style|script]' : undefined,
+            verify_html: isScriptEmbed ? false : undefined,
           }}
         />
       </div>

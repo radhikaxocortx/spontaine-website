@@ -36,6 +36,7 @@ import { sectionFeatureSplitV3Block } from '../Blocks/SpontaineV3/SectionFeature
 import { sectionHeroV3Block } from '../Blocks/SpontaineV3/SectionHeroV3'
 import { sectionLargeHeroV3Block } from '../Blocks/SpontaineV3/SectionLargeHeroV3'
 import { sectionRichTextV3Block } from '../Blocks/SpontaineV3/SectionRichTextV3'
+import { sectionScriptEmbedV3Block } from '../Blocks/SpontaineV3/SectionScriptEmbedV3'
 
 export interface PageBuilderAction {
   action:
@@ -249,6 +250,11 @@ const getBlockDefaultData = (blockName: string) => {
     case 'Spontaine V3 - Rich Text': {
       return {
         ...sectionRichTextV3Block,
+      }
+    }
+    case 'Spontaine V3 - Script Embed': {
+      return {
+        ...sectionScriptEmbedV3Block,
       }
     }
 

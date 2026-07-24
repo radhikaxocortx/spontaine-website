@@ -220,6 +220,11 @@ const blockFolders: readonly PageBlockFolder[] = [
         badge: 'RT3',
       },
       {
+        name: 'Spontaine V3 - Script Embed',
+        description: 'Trusted V3 HTML embed section with script, style, and iframe support',
+        badge: 'SE3',
+      },
+      {
         name: 'Content Section - Contact Us',
         description: 'V3 contact form with founding-team copy and enquiry pills',
         badge: 'CU',

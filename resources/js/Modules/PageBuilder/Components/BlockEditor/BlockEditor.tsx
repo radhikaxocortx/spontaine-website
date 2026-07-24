@@ -7,7 +7,6 @@ import ChangeTextForm from '@/Modules/PageBuilder/Components/BlockEditor/BlockEd
 import ChangeVideoForm from '@/Modules/PageBuilder/Components/BlockEditor/BlockEditorForms/ChangeVideoForm'
 import ResolveComponent from '@/Modules/PageBuilder/Components/ResolveComponent'
 import TinyMCE from '@/Modules/PageBuilder/Components/TinyMCE/TinyMce'
-import { Language } from '@/Modules/PageBuilder/Pages/PageBuilder'
 import { PageBuilderAction } from '@/Modules/PageBuilder/hooks/pageBuilderService'
 import useBlockStyling from '@/Modules/PageBuilder/hooks/useBlockStyling'
 import {
@@ -21,6 +20,7 @@ import {
   RequiredTextData,
   TextData,
 } from '@/Modules/PageBuilder/page_interfaces'
+import { Language } from '@/Modules/PageBuilder/Pages/PageBuilder'
 import { ArrowDownIcon, ArrowUpIcon, Settings2Icon, XIcon } from 'lucide-react'
 import React, { useCallback, useState } from 'react'
 import { FAQItemData } from '../../Blocks/FAQ'
@@ -160,7 +160,13 @@ const BlockEditor = ({ block, dispatch, language, dependencies }: Properties) =>
             }
             setData={onHtmlInput}
             setShowModal={() => setSelectedField(null)}
-            variant={block.blockName === 'Spontaine V3 - Rich Text' ? 'v3' : 'default'}
+            variant={
+              block.blockName === 'Spontaine V3 - Rich Text'
+                ? 'v3'
+                : block.blockName === 'Spontaine V3 - Script Embed'
+                  ? 'scriptEmbed'
+                  : 'default'
+            }
           />
         </div>
       )}
