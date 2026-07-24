@@ -23,7 +23,11 @@ export interface DPASectionData {
 }
 
 export interface DPAAccordionBlockData extends BlockConfiguration, Block {
+  backgroundColor?: TextData
+  overlapTop?: TextData
+  roundedTop?: TextData
   sections: ItemListField<DPASectionData>
+  textColor?: TextData
 }
 
 export const createEmptyText = (): TextData => ({

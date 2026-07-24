@@ -4,7 +4,6 @@ import { defaultPricePlanBlock } from '@/Modules/PageBuilder/Blocks/PricePlanCar
 import { richTextData } from '@/Modules/PageBuilder/Blocks/RichText/RichTextBlock'
 import { BlockFieldValues } from '@/Modules/PageBuilder/Components/BlockEditor/BlockEditor'
 import { Block, ItemListField, PageBlock } from '@/Modules/PageBuilder/page_interfaces'
-import { dpaAccordionBlock } from '../Blocks/DPAAccordion/DPAAccordion'
 import { faqBlock } from '../Blocks/FAQ'
 import { fullWidthImageWithTItleBlock } from '../Blocks/FullWidthImageWithTItle'
 import { gridWithVideoBlock } from '../Blocks/GridWithVideo'
@@ -31,6 +30,7 @@ import { heroImageBlock as heroImageSPBlock } from '../Blocks/SpontaineBlocks/Se
 import { heroVideoBlock } from '../Blocks/SpontaineBlocks/SectionHeroVideoSP'
 import { imageCarouselSPBlock } from '../Blocks/SpontaineBlocks/SectionImageCarouselSP'
 import { marqueeSPBlock } from '../Blocks/SpontaineBlocks/SectionMarqueeSP'
+import { dpaAccordionBlock } from '../Blocks/SpontaineV3/DPAAccordion/DPAAccordion'
 import { sectionCtaV3Block } from '../Blocks/SpontaineV3/SectionCtaV3'
 import { sectionFeatureSplitV3Block } from '../Blocks/SpontaineV3/SectionFeatureSplitV3'
 import { sectionHeroV3Block } from '../Blocks/SpontaineV3/SectionHeroV3'
@@ -130,7 +130,8 @@ const getBlockDefaultData = (blockName: string) => {
       }
     }
 
-    case 'Content Section - DPA Accordion': {
+    case 'Content Section - DPA Accordion':
+    case 'Spontaine V3 - DPA Accordion': {
       return {
         ...dpaAccordionBlock,
       }

@@ -9,7 +9,6 @@ import { PageBuilderAction } from '@/Modules/PageBuilder/hooks/pageBuilderServic
 import { Block, PageDataDependencies } from '@/Modules/PageBuilder/page_interfaces'
 import { Language } from '@/Modules/PageBuilder/Pages/PageBuilder'
 import React from 'react'
-import DPAAccordion, { DPAAccordionBlockData } from '../Blocks/DPAAccordion/DPAAccordion'
 import LeadCapture, { LeadCaptureBlockInterface } from '../Blocks/LeadCapture'
 
 import FAQ, { FAQBlockInfo } from '../Blocks/FAQ'
@@ -61,6 +60,9 @@ import SectionImageCarouselSP, {
 } from '../Blocks/SpontaineBlocks/SectionImageCarouselSP'
 import SectionMarqueeSP, { MarqueeSPData } from '../Blocks/SpontaineBlocks/SectionMarqueeSP'
 import ContactUS, { ContactUsBlockInterface } from '../Blocks/SpontaineV3/ContactUS'
+import DPAAccordion, {
+  DPAAccordionBlockData,
+} from '../Blocks/SpontaineV3/DPAAccordion/DPAAccordion'
 import SectionCtaV3, { SectionCtaV3Block } from '../Blocks/SpontaineV3/SectionCtaV3'
 import SectionFeatureSplitV3, {
   SectionFeatureSplitV3Block,
@@ -218,7 +220,8 @@ const ResolveComponent = ({
           language={language}
         />
       )}
-      {blockName === 'Content Section - DPA Accordion' && (
+      {(blockName === 'Content Section - DPA Accordion' ||
+        blockName === 'Spontaine V3 - DPA Accordion') && (
         <DPAAccordion
           editMode={editMode}
           onFieldEdit={onFieldEdit}

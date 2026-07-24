@@ -9,9 +9,13 @@ import useBlockStyling from '@/Modules/PageBuilder/hooks/useBlockStyling'
 import { ItemListField } from '@/Modules/PageBuilder/page_interfaces'
 import { Language } from '@/Modules/PageBuilder/Pages/PageBuilder'
 import { Dispatch } from 'react'
-import DPAAccordionSectionCard from './DPAAccordionSectionCard'
-import { createDPAAccordionHandlers } from './DPAAccordionStateHelpers'
-import { dpaAccordionBlock, DPAAccordionBlockData, DPASectionData } from './types'
+import DPAAccordionSectionCard from '../SpontaineV3/DPAAccordion/DPAAccordionSectionCard'
+import { createDPAAccordionHandlers } from '../SpontaineV3/DPAAccordion/DPAAccordionStateHelpers'
+import {
+  dpaAccordionBlock,
+  DPAAccordionBlockData,
+  DPASectionData,
+} from '../SpontaineV3/DPAAccordion/types'
 
 export { dpaAccordionBlock }
 export type { DPAAccordionBlockData }

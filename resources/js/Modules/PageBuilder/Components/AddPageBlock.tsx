@@ -95,11 +95,6 @@ const blockFolders: readonly PageBlockFolder[] = [
         badge: 'LC',
       },
       {
-        name: 'Content Section - DPA Accordion',
-        description: 'Nested legal sections with clauses and accordions for policy pages',
-        badge: 'DPA',
-      },
-      {
         name: 'Formatted Text',
         description: 'Rich text content with formatting options',
         badge: 'FT',
@@ -223,6 +218,11 @@ const blockFolders: readonly PageBlockFolder[] = [
         name: 'Spontaine V3 - Script Embed',
         description: 'Trusted V3 HTML embed section with script, style, and iframe support',
         badge: 'SE3',
+      },
+      {
+        name: 'Spontaine V3 - DPA Accordion',
+        description: 'V3 nested legal sections with clauses and compact accordions',
+        badge: 'DPA',
       },
       {
         name: 'Content Section - Contact Us',

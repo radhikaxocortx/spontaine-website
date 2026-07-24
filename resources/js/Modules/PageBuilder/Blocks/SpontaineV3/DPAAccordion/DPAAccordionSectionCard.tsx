@@ -55,19 +55,19 @@ const DPAAccordionSectionCard = ({
     <div
       className={
         editMode
-          ? 'rounded-[12px] border border-primary-200 bg-white p-4 sm:p-6'
-          : 'bg-spontaine-dpa-card shadow-spontaine-dpa w-full rounded-[12px] p-[30px] text-left'
+          ? 'rounded-2xl border border-spontaine-border-subtle bg-spontaine-surface-paper p-4 shadow-surface sm:p-6'
+          : 'w-full rounded-2xl border border-spontaine-border-subtle bg-spontaine-surface-paper p-5 text-left shadow-surface md:p-7'
       }
     >
       <div
         className={
           editMode
-            ? 'rounded-[10px] bg-primary-100 px-4 py-5 sm:px-7'
-            : 'bg-spontaine-dpa-header rounded-[8px] px-[25px] py-[30px]'
+            ? 'rounded-xl bg-spontaine-surface-cream px-4 py-5 sm:px-7'
+            : 'rounded-xl bg-spontaine-surface-cream px-5 py-6 md:px-7 md:py-8'
         }
       >
         {!editMode && (
-          <h2 className='text-spontaine-dpa-title font-body text-[32px] font-medium leading-tight'>
+          <h2 className='m-0 font-display text-lg font-bold leading-[0.98] tracking-[-0.05em] text-spontaine-text-primary md:text-xl'>
             <Localization
               text={section.item.sectionTitle}
               language={language}
@@ -77,11 +77,11 @@ const DPAAccordionSectionCard = ({
 
         {editMode && (
           <div className='space-y-3'>
-            <label className='block font-body text-xs font-semibold uppercase tracking-wide text-primary-900'>
+            <label className='block font-mono text-[11px] font-semibold uppercase tracking-[0.12em] text-spontaine-gray-cool'>
               Section Title
             </label>
             <textarea
-              className='w-full rounded-md border border-primary-300 px-3 py-2 font-body text-[18px] text-primary-950'
+              className='w-full rounded-lg border border-spontaine-border-medium bg-spontaine-light px-3 py-2 font-body text-[18px] text-spontaine-text-primary focus:border-spontaine-gray-soft focus:outline-none focus:ring-0'
               rows={2}
               value={
                 language === 'en'
@@ -115,7 +115,7 @@ const DPAAccordionSectionCard = ({
         )}
       </div>
 
-      <div className={editMode ? 'space-y-5 px-1 pt-6 sm:px-0' : 'space-y-5 pt-[25px]'}>
+      <div className={editMode ? 'space-y-5 px-1 pt-6 sm:px-0' : 'space-y-5 pt-6'}>
         {section.item.clauses.items.map((clause) => (
           <DPAAccordionClauseItem
             key={clause.id}
