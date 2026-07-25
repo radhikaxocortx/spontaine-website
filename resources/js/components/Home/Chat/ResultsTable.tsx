@@ -3,16 +3,16 @@ import ChatSurface from './ChatSurface'
 
 const rows = [
   {
-    engagement: 'Kuiper Groep -- advisory',
+    engagement: 'Euroline Group -- advisory',
     margin: '24.6%',
     target: '-13.4 pts',
-    partner: 'A. de Vries',
+    partner: 'K. Keller',
   },
   {
-    engagement: 'Verhoeven Logistics -- audit',
+    engagement: 'Riverton Energy -- audit',
     margin: '31.2%',
     target: '-6.8 pts',
-    partner: 'J. Smit',
+    partner: 'E. Moretti',
   },
 ]
 
