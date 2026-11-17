@@ -1,10 +1,12 @@
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ArrowRight, ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 import { useEffect, useRef } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Pill, type PillProps } from '@/components/ui/pill'
+import { trackEvent } from '@/lib/analytics'
+import HeroDoors from './Doors/HeroDoors'
 
 const decisionStates = [
   {
@@ -97,7 +99,7 @@ export default function SpontaineV3Hero() {
   return (
     <section
       ref={heroRef}
-      id='hero'
+      id='top'
       aria-labelledby='spontaine-v3-hero-title'
       className='relative isolate overflow-hidden bg-hero-wash px-[var(--space-shell-sm)] pb-[150px] pt-20 md:px-[var(--space-shell)] md:pb-[150px] md:pt-[168px] lg:pt-[120px]'
     >
@@ -119,24 +121,24 @@ export default function SpontaineV3Hero() {
         {/* Hero message and primary actions */}
         <div className='relative z-10 max-w-[760px] pb-8 pt-12 md:pb-20 md:pt-16 lg:pb-0'>
           <p className='eyebrow mb-6 max-w-[560px] text-spontaine-gray-cool'>
-            The owned intelligence layer for professional services and private equity
+            For companies that run like large ones, without a large data team
           </p>
 
           <h1
             id='spontaine-v3-hero-title'
-            className='display-hero text-spontaine-dark'
+            className='display-hero text-balance text-spontaine-dark'
           >
-            Turn your firm’s data and judgment
+            Turn the data you already have
             <br />
             <span className='display-hero text-spontaine-text-accent-dark'>
-              into an intelligence system you own.
+              into answers the whole business trusts.
             </span>
           </h1>
 
           <p className='body-lg mt-7 max-w-[570px] text-spontaine-gray-muted'>
-            Your data and experience are already an advantage. Spontaine turns them into a governed
-            intelligence layer your firm owns, so the answers your people create can be reused in
-            dashboards, workflows, client products, and the next decision.
+            Spontaine connects the systems you already run, agrees what your numbers mean, and
+            serves them to your people, your tools and your customers. Single tenant, hosted
+            securely and exclusively in your region. First results in four weeks.
           </p>
 
           <div className='mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap'>
@@ -145,7 +147,10 @@ export default function SpontaineV3Hero() {
               variant='v3Primary'
               size='v3Hero'
             >
-              <a href='/product'>
+              <a
+                href='/product'
+                onClick={() => trackEvent('cta_clicked', { label: 'The Product', section: 'top' })}
+              >
                 The Product
                 <ArrowUpRight
                   aria-hidden='true'
@@ -160,7 +165,10 @@ export default function SpontaineV3Hero() {
               variant='v3Secondary'
               size='v3Hero'
             >
-              <a href='/spontaine-video'>
+              <a
+                href='/spontaine-video'
+                onClick={() => trackEvent('cta_clicked', { label: 'View video', section: 'top' })}
+              >
                 View video
                 <ArrowUpRight
                   aria-hidden='true'
@@ -213,33 +221,12 @@ export default function SpontaineV3Hero() {
         </div>
       </div>
 
-      {/* Portfolio intelligence callout */}
+      {/* Three doors: route each visitor by situation */}
       <div
         ref={calloutRef}
-        className='relative left-1/2 z-20 mt-6 w-screen -translate-x-1/2'
+        className='relative left-1/2 z-20 mt-10 w-screen -translate-x-1/2 md:mt-14'
       >
-        <div className='border border-spontaine-white/70 bg-spontaine-white/35 backdrop-blur-[6px]'>
-          <div className='mx-auto grid min-h-[66px] w-full max-w-[1180px] gap-[7px] px-[var(--space-shell-sm)] py-[17px] font-body text-[0.76rem] md:grid-cols-[1.15fr_2fr_0.75fr] md:items-center md:gap-[18px] md:px-[var(--space-shell)]'>
-            <strong className='text-[0.8rem] font-semibold text-spontaine-dark'>
-              For private equity operating teams
-            </strong>
-            <span className='text-spontaine-gray-muted'>
-              Bring portfolio signals into one governed intelligence layer without replacing each
-              company&apos;s systems.
-            </span>
-            <a
-              href='/private-equity'
-              className='inline-flex items-center gap-2 font-body text-[0.76rem] font-bold text-spontaine-accent-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-spontaine-accent-dark md:justify-self-end md:text-right'
-            >
-              Explore portfolio intelligence
-              <ArrowRight
-                aria-hidden='true'
-                className='h-4 w-4'
-                strokeWidth={2}
-              />
-            </a>
-          </div>
-        </div>
+        <HeroDoors />
       </div>
     </section>
   )

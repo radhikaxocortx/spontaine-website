@@ -1,11 +1,16 @@
 import SectionBentoV3 from '@/components/Home/Bento/SectionBentoV3'
+import SectionBuildV3 from '@/components/Home/Build/SectionBuildV3'
 import SectionChatV3 from '@/components/Home/Chat/SectionChatV3'
 import SectionBlogsCarouselV3 from '@/components/Home/SectionBlogsCarouselV3'
 import SectionCTAV3 from '@/components/Home/SectionCTAV3'
 import SectionTestBannerV3 from '@/components/Home/SectionTestBannerV3'
 import SpontaineV3Hero from '@/components/Home/SpontaineV3Hero'
 import SectionStackV3 from '@/components/Home/Stack/SectionStackV3'
+import StackUpBand from '@/components/Home/StackUpBand'
+import SectionStartV3 from '@/components/Home/Start/SectionStartV3'
+import SectionTrustV3 from '@/components/Home/Trust/SectionTrustV3'
 import MetaTags from '@/components/MetaTags'
+import { useSectionViewed } from '@/hooks/useSectionViewed'
 import { useSmoothPageScroll } from '@/hooks/useSmoothPageScroll'
 import { FooterDataInterface } from '@/Modules/PageBuilder/FooterEditor/FooterEditor'
 import { Page } from '@/Modules/PageBuilder/page_interfaces'
@@ -14,6 +19,19 @@ import { usePage } from '@inertiajs/react'
 import { useEffect } from 'react'
 import Footer from './Footer/Footer'
 import Navbar from './Navbar/Navbar'
+
+/** Fixed anchor ids: other pages and outbound emails link to these. */
+const HOME_SECTION_IDS = [
+  'top',
+  'example',
+  'choices',
+  'architecture',
+  'build',
+  'first-question',
+  'security',
+  'belief',
+  'book',
+] as const
 
 interface StaticHomePageV3Props {
   featuredVideoPosts?: Page[]
@@ -26,14 +44,15 @@ interface StaticHomePageV3Props {
 
 const StaticHomePageV3 = ({
   featuredBlogs = [],
-  title = 'Governed AI Data Infrastructure for Professional Services',
-  description = `Spontaine turns your firm's data and judgment into governed intelligence you own - one system orchestrating client delivery, workflows, dashboards, and outputs.`,
+  title = 'Governed answers from the data you already have',
+  description = 'Spontaine connects your systems, agrees what your numbers mean and serves governed answers to your people, tools and customers. Single tenant, hosted securely and exclusively in your region. First results in four weeks.',
   image = 'https://spontaine.com/storage/images/8205df31-7880-4c23-902d-6b222d8174b5.png',
   noIndex = false,
 }: StaticHomePageV3Props) => {
   const { footer } = usePage<PageProps & { footer: { items: FooterDataInterface } }>().props
 
   useSmoothPageScroll()
+  useSectionViewed(HOME_SECTION_IDS)
 
   useEffect(() => {
     const loadCookieConsent = async () => {
@@ -91,20 +110,33 @@ const StaticHomePageV3 = ({
           <SectionChatV3 />
         </div>
         {/* <VideoFeatureCarousel /> */}
-        <SectionBentoV3 />
+        <StackUpBand className='relative'>
+          <SectionBentoV3 />
+        </StackUpBand>
         {/* <CompanyLogosMarquee /> */}
         <div className='relative z-20 -mt-8 md:-mt-10 lg:-mt-12 xl:-mt-16'>
           <SectionStackV3 />
         </div>
-        <SectionTestBannerV3 />
-        {/* <SectionTestimonial /> */}
-
-        <div id='resources'>
-          <SectionBlogsCarouselV3 featuredBlogs={featuredBlogs} />
+        <div className='relative z-20'>
+          <SectionBuildV3 />
         </div>
-        <div className='relative z-20 -mt-8 md:-mt-10 lg:-mt-12 xl:-mt-20'>
+        <div className='relative z-20 -mt-8 md:-mt-10 lg:-mt-12 xl:-mt-16'>
+          <SectionStartV3 />
+        </div>
+        <div className='relative z-20'>
+          <SectionTrustV3 />
+        </div>
+        {/* Belief, quote and resources read as one cream band */}
+        <StackUpBand className='relative z-20 -mt-8 md:-mt-10 lg:-mt-12 xl:-mt-16'>
+          <SectionTestBannerV3 />
+          {/* <SectionTestimonial /> */}
+          <div id='resources'>
+            <SectionBlogsCarouselV3 featuredBlogs={featuredBlogs} />
+          </div>
+        </StackUpBand>
+        <StackUpBand className='relative z-20 -mt-8 md:-mt-10 lg:-mt-12 xl:-mt-20'>
           <SectionCTAV3 />
-        </div>
+        </StackUpBand>
       </div>
       <Footer blockData={footer.items} />
     </div>

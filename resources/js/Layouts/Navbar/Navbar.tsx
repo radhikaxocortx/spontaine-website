@@ -1,6 +1,7 @@
 import { CalendarBooking } from '@/components/CalendarBooking'
 import ApplicationLogo2 from '@/components/CustomUI/ApplicationLogo2'
 import { Button } from '@/components/ui/button'
+import { trackEvent } from '@/lib/analytics'
 import { Link } from '@inertiajs/react'
 import { MobileNav } from './MobileNav/MobileNav'
 import NavbarLinks from './NavbarLinks'
@@ -28,12 +29,19 @@ const Navbar = () => {
             {({ openCalendar }) => (
               <Button
                 type='button'
-                onClick={openCalendar}
+                onClick={() => {
+                  trackEvent('cta_clicked', {
+                    label: 'Book the working session',
+                    section: 'header',
+                  })
+                  openCalendar()
+                }}
                 variant='v3NavPrimary'
                 size='v3Hero'
                 className='min-h-10 px-5 py-2 text-[15px]'
               >
-                Book a session
+                <span className='xl:hidden'>Book a session</span>
+                <span className='hidden xl:inline'>Book the working session</span>
               </Button>
             )}
           </CalendarBooking>

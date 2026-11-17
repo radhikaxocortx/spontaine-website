@@ -62,12 +62,23 @@ export default function SectionBentoV3() {
   let cardIndex = 0
 
   return (
-    <section className='rounded-t-section-sm bg-spontaine-surface-ice md:rounded-t-section-md lg:rounded-t-section-lg xl:rounded-t-section-xl relative w-full overflow-hidden py-[105px] md:py-[130px] lg:pb-[155px]'>
+    <section
+      id='choices'
+      className='relative w-full overflow-hidden rounded-t-section-sm bg-spontaine-surface-ice py-[105px] md:rounded-t-section-md md:py-[130px] lg:rounded-t-section-lg lg:pb-[155px] xl:rounded-t-section-xl'
+    >
       <div className='mx-auto w-full max-w-[1180px] px-[var(--space-shell-sm)] md:px-[var(--space-shell)]'>
         <div className='mx-auto max-w-[790px] text-center'>
-          <p className='eyebrow mb-5 text-spontaine-gray-cool'>THE OLD CHOICES</p>
+          <p
+            data-stack-item
+            className='eyebrow mb-5 text-spontaine-gray-cool'
+          >
+            THE OLD CHOICES
+          </p>
 
-          <h2 className='display-xl text-spontaine-dark'>
+          <h2
+            data-stack-item
+            className='display-xl text-spontaine-dark'
+          >
             You do not need another dashboard.
             <br />
             <span className='display-xl text-spontaine-text-accent-dark'>
@@ -75,9 +86,12 @@ export default function SectionBentoV3() {
             </span>
           </h2>
 
-          <p className='body-lg mx-auto mt-5 max-w-[580px] font-body text-spontaine-gray-muted'>
+          <p
+            data-stack-item
+            className='body-lg mx-auto mt-5 max-w-[580px] font-body text-spontaine-gray-muted'
+          >
             The models are ready. The missing layer is the governed business knowledge that lets
-            them work safely, consistently, and repeatedly for your firm.
+            them work safely, consistently, and repeatedly for your business.
           </p>
         </div>
 

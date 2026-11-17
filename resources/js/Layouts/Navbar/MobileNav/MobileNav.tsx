@@ -2,12 +2,14 @@ import { CalendarBooking } from '@/components/CalendarBooking'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { Language } from '@/components/ui/ui_interfaces'
+import { cn } from '@/lib/utils'
 import InertiaLink from '@/Modules/PageBuilder/Components/InertiaLink'
 import Localization from '@/Modules/PageBuilder/Components/Localization'
 import { NavMenu } from '@/Modules/PageBuilder/page_interfaces'
 import { Link, usePage } from '@inertiajs/react'
 import { ChevronDown, Menu } from 'lucide-react'
 import { useState } from 'react'
+import NavLinkContent, { trackNavLink } from '../NavLinkContent'
 import { MobileNavHeader } from './MobileNavHeader'
 
 function MobileNavItem({
@@ -100,10 +102,13 @@ function MobileNavItem({
 
       {isOpen && (
         <div className='mt-4 space-y-3 rounded-[18px] bg-spontaine-surface-cream/45 p-3'>
-          {sectionGroups.map((section) => (
+          {sectionGroups.map((section, sectionIndex) => (
             <div
               key={section.id}
-              className='space-y-1.5'
+              className={cn(
+                'space-y-1.5',
+                sectionIndex > 0 && 'border-t border-[var(--spontaine-border-subtle)] pt-3'
+              )}
             >
               <p className='px-2 font-mono text-[0.66rem] font-medium uppercase tracking-[0.12em] text-spontaine-text-tertiary'>
                 <Localization
@@ -118,9 +123,17 @@ function MobileNavItem({
                     key={link.id}
                     link={link}
                     language={lang}
-                    onClick={onNavigate}
+                    onClick={() => {
+                      trackNavLink(item, link, 'sheet')
+                      onNavigate()
+                    }}
                     className='block rounded-[12px] px-2.5 py-2 font-body text-sm font-medium text-spontaine-text-primary transition-colors duration-200 hover:bg-spontaine-surface-paper hover:text-spontaine-text-accent-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-spontaine-accent-dark'
-                  />
+                  >
+                    <NavLinkContent
+                      link={link}
+                      lang={lang}
+                    />
+                  </InertiaLink>
                 ))}
               </div>
             </div>
@@ -207,7 +220,7 @@ export function MobileNav() {
                   size='v3Hero'
                   className='min-h-10 w-full px-5 py-2 text-[15px]'
                 >
-                  Book a session
+                  Book the working session
                 </Button>
               )}
             </CalendarBooking>

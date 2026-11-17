@@ -36,8 +36,9 @@ final class HomePageController extends Controller
             'featuredBlogs' => $featuredBlogs,
         ])->withViewData([
             'seo' => [
-                'title' => 'Governed AI Data Infrastructure for Professional Services',
-                'description' => "Spontaine turns your firm's data and judgment into governed intelligence you own - one system orchestrating client delivery, workflows, dashboards, and outputs.",
+                // Keep in sync with StaticHomePageV3.tsx: link-preview scrapers read these, not the client-side tags.
+                'title' => 'Governed answers from the data you already have',
+                'description' => 'Spontaine connects your systems, agrees what your numbers mean and serves governed answers to your people, tools and customers. Single tenant, hosted securely and exclusively in your region. First results in four weeks.',
                 'image' => rtrim((string) config('app.url'), '/') . '/storage/images/8205df31-7880-4c23-902d-6b222d8174b5.png',
                 'url' => $request->fullUrl(),
                 'type' => 'website',

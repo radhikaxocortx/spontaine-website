@@ -43,6 +43,7 @@ Route::get('media/file/{type}/{key}', [ManageMediaController::class, 'file'])
 // Nav Editor
 Route::resource('nav-editor', NavEditorController::class);
 Route::post('nav-editor/{id}/sections', UpdateNavMenuItemsController::class)
+    ->middleware('auth')
     ->name('nav-editor.update-items');
 
 Route::resource('footer-editor', FooterController::class);

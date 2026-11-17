@@ -1,13 +1,29 @@
 import { Pill } from '@/components/ui/pill'
+import { useStackUp } from '@/hooks/useStackUp'
+import { trackEvent } from '@/lib/analytics'
+import { prefersReducedMotion } from '@/lib/motion'
+import { cn } from '@/lib/utils'
 import { Paperclip, SendHorizontal } from 'lucide-react'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import ApprovalCard from './ApprovalCard'
 import ChatSurface from './ChatSurface'
+import { demoSceneList, demoScenes } from './demoScenes'
+import DemoTabs, { demoTabButtonId } from './DemoTabs'
+import {
+  DEFAULT_DEMO_TAB,
+  type DemoTabId,
+  type DemoTabSource,
+  onDemoTabRequest,
+  readDemoTabFromUrl,
+} from './demoTabState'
 import ResultsTable from './ResultsTable'
 import { useChatStory } from './useChatStory'
 
+const STAGE_PANEL_ID = 'demo-stage'
+const CROSSFADE_OUT_MS = 200
+
 const useTypewriter = (
-  questions: string[],
+  questions: readonly string[],
   onTypingComplete: () => void,
   typingSpeed = 80,
   deletingSpeed = 30
@@ -16,9 +32,22 @@ const useTypewriter = (
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isDeleting, setIsDeleting] = useState(false)
   const hasReportedCompletionRef = useRef(false)
+  const questionsRef = useRef(questions)
+
+  // A new scene restarts typing from its first question.
+  useEffect(() => {
+    if (questionsRef.current === questions) {
+      return
+    }
+
+    questionsRef.current = questions
+    setDisplayText('')
+    setCurrentIndex(0)
+    setIsDeleting(false)
+  }, [questions])
 
   useEffect(() => {
-    const currentQuestion = questions[currentIndex]
+    const currentQuestion = questions[currentIndex] ?? questions[0]
 
     const timeout = setTimeout(
       () => {
@@ -57,15 +86,66 @@ const useTypewriter = (
   return displayText
 }
 
-const questions = [
-  'Which engagements are likely to miss target margin this quarter?',
-  'Where did delayed billing change expected realization?',
-]
+/** Selected tab, the tab on stage (lags during the crossfade), and the ways a tab gets chosen. */
+const useDemoTab = () => {
+  const [activeTab, setActiveTab] = useState<DemoTabId>(DEFAULT_DEMO_TAB)
+  const [displayedTab, setDisplayedTab] = useState<DemoTabId>(DEFAULT_DEMO_TAB)
+  const [isFading, setIsFading] = useState(false)
+  const activeTabRef = useRef(activeTab)
+
+  const selectTab = useCallback((tab: DemoTabId, source: DemoTabSource) => {
+    if (tab === activeTabRef.current) {
+      return
+    }
+
+    activeTabRef.current = tab
+    setActiveTab(tab)
+    trackEvent('demo_tab_switched', { tab, source })
+  }, [])
+
+  useEffect(() => {
+    const tabFromUrl = readDemoTabFromUrl()
+
+    if (tabFromUrl && tabFromUrl !== DEFAULT_DEMO_TAB) {
+      activeTabRef.current = tabFromUrl
+      setActiveTab(tabFromUrl)
+      setDisplayedTab(tabFromUrl)
+      trackEvent('demo_tab_switched', { tab: tabFromUrl, source: 'url' })
+    }
+
+    return onDemoTabRequest(selectTab)
+  }, [selectTab])
+
+  useEffect(() => {
+    if (activeTab === displayedTab) {
+      return
+    }
+
+    if (prefersReducedMotion()) {
+      setDisplayedTab(activeTab)
+      return
+    }
+
+    setIsFading(true)
+    const timeout = window.setTimeout(() => {
+      setDisplayedTab(activeTab)
+      setIsFading(false)
+    }, CROSSFADE_OUT_MS)
+
+    return () => window.clearTimeout(timeout)
+  }, [activeTab, displayedTab])
+
+  return { activeTab, displayedTab, isFading, selectTab }
+}
 
 export default function SectionChatV3() {
+  const sectionRef = useStackUp<HTMLElement>()
   const stageRef = useRef<HTMLDivElement>(null)
   const tableRef = useRef<HTMLDivElement>(null)
   const approvalRef = useRef<HTMLDivElement>(null)
+
+  const { activeTab, displayedTab, isFading, selectTab } = useDemoTab()
+  const scene = demoScenes[displayedTab]
 
   const { storyState, onTypingComplete } = useChatStory({
     stageRef,
@@ -73,32 +153,71 @@ export default function SectionChatV3() {
     approvalRef,
   })
 
-  const typewriterText = useTypewriter(questions, onTypingComplete)
+  const typewriterText = useTypewriter(scene.questions, onTypingComplete)
 
   return (
     <section
-      className='relative z-30 w-full overflow-hidden rounded-t-section-sm bg-spontaine-surface-paper pb-[110px] pt-[104px] md:rounded-t-section-md md:pb-[130px] md:pt-[130px] lg:rounded-t-section-lg lg:pb-[150px] lg:pt-[136px] xl:rounded-t-section-xl xl:pt-[144px]'
+      ref={sectionRef}
+      id='example'
+      className='relative z-30 w-full scroll-mt-16 overflow-hidden rounded-t-section-sm bg-spontaine-surface-paper pb-[110px] pt-[104px] md:rounded-t-section-md md:pb-[130px] md:pt-[130px] lg:rounded-t-section-lg lg:pb-[150px] lg:pt-[136px] xl:rounded-t-section-xl xl:pt-[144px]'
       data-story-state={storyState}
     >
       <div className='mx-auto w-full max-w-[1180px] px-[var(--space-shell-sm)] md:px-[var(--space-shell)]'>
         <div className='mx-auto max-w-[760px] text-center'>
-          <h2 className='font-display text-[clamp(2.5rem,4.4vw,4.45rem)] font-bold leading-[0.95] tracking-[-0.06em]'>
-            <p className='m-0 block font-display font-bold leading-[inherit] tracking-[inherit] text-spontaine-text-accent-grey'>
+          <p
+            data-stack-item
+            className='eyebrow mb-5 text-spontaine-gray-cool'
+          >
+            See it work
+          </p>
+          <h2
+            data-stack-item
+            className='font-display text-[clamp(2.5rem,4.4vw,4.45rem)] font-bold leading-[0.95] tracking-[-0.06em]'
+          >
+            <span className='m-0 block font-display font-bold leading-[inherit] tracking-[inherit] text-spontaine-text-accent-grey'>
               An answer is useful once.
-            </p>
-            <p className='m-0 block font-display font-bold leading-[inherit] tracking-[inherit] text-spontaine-dark'>
+            </span>
+            <span className='m-0 block font-display font-bold leading-[inherit] tracking-[inherit] text-spontaine-dark'>
               A capability works every day.
-            </p>
+            </span>
           </h2>
-          <p className='body-lg mx-auto mt-[21px] max-w-[570px] font-body text-spontaine-gray-muted'>
-            Ask a question your firm cares about. Spontaine gives you a governed answer with the
+          <p
+            data-stack-item
+            className='body-lg mx-auto mt-[21px] max-w-[570px] font-body text-spontaine-gray-muted'
+          >
+            Ask a question your business cares about. Spontaine gives you a governed answer with the
             right context, then lets you keep the useful work as a reusable Block.
+          </p>
+
+          <div
+            data-stack-item
+            className='mt-9'
+          >
+            <DemoTabs
+              tabs={demoSceneList}
+              value={activeTab}
+              panelId={STAGE_PANEL_ID}
+              onChange={(tab) => selectTab(tab, 'click')}
+            />
+          </div>
+
+          <p
+            aria-live='polite'
+            className='sr-only'
+          >
+            {`Showing the ${demoScenes[activeTab].label} example`}
           </p>
         </div>
 
         <div
           ref={stageRef}
-          className='mx-auto mt-[50px] w-full min-w-0'
+          id={STAGE_PANEL_ID}
+          role='tabpanel'
+          aria-labelledby={demoTabButtonId(activeTab)}
+          className={cn(
+            'mx-auto mt-9 w-full min-w-0 transition-opacity [transition-timing-function:cubic-bezier(0.215,0.61,0.355,1)]',
+            isFading ? 'opacity-0 duration-200' : 'opacity-100 duration-300'
+          )}
         >
           <div className='mx-auto max-w-[690px]'>
             <ChatSurface
@@ -136,26 +255,15 @@ export default function SectionChatV3() {
               </div>
 
               <div className='mt-[14px] flex flex-wrap gap-[7px]'>
-                <Pill
-                  variant='variant1'
-                  size='md'
-                >
-                  Create interactive view
-                </Pill>
-
-                <Pill
-                  variant='variant4'
-                  size='md'
-                >
-                  Sources: Finance, time &amp; WIP
-                </Pill>
-
-                <Pill
-                  variant='neutral'
-                  size='md'
-                >
-                  This quarter
-                </Pill>
+                {scene.pills.map((pill) => (
+                  <Pill
+                    key={pill.label}
+                    variant={pill.variant}
+                    size='md'
+                  >
+                    {pill.label}
+                  </Pill>
+                ))}
               </div>
             </ChatSurface>
           </div>
@@ -165,16 +273,27 @@ export default function SectionChatV3() {
               ref={tableRef}
               className='min-w-0'
             >
-              <ResultsTable />
+              <ResultsTable scene={scene} />
             </div>
 
             <div
               ref={approvalRef}
               className='min-w-0 self-stretch lg:self-end'
             >
-              <ApprovalCard />
+              <ApprovalCard
+                label={scene.alertLabel}
+                title={scene.alertTitle}
+              />
             </div>
           </div>
+
+          <p className='eyebrow mt-[22px] flex items-center justify-center gap-2 text-spontaine-text-tertiary'>
+            <span
+              aria-hidden='true'
+              className='h-1.5 w-1.5 rounded-[var(--radius-pill)] bg-spontaine-gray-soft'
+            />
+            Illustrative data
+          </p>
         </div>
       </div>
     </section>

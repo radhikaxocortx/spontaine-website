@@ -6,12 +6,14 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Language } from '@/components/ui/ui_interfaces'
+import { cn } from '@/lib/utils'
 import InertiaLink from '@/Modules/PageBuilder/Components/InertiaLink'
 import Localization from '@/Modules/PageBuilder/Components/Localization'
 import { NavMenu } from '@/Modules/PageBuilder/page_interfaces'
 import { Link, usePage } from '@inertiajs/react'
 import { ChevronDown } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import NavLinkContent, { menuHasDescriptions, trackNavLink } from './NavLinkContent'
 
 const NavbarLinks = () => {
   const { nav, lang = 'en' } = usePage().props as unknown as {
@@ -130,12 +132,18 @@ const NavbarLinks = () => {
               sideOffset={10}
               onMouseEnter={() => openMenu(menuId)}
               onMouseLeave={closeMenu}
-              className='z-[60] w-[260px] rounded-[14px] bg-spontaine-surface-paper p-2 shadow-card-lift'
+              className={cn(
+                'z-[60] rounded-[14px] bg-spontaine-surface-paper p-2 shadow-card-lift',
+                menuHasDescriptions(sectionGroups) ? 'w-[340px]' : 'w-[260px]'
+              )}
             >
-              {sectionGroups.map((section) => (
+              {sectionGroups.map((section, sectionIndex) => (
                 <div
                   key={section.id}
-                  className='py-1'
+                  className={cn(
+                    'py-1',
+                    sectionIndex > 0 && 'mt-1 border-t border-[var(--spontaine-border-subtle)] pt-2'
+                  )}
                 >
                   <DropdownMenuLabel className='px-2 pb-1 pt-2 font-mono text-[0.66rem] font-medium uppercase tracking-[0.12em] text-spontaine-text-tertiary'>
                     <Localization
@@ -151,8 +159,14 @@ const NavbarLinks = () => {
                       <InertiaLink
                         link={link}
                         language={lang}
+                        onClick={() => trackNavLink(menuItem, link, 'header')}
                         className='block w-full rounded-[10px] px-2.5 py-2 font-body text-sm font-medium text-spontaine-text-primary transition-colors duration-200 hover:bg-spontaine-surface-cream hover:text-spontaine-text-accent-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-spontaine-accent-dark'
-                      />
+                      >
+                        <NavLinkContent
+                          link={link}
+                          lang={lang}
+                        />
+                      </InertiaLink>
                     </DropdownMenuItem>
                   ))}
                 </div>

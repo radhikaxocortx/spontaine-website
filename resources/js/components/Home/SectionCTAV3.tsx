@@ -1,5 +1,6 @@
 import { CalendarBooking } from '@/components/CalendarBooking'
 import { Button } from '@/components/ui/button'
+import { trackEvent } from '@/lib/analytics'
 import { cn } from '@/lib/utils'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -119,7 +120,7 @@ export default function SectionCTAV3({ className }: SectionCTAV3Props) {
   return (
     <section
       ref={sectionRef}
-      id='contact'
+      id='book'
       className={cn(
         'relative w-full overflow-hidden rounded-t-section-sm bg-cta-wash py-[96px] text-center md:rounded-t-section-md md:py-[120px] lg:rounded-t-section-lg lg:pb-[120px] lg:pt-[135px] xl:rounded-t-section-xl',
         className
@@ -128,18 +129,16 @@ export default function SectionCTAV3({ className }: SectionCTAV3Props) {
       <div className='mx-auto w-full max-w-[1180px] px-[var(--space-shell-sm)] md:px-[var(--space-shell)]'>
         <h2
           data-home-cta-title
-          className='display-xl text-spontaine-text-primary mx-auto max-w-[880px] font-display'
+          className='display-xl mx-auto max-w-[880px] font-display text-spontaine-text-primary'
         >
-          Bring the question your firm cannot answer with confidence.
+          Thirty minutes with the people who built it.
         </h2>
 
         <p
           data-home-cta-description
-          className='body-lg text-spontaine-text-secondary mx-auto mt-[23px] max-w-[650px] font-body'
+          className='body-lg mx-auto mt-[23px] max-w-[650px] font-body text-spontaine-text-secondary'
         >
-          Thirty minutes. No discovery-call script. Bring the decision, the spreadsheet, or the
-          system that sits behind it. We will show you what a governed answer - and the capability
-          it can become - could look like in your firm.
+          Bring the question your leadership keeps asking.
         </p>
 
         <div
@@ -150,11 +149,14 @@ export default function SectionCTAV3({ className }: SectionCTAV3Props) {
             {({ openCalendar }) => (
               <Button
                 type='button'
-                onClick={openCalendar}
+                onClick={() => {
+                  trackEvent('cta_clicked', { label: 'Book the working session', section: 'book' })
+                  openCalendar()
+                }}
                 variant='v3Primary'
                 size='v3Hero'
               >
-                Book a working session
+                Book the working session
                 <ArrowUpRight
                   aria-hidden='true'
                   className='h-4 w-4'
@@ -168,7 +170,7 @@ export default function SectionCTAV3({ className }: SectionCTAV3Props) {
           data-home-cta-note
           className='mt-[19px] font-mono text-[0.72rem] text-spontaine-gray-deep'
         >
-          Start with the decision. Build from there.
+          A 30-minute working session. No deck. No obligation.
         </p>
       </div>
     </section>

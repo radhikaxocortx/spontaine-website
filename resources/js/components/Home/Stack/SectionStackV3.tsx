@@ -1,3 +1,4 @@
+import { useStackUp } from '@/hooks/useStackUp'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
@@ -93,6 +94,8 @@ const figmaStackOffsets = [
 
 export default function SectionStackV3() {
   const sectionRef = useRef<HTMLElement | null>(null)
+  // This band is pinned by ScrollTrigger, so only its intro stacks up.
+  const introRef = useStackUp<HTMLDivElement>({ moveBand: false })
   const stackStageRef = useRef<HTMLDivElement | null>(null)
   const scrollTriggerRef = useRef<ScrollTrigger | null>(null)
   const progressBarRef = useRef<HTMLDivElement | null>(null)
@@ -264,16 +267,27 @@ export default function SectionStackV3() {
 
   return (
     <section
-      id='architecure'
+      id='architecture'
       ref={sectionRef}
       className='relative z-20 overflow-hidden rounded-t-section-sm bg-spontaine-surface-paper pb-[110px] pt-[142px] md:rounded-t-section-md md:pt-[150px] lg:rounded-t-section-lg lg:pb-[142px] lg:pt-[178px] xl:rounded-t-section-xl xl:pt-[190px]'
     >
       <div className='mx-auto w-full max-w-[1180px] px-[var(--space-shell-sm)] md:px-[var(--space-shell)]'>
         <div className='mx-auto flex w-full max-w-[1060px] flex-col items-center'>
-          <div className='mx-auto max-w-[820px] text-center'>
-            <p className='eyebrow mb-5 text-spontaine-gray-cool'>ARCHITECTURE</p>
+          <div
+            ref={introRef}
+            className='mx-auto max-w-[820px] text-center'
+          >
+            <p
+              data-stack-item
+              className='eyebrow mb-5 text-spontaine-gray-cool'
+            >
+              ARCHITECTURE
+            </p>
 
-            <h2 className='display-xl text-spontaine-dark'>
+            <h2
+              data-stack-item
+              className='display-xl text-spontaine-dark'
+            >
               Not six tools stitched together.
               <br />
               <span className='display-xl text-spontaine-text-accent-dark'>
@@ -281,12 +295,15 @@ export default function SectionStackV3() {
               </span>
             </h2>
 
-            <p className='body-lg mx-auto mt-5 max-w-[690px] font-body text-spontaine-gray-muted'>
+            <p
+              data-stack-item
+              className='body-lg mx-auto mt-5 max-w-[690px] font-body text-spontaine-gray-muted'
+            >
               Most AI pilots are third-party tools stitched together connectors, models, workflows,
               none of them built to work with each other. The stitching breaks: someone has to
               manage every integration, patch every failure. Spontaine is a single core powering
-              everything else, including the platforms you already run. No engineering required. One
-              system, built for your teams to actually use.
+              everything else, including the platforms you already run. IT owns the perimeter. Not
+              the backlog. One system, built for your teams to actually use.
             </p>
           </div>
 
