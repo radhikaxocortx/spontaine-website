@@ -59,10 +59,13 @@ import SectionImageCarouselSP, {
   ImageCarouselSPData,
 } from '../Blocks/SpontaineBlocks/SectionImageCarouselSP'
 import SectionMarqueeSP, { MarqueeSPData } from '../Blocks/SpontaineBlocks/SectionMarqueeSP'
+import AccordionV3, { type AccordionV3Block } from '../Blocks/SpontaineV3/AccordionV3'
 import ContactUS, { ContactUsBlockInterface } from '../Blocks/SpontaineV3/ContactUS'
 import DPAAccordion, {
   DPAAccordionBlockData,
 } from '../Blocks/SpontaineV3/DPAAccordion/DPAAccordion'
+import FactsRowV3, { type FactsRowV3Block } from '../Blocks/SpontaineV3/FactsRowV3'
+import PillarsRowV3, { type PillarsRowV3Block } from '../Blocks/SpontaineV3/PillarsRowV3'
 import SectionCtaV3, { SectionCtaV3Block } from '../Blocks/SpontaineV3/SectionCtaV3'
 import SectionFeatureSplitV3, {
   SectionFeatureSplitV3Block,
@@ -75,6 +78,12 @@ import SectionRichTextV3, { SectionRichTextV3Block } from '../Blocks/SpontaineV3
 import SectionScriptEmbedV3, {
   SectionScriptEmbedV3Block,
 } from '../Blocks/SpontaineV3/SectionScriptEmbedV3'
+import SectionSolutionsTabsV3, {
+  SectionSolutionsTabsV3Block,
+} from '../Blocks/SpontaineV3/SectionSolutionsTabsV3'
+import StepsV3, { type StepsV3Block } from '../Blocks/SpontaineV3/StepsV3'
+import TrustBandV3, { type TrustBandV3Block } from '../Blocks/SpontaineV3/TrustBandV3'
+import WorkedExampleV3, { type WorkedExampleV3Block } from '../Blocks/SpontaineV3/WorkedExampleV3'
 
 interface Properties {
   block?: Block
@@ -429,6 +438,69 @@ const ResolveComponent = ({
       {blockName === 'Spontaine V3 - Script Embed' && (
         <SectionScriptEmbedV3
           blockData={block as unknown as SectionScriptEmbedV3Block}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+          dispatch={dispatch}
+        />
+      )}
+      {blockName === 'Spontaine V3 - Solutions Tabs' && (
+        <SectionSolutionsTabsV3
+          blockData={block as unknown as SectionSolutionsTabsV3Block}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+          dispatch={dispatch}
+        />
+      )}
+      {blockName === 'Spontaine V3 - Pillars Row' && (
+        <PillarsRowV3
+          blockData={block as unknown as PillarsRowV3Block}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+          dispatch={dispatch}
+        />
+      )}
+      {blockName === 'Spontaine V3 - Facts Row' && (
+        <FactsRowV3
+          blockData={block as unknown as FactsRowV3Block}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+          dispatch={dispatch}
+        />
+      )}
+      {blockName === 'Spontaine V3 - Accordion' && (
+        <AccordionV3
+          blockData={block as unknown as AccordionV3Block}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+          dispatch={dispatch}
+        />
+      )}
+      {blockName === 'Spontaine V3 - Worked Example' && (
+        <WorkedExampleV3
+          blockData={block as unknown as WorkedExampleV3Block}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+          dispatch={dispatch}
+        />
+      )}
+      {blockName === 'Spontaine V3 - Steps' && (
+        <StepsV3
+          blockData={block as unknown as StepsV3Block}
+          editMode={editMode}
+          onFieldEdit={onFieldEdit}
+          language={language}
+          dispatch={dispatch}
+        />
+      )}
+      {blockName === 'Spontaine V3 - Trust Band' && (
+        <TrustBandV3
+          blockData={block as unknown as TrustBandV3Block}
           editMode={editMode}
           onFieldEdit={onFieldEdit}
           language={language}

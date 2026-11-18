@@ -220,6 +220,41 @@ const blockFolders: readonly PageBlockFolder[] = [
         badge: 'SE3',
       },
       {
+        name: 'Spontaine V3 - Solutions Tabs',
+        description: 'V3 tabbed solutions section with autoplay, tags, headlines and outcomes',
+        badge: 'ST3',
+      },
+      {
+        name: 'Spontaine V3 - Pillars Row',
+        description: 'Three outcome pillars with anchor arrows; plain or glass over the wash',
+        badge: 'PR3',
+      },
+      {
+        name: 'Spontaine V3 - Facts Row',
+        description: 'Large-value facts with hairlines (approved claims only)',
+        badge: 'FR3',
+      },
+      {
+        name: 'Spontaine V3 - Accordion',
+        description: 'Grouped use cases or an FAQ, one row open at a time',
+        badge: 'AC3',
+      },
+      {
+        name: 'Spontaine V3 - Worked Example',
+        description: 'Animated demo with industrial and/or professional-services scenes',
+        badge: 'WE3',
+      },
+      {
+        name: 'Spontaine V3 - Steps',
+        description: 'Two to four steps on a connector, terms and booking button',
+        badge: 'ST4',
+      },
+      {
+        name: 'Spontaine V3 - Trust Band',
+        description: 'Security facts on the ink band with Trust Centre link',
+        badge: 'TB3',
+      },
+      {
         name: 'Spontaine V3 - DPA Accordion',
         description: 'V3 nested legal sections with clauses and compact accordions',
         badge: 'DPA',

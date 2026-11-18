@@ -8,6 +8,8 @@ import type {
 
 export const SPONTAINE_V3_LARGE_HERO_BLOCK_NAME = 'Spontaine V3 - Hero Large'
 
+export const FADE_INTO_NEXT_TREATMENT = 'fade-into-next'
+
 export const emptyTextData: TextData = {
   english: '',
   malayalam: '',
@@ -71,6 +73,8 @@ const defaultSecondaryCta: LinkData = {
 export interface SectionLargeHeroV3Block extends Block, BlockConfiguration {
   backgroundColor?: TextData
   backgroundImage?: BlockImage | null
+  /** 'fade-into-next': image anchored right, dissolving into the glass wash of the next band. */
+  backgroundTreatment?: TextData
   description?: TextData | null
   descriptionColor?: TextData
   eyebrow?: TextData | null

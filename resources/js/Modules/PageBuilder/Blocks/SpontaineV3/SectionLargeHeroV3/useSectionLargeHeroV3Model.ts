@@ -8,7 +8,12 @@ import {
 } from '../../../Components/V3RoundedTopToggle'
 import type { PageBuilderAction } from '../../../hooks/pageBuilderService'
 import type { TextData } from '../../../page_interfaces'
-import { defaultOverlayColor, emptyTextData, type SectionLargeHeroV3Block } from './types'
+import {
+  defaultOverlayColor,
+  emptyTextData,
+  FADE_INTO_NEXT_TREATMENT,
+  type SectionLargeHeroV3Block,
+} from './types'
 import { getBlockFieldValue, getOverlayOpacity, hasTextValue, openCtaLink } from './utils'
 
 interface UseSectionLargeHeroV3ModelProps {
@@ -26,6 +31,8 @@ export const useSectionLargeHeroV3Model = ({
 }: UseSectionLargeHeroV3ModelProps) => {
   const backgroundImage = blockData?.backgroundImage
   const hasImage = Boolean(backgroundImage?.url)
+  const fadesIntoNext =
+    getV3ColorValue(blockData?.backgroundTreatment, language) === FADE_INTO_NEXT_TREATMENT
   const hasEyebrow = hasTextValue(blockData?.eyebrow, language)
   const hasTitleOne = hasTextValue(blockData?.titleOne, language)
   const hasTitleTwo = hasTextValue(blockData?.titleTwo, language)
@@ -98,6 +105,7 @@ export const useSectionLargeHeroV3Model = ({
     descriptionColor,
     editTextField,
     eyebrowColor,
+    fadesIntoNext,
     hasCTAGroup,
     hasContent,
     hasDescription,

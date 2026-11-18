@@ -1,4 +1,5 @@
 import Modal from '@/components/CustomUI/Modal/Modal'
+import { Language } from '@/components/ui/ui_interfaces'
 import Localization from '@/Modules/PageBuilder/Components/Localization'
 import { BlockLink, LinkData } from '@/Modules/PageBuilder/page_interfaces'
 import { PencilIcon } from 'lucide-react'
@@ -40,6 +41,15 @@ const NavLinkEdit = ({ link, onUpdateLink, onRemoveLink, language }: Properties)
             language={language}
           />
         </span>
+        {/* The one-line description shown under this link in the live menu */}
+        {(link.description?.english || link.description?.malayalam) && (
+          <p className='ml-4 mt-0.5 max-w-[260px] text-xs leading-snug text-gray-500'>
+            <Localization
+              text={link.description}
+              language={language as Language}
+            />
+          </p>
+        )}
       </div>
       {showEditLink && (
         <Modal

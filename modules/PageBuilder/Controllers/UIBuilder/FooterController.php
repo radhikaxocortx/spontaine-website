@@ -6,13 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Services\Footer\FooterCreate;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Inertia\Inertia;
 use Inertia\Response;
 use Modules\PageBuilder\Models\UIBuilder\Footer;
 
-class FooterController extends Controller
+class FooterController extends Controller implements HasMiddleware
 {
-    public static function middleware()
+    /**
+     * Laravel only applies this when the class implements HasMiddleware.
+     *
+     * @return string[]
+     */
+    public static function middleware(): array
     {
         return [
             'auth',

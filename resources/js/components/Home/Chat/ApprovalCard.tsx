@@ -1,7 +1,12 @@
 import { Sparkles } from 'lucide-react'
 import ChatSurface from './ChatSurface'
 
-export default function ApprovalCard() {
+interface ApprovalCardProps {
+  readonly label: string
+  readonly title: string
+}
+
+export default function ApprovalCard({ label, title }: ApprovalCardProps) {
   return (
     <ChatSurface
       variant='card'
@@ -14,12 +19,12 @@ export default function ApprovalCard() {
           className='mt-0.5 h-3 w-3 flex-shrink-0'
         />
         <p className='m-0 min-w-0 break-words font-mono text-[0.62rem] font-bold uppercase leading-snug tracking-[0.07em]'>
-          Opportunity found &middot; 05:47
+          {label}
         </p>
       </div>
 
       <h3 className='mt-3 font-display text-[0.94rem] font-semibold leading-[1.3] tracking-[-0.025em] text-spontaine-dark'>
-        One client may qualify for an energy-tax deduction.
+        {title}
       </h3>
 
       <p className='mt-3 font-body text-[0.7rem] leading-relaxed text-spontaine-gray-muted'>

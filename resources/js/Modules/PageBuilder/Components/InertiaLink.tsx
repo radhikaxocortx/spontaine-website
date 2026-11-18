@@ -9,9 +9,10 @@ interface Properties {
   className?: string
   language?: Language
   children?: React.ReactNode
+  onClick?: (event: React.MouseEvent<Element>) => void
 }
 
-const InertiaLink = ({ link, className = '', language = 'en', children }: Properties) => {
+const InertiaLink = ({ link, className = '', language = 'en', children, onClick }: Properties) => {
   const customUrl = useMemo(() => {
     if (link == null || link.link == null) {
       return ''
@@ -34,6 +35,7 @@ const InertiaLink = ({ link, className = '', language = 'en', children }: Proper
             <a
               href={customUrl}
               className={className}
+              onClick={onClick}
               target='_blank'
               rel='noreferrer'
               aria-label='External Link'
@@ -52,6 +54,7 @@ const InertiaLink = ({ link, className = '', language = 'en', children }: Proper
               as='a'
               href={customUrl}
               className={className}
+              onClick={onClick}
             >
               {children == null && (
                 <Localization

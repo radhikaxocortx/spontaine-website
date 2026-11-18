@@ -47,6 +47,13 @@
   --feedback-success: #0fa57e;
   --feedback-warning: #c97b12;
   --feedback-error: #c4453b;
+  /* Glass-wash stops, sampled from the bottom edge of the industrial hero image */
+  --glass-wash-warm: #f8f3ec;
+  --glass-wash-cream: #f1efe9;
+  --glass-wash-neutral: #eaeeeb;
+  --glass-wash-mint: #e3eee8;
+  --glass-wash-sky: #dbe9f2;
+  --glass-wash-blue: #cfe6f6;
 
   /* Semantic Tokens: public Spontaine names alias primitives for compatibility. */
   --spontaine-accent: var(--brand-accent);
@@ -232,6 +239,25 @@
     rgba(255, 224, 112, 0.42) 58%,
     rgba(53, 190, 255, 0.24) 100%
   );
+  /* Use via bg-glass-wash-base behind a hero image that fades into the next band.
+     Horizontal only, so two stacked bands meet without a seam. */
+  --gradient-glass-wash-base: linear-gradient(
+    90deg,
+    var(--glass-wash-warm) 0%,
+    var(--glass-wash-cream) 30%,
+    var(--glass-wash-neutral) 55%,
+    var(--glass-wash-mint) 72%,
+    var(--glass-wash-sky) 88%,
+    var(--glass-wash-blue) 100%
+  );
+  /* Use via bg-glass-wash for the band that continues a faded hero (glass panels sit on it). */
+  --gradient-glass-wash:
+    /* Glows sit low enough to be clear of the top edge, so the hero above meets it without a seam. */
+    radial-gradient(34% 40% at 40% 62%, rgb(255 226 170 / 34%), transparent 70%),
+    radial-gradient(36% 42% at 74% 58%, rgb(from var(--brand-accent) r g b / 14%), transparent 70%),
+    radial-gradient(40% 46% at 96% 64%, rgb(186 219 240 / 50%), transparent 70%),
+    linear-gradient(to bottom, rgb(255 255 255 / 0%) 0%, rgb(255 255 255 / 40%) 100%),
+    var(--gradient-glass-wash-base);
   /* Use via bg-cta-wash for calm closing CTA or conversion bands. */
   --gradient-cta-wash: linear-gradient(120deg, var(--wash-blue) 0%, var(--wash-cream) 100%);
   /* Use via bg-mint-lime for primary optimistic accent panels. */

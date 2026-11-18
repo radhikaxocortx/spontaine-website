@@ -108,6 +108,39 @@ body {
   }
 }
 
+/* Solutions tabs: autoplay progress line under the active tab.
+   Keep the duration in sync with motionDuration.solutionDwell in lib/motion.ts. */
+@keyframes solution-progress-fill {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.solution-progress-run {
+  animation: solution-progress-fill 12s linear forwards;
+}
+
+.solution-progress-paused {
+  animation-play-state: paused;
+}
+
+/* Hero image that dissolves into the band below it (Hero Large "fade into next section"). */
+.v3-hero-fade-mask {
+  -webkit-mask-image: linear-gradient(to bottom, #000 80%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 80%, transparent 100%);
+}
+
+@media (max-width: 767px) {
+  .v3-hero-fade-mask {
+    -webkit-mask-image: linear-gradient(to bottom, #000 40%, transparent 85%);
+    mask-image: linear-gradient(to bottom, #000 40%, transparent 85%);
+  }
+}
+
 /* Universal hover ripple effect utility */
 .hover-ripple {
   position: relative;

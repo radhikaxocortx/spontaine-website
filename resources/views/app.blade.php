@@ -21,7 +21,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title inertia>{{ config('app.name', 'Spontaine') }}</title>
+    <title inertia>{{ $seoTitle }}</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}" />
@@ -37,6 +37,7 @@
     <meta property="og:image" content="{{ $seoImage }}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="{{ $seoTitle }}">
     <meta property="og:url" content="{{ $seoUrl }}">
     <meta property="og:type" content="{{ $seoType }}">
 

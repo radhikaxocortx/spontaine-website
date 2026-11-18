@@ -26,7 +26,7 @@ export const bentoCards: BentoCardData[] = [
           person, product, and model can use.
         </p>
         <p className='mt-[13px] text-[0.76rem] font-bold leading-[1.48]'>
-          Keep your BI tools. Point them at intelligence your firm can trust.
+          Keep your BI tools. Point them at numbers your whole business can trust.
         </p>
       </>
     ),
@@ -40,8 +40,8 @@ export const bentoCards: BentoCardData[] = [
     body: (
       <>
         <p>
-          Start a long data programme before the firm can answer its first important question. The
-          implementation absorbs the knowledge; the capability remains difficult to change.
+          Start a long data programme before the business can answer its first important question.
+          The implementation absorbs the knowledge; the capability remains difficult to change.
         </p>
         <p className='mt-[13px] text-[0.76rem] font-bold leading-[1.48]'>
           Start with a decision. Keep extending what works.

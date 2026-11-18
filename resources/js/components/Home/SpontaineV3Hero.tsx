@@ -1,10 +1,11 @@
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ArrowRight, ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 import { useEffect, useRef } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Pill, type PillProps } from '@/components/ui/pill'
+import { trackEvent } from '@/lib/analytics'
 
 const decisionStates = [
   {
@@ -24,6 +25,8 @@ const decisionStates = [
     variant: 'variant4',
   },
 ] satisfies Array<{ label: string; variant: PillProps['variant'] }>
+
+const HERO_PROOF_POINTS = ['Four weeks to live value', 'Full stack, in place', 'Your IP'] as const
 
 export default function SpontaineV3Hero() {
   const heroRef = useRef<HTMLElement | null>(null)
@@ -97,9 +100,9 @@ export default function SpontaineV3Hero() {
   return (
     <section
       ref={heroRef}
-      id='hero'
+      id='top'
       aria-labelledby='spontaine-v3-hero-title'
-      className='relative isolate overflow-hidden bg-hero-wash px-[var(--space-shell-sm)] pb-[150px] pt-20 md:px-[var(--space-shell)] md:pb-[150px] md:pt-[168px] lg:pt-[120px]'
+      className='relative isolate overflow-hidden px-[var(--space-shell-sm)] pb-12 pt-20 md:px-[var(--space-shell)] md:pb-16 md:pt-[168px] lg:pt-[120px]'
     >
       {/* Diagonal ambient band behind the prism */}
       <div
@@ -119,33 +122,37 @@ export default function SpontaineV3Hero() {
         {/* Hero message and primary actions */}
         <div className='relative z-10 max-w-[760px] pb-8 pt-12 md:pb-20 md:pt-16 lg:pb-0'>
           <p className='eyebrow mb-6 max-w-[560px] text-spontaine-gray-cool'>
-            The owned intelligence layer for professional services and private equity
+            The data foundation for real-world AI
           </p>
 
           <h1
             id='spontaine-v3-hero-title'
-            className='display-hero text-spontaine-dark'
+            className='display-hero text-balance text-spontaine-dark'
           >
-            Turn your firm’s data and judgment
+            Good data unlocks AI.
             <br />
             <span className='display-hero text-spontaine-text-accent-dark'>
-              into an intelligence system you own.
+              One stack. No&nbsp;overhaul.
             </span>
           </h1>
 
           <p className='body-lg mt-7 max-w-[570px] text-spontaine-gray-muted'>
-            Your data and experience are already an advantage. Spontaine turns them into a governed
-            intelligence layer your firm owns, so the answers your people create can be reused in
-            dashboards, workflows, client products, and the next decision.
+            Professional services and industrial operations don&apos;t fail at AI for lack of
+            ambition. They fail because critical data sits trapped across legacy ERPs, machines,
+            time tools and spreadsheets. Spontaine connects and governs your entire operational
+            stack in place, giving AI reliable context in weeks.
           </p>
 
-          <div className='mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap'>
+          <div className='mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center'>
             <Button
               asChild
               variant='v3Primary'
               size='v3Hero'
             >
-              <a href='/product'>
+              <a
+                href='/product'
+                onClick={() => trackEvent('cta_clicked', { label: 'The Product', section: 'top' })}
+              >
                 The Product
                 <ArrowUpRight
                   aria-hidden='true'
@@ -160,7 +167,10 @@ export default function SpontaineV3Hero() {
               variant='v3Secondary'
               size='v3Hero'
             >
-              <a href='/spontaine-video'>
+              <a
+                href='/spontaine-video'
+                onClick={() => trackEvent('cta_clicked', { label: 'View video', section: 'top' })}
+              >
                 View video
                 <ArrowUpRight
                   aria-hidden='true'
@@ -169,11 +179,35 @@ export default function SpontaineV3Hero() {
                 />
               </a>
             </Button>
-          </div>
 
-          <p className='mt-5 font-mono text-xs text-spontaine-gray-deep'>
-            A 30-minute working session. No deck. No obligation.
-          </p>
+            {/* Proof pill: three short facts beside the buttons */}
+            <ul
+              aria-label='At a glance'
+              className='flex flex-wrap items-center gap-y-1 self-start rounded-[var(--radius-pill)] border border-spontaine-white/90 bg-spontaine-white/55 px-3.5 py-2 font-mono text-xs text-spontaine-gray-deep backdrop-blur-md sm:ml-2 sm:self-auto'
+            >
+              {HERO_PROOF_POINTS.map((point, index) => (
+                <li
+                  key={point}
+                  className='flex items-center'
+                >
+                  {index === 0 ? (
+                    <span
+                      aria-hidden='true'
+                      className='mr-2 h-1.5 w-1.5 rounded-full bg-spontaine-accent shadow-[0_0_0_4px_var(--spontaine-accent-soft)]'
+                    />
+                  ) : (
+                    <span
+                      aria-hidden='true'
+                      className='mx-2.5 text-spontaine-text-tertiary'
+                    >
+                      ·
+                    </span>
+                  )}
+                  {point}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
         {/* Governed intelligence product visual */}
@@ -213,34 +247,12 @@ export default function SpontaineV3Hero() {
         </div>
       </div>
 
-      {/* Portfolio intelligence callout */}
+      {/* Marks the end of the hero: the prompt card rises in as this scrolls into view */}
       <div
         ref={calloutRef}
-        className='relative left-1/2 z-20 mt-6 w-screen -translate-x-1/2'
-      >
-        <div className='border border-spontaine-white/70 bg-spontaine-white/35 backdrop-blur-[6px]'>
-          <div className='mx-auto grid min-h-[66px] w-full max-w-[1180px] gap-[7px] px-[var(--space-shell-sm)] py-[17px] font-body text-[0.76rem] md:grid-cols-[1.15fr_2fr_0.75fr] md:items-center md:gap-[18px] md:px-[var(--space-shell)]'>
-            <strong className='text-[0.8rem] font-semibold text-spontaine-dark'>
-              For private equity operating teams
-            </strong>
-            <span className='text-spontaine-gray-muted'>
-              Bring portfolio signals into one governed intelligence layer without replacing each
-              company&apos;s systems.
-            </span>
-            <a
-              href='/private-equity'
-              className='inline-flex items-center gap-2 font-body text-[0.76rem] font-bold text-spontaine-accent-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-spontaine-accent-dark md:justify-self-end md:text-right'
-            >
-              Explore portfolio intelligence
-              <ArrowRight
-                aria-hidden='true'
-                className='h-4 w-4'
-                strokeWidth={2}
-              />
-            </a>
-          </div>
-        </div>
-      </div>
+        aria-hidden='true'
+        className='h-px w-full'
+      />
     </section>
   )
 }

@@ -58,7 +58,7 @@ export default function SectionProductHeroV3() {
               variant='v3Secondary'
               size='v3Hero'
             >
-              <a href='/#architecure'>
+              <a href='/#architecture'>
                 Explore the architecture
                 <ArrowUpRight
                   aria-hidden='true'

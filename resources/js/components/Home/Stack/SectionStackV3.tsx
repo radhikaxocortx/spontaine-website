@@ -1,3 +1,4 @@
+import { useStackUp } from '@/hooks/useStackUp'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
@@ -15,63 +16,56 @@ interface StackCardData {
   readonly compactRightPadding?: boolean
 }
 
+// Card copy stays under 30 words so the card never grows beside its artwork.
 const stackCards: StackCardData[] = [
   {
-    label: 'Connectors',
-    title: 'Connect any source, from anywhere.',
+    label: 'Connect',
+    title: 'Plug into any stack, in place.',
     description: [
-      'Spontaine plugs into your data systems in-place, and runs automatically so your processes are untouched. Nothing to replace, nothing to reconfigure.',
-      'And unlike enterprise vendors, you are not locked in to any one stack or limited by a set of supported connectors.',
+      'Connect legacy ERPs, shop-floor PLCs, time and billing tools, CRMs and spreadsheets with zero migration or operational downtime.',
     ],
     artwork: 'connectors',
   },
   {
-    label: 'Meaning',
-    title: 'Knows your business, not just your data',
+    label: 'Reconcile',
+    title: 'One shared definition of truth.',
     description: [
-      "Spontaine doesn't just know what a number means. It knows what it means for you - your org structure, how you operate, what you're actually trying to achieve. That context shapes the answer, not just the definition behind it.",
-      "Ask a nuanced question, get an answer built to be acted on, with the logical next question already suggested. Insight doesn't dead-end at the first answer.",
+      'Codify how your business calculates true margin, OTIF and utilisation once, and end conflicting numbers across sites and offices.',
     ],
     artwork: 'meaning',
   },
   {
-    label: 'Answers',
-    title: "Answers built for who's asking",
+    label: 'Decide',
+    title: 'Role-aware answers with full lineage.',
     description: [
-      'A partner and an associate ask "what\'s our margin on this account," and each gets exactly what they are looking for.',
-      "Context isn't just what's being asked. It's also who's asking.",
-      'Every answer carries its own reasoning and traces straight back to the source data behind it.',
+      'Give plant directors, managing partners and CFOs live answers traced straight back to source records, with no analyst bottleneck.',
     ],
     artwork: 'answers',
     titleTone: 'green',
   },
   {
-    label: 'Persistence',
-    title: 'Generated once and staying alive.',
+    label: 'Automate',
+    title: 'Turn questions into daily workflows.',
     description: [
-      "A Persistent Block isn't a frozen snapshot - generated once, pulls data and stays interactive forever. Filter it, drill into it, explore it independently, without asking the AI again.",
-      'AI inference runs down toward the minimum as use expands.',
+      'Save any verified logic as a live endpoint that triggers alerts, updates CRM records or flags margin drift automatically.',
     ],
     artwork: 'persistence',
     titleTone: 'green',
   },
   {
-    label: 'Safety',
-    title: 'Safe by architecture, not by policy.',
+    label: 'Protect',
+    title: 'Sovereign security by architecture.',
     description: [
-      'AI never sees your raw data. Only its shape. Anything sensitive - names, IDs - gets pseudonymised before the model sees it, and the AI has no ability to submit queries to your database directly.',
-      'Every answer traces back to what produced it. Safe to run at scale, not just safe in a demo.',
+      'Sensitive pricing, part tolerances and client records are pseudonymised before AI touches them, hosted strictly in your chosen region.',
     ],
     artwork: 'safety',
     compactRightPadding: true,
   },
   {
-    label: 'New IP',
-    title: 'Your platform. Your IP. Your revenue.',
+    label: 'Monetize',
+    title: 'Turn internal data into customer IP.',
     description: [
-      'Codified skills and persistent endpoints remove the real barrier to productising a service line: the build cost.',
-      "Connected workflows and automated actions get easier to assemble, and each one keeps uncovering value long after it's built.",
-      "Spontaine's core runs inside your perimeter. Everything built on top of it is yours - new IP, not a vendor's feature you're renting.",
+      'Publish governed order tracking, quality certificates or client benchmarks through secure portals and APIs that lock in renewals.',
     ],
     artwork: 'new-ip',
     titleTone: 'green',
@@ -80,6 +74,13 @@ const stackCards: StackCardData[] = [
 ]
 
 const stackStep = 1 / (stackCards.length + 1)
+
+/** Free space (px) the pinned section needs above and below before it is centred on screen. */
+const PIN_MIN_ROOM = 32
+
+/** The Navbar reads this attribute and slides out of view while it is set. */
+const setNavHidden = (hidden: boolean) =>
+  document.documentElement.toggleAttribute('data-nav-hidden', hidden)
 const stackRevealWindow = stackStep * 1.75
 const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max)
 const figmaStackOffsets = [
@@ -93,6 +94,8 @@ const figmaStackOffsets = [
 
 export default function SectionStackV3() {
   const sectionRef = useRef<HTMLElement | null>(null)
+  // This band is pinned by ScrollTrigger, so only its intro stacks up.
+  const introRef = useStackUp<HTMLDivElement>({ moveBand: false })
   const stackStageRef = useRef<HTMLDivElement | null>(null)
   const scrollTriggerRef = useRef<ScrollTrigger | null>(null)
   const progressBarRef = useRef<HTMLDivElement | null>(null)
@@ -225,23 +228,48 @@ export default function SectionStackV3() {
 
     updateStack(0)
 
+    // Where the pin starts, re-measured on every refresh. When the intro and cards fit on
+    // screen (the menu bar is hidden while pinned), centre them so the title is never cut
+    // off; otherwise keep the cards fully in view, as before.
+    const getPinStart = () => {
+      const intro = introRef.current
+      const sectionTop = section.getBoundingClientRect().top
+      const stageBottom = stackStage.getBoundingClientRect().bottom - sectionTop
+
+      if (intro) {
+        const introTop = intro.getBoundingClientRect().top - sectionTop
+        const room = window.innerHeight - (stageBottom - introTop)
+
+        if (room >= PIN_MIN_ROOM) {
+          return `top+=${Math.round(introTop - room / 2)} top`
+        }
+      }
+
+      return `top+=${Math.round(stageBottom - window.innerHeight)} top`
+    }
+
     const trigger = ScrollTrigger.create({
-      trigger: stackStage,
-      start: 'bottom bottom',
-      end: '+=450%',
+      trigger: section,
+      start: getPinStart,
+      // Phones get a shorter pin (about half a screen per card) so it never feels like a scroll trap.
+      // A function, so ScrollTrigger re-reads it on every refresh (e.g. after rotation).
+      end: () => (window.matchMedia('(max-width: 767px)').matches ? '+=300%' : '+=450%'),
       pin: section,
       scrub: true,
       anticipatePin: 1,
       onUpdate: (self) => updateStack(self.progress),
+      // Slide the fixed menu bar away while the section is pinned, so it never covers the title.
+      onToggle: (self) => setNavHidden(self.isActive),
     })
     scrollTriggerRef.current = trigger
 
     return () => {
+      setNavHidden(false)
       trigger.kill()
       scrollTriggerRef.current = null
       gsap.killTweensOf([progressBar, ...cards])
     }
-  }, [prefersReducedMotion])
+  }, [prefersReducedMotion, introRef])
 
   const goToCard = (index: number) => {
     const boundedIndex = clamp(index, 0, stackCards.length - 1)
@@ -264,33 +292,36 @@ export default function SectionStackV3() {
 
   return (
     <section
-      id='architecure'
+      id='architecture'
       ref={sectionRef}
       className='relative z-20 overflow-hidden rounded-t-section-sm bg-spontaine-surface-paper pb-[110px] pt-[142px] md:rounded-t-section-md md:pt-[150px] lg:rounded-t-section-lg lg:pb-[142px] lg:pt-[178px] xl:rounded-t-section-xl xl:pt-[190px]'
     >
       <div className='mx-auto w-full max-w-[1180px] px-[var(--space-shell-sm)] md:px-[var(--space-shell)]'>
         <div className='mx-auto flex w-full max-w-[1060px] flex-col items-center'>
-          <div className='mx-auto max-w-[820px] text-center'>
-            <p className='eyebrow mb-5 text-spontaine-gray-cool'>ARCHITECTURE</p>
+          <div
+            ref={introRef}
+            className='mx-auto max-w-[820px] text-center'
+          >
+            <p
+              data-stack-item
+              className='eyebrow mb-5 text-spontaine-gray-cool'
+            >
+              How it works in place
+            </p>
 
-            <h2 className='display-xl text-spontaine-dark'>
-              Not six tools stitched together.
+            <h2
+              data-stack-item
+              className='display-xl text-balance text-spontaine-dark'
+            >
+              One governed layer
               <br />
               <span className='display-xl text-spontaine-text-accent-dark'>
-                You need one system.
+                across every system you run.
               </span>
             </h2>
-
-            <p className='body-lg mx-auto mt-5 max-w-[690px] font-body text-spontaine-gray-muted'>
-              Most AI pilots are third-party tools stitched together connectors, models, workflows,
-              none of them built to work with each other. The stitching breaks: someone has to
-              manage every integration, patch every failure. Spontaine is a single core powering
-              everything else, including the platforms you already run. No engineering required. One
-              system, built for your teams to actually use.
-            </p>
           </div>
 
-          <div className='mt-[58px] grid w-full grid-cols-1 gap-8 lg:grid-cols-[104px_minmax(0,1fr)] lg:items-start lg:gap-3 xl:gap-4'>
+          <div className='mt-[58px] grid w-full grid-cols-1 gap-8 lg:grid-cols-[104px_minmax(0,1fr)] lg:items-start lg:gap-3 xl:gap-4 [@media(max-height:780px)]:mt-10'>
             <div className='flex flex-wrap justify-center gap-3 lg:flex-col lg:justify-start lg:gap-7 lg:pt-1'>
               {stackCards.map((card, index) => (
                 <button
@@ -343,7 +374,7 @@ export default function SectionStackV3() {
               ) : (
                 <div
                   ref={stackStageRef}
-                  className='relative min-h-[500px] w-full max-w-[730px] overflow-hidden sm:min-h-[560px] md:-ml-6 md:-mr-12 md:w-[calc(100%+4.5rem)] md:max-w-[calc(730px+4.5rem)] md:pl-6 md:pr-12 lg:-ml-8 lg:-mr-14 lg:w-[calc(100%+5.5rem)] lg:max-w-[calc(730px+5.5rem)] lg:pl-8 lg:pr-14 xl:-mr-16 xl:w-[calc(100%+6rem)] xl:max-w-[calc(730px+6rem)] xl:pr-16'
+                  className='relative min-h-[500px] w-full max-w-[730px] overflow-hidden sm:min-h-[560px] md:-ml-6 md:-mr-12 md:w-[calc(100%+4.5rem)] md:max-w-[calc(730px+4.5rem)] md:pl-6 md:pr-12 lg:-ml-8 lg:-mr-14 lg:w-[calc(100%+5.5rem)] lg:max-w-[calc(730px+5.5rem)] lg:pl-8 lg:pr-14 xl:-mr-16 xl:w-[calc(100%+6rem)] xl:max-w-[calc(730px+6rem)] xl:pr-16 sm:[@media(max-height:780px)]:min-h-[500px]'
                 >
                   <div className='absolute inset-x-0 bottom-14 top-0 overflow-visible md:left-6 md:right-12 lg:left-8 lg:right-14 xl:right-16'>
                     {stackCards.map((card, index) => (
