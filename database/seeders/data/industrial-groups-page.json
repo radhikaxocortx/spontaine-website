@@ -1,0 +1,1136 @@
+{
+  "title": "Industrial groups",
+  "page_title": "Manufacturing and distribution | Spontaine",
+  "description": "Unify your plants, supply chain and CRM without becoming a software company. Spontaine captures live production data and connects it back to your suppliers and forward to your customers, giving you operational and margin control in weeks.",
+  "url": "industrial-groups",
+  "type": "Page",
+  "published": true,
+  "featured": false,
+  "cover_image": "/images/industrial/hero-glass-panes.svg",
+  "blocks": {
+    "lastUUID": 11,
+    "blocks": [
+      {
+        "id": 1,
+        "position": 1,
+        "blockName": "Spontaine V3 - Hero Large",
+        "eyebrow": {
+          "english": "Manufacturing and distribution",
+          "malayalam": ""
+        },
+        "titleOne": {
+          "english": "Unify your plants, supply chain and CRM.",
+          "malayalam": ""
+        },
+        "titleTwo": {
+          "english": "Without becoming a software company.",
+          "malayalam": ""
+        },
+        "titleOneColor": null,
+        "titleTwoColor": null,
+        "description": {
+          "english": "Your operations run across disconnected ERPs, shop-floor machines, spreadsheets and regional teams. Spontaine captures live production data and connects it back to your suppliers and forward to your customers, giving you operational and margin control in weeks, not multi-year IT projects.",
+          "malayalam": ""
+        },
+        "primaryCta": {
+          "name": {
+            "english": "Talk to an expert",
+            "malayalam": ""
+          },
+          "link": "",
+          "external": false
+        },
+        "primaryCalendarUrl": {
+          "english": "intuonfx/30min",
+          "malayalam": ""
+        },
+        "secondaryCta": {
+          "name": {
+            "english": "See it work",
+            "malayalam": ""
+          },
+          "link": "#see-it-work",
+          "external": false
+        },
+        "secondaryCalendarUrl": null,
+        "microcopy": {
+          "english": "Single tenant, hosted securely in your region.",
+          "malayalam": ""
+        },
+        "backgroundImage": {
+          "url": "/images/industrial/hero-glass-panes.svg",
+          "caption": ""
+        },
+        "backgroundTreatment": {
+          "english": "fade-into-next",
+          "malayalam": ""
+        },
+        "overlayColor": {
+          "english": "var(--spontaine-dark)",
+          "malayalam": ""
+        },
+        "overlayOpacity": {
+          "english": "0",
+          "malayalam": ""
+        },
+        "roundedTop": {
+          "english": "false",
+          "malayalam": ""
+        }
+      },
+      {
+        "id": 2,
+        "position": 2,
+        "blockName": "Spontaine V3 - Pillars Row",
+        "eyebrow": {
+          "english": "One live operational layer",
+          "malayalam": ""
+        },
+        "title": {
+          "english": "Margin, service and the factory floor, on one set of numbers.",
+          "malayalam": ""
+        },
+        "surface": {
+          "english": "glass",
+          "malayalam": ""
+        },
+        "pillars": {
+          "lastUUID": 3,
+          "items": [
+            {
+              "id": 1,
+              "item": {
+                "title": {
+                  "english": "Automatic shop-floor capture",
+                  "malayalam": ""
+                },
+                "line": {
+                  "english": "Cycle times, scrap, downtime and quality results pulled straight from machines and MES. No manual entry, and no Friday spreadsheet reconciliation.",
+                  "malayalam": ""
+                },
+                "link": {
+                  "english": "#cross-plant-benchmarking",
+                  "malayalam": ""
+                }
+              }
+            },
+            {
+              "id": 2,
+              "item": {
+                "title": {
+                  "english": "Backward into supply and cost",
+                  "malayalam": ""
+                },
+                "line": {
+                  "english": "Raw material price swings, supplier lead-time slips and incoming inspection, linked to live production schedules and true unit cost.",
+                  "malayalam": ""
+                },
+                "link": {
+                  "english": "#supply-disruption",
+                  "malayalam": ""
+                }
+              }
+            },
+            {
+              "id": 3,
+              "item": {
+                "title": {
+                  "english": "Forward into CRM and quoting",
+                  "malayalam": ""
+                },
+                "line": {
+                  "english": "Live plant capacity, lead times and true order margin inside your CRM, so sales and account teams see them before they commit to a quote.",
+                  "malayalam": ""
+                },
+                "link": {
+                  "english": "#quote-to-actual-margin",
+                  "malayalam": ""
+                }
+              }
+            }
+          ]
+        },
+        "roundedTop": {
+          "english": "false",
+          "malayalam": ""
+        }
+      },
+      {
+        "id": 3,
+        "position": 3,
+        "blockName": "Spontaine V3 - Feature Split",
+        "eyebrow": {
+          "english": "The industrial data trap",
+          "malayalam": ""
+        },
+        "titleOne": {
+          "english": "Your business is built to manufacture at scale.",
+          "malayalam": ""
+        },
+        "titleTwo": {
+          "english": "Not to engineer software.",
+          "malayalam": ""
+        },
+        "description": {
+          "english": "Across acquired plants, legacy ERPs, local PLCs and regional CRMs, the data you run on stays trapped in silos. Stitching it together with custom data warehouses and brittle integrations takes years, drains lean IT teams and disrupts live production. Spontaine unifies the stack you already have, giving multi-site leaders cross-plant visibility without rewriting a single system or hiring a team of data engineers.",
+          "malayalam": ""
+        },
+        "cta": null,
+        "calendarUrl": null,
+        "image": null,
+        "imageAlt": {
+          "english": "",
+          "malayalam": ""
+        },
+        "mediaSide": {
+          "english": "right",
+          "malayalam": ""
+        },
+        "backgroundColor": {
+          "english": "var(--spontaine-surface-paper)",
+          "malayalam": ""
+        },
+        "roundedTop": {
+          "english": "true",
+          "malayalam": ""
+        },
+        "overlapTop": {
+          "english": "true",
+          "malayalam": ""
+        }
+      },
+      {
+        "id": 4,
+        "position": 4,
+        "blockName": "Spontaine V3 - Facts Row",
+        "eyebrow": {
+          "english": "Proof and architecture",
+          "malayalam": ""
+        },
+        "facts": {
+          "lastUUID": 4,
+          "items": [
+            {
+              "id": 1,
+              "item": {
+                "value": {
+                  "english": "4–6 weeks",
+                  "malayalam": ""
+                },
+                "label": {
+                  "english": "From fragmented systems to live cross-plant workflows.",
+                  "malayalam": ""
+                },
+                "linkLabel": {
+                  "english": "",
+                  "malayalam": ""
+                },
+                "linkUrl": {
+                  "english": "",
+                  "malayalam": ""
+                }
+              }
+            },
+            {
+              "id": 2,
+              "item": {
+                "value": {
+                  "english": "No rip and replace",
+                  "malayalam": ""
+                },
+                "label": {
+                  "english": "Connects to the ERPs, PLCs, MES and CRMs you already run, as they are.",
+                  "malayalam": ""
+                },
+                "linkLabel": {
+                  "english": "",
+                  "malayalam": ""
+                },
+                "linkUrl": {
+                  "english": "",
+                  "malayalam": ""
+                }
+              }
+            },
+            {
+              "id": 3,
+              "item": {
+                "value": {
+                  "english": "Zero engineering lift",
+                  "malayalam": ""
+                },
+                "label": {
+                  "english": "Built for lean industrial IT and plant operations teams.",
+                  "malayalam": ""
+                },
+                "linkLabel": {
+                  "english": "",
+                  "malayalam": ""
+                },
+                "linkUrl": {
+                  "english": "",
+                  "malayalam": ""
+                }
+              }
+            },
+            {
+              "id": 4,
+              "item": {
+                "value": {
+                  "english": "ISO 27001",
+                  "malayalam": ""
+                },
+                "label": {
+                  "english": "Certified, governed and auditable, and hosted in your chosen region. Details in our",
+                  "malayalam": ""
+                },
+                "linkLabel": {
+                  "english": "Trust Centre.",
+                  "malayalam": ""
+                },
+                "linkUrl": {
+                  "english": "https://spontaine.eu.trust.site",
+                  "malayalam": ""
+                }
+              }
+            }
+          ]
+        },
+        "roundedTop": {
+          "english": "true",
+          "malayalam": ""
+        },
+        "overlapTop": {
+          "english": "true",
+          "malayalam": ""
+        }
+      },
+      {
+        "id": 5,
+        "position": 5,
+        "blockName": "Spontaine V3 - Accordion",
+        "variant": {
+          "english": "grouped",
+          "malayalam": ""
+        },
+        "eyebrow": {
+          "english": "End-to-end impact",
+          "malayalam": ""
+        },
+        "title": {
+          "english": "What changes when your floor talks to your front office.",
+          "malayalam": ""
+        },
+        "note": {
+          "english": "Real operational workflows running across plants and geographies, without custom software builds.",
+          "malayalam": ""
+        },
+        "linkLabel": {
+          "english": "See it work",
+          "malayalam": ""
+        },
+        "linkUrl": {
+          "english": "#see-it-work",
+          "malayalam": ""
+        },
+        "rows": {
+          "lastUUID": 4,
+          "items": [
+            {
+              "id": 1,
+              "item": {
+                "title": {
+                  "english": "Quote-to-actual margin and capacity truth",
+                  "malayalam": ""
+                },
+                "anchor": {
+                  "english": "quote-to-actual-margin",
+                  "malayalam": ""
+                },
+                "body": {
+                  "english": "",
+                  "malayalam": ""
+                },
+                "entries": {
+                  "lastUUID": 3,
+                  "items": [
+                    {
+                      "id": 1,
+                      "item": {
+                        "title": {
+                          "english": "Shop floor to CRM",
+                          "malayalam": ""
+                        },
+                        "line": {
+                          "english": "Sales teams see real machine capacity and historical run-rate costs inside the CRM before they price complex RFQs.",
+                          "malayalam": ""
+                        },
+                        "linkLabel": {
+                          "english": "",
+                          "malayalam": ""
+                        },
+                        "linkUrl": {
+                          "english": "",
+                          "malayalam": ""
+                        }
+                      }
+                    },
+                    {
+                      "id": 2,
+                      "item": {
+                        "title": {
+                          "english": "Margin while the job runs",
+                          "malayalam": ""
+                        },
+                        "line": {
+                          "english": "Live scrap, tooling wear and overtime update order profitability while jobs are still on the floor.",
+                          "malayalam": ""
+                        },
+                        "linkLabel": {
+                          "english": "",
+                          "malayalam": ""
+                        },
+                        "linkUrl": {
+                          "english": "",
+                          "malayalam": ""
+                        }
+                      }
+                    },
+                    {
+                      "id": 3,
+                      "item": {
+                        "title": {
+                          "english": "Before the quarter closes",
+                          "malayalam": ""
+                        },
+                        "line": {
+                          "english": "Account teams flag underpriced SKUs and renegotiate terms before margin erodes at quarter-end.",
+                          "malayalam": ""
+                        },
+                        "linkLabel": {
+                          "english": "",
+                          "malayalam": ""
+                        },
+                        "linkUrl": {
+                          "english": "",
+                          "malayalam": ""
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "id": 2,
+              "item": {
+                "title": {
+                  "english": "Supply disruption to customer commitment",
+                  "malayalam": ""
+                },
+                "anchor": {
+                  "english": "supply-disruption",
+                  "malayalam": ""
+                },
+                "body": {
+                  "english": "",
+                  "malayalam": ""
+                },
+                "entries": {
+                  "lastUUID": 2,
+                  "items": [
+                    {
+                      "id": 1,
+                      "item": {
+                        "title": {
+                          "english": "Suppliers to floor to account teams",
+                          "malayalam": ""
+                        },
+                        "line": {
+                          "english": "A late or short delivery is traced to the production orders and customer commitments it puts at risk.",
+                          "malayalam": ""
+                        },
+                        "linkLabel": {
+                          "english": "",
+                          "malayalam": ""
+                        },
+                        "linkUrl": {
+                          "english": "",
+                          "malayalam": ""
+                        }
+                      }
+                    },
+                    {
+                      "id": 2,
+                      "item": {
+                        "title": {
+                          "english": "Cost that reaches the price",
+                          "malayalam": ""
+                        },
+                        "line": {
+                          "english": "Material price movements flow into unit cost, so you can see which contracts no longer cover them.",
+                          "malayalam": ""
+                        },
+                        "linkLabel": {
+                          "english": "",
+                          "malayalam": ""
+                        },
+                        "linkUrl": {
+                          "english": "",
+                          "malayalam": ""
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "id": 3,
+              "item": {
+                "title": {
+                  "english": "Cross-plant benchmarking without ERP consolidation",
+                  "malayalam": ""
+                },
+                "anchor": {
+                  "english": "cross-plant-benchmarking",
+                  "malayalam": ""
+                },
+                "body": {
+                  "english": "",
+                  "malayalam": ""
+                },
+                "entries": {
+                  "lastUUID": 2,
+                  "items": [
+                    {
+                      "id": 1,
+                      "item": {
+                        "title": {
+                          "english": "Multi-site operations",
+                          "malayalam": ""
+                        },
+                        "line": {
+                          "english": "One meaning of yield, scrap, downtime and on-time delivery, so every plant is compared fairly while each keeps its own ERP.",
+                          "malayalam": ""
+                        },
+                        "linkLabel": {
+                          "english": "",
+                          "malayalam": ""
+                        },
+                        "linkUrl": {
+                          "english": "",
+                          "malayalam": ""
+                        }
+                      }
+                    },
+                    {
+                      "id": 2,
+                      "item": {
+                        "title": {
+                          "english": "Cost of poor quality",
+                          "malayalam": ""
+                        },
+                        "line": {
+                          "english": "Scrap, rework and complaints costed plant by plant, from your ERP and MES together.",
+                          "malayalam": ""
+                        },
+                        "linkLabel": {
+                          "english": "",
+                          "malayalam": ""
+                        },
+                        "linkUrl": {
+                          "english": "",
+                          "malayalam": ""
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "id": 4,
+              "item": {
+                "title": {
+                  "english": "Zero-touch quality and traceability",
+                  "malayalam": ""
+                },
+                "anchor": {
+                  "english": "quality-traceability",
+                  "malayalam": ""
+                },
+                "body": {
+                  "english": "",
+                  "malayalam": ""
+                },
+                "entries": {
+                  "lastUUID": 2,
+                  "items": [
+                    {
+                      "id": 1,
+                      "item": {
+                        "title": {
+                          "english": "Inspection to customer portal",
+                          "malayalam": ""
+                        },
+                        "line": {
+                          "english": "Inspection results and certificates are linked to the lot, order and customer they belong to, without anyone compiling them.",
+                          "malayalam": ""
+                        },
+                        "linkLabel": {
+                          "english": "",
+                          "malayalam": ""
+                        },
+                        "linkUrl": {
+                          "english": "",
+                          "malayalam": ""
+                        }
+                      }
+                    },
+                    {
+                      "id": 2,
+                      "item": {
+                        "title": {
+                          "english": "Answer the complaint faster",
+                          "malayalam": ""
+                        },
+                        "line": {
+                          "english": "From a customer complaint back to the batch, the machine and the supplier lot that produced it.",
+                          "malayalam": ""
+                        },
+                        "linkLabel": {
+                          "english": "",
+                          "malayalam": ""
+                        },
+                        "linkUrl": {
+                          "english": "",
+                          "malayalam": ""
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "roundedTop": {
+          "english": "true",
+          "malayalam": ""
+        },
+        "overlapTop": {
+          "english": "true",
+          "malayalam": ""
+        }
+      },
+      {
+        "id": 6,
+        "position": 6,
+        "blockName": "Spontaine V3 - Feature Split",
+        "eyebrow": {
+          "english": "Forward integration and data products",
+          "malayalam": ""
+        },
+        "titleOne": {
+          "english": "Your customers want your data.",
+          "malayalam": ""
+        },
+        "titleTwo": {
+          "english": "Give it to them on your terms.",
+          "malayalam": ""
+        },
+        "description": {
+          "english": "OEM and Tier-1 buyers increasingly ask for live order status, mill and material certificates and quality results, usually met by your staff exporting spreadsheets by hand. Because Spontaine already unifies shop-floor and ERP data, every governed dataset is ready to share as a secure customer portal or API feed. You decide the exact scope. Nothing else leaves. Turn a reporting cost into a reason to stay with you at the next tender.",
+          "malayalam": ""
+        },
+        "cta": null,
+        "calendarUrl": null,
+        "image": {
+          "url": "/images/industrial/oem-data-products.svg",
+          "caption": "Governed data shared with a customer"
+        },
+        "imageAlt": {
+          "english": "Three translucent data panes; one mint thread carries a chosen slice to a customer portal card.",
+          "malayalam": ""
+        },
+        "mediaSide": {
+          "english": "right",
+          "malayalam": ""
+        },
+        "backgroundColor": {
+          "english": "var(--spontaine-surface-sky-soft)",
+          "malayalam": ""
+        },
+        "roundedTop": {
+          "english": "true",
+          "malayalam": ""
+        },
+        "overlapTop": {
+          "english": "true",
+          "malayalam": ""
+        }
+      },
+      {
+        "id": 7,
+        "position": 7,
+        "blockName": "Spontaine V3 - Worked Example",
+        "anchor": {
+          "english": "see-it-work",
+          "malayalam": ""
+        },
+        "eyebrow": {
+          "english": "Beyond static dashboards",
+          "malayalam": ""
+        },
+        "titleOne": {
+          "english": "A report explains last month.",
+          "malayalam": ""
+        },
+        "titleTwo": {
+          "english": "A live capability runs every shift.",
+          "malayalam": ""
+        },
+        "description": {
+          "english": "Once your machines, supply chain and CRM are unified, teams stop waiting on analysts to merge spreadsheets. Anyone from plant directors to regional sales leads can query live operations and trigger alerts across every site.",
+          "malayalam": ""
+        },
+        "scenes": {
+          "english": "industrial-otif",
+          "malayalam": ""
+        },
+        "roundedTop": {
+          "english": "true",
+          "malayalam": ""
+        },
+        "overlapTop": {
+          "english": "true",
+          "malayalam": ""
+        }
+      },
+      {
+        "id": 8,
+        "position": 8,
+        "blockName": "Spontaine V3 - Steps",
+        "eyebrow": {
+          "english": "Built for your reality",
+          "malayalam": ""
+        },
+        "titleOne": {
+          "english": "Tailored to your specific bottleneck.",
+          "malayalam": ""
+        },
+        "titleTwo": {
+          "english": "Delivered by experts who know manufacturing.",
+          "malayalam": ""
+        },
+        "steps": {
+          "lastUUID": 3,
+          "items": [
+            {
+              "id": 1,
+              "item": {
+                "label": {
+                  "english": "Step 1",
+                  "malayalam": ""
+                },
+                "text": {
+                  "english": "Start with your exact operational problem",
+                  "malayalam": ""
+                },
+                "detail": {
+                  "english": "Spontaine is not a rigid off-the-shelf template. Bring the cross-system bottleneck hurting you most, from quote-to-actual margin to multi-plant OTIF, and we tailor the solution around your exact workflows.",
+                  "malayalam": ""
+                }
+              }
+            },
+            {
+              "id": 2,
+              "item": {
+                "label": {
+                  "english": "Step 2",
+                  "malayalam": ""
+                },
+                "text": {
+                  "english": "Connect your stack with industrial specialists",
+                  "malayalam": ""
+                },
+                "detail": {
+                  "english": "Our experts understand the realities of manufacturing: legacy ERPs and shop-floor tooling. We connect your machines, suppliers and CRM with no line downtime and no lift from local IT.",
+                  "malayalam": ""
+                }
+              }
+            },
+            {
+              "id": 3,
+              "item": {
+                "label": {
+                  "english": "Step 3",
+                  "malayalam": ""
+                },
+                "text": {
+                  "english": "Scale across plants on your terms",
+                  "malayalam": ""
+                },
+                "detail": {
+                  "english": "Roll out governed workflows across divisions and geographies in weeks, and keep full ownership of your unified data model and results either way.",
+                  "malayalam": ""
+                }
+              }
+            }
+          ]
+        },
+        "note": {
+          "english": "",
+          "malayalam": ""
+        },
+        "body": {
+          "english": "Tailored to your plants, your tooling and your commercial goals, without an 18-month IT roadmap.",
+          "malayalam": ""
+        },
+        "ctaLabel": {
+          "english": "Scope your first 4-week rollout",
+          "malayalam": ""
+        },
+        "calendarUrl": {
+          "english": "intuonfx/30min",
+          "malayalam": ""
+        },
+        "linkLabel": {
+          "english": "",
+          "malayalam": ""
+        },
+        "linkUrl": {
+          "english": "",
+          "malayalam": ""
+        },
+        "backgroundColor": {
+          "english": "var(--spontaine-surface-paper)",
+          "malayalam": ""
+        },
+        "roundedTop": {
+          "english": "true",
+          "malayalam": ""
+        },
+        "overlapTop": {
+          "english": "true",
+          "malayalam": ""
+        }
+      },
+      {
+        "id": 9,
+        "position": 9,
+        "blockName": "Spontaine V3 - Trust Band",
+        "eyebrow": {
+          "english": "Governance and IP protection",
+          "malayalam": ""
+        },
+        "title": {
+          "english": "Yours alone, and it stays in your region.",
+          "malayalam": ""
+        },
+        "items": {
+          "lastUUID": 4,
+          "items": [
+            {
+              "id": 1,
+              "item": {
+                "icon": {
+                  "english": "lock",
+                  "malayalam": ""
+                },
+                "title": {
+                  "english": "Proprietary IP stays protected",
+                  "malayalam": ""
+                },
+                "text": {
+                  "english": "Drawings, tooling tolerances and cost structures are never shared or used to train external models.",
+                  "malayalam": ""
+                }
+              }
+            },
+            {
+              "id": 2,
+              "item": {
+                "icon": {
+                  "english": "key",
+                  "malayalam": ""
+                },
+                "title": {
+                  "english": "Granular plant and role permissions",
+                  "malayalam": ""
+                },
+                "text": {
+                  "english": "Control exactly what regional managers, corporate finance, suppliers and customers can see.",
+                  "malayalam": ""
+                }
+              }
+            },
+            {
+              "id": 3,
+              "item": {
+                "icon": {
+                  "english": "map-pin",
+                  "malayalam": ""
+                },
+                "title": {
+                  "english": "Sovereign regional hosting",
+                  "malayalam": ""
+                },
+                "text": {
+                  "english": "Deploy in your own cloud tenant or a designated EU or North American region, to satisfy export and customer mandates.",
+                  "malayalam": ""
+                }
+              }
+            },
+            {
+              "id": 4,
+              "item": {
+                "icon": {
+                  "english": "shield-check",
+                  "malayalam": ""
+                },
+                "title": {
+                  "english": "Full audit lineage",
+                  "malayalam": ""
+                },
+                "text": {
+                  "english": "Every figure traces back to the machine signal, ERP ledger entry or supplier record that produced it.",
+                  "malayalam": ""
+                }
+              }
+            }
+          ]
+        },
+        "extraLine": {
+          "english": "",
+          "malayalam": ""
+        },
+        "linkLabel": {
+          "english": "Visit the Trust Centre",
+          "malayalam": ""
+        },
+        "linkUrl": {
+          "english": "https://spontaine.eu.trust.site",
+          "malayalam": ""
+        },
+        "roundedTop": {
+          "english": "true",
+          "malayalam": ""
+        },
+        "overlapTop": {
+          "english": "true",
+          "malayalam": ""
+        }
+      },
+      {
+        "id": 10,
+        "position": 10,
+        "blockName": "Spontaine V3 - Accordion",
+        "variant": {
+          "english": "faq",
+          "malayalam": ""
+        },
+        "eyebrow": {
+          "english": "Straight answers",
+          "malayalam": ""
+        },
+        "title": {
+          "english": "What industrial leaders ask before starting.",
+          "malayalam": ""
+        },
+        "note": {
+          "english": "Clear answers for operations, finance and lean IT teams.",
+          "malayalam": ""
+        },
+        "linkLabel": {
+          "english": "",
+          "malayalam": ""
+        },
+        "linkUrl": {
+          "english": "",
+          "malayalam": ""
+        },
+        "rows": {
+          "lastUUID": 6,
+          "items": [
+            {
+              "id": 1,
+              "item": {
+                "title": {
+                  "english": "We run different ERPs across acquired plants and older PLCs on the shop floor. Do we need to standardise them first?",
+                  "malayalam": ""
+                },
+                "anchor": {
+                  "english": "",
+                  "malayalam": ""
+                },
+                "body": {
+                  "english": "No. Your ERPs, MES and shop-floor systems stay as they are. Spontaine reads from each of them and agrees what margin, cost and on-time mean across every plant, so nothing has to be standardised first.",
+                  "malayalam": ""
+                },
+                "entries": {
+                  "lastUUID": 0,
+                  "items": []
+                }
+              }
+            },
+            {
+              "id": 2,
+              "item": {
+                "title": {
+                  "english": "Our IT team is small and focused on keeping plants running. How much internal engineering does this require?",
+                  "malayalam": ""
+                },
+                "anchor": {
+                  "english": "",
+                  "malayalam": ""
+                },
+                "body": {
+                  "english": "Very little. IT grants read access to the systems that hold the answer and chooses where Spontaine runs. We do the connecting and the modelling. IT owns the perimeter. Not the backlog.",
+                  "malayalam": ""
+                },
+                "entries": {
+                  "lastUUID": 0,
+                  "items": []
+                }
+              }
+            },
+            {
+              "id": 3,
+              "item": {
+                "title": {
+                  "english": "How is this different from building a data warehouse in Snowflake or hiring a systems integrator?",
+                  "malayalam": ""
+                },
+                "anchor": {
+                  "english": "",
+                  "malayalam": ""
+                },
+                "body": {
+                  "english": "A warehouse stores data. Someone still has to model it, agree the definitions and build every answer on top, and that is where integrator projects run for years. Spontaine arrives with that layer: connections, agreed definitions and live answers, delivered in weeks on a fixed scope and fee. If you already run a warehouse, Spontaine reads from it too.",
+                  "malayalam": ""
+                },
+                "entries": {
+                  "lastUUID": 0,
+                  "items": []
+                }
+              }
+            },
+            {
+              "id": 4,
+              "item": {
+                "title": {
+                  "english": "How do you capture shop-floor data without disrupting active production lines?",
+                  "malayalam": ""
+                },
+                "anchor": {
+                  "english": "",
+                  "malayalam": ""
+                },
+                "body": {
+                  "english": "We read from the systems that already record it, such as your MES, historians and machine data collection, rather than touching the lines themselves. Nothing on the floor is reconfigured, and no line has to stop.",
+                  "malayalam": ""
+                },
+                "entries": {
+                  "lastUUID": 0,
+                  "items": []
+                }
+              }
+            },
+            {
+              "id": 5,
+              "item": {
+                "title": {
+                  "english": "Can we push live production and margin data back into our CRM and customer portals without custom APIs?",
+                  "malayalam": ""
+                },
+                "anchor": {
+                  "english": "",
+                  "malayalam": ""
+                },
+                "body": {
+                  "english": "Yes. Every governed dataset in Spontaine is already a secure API. Send it to your CRM, or give a customer a portal scoped to exactly what they may see. Nothing else leaves.",
+                  "malayalam": ""
+                },
+                "entries": {
+                  "lastUUID": 0,
+                  "items": []
+                }
+              }
+            },
+            {
+              "id": 6,
+              "item": {
+                "title": {
+                  "english": "What does a first four-week deployment cost and deliver?",
+                  "malayalam": ""
+                },
+                "anchor": {
+                  "english": "",
+                  "malayalam": ""
+                },
+                "body": {
+                  "english": "One cross-system question answered from your own systems and refreshing on its own, with the definitions agreed by your team. Fixed scope and fixed fee, agreed before we start; we quote once we know the question and the systems. If you stop, the data and results stay yours.",
+                  "malayalam": ""
+                },
+                "entries": {
+                  "lastUUID": 0,
+                  "items": []
+                }
+              }
+            }
+          ]
+        },
+        "backgroundColor": {
+          "english": "var(--spontaine-surface-cream)",
+          "malayalam": ""
+        },
+        "roundedTop": {
+          "english": "true",
+          "malayalam": ""
+        },
+        "overlapTop": {
+          "english": "true",
+          "malayalam": ""
+        }
+      },
+      {
+        "id": 11,
+        "position": 11,
+        "blockName": "Spontaine V3 - CTA",
+        "titleOne": {
+          "english": "Transform how your plants, suppliers and commercial teams operate, without becoming a software company.",
+          "malayalam": ""
+        },
+        "description": null,
+        "microcopy": {
+          "english": "Bring one cross-system bottleneck. Leave with a concrete four-week deployment plan.",
+          "malayalam": ""
+        },
+        "primaryCta": {
+          "name": {
+            "english": "Book a 30-minute operational architecture session",
+            "malayalam": ""
+          },
+          "link": "",
+          "external": false
+        },
+        "primaryCalendarUrl": {
+          "english": "intuonfx/30min",
+          "malayalam": ""
+        },
+        "secondaryCta": null,
+        "secondaryCalendarUrl": null,
+        "roundedTop": {
+          "english": "true",
+          "malayalam": ""
+        },
+        "overlapTop": {
+          "english": "true",
+          "malayalam": ""
+        }
+      }
+    ]
+  }
+}

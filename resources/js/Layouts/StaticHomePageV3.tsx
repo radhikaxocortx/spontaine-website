@@ -1,9 +1,11 @@
-import SectionBentoV3 from '@/components/Home/Bento/SectionBentoV3'
 import SectionBuildV3 from '@/components/Home/Build/SectionBuildV3'
 import SectionChatV3 from '@/components/Home/Chat/SectionChatV3'
+import SectionContrastV3 from '@/components/Home/Contrast/SectionContrastV3'
+import SectionFaqV3 from '@/components/Home/Faq/SectionFaqV3'
 import SectionBlogsCarouselV3 from '@/components/Home/SectionBlogsCarouselV3'
 import SectionCTAV3 from '@/components/Home/SectionCTAV3'
 import SectionTestBannerV3 from '@/components/Home/SectionTestBannerV3'
+import SectionSolutionsV3 from '@/components/Home/Solutions/SectionSolutionsV3'
 import SpontaineV3Hero from '@/components/Home/SpontaineV3Hero'
 import SectionStackV3 from '@/components/Home/Stack/SectionStackV3'
 import StackUpBand from '@/components/Home/StackUpBand'
@@ -23,10 +25,12 @@ import Navbar from './Navbar/Navbar'
 /** Fixed anchor ids: other pages and outbound emails link to these. */
 const HOME_SECTION_IDS = [
   'top',
+  'solutions',
   'example',
   'choices',
   'architecture',
   'build',
+  'faq',
   'first-question',
   'security',
   'belief',
@@ -44,8 +48,8 @@ interface StaticHomePageV3Props {
 
 const StaticHomePageV3 = ({
   featuredBlogs = [],
-  title = 'Governed answers from the data you already have',
-  description = 'Spontaine connects your systems, agrees what your numbers mean and serves governed answers to your people, tools and customers. Single tenant, hosted securely and exclusively in your region. First results in four weeks.',
+  title = 'Unify your operational stack and unlock working AI in weeks',
+  description = "Professional services and industrial operations don't fail at AI for lack of ambition. Their data is trapped in legacy ERPs, machines, time tools and CRMs. Spontaine unifies your stack in place in four weeks.",
   image = 'https://spontaine.com/storage/images/8205df31-7880-4c23-902d-6b222d8174b5.png',
   noIndex = false,
 }: StaticHomePageV3Props) => {
@@ -101,7 +105,11 @@ const StaticHomePageV3 = ({
         noIndex={noIndex}
       />
       <div className='relative w-full max-w-full overflow-x-hidden bg-spontaine-white'>
-        <SpontaineV3Hero />
+        {/* The hero background extends behind the solutions glass panel */}
+        <div className='relative isolate overflow-hidden bg-hero-wash'>
+          <SpontaineV3Hero />
+          <SectionSolutionsV3 />
+        </div>
 
         <div
           id='product'
@@ -111,7 +119,7 @@ const StaticHomePageV3 = ({
         </div>
         {/* <VideoFeatureCarousel /> */}
         <StackUpBand className='relative'>
-          <SectionBentoV3 />
+          <SectionContrastV3 />
         </StackUpBand>
         {/* <CompanyLogosMarquee /> */}
         <div className='relative z-20 -mt-8 md:-mt-10 lg:-mt-12 xl:-mt-16'>
@@ -119,6 +127,9 @@ const StaticHomePageV3 = ({
         </div>
         <div className='relative z-20'>
           <SectionBuildV3 />
+        </div>
+        <div className='relative z-20 -mt-8 md:-mt-10 lg:-mt-12 xl:-mt-16'>
+          <SectionFaqV3 />
         </div>
         <div className='relative z-20 -mt-8 md:-mt-10 lg:-mt-12 xl:-mt-16'>
           <SectionStartV3 />

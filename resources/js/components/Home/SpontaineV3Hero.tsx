@@ -6,7 +6,6 @@ import { useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { Pill, type PillProps } from '@/components/ui/pill'
 import { trackEvent } from '@/lib/analytics'
-import HeroDoors from './Doors/HeroDoors'
 
 const decisionStates = [
   {
@@ -26,6 +25,8 @@ const decisionStates = [
     variant: 'variant4',
   },
 ] satisfies Array<{ label: string; variant: PillProps['variant'] }>
+
+const HERO_PROOF_POINTS = ['Four weeks to live value', 'Full stack, in place', 'Your IP'] as const
 
 export default function SpontaineV3Hero() {
   const heroRef = useRef<HTMLElement | null>(null)
@@ -101,7 +102,7 @@ export default function SpontaineV3Hero() {
       ref={heroRef}
       id='top'
       aria-labelledby='spontaine-v3-hero-title'
-      className='relative isolate overflow-hidden bg-hero-wash px-[var(--space-shell-sm)] pb-[150px] pt-20 md:px-[var(--space-shell)] md:pb-[150px] md:pt-[168px] lg:pt-[120px]'
+      className='relative isolate overflow-hidden px-[var(--space-shell-sm)] pb-12 pt-20 md:px-[var(--space-shell)] md:pb-16 md:pt-[168px] lg:pt-[120px]'
     >
       {/* Diagonal ambient band behind the prism */}
       <div
@@ -121,27 +122,28 @@ export default function SpontaineV3Hero() {
         {/* Hero message and primary actions */}
         <div className='relative z-10 max-w-[760px] pb-8 pt-12 md:pb-20 md:pt-16 lg:pb-0'>
           <p className='eyebrow mb-6 max-w-[560px] text-spontaine-gray-cool'>
-            For companies that run like large ones, without a large data team
+            The data foundation for real-world AI
           </p>
 
           <h1
             id='spontaine-v3-hero-title'
             className='display-hero text-balance text-spontaine-dark'
           >
-            Turn the data you already have
+            Good data is what unlocks AI.
             <br />
             <span className='display-hero text-spontaine-text-accent-dark'>
-              into answers the whole business trusts.
+              We unify your entire stack, without the overhaul.
             </span>
           </h1>
 
           <p className='body-lg mt-7 max-w-[570px] text-spontaine-gray-muted'>
-            Spontaine connects the systems you already run, agrees what your numbers mean, and
-            serves them to your people, your tools and your customers. Single tenant, hosted
-            securely and exclusively in your region. First results in four weeks.
+            Professional services and industrial operations don&apos;t fail at AI for lack of
+            ambition. They fail because critical data sits trapped across legacy ERPs, machines,
+            time tools and spreadsheets. Spontaine connects and governs your entire operational
+            stack in place, giving AI reliable context in weeks.
           </p>
 
-          <div className='mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap'>
+          <div className='mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center'>
             <Button
               asChild
               variant='v3Primary'
@@ -177,11 +179,35 @@ export default function SpontaineV3Hero() {
                 />
               </a>
             </Button>
-          </div>
 
-          <p className='mt-5 font-mono text-xs text-spontaine-gray-deep'>
-            A 30-minute working session. No deck. No obligation.
-          </p>
+            {/* Proof pill: three short facts beside the buttons */}
+            <ul
+              aria-label='At a glance'
+              className='flex flex-wrap items-center gap-y-1 self-start rounded-[var(--radius-pill)] border border-spontaine-white/90 bg-spontaine-white/55 px-3.5 py-2 font-mono text-xs text-spontaine-gray-deep backdrop-blur-md sm:ml-2 sm:self-auto'
+            >
+              {HERO_PROOF_POINTS.map((point, index) => (
+                <li
+                  key={point}
+                  className='flex items-center'
+                >
+                  {index === 0 ? (
+                    <span
+                      aria-hidden='true'
+                      className='mr-2 h-1.5 w-1.5 rounded-full bg-spontaine-accent shadow-[0_0_0_4px_var(--spontaine-accent-soft)]'
+                    />
+                  ) : (
+                    <span
+                      aria-hidden='true'
+                      className='mx-2.5 text-spontaine-text-tertiary'
+                    >
+                      ·
+                    </span>
+                  )}
+                  {point}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
         {/* Governed intelligence product visual */}
@@ -221,13 +247,12 @@ export default function SpontaineV3Hero() {
         </div>
       </div>
 
-      {/* Three doors: route each visitor by situation */}
+      {/* Marks the end of the hero: the prompt card rises in as this scrolls into view */}
       <div
         ref={calloutRef}
-        className='relative left-1/2 z-20 mt-10 w-screen -translate-x-1/2 md:mt-14'
-      >
-        <HeroDoors />
-      </div>
+        aria-hidden='true'
+        className='h-px w-full'
+      />
     </section>
   )
 }

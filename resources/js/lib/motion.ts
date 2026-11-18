@@ -18,6 +18,10 @@ export const motionDuration = {
   indicator: 0.45,
   /** Connector line fill on the PathSteps band. */
   connector: 1.4,
+  /** Seconds each solutions tab stays up during autoplay (matches .solution-progress-run). */
+  solutionDwell: 12,
+  /** Panel crossfade out, in milliseconds (the fade in is 300ms). */
+  crossfadeOutMs: 200,
 } as const
 
 export const motionStagger = {

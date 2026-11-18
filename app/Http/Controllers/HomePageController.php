@@ -37,8 +37,8 @@ final class HomePageController extends Controller
         ])->withViewData([
             'seo' => [
                 // Keep in sync with StaticHomePageV3.tsx: link-preview scrapers read these, not the client-side tags.
-                'title' => 'Governed answers from the data you already have',
-                'description' => 'Spontaine connects your systems, agrees what your numbers mean and serves governed answers to your people, tools and customers. Single tenant, hosted securely and exclusively in your region. First results in four weeks.',
+                'title' => 'Unify your operational stack and unlock working AI in weeks',
+                'description' => 'Professional services and industrial operations don\'t fail at AI for lack of ambition. Their data is trapped in legacy ERPs, machines, time tools and CRMs. Spontaine unifies your stack in place in four weeks.',
                 'image' => rtrim((string) config('app.url'), '/') . '/storage/images/8205df31-7880-4c23-902d-6b222d8174b5.png',
                 'url' => $request->fullUrl(),
                 'type' => 'website',

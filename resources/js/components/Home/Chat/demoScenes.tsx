@@ -1,12 +1,12 @@
 import { type PillProps } from '@/components/ui/pill'
-import { type DemoTabId } from './demoTabState'
+import { type DemoSceneId } from './demoTabState'
 
 export interface DemoRow {
   readonly cells: readonly [string, string, string, string]
 }
 
 export interface DemoScene {
-  readonly id: DemoTabId
+  readonly id: DemoSceneId
   readonly label: string
   readonly questions: readonly string[]
   readonly pills: readonly { readonly variant: PillProps['variant']; readonly label: string }[]
@@ -22,63 +22,96 @@ export interface DemoScene {
   readonly alertTitle: string
 }
 
-// Professional services: unchanged from the live page.
+// Professional services: fixed-fee margin drift. Illustrative data.
 const professionalServices: DemoScene = {
   id: 'professional-services',
   label: 'Professional services',
   questions: [
-    'Which engagements are likely to miss target margin this quarter?',
-    'Where did delayed billing change expected realization?',
+    'Which fixed-fee client engagements are drifting below 35% target margin due to senior staffing mix or unbilled scope?',
   ],
   pills: [
     { variant: 'variant1', label: 'Create interactive view' },
     { variant: 'variant4', label: 'Sources: Finance, time & WIP' },
     { variant: 'neutral', label: 'This quarter' },
   ],
-  columns: ['Engagement', 'Margin', 'vs target', 'Partner'],
-  gridClassName: 'grid-cols-[2.5fr_0.8fr_0.8fr_0.9fr]',
+  columns: ['Engagement', 'Margin', 'vs 35% target', 'Main driver'],
+  gridClassName: 'grid-cols-[1.7fr_0.6fr_0.8fr_1.1fr]',
   rows: [
-    { cells: ['Euroline Group -- advisory', '24.6%', '-13.4 pts', 'K. Keller'] },
-    { cells: ['Riverton Energy -- audit', '31.2%', '-6.8 pts', 'E. Moretti'] },
+    { cells: ['Euroline Group, advisory', '24.6%', '-10.4 pts', 'Senior staffing mix'] },
+    { cells: ['Riverton Energy, audit', '31.2%', '-3.8 pts', 'Unbilled scope'] },
   ],
-  metricLabel: 'Margin at risk',
-  metricValue: '€12,596.98',
+  metricLabel: 'Fixed-fee margin at risk',
+  metricValue: '€126,400',
   sparkPath:
     'M0 52 L13 44 L24 52 L37 36 L50 40 L63 19 L78 40 L93 26 L106 52 L120 48 L133 59 L148 47 L160 60 L177 40 L188 30 L202 46 L215 19 L229 36 L250 28',
   whatChanged:
-    'The bottom T&M projects have fallen below target margin. The pattern points to delayed billing and senior time used below its value.',
-  alertLabel: 'Opportunity found · 05:47',
-  alertTitle: 'One client may qualify for an energy-tax deduction.',
+    'Senior hours on Euroline are running at twice the plan. On Riverton, three change requests were delivered but never billed.',
+  alertLabel: 'Unbilled scope found · 05:47',
+  alertTitle: 'Three delivered change requests on Riverton Energy are not yet billed.',
 }
 
-// Industrial: illustrative data. Never implies a real customer.
+// Industrial: on-time in-full risk across Plant A and Plant B. Illustrative data. Never implies a real customer.
 const industrial: DemoScene = {
   id: 'industrial',
   label: 'Industrial',
-  questions: ['Why did margin on Programme 4410 fall at Plant B but not Plant A?'],
+  questions: [
+    'Which open orders across Plant A and Plant B will miss OTIF due to scrap or supplier delays, and what is the margin hit?',
+  ],
   pills: [
     { variant: 'variant1', label: 'Create interactive view' },
-    { variant: 'variant4', label: 'Sources: ERP, MES, pricing' },
-    { variant: 'neutral', label: 'This quarter' },
+    { variant: 'variant4', label: 'Sources: ERP, MES, suppliers, CRM' },
+    { variant: 'neutral', label: 'Open orders' },
   ],
-  columns: ['Plant', 'Margin', 'vs plan', 'Main driver'],
-  gridClassName: 'grid-cols-[0.8fr_0.7fr_0.7fr_1.9fr]',
+  columns: ['Open order', 'Plant', 'vs promise', 'Cause'],
+  gridClassName: 'grid-cols-[1.5fr_0.6fr_0.7fr_1.1fr]',
   rows: [
-    { cells: ['Plant A', '18.2%', '-0.4 pts', 'Volume mix'] },
-    { cells: ['Plant B', '11.7%', '-6.9 pts', 'Resin cost not passed through'] },
+    { cells: ['SO-22817 · Brackets', 'Plant A', '+5 days', 'Scrap on line 3'] },
+    { cells: ['SO-22904 · Pump housings', 'Plant B', '+3 days', 'Supplier delay'] },
   ],
-  metricLabel: 'Plant B margin, last four quarters',
-  metricValue: '18.6% → 11.7%',
-  sparkPath: 'M0 14 L40 16 L80 15 L120 22 L150 30 L180 41 L215 50 L250 56',
+  metricLabel: 'Margin hit, 11 open orders',
+  metricValue: '€168,300',
+  sparkPath: 'M0 60 L30 59 L60 57 L90 55 L120 48 L150 41 L180 33 L215 24 L250 15',
   whatChanged:
-    'Resin cost at Plant B rose in Q3. Price changes to the two largest customers did not follow. Plant A reprices quarterly; Plant B reprices yearly.',
-  alertLabel: 'Price leakage found · 05:47',
-  alertTitle: 'Two customers below cost-plus floor at Plant B.',
+    'Scrap on line 3 at Plant A doubled this month, and the alloy supplier for Plant B is running 9 days late. Expedited freight and penalties carry most of the cost.',
+  alertLabel: 'OTIF risk found · 05:47',
+  alertTitle: 'Re-sequence two Plant A orders to protect a key customer delivery.',
 }
 
-export const demoScenes: Readonly<Record<DemoTabId, DemoScene>> = {
+// Industrial, on-time in-full risk: used on /industrial-groups only. Illustrative data.
+const industrialOtif: DemoScene = {
+  id: 'industrial-otif',
+  label: 'Industrial',
+  questions: [
+    'Which open orders across our Ohio and Brno plants are at risk of missing OTIF due to alloy lead-time slips, and what is the margin impact?',
+  ],
+  pills: [
+    { variant: 'variant1', label: 'Create interactive view' },
+    { variant: 'variant4', label: 'Sources: ERP, MES, suppliers, CRM' },
+    { variant: 'neutral', label: 'Open orders' },
+  ],
+  columns: ['Open order', 'Plant', 'vs promise', 'Margin impact'],
+  gridClassName: 'grid-cols-[1.7fr_0.6fr_0.7fr_0.9fr]',
+  rows: [
+    { cells: ['SO-22817 · Tier-1 auto brackets', 'Brno', '+6 days', '-€41,200'] },
+    { cells: ['SO-22904 · Pump housings', 'Ohio', '+3 days', '-€12,900'] },
+  ],
+  metricLabel: 'Margin at risk, 14 open orders',
+  metricValue: '€214,600',
+  sparkPath: 'M0 60 L30 59 L60 57 L90 55 L120 48 L150 41 L180 33 L215 24 L250 15',
+  whatChanged:
+    'Alloy 6082 lead time from the main mill rose from 21 to 32 days. Fourteen open orders depend on it, nine at Brno and five at Ohio. Expedited freight and late-delivery penalties carry most of the cost.',
+  alertLabel: 'OTIF risk found · 05:47',
+  alertTitle: 'Move 40 t of alloy from Ohio stock to protect three Brno orders.',
+}
+
+export const demoScenes: Readonly<Record<DemoSceneId, DemoScene>> = {
   'professional-services': professionalServices,
   industrial,
+  'industrial-otif': industrialOtif,
 }
 
-export const demoSceneList: readonly DemoScene[] = [professionalServices, industrial]
+export const demoSceneList: readonly DemoScene[] = [
+  professionalServices,
+  industrial,
+  industrialOtif,
+]

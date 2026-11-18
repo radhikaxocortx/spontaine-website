@@ -16,63 +16,56 @@ interface StackCardData {
   readonly compactRightPadding?: boolean
 }
 
+// Card copy stays under 30 words so the card never grows beside its artwork.
 const stackCards: StackCardData[] = [
   {
-    label: 'Connectors',
-    title: 'Connect any source, from anywhere.',
+    label: 'Connect',
+    title: 'Plug into any stack, in place.',
     description: [
-      'Spontaine plugs into your data systems in-place, and runs automatically so your processes are untouched. Nothing to replace, nothing to reconfigure.',
-      'And unlike enterprise vendors, you are not locked in to any one stack or limited by a set of supported connectors.',
+      'Connect legacy ERPs, shop-floor PLCs, time and billing tools, CRMs and spreadsheets with zero migration or operational downtime.',
     ],
     artwork: 'connectors',
   },
   {
-    label: 'Meaning',
-    title: 'Knows your business, not just your data',
+    label: 'Reconcile',
+    title: 'One shared definition of truth.',
     description: [
-      "Spontaine doesn't just know what a number means. It knows what it means for you - your org structure, how you operate, what you're actually trying to achieve. That context shapes the answer, not just the definition behind it.",
-      "Ask a nuanced question, get an answer built to be acted on, with the logical next question already suggested. Insight doesn't dead-end at the first answer.",
+      'Codify how your business calculates true margin, OTIF and utilisation once, and end conflicting numbers across sites and offices.',
     ],
     artwork: 'meaning',
   },
   {
-    label: 'Answers',
-    title: "Answers built for who's asking",
+    label: 'Decide',
+    title: 'Role-aware answers with full lineage.',
     description: [
-      'A partner and an associate ask "what\'s our margin on this account," and each gets exactly what they are looking for.',
-      "Context isn't just what's being asked. It's also who's asking.",
-      'Every answer carries its own reasoning and traces straight back to the source data behind it.',
+      'Give plant directors, managing partners and CFOs live answers traced straight back to source records, with no analyst bottleneck.',
     ],
     artwork: 'answers',
     titleTone: 'green',
   },
   {
-    label: 'Persistence',
-    title: 'Generated once and staying alive.',
+    label: 'Automate',
+    title: 'Turn questions into daily workflows.',
     description: [
-      "A Persistent Block isn't a frozen snapshot - generated once, pulls data and stays interactive forever. Filter it, drill into it, explore it independently, without asking the AI again.",
-      'AI inference runs down toward the minimum as use expands.',
+      'Save any verified logic as a live endpoint that triggers alerts, updates CRM records or flags margin drift automatically.',
     ],
     artwork: 'persistence',
     titleTone: 'green',
   },
   {
-    label: 'Safety',
-    title: 'Safe by architecture, not by policy.',
+    label: 'Protect',
+    title: 'Sovereign security by architecture.',
     description: [
-      'AI never sees your raw data. Only its shape. Anything sensitive - names, IDs - gets pseudonymised before the model sees it, and the AI has no ability to submit queries to your database directly.',
-      'Every answer traces back to what produced it. Safe to run at scale, not just safe in a demo.',
+      'Sensitive pricing, part tolerances and client records are pseudonymised before AI touches them, hosted strictly in your chosen region.',
     ],
     artwork: 'safety',
     compactRightPadding: true,
   },
   {
-    label: 'New IP',
-    title: 'Your platform. Your IP. Your revenue.',
+    label: 'Monetize',
+    title: 'Turn internal data into customer IP.',
     description: [
-      'Codified skills and persistent endpoints remove the real barrier to productising a service line: the build cost.',
-      "Connected workflows and automated actions get easier to assemble, and each one keeps uncovering value long after it's built.",
-      "Spontaine's core runs inside your perimeter. Everything built on top of it is yours - new IP, not a vendor's feature you're renting.",
+      'Publish governed order tracking, quality certificates or client benchmarks through secure portals and APIs that lock in renewals.',
     ],
     artwork: 'new-ip',
     titleTone: 'green',
@@ -231,7 +224,9 @@ export default function SectionStackV3() {
     const trigger = ScrollTrigger.create({
       trigger: stackStage,
       start: 'bottom bottom',
-      end: '+=450%',
+      // Phones get a shorter pin (about half a screen per card) so it never feels like a scroll trap.
+      // A function, so ScrollTrigger re-reads it on every refresh (e.g. after rotation).
+      end: () => (window.matchMedia('(max-width: 767px)').matches ? '+=300%' : '+=450%'),
       pin: section,
       scrub: true,
       anticipatePin: 1,
@@ -281,30 +276,19 @@ export default function SectionStackV3() {
               data-stack-item
               className='eyebrow mb-5 text-spontaine-gray-cool'
             >
-              ARCHITECTURE
+              How it works in place
             </p>
 
             <h2
               data-stack-item
-              className='display-xl text-spontaine-dark'
+              className='display-xl text-balance text-spontaine-dark'
             >
-              Not six tools stitched together.
+              One governed layer
               <br />
               <span className='display-xl text-spontaine-text-accent-dark'>
-                You need one system.
+                across every system you run.
               </span>
             </h2>
-
-            <p
-              data-stack-item
-              className='body-lg mx-auto mt-5 max-w-[690px] font-body text-spontaine-gray-muted'
-            >
-              Most AI pilots are third-party tools stitched together connectors, models, workflows,
-              none of them built to work with each other. The stitching breaks: someone has to
-              manage every integration, patch every failure. Spontaine is a single core powering
-              everything else, including the platforms you already run. IT owns the perimeter. Not
-              the backlog. One system, built for your teams to actually use.
-            </p>
           </div>
 
           <div className='mt-[58px] grid w-full grid-cols-1 gap-8 lg:grid-cols-[104px_minmax(0,1fr)] lg:items-start lg:gap-3 xl:gap-4'>

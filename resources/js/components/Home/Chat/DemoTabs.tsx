@@ -2,23 +2,24 @@ import { motionDuration, motionEase } from '@/lib/motion'
 import { cn } from '@/lib/utils'
 import { motion, useReducedMotion } from 'framer-motion'
 import { type KeyboardEvent, useRef } from 'react'
-import { type DemoTabId } from './demoTabState'
+import { type DemoSceneId } from './demoTabState'
 
 interface DemoTab {
-  readonly id: DemoTabId
+  readonly id: DemoSceneId
   readonly label: string
 }
 
 interface DemoTabsProps {
   readonly tabs: readonly DemoTab[]
-  readonly value: DemoTabId
+  readonly value: DemoSceneId
   readonly panelId: string
-  readonly onChange: (tab: DemoTabId) => void
+  readonly onChange: (tab: DemoSceneId) => void
+  readonly idPrefix?: string
 }
 
-export const demoTabButtonId = (tab: DemoTabId) => `demo-tab-${tab}`
+export const demoTabButtonId = (tab: DemoSceneId, idPrefix = 'demo') => `${idPrefix}-tab-${tab}`
 
-export default function DemoTabs({ tabs, value, panelId, onChange }: DemoTabsProps) {
+export default function DemoTabs({ tabs, value, panelId, onChange, idPrefix }: DemoTabsProps) {
   const buttonRefs = useRef<Array<HTMLButtonElement | null>>([])
   const shouldReduceMotion = useReducedMotion()
 
@@ -59,7 +60,7 @@ export default function DemoTabs({ tabs, value, panelId, onChange }: DemoTabsPro
             ref={(node) => {
               buttonRefs.current[index] = node
             }}
-            id={demoTabButtonId(tab.id)}
+            id={demoTabButtonId(tab.id, idPrefix)}
             type='button'
             role='tab'
             aria-selected={isSelected}

@@ -15,6 +15,8 @@ interface StackUpOptions {
    * because a transform on a pinned element breaks the pin.
    */
   readonly moveBand?: boolean
+  /** Turn the entrance off entirely, e.g. inside the page builder editor. */
+  readonly enabled?: boolean
 }
 
 /**
@@ -24,13 +26,14 @@ interface StackUpOptions {
  */
 export function useStackUp<TElement extends HTMLElement = HTMLElement>({
   moveBand = true,
+  enabled = true,
 }: StackUpOptions = {}) {
   const bandRef = useRef<TElement | null>(null)
 
   useEffect(() => {
     const band = bandRef.current
 
-    if (!band || prefersReducedMotion()) {
+    if (!band || !enabled || prefersReducedMotion()) {
       return
     }
 
@@ -82,7 +85,7 @@ export function useStackUp<TElement extends HTMLElement = HTMLElement>({
     }, band)
 
     return () => context.revert()
-  }, [moveBand])
+  }, [moveBand, enabled])
 
   return bandRef
 }

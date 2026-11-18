@@ -30,13 +30,20 @@ import { heroImageBlock as heroImageSPBlock } from '../Blocks/SpontaineBlocks/Se
 import { heroVideoBlock } from '../Blocks/SpontaineBlocks/SectionHeroVideoSP'
 import { imageCarouselSPBlock } from '../Blocks/SpontaineBlocks/SectionImageCarouselSP'
 import { marqueeSPBlock } from '../Blocks/SpontaineBlocks/SectionMarqueeSP'
+import { accordionV3Block } from '../Blocks/SpontaineV3/AccordionV3'
 import { dpaAccordionBlock } from '../Blocks/SpontaineV3/DPAAccordion/DPAAccordion'
+import { factsRowV3Block } from '../Blocks/SpontaineV3/FactsRowV3'
+import { pillarsRowV3Block } from '../Blocks/SpontaineV3/PillarsRowV3'
 import { sectionCtaV3Block } from '../Blocks/SpontaineV3/SectionCtaV3'
 import { sectionFeatureSplitV3Block } from '../Blocks/SpontaineV3/SectionFeatureSplitV3'
 import { sectionHeroV3Block } from '../Blocks/SpontaineV3/SectionHeroV3'
 import { sectionLargeHeroV3Block } from '../Blocks/SpontaineV3/SectionLargeHeroV3'
 import { sectionRichTextV3Block } from '../Blocks/SpontaineV3/SectionRichTextV3'
 import { sectionScriptEmbedV3Block } from '../Blocks/SpontaineV3/SectionScriptEmbedV3'
+import { sectionSolutionsTabsV3Block } from '../Blocks/SpontaineV3/SectionSolutionsTabsV3'
+import { stepsV3Block } from '../Blocks/SpontaineV3/StepsV3'
+import { trustBandV3Block } from '../Blocks/SpontaineV3/TrustBandV3'
+import { workedExampleV3Block } from '../Blocks/SpontaineV3/WorkedExampleV3'
 
 export interface PageBuilderAction {
   action:
@@ -256,6 +263,41 @@ const getBlockDefaultData = (blockName: string) => {
     case 'Spontaine V3 - Script Embed': {
       return {
         ...sectionScriptEmbedV3Block,
+      }
+    }
+    case 'Spontaine V3 - Solutions Tabs': {
+      return {
+        ...sectionSolutionsTabsV3Block,
+      }
+    }
+    case 'Spontaine V3 - Pillars Row': {
+      return {
+        ...pillarsRowV3Block,
+      }
+    }
+    case 'Spontaine V3 - Facts Row': {
+      return {
+        ...factsRowV3Block,
+      }
+    }
+    case 'Spontaine V3 - Accordion': {
+      return {
+        ...accordionV3Block,
+      }
+    }
+    case 'Spontaine V3 - Worked Example': {
+      return {
+        ...workedExampleV3Block,
+      }
+    }
+    case 'Spontaine V3 - Steps': {
+      return {
+        ...stepsV3Block,
+      }
+    }
+    case 'Spontaine V3 - Trust Band': {
+      return {
+        ...trustBandV3Block,
       }
     }
 

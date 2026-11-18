@@ -2,10 +2,13 @@ import type { Language } from '@/components/ui/ui_interfaces'
 import type { Dispatch } from 'react'
 import type { BlocKFieldInfo } from '../../../Components/BlockEditor/BlockEditor'
 import EditLabel from '../../../Components/EditLabel'
-import V3ColorControls from '../../../Components/V3ColorControls'
+import V3ColorControls, { getV3ColorValue } from '../../../Components/V3ColorControls'
 import V3RoundedTopToggle from '../../../Components/V3RoundedTopToggle'
 import type { PageBuilderAction } from '../../../hooks/pageBuilderService'
-import { emptyTextData, type SectionLargeHeroV3Block } from './types'
+import { emptyTextData, FADE_INTO_NEXT_TREATMENT, type SectionLargeHeroV3Block } from './types'
+
+const isFadeIntoNext = (blockData: SectionLargeHeroV3Block, language: Language) =>
+  getV3ColorValue(blockData.backgroundTreatment, language) === FADE_INTO_NEXT_TREATMENT
 
 interface SectionLargeHeroV3EditPanelProps {
   blockData?: SectionLargeHeroV3Block
@@ -56,6 +59,26 @@ const SectionLargeHeroV3EditPanel = ({
               <EditLabel
                 label='Edit Overlay'
                 onClick={onOpenOverlayModal}
+              />
+            )}
+            {dispatch != null && blockData?.id != null && (
+              <EditLabel
+                label={
+                  isFadeIntoNext(blockData, language)
+                    ? 'Fade Into Next Section: On'
+                    : 'Fade Into Next Section: Off'
+                }
+                onClick={() =>
+                  dispatch({
+                    action: 'UPDATE_BLOCK_FIELD',
+                    blockId: blockData.id,
+                    fieldName: 'backgroundTreatment',
+                    fieldValue: {
+                      english: isFadeIntoNext(blockData, language) ? '' : FADE_INTO_NEXT_TREATMENT,
+                      malayalam: '',
+                    },
+                  })
+                }
               />
             )}
           </div>

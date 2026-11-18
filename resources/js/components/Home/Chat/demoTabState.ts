@@ -1,6 +1,9 @@
 export type DemoTabId = 'professional-services' | 'industrial'
 
-export type DemoTabSource = 'click' | 'door' | 'url'
+/** Every scene a worked example can show. Only DemoTabId scenes can be picked by ?tab= on the homepage. */
+export type DemoSceneId = DemoTabId | 'industrial-otif'
+
+export type DemoTabSource = 'click' | 'url'
 
 export const DEMO_TAB_IDS: readonly DemoTabId[] = ['professional-services', 'industrial']
 
