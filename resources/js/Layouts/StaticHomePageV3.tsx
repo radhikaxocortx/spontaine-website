@@ -96,7 +96,7 @@ const StaticHomePageV3 = ({
   }, [])
 
   return (
-    <div className='overflow-x-hidden'>
+    <div className='page-clip-x'>
       <Navbar />
       <MetaTags
         title={title}
@@ -104,7 +104,7 @@ const StaticHomePageV3 = ({
         image={image}
         noIndex={noIndex}
       />
-      <div className='relative w-full max-w-full overflow-x-hidden bg-spontaine-white'>
+      <div className='page-clip-x relative w-full max-w-full bg-spontaine-white'>
         {/* The hero background extends behind the solutions glass panel */}
         <div className='relative isolate overflow-hidden bg-hero-wash'>
           <SpontaineV3Hero />

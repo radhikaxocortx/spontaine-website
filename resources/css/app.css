@@ -129,6 +129,15 @@ body {
 }
 
 /* Hero image that dissolves into the band below it (Hero Large "fade into next section"). */
+/* Page wrappers: hide sideways overflow WITHOUT becoming a scroll container.
+   overflow-x: hidden forces overflow-y to auto, so any child that pokes out at the bottom
+   (e.g. a band still waiting for its stack-up entrance) gives the wrapper its own scroll.
+   On iOS that inner scroll grabs the first swipes and the page will not move. */
+.page-clip-x {
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
 .v3-hero-fade-mask {
   -webkit-mask-image: linear-gradient(to bottom, #000 80%, transparent 100%);
   mask-image: linear-gradient(to bottom, #000 80%, transparent 100%);
