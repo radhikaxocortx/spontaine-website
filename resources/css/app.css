@@ -121,7 +121,7 @@ body {
 }
 
 .solution-progress-run {
-  animation: solution-progress-fill 12s linear forwards;
+  animation: solution-progress-fill 6s linear forwards;
 }
 
 .solution-progress-paused {
