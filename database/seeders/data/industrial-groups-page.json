@@ -1,12 +1,12 @@
 {
   "title": "Industrial groups",
-  "page_title": "Manufacturing and distribution | Spontaine",
-  "description": "Unify your plants, supply chain and CRM without becoming a software company. Spontaine captures live production data and connects it back to your suppliers and forward to your customers, giving you operational and margin control in weeks.",
+  "page_title": "Unify your plants, supply chain and CRM",
+  "description": "Unify your plants, supply chain and CRM without becoming a software company. Live production data, connected to suppliers and customers, in weeks.",
   "url": "industrial-groups",
   "type": "Page",
   "published": true,
   "featured": false,
-  "cover_image": "/images/industrial/hero-glass-panes.svg",
+  "cover_image": "/images/industrial/industrial-groups-share.jpg",
   "blocks": {
     "lastUUID": 11,
     "blocks": [

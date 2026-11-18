@@ -129,10 +129,10 @@ export default function SpontaineV3Hero() {
             id='spontaine-v3-hero-title'
             className='display-hero text-balance text-spontaine-dark'
           >
-            Good data is what unlocks AI.
+            Good data unlocks AI.
             <br />
             <span className='display-hero text-spontaine-text-accent-dark'>
-              We unify your entire stack, without the overhaul.
+              One stack. No&nbsp;overhaul.
             </span>
           </h1>
 

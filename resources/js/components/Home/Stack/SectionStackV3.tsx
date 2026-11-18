@@ -74,6 +74,13 @@ const stackCards: StackCardData[] = [
 ]
 
 const stackStep = 1 / (stackCards.length + 1)
+
+/** Free space (px) the pinned section needs above and below before it is centred on screen. */
+const PIN_MIN_ROOM = 32
+
+/** The Navbar reads this attribute and slides out of view while it is set. */
+const setNavHidden = (hidden: boolean) =>
+  document.documentElement.toggleAttribute('data-nav-hidden', hidden)
 const stackRevealWindow = stackStep * 1.75
 const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max)
 const figmaStackOffsets = [
@@ -221,9 +228,29 @@ export default function SectionStackV3() {
 
     updateStack(0)
 
+    // Where the pin starts, re-measured on every refresh. When the intro and cards fit on
+    // screen (the menu bar is hidden while pinned), centre them so the title is never cut
+    // off; otherwise keep the cards fully in view, as before.
+    const getPinStart = () => {
+      const intro = introRef.current
+      const sectionTop = section.getBoundingClientRect().top
+      const stageBottom = stackStage.getBoundingClientRect().bottom - sectionTop
+
+      if (intro) {
+        const introTop = intro.getBoundingClientRect().top - sectionTop
+        const room = window.innerHeight - (stageBottom - introTop)
+
+        if (room >= PIN_MIN_ROOM) {
+          return `top+=${Math.round(introTop - room / 2)} top`
+        }
+      }
+
+      return `top+=${Math.round(stageBottom - window.innerHeight)} top`
+    }
+
     const trigger = ScrollTrigger.create({
-      trigger: stackStage,
-      start: 'bottom bottom',
+      trigger: section,
+      start: getPinStart,
       // Phones get a shorter pin (about half a screen per card) so it never feels like a scroll trap.
       // A function, so ScrollTrigger re-reads it on every refresh (e.g. after rotation).
       end: () => (window.matchMedia('(max-width: 767px)').matches ? '+=300%' : '+=450%'),
@@ -231,15 +258,18 @@ export default function SectionStackV3() {
       scrub: true,
       anticipatePin: 1,
       onUpdate: (self) => updateStack(self.progress),
+      // Slide the fixed menu bar away while the section is pinned, so it never covers the title.
+      onToggle: (self) => setNavHidden(self.isActive),
     })
     scrollTriggerRef.current = trigger
 
     return () => {
+      setNavHidden(false)
       trigger.kill()
       scrollTriggerRef.current = null
       gsap.killTweensOf([progressBar, ...cards])
     }
-  }, [prefersReducedMotion])
+  }, [prefersReducedMotion, introRef])
 
   const goToCard = (index: number) => {
     const boundedIndex = clamp(index, 0, stackCards.length - 1)
@@ -291,7 +321,7 @@ export default function SectionStackV3() {
             </h2>
           </div>
 
-          <div className='mt-[58px] grid w-full grid-cols-1 gap-8 lg:grid-cols-[104px_minmax(0,1fr)] lg:items-start lg:gap-3 xl:gap-4'>
+          <div className='mt-[58px] grid w-full grid-cols-1 gap-8 lg:grid-cols-[104px_minmax(0,1fr)] lg:items-start lg:gap-3 xl:gap-4 [@media(max-height:780px)]:mt-10'>
             <div className='flex flex-wrap justify-center gap-3 lg:flex-col lg:justify-start lg:gap-7 lg:pt-1'>
               {stackCards.map((card, index) => (
                 <button
@@ -344,7 +374,7 @@ export default function SectionStackV3() {
               ) : (
                 <div
                   ref={stackStageRef}
-                  className='relative min-h-[500px] w-full max-w-[730px] overflow-hidden sm:min-h-[560px] md:-ml-6 md:-mr-12 md:w-[calc(100%+4.5rem)] md:max-w-[calc(730px+4.5rem)] md:pl-6 md:pr-12 lg:-ml-8 lg:-mr-14 lg:w-[calc(100%+5.5rem)] lg:max-w-[calc(730px+5.5rem)] lg:pl-8 lg:pr-14 xl:-mr-16 xl:w-[calc(100%+6rem)] xl:max-w-[calc(730px+6rem)] xl:pr-16'
+                  className='relative min-h-[500px] w-full max-w-[730px] overflow-hidden sm:min-h-[560px] md:-ml-6 md:-mr-12 md:w-[calc(100%+4.5rem)] md:max-w-[calc(730px+4.5rem)] md:pl-6 md:pr-12 lg:-ml-8 lg:-mr-14 lg:w-[calc(100%+5.5rem)] lg:max-w-[calc(730px+5.5rem)] lg:pl-8 lg:pr-14 xl:-mr-16 xl:w-[calc(100%+6rem)] xl:max-w-[calc(730px+6rem)] xl:pr-16 sm:[@media(max-height:780px)]:min-h-[500px]'
                 >
                   <div className='absolute inset-x-0 bottom-14 top-0 overflow-visible md:left-6 md:right-12 lg:left-8 lg:right-14 xl:right-16'>
                     {stackCards.map((card, index) => (

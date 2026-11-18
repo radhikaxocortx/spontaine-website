@@ -39,7 +39,7 @@ final class HomePageController extends Controller
                 // Keep in sync with StaticHomePageV3.tsx: link-preview scrapers read these, not the client-side tags.
                 'title' => 'Unify your operational stack and unlock working AI in weeks',
                 'description' => 'Professional services and industrial operations don\'t fail at AI for lack of ambition. Their data is trapped in legacy ERPs, machines, time tools and CRMs. Spontaine unifies your stack in place in four weeks.',
-                'image' => rtrim((string) config('app.url'), '/') . '/storage/images/8205df31-7880-4c23-902d-6b222d8174b5.png',
+                'image' => rtrim((string) config('app.url'), '/').'/images/home/home-share.jpg',
                 'url' => $request->fullUrl(),
                 'type' => 'website',
                 'noIndex' => false,

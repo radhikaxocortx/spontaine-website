@@ -8,7 +8,8 @@ import NavbarLinks from './NavbarLinks'
 
 const Navbar = () => {
   return (
-    <nav className='fixed left-0 top-0 z-50 w-full bg-spontaine-surface-paper/50 backdrop-blur-md'>
+    // Slides up while <html data-nav-hidden> is set (e.g. while the homepage architecture section is pinned).
+    <nav className='fixed left-0 top-0 z-50 w-full bg-spontaine-surface-paper/50 backdrop-blur-md transition-transform duration-500 [transition-timing-function:cubic-bezier(0.215,0.61,0.355,1)] [html[data-nav-hidden]_&]:-translate-y-full'>
       <div className='mx-auto flex h-16 w-full max-w-[1180px] items-center justify-between px-[var(--space-shell-sm)] md:px-[var(--space-shell)]'>
         <Link
           href='/'
