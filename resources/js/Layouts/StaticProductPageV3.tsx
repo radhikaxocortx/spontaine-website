@@ -69,7 +69,7 @@ const StaticProductPageV3 = ({
   }, [])
 
   return (
-    <div className='overflow-x-hidden'>
+    <div className='page-clip-x'>
       <Navbar />
       <MetaTags
         title={title}
@@ -77,7 +77,7 @@ const StaticProductPageV3 = ({
         image={image}
         noIndex={noIndex}
       />
-      <div className='relative w-full max-w-full overflow-x-hidden bg-spontaine-white'>
+      <div className='page-clip-x relative w-full max-w-full bg-spontaine-white'>
         <SectionProductHeroV3 />
         <div className='relative z-20 -mt-8 md:-mt-10 lg:-mt-12 xl:-mt-16'>
           <SectionProductCompoundV3 />
